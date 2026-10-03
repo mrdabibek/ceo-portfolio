@@ -1371,6 +1371,50 @@ footer {
   font-size: 13px;
 }
 .flinks a:hover { color: var(--gold); }
+/* Footer live-build links */
+.fbuilds {
+  margin: 22px auto;
+  max-width: 720px;
+}
+.fbuilds small {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+}
+.fbuilds div {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 12px;
+}
+.fbuilds a {
+  border: 1px solid var(--border-gold);
+  background: rgba(233, 196, 106, 0.07);
+  color: var(--gold);
+  font-size: 13px;
+  padding: 8px 18px;
+  border-radius: 99px;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.fbuilds a:hover {
+  background: rgba(233, 196, 106, 0.18);
+  transform: translateY(-1px);
+}
+/* Contact deliverables checklist */
+.cdeliv {
+  list-style: none;
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 2;
+}
+.cdeliv li::before {
+  content: "✓ ";
+  color: var(--emerald);
+}
 
 /* FAQ (details-driven, no JS required) */
 .faq {

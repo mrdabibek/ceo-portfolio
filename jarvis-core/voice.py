@@ -53,18 +53,24 @@ def _load_dotenv() -> None:
         return
     _DOTENV_LOADED = True
     try:
-        env_path = Path(__file__).resolve().parent / ".env"
-        if not env_path.is_file():
-            return
-        for raw_line in env_path.read_text(encoding="utf-8").splitlines():
-            line = raw_line.strip()
-            if not line or line.startswith("#") or "=" not in line:
+        candidates = [Path(__file__).resolve().parent]
+        if getattr(sys, "frozen", False):
+            exe_dir = Path(sys.executable).resolve().parent
+            if exe_dir not in candidates:
+                candidates.append(exe_dir)
+        for base in candidates:
+            env_path = base / ".env"
+            if not env_path.is_file():
                 continue
-            key, _, value = line.partition("=")
-            key = key.strip()
-            value = value.strip().strip('"').strip("'").strip()
-            if key and value and key not in os.environ:
-                os.environ[key] = value
+            for raw_line in env_path.read_text(encoding="utf-8").splitlines():
+                line = raw_line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, value = line.partition("=")
+                key = key.strip()
+                value = value.strip().strip('"').strip("'").strip()
+                if key and value and key not in os.environ:
+                    os.environ[key] = value
     except Exception as exc:
         logger.debug("dotenv o'qishda xato: %s", exc)
 

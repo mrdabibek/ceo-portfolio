@@ -691,5 +691,32 @@
     "folder": "portfolio-77-noutbooster",
     "text": "💻 #Loyiha77 — NoutBooster MAX — Windows Kernel Engine & 3D Hardware Telemetry\n\n💡 Loyiha Haqida:\nWindows 10/11 uchun enterprise darajadagi noutbuk tezlashtiruvchi utilita. ACPI apparat termal himoyasi, kernel darajasidagi o'yin prioritetlarini sozlash (.NET 10 & Win32 API), RAM WorkingSet optimallashtirish va interaktiv 3D noutbuk sovutish turbinalari simulyatsiyasi!\n\n🛠 Texnologik Stek:\n• C# .NET 10, Win32 Kernel APIs, Three.js 3D WebGL, Inno Setup x64 Installer\n• Real-time apparat monitoringi, avtomatik fan RPM telemetriyasi va CSV jurnali.\n\n💰 Upwork Shartnoma Qiymati: .5K\n🌐 Jonli Portal & Setup (.EXE): https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-77-noutbooster/index.html\n\n#windows #dotnet #csharp #kernel #threejs #laptopboost #pcgaming #upwork",
     "img": "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=900&auto=format&fit=crop"
+  },
+  "78": {
+    "num": "78",
+    "title": "Zeto Music — Telegram Audio Streamer & Downloader",
+    "val": ".5K",
+    "cat": "ai",
+    "folder": "portfolio-78-zeto-music",
+    "text": "🎵 #Loyiha78 — Zeto Music — Telegram Audio Streamer & Downloader\n\n💡 Loyiha Haqida:\nTezkor musiqa qidiruv va yuklab olish boti. YouTube, Spotify va Instagram Reels havolalaridan 320 kbps sifatdagi audio treklarni ajratib oladi. 0.1 soniyalik SQLite kesh qatlami, inline rejim (@zeto_music_bot) va to'liq ID3 metadata biriktirish imkoniyati!\n\n🛠 Texnologik Stek:\n• Python aiogram 3.x, yt-dlp, FFmpeg audio pipelines\n• SQLite kesh bazasi va xotirani avtomatik tozalash arxitekturasi.\n\n💰 Upwork Shartnoma Qiymati: .5K\n🌐 Jonli Bot Simulyatori: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-78-zeto-music/index.html\n\n#telegrambot #python #aiogram #musicbot #audio #ytdlp #upwork",
+    "img": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=900&auto=format&fit=crop"
+  },
+  "79": {
+    "num": "79",
+    "title": "Subway Stars Runner — Telegram WebApp & Turnir",
+    "val": ".5K",
+    "cat": "game",
+    "folder": "portfolio-79-stars-runner",
+    "text": "⭐ #Loyiha79 — Subway Stars Runner — Telegram WebApp & Turnir\n\n💡 Loyiha Haqida:\nTelegram WebApp ustiga qurilgan 3-lane 3D cheksiz yugurish o'yini. 100–700 ⭐ Stars sovrinli turnir tizimi, referal iqtisodiyoti (+1 jon taklif uchun), 24 soatlik jonlar balansi va FastAPI HMAC-SHA256 anticheat himoyasi!\n\n🛠 Texnologik Stek:\n• Three.js, Telegram WebApp SDK, FastAPI, SQLAlchemy, PyJWT\n• Poezdlar, skeytbord va jetpack power-up tizimlari.\n\n💰 Upwork Shartnoma Qiymati: .5K\n🌐 Jonli O'yin: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-79-stars-runner/index.html\n\n#telegram #webapp #stars #miniapp #gamedev #fastapi #threejs #upwork",
+    "img": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=900&auto=format&fit=crop"
+  },
+  "80": {
+    "num": "80",
+    "title": "NewsAuto AI — Automated Multi-Lingual Telegram Publisher",
+    "val": ".5K",
+    "cat": "ai",
+    "folder": "portfolio-80-newsauto-bot",
+    "text": "📢 #Loyiha80 — NewsAuto AI — Automated Multi-Lingual Telegram Publisher\n\n💡 Loyiha Haqida:\nTelegram kanallari uchun avtomatlashtirilgan xalqaro va mahalliy yangiliklar chop etish boti. Dunyo yangiliklar lentalarini (BBC, Reuters, Kun.uz) tahlil qiladi, 3 ta tilga (UZ/RU/EN) tarjima qiladi va belgilangan vaqt jadvali bo'yicha kanallarga avtomatik joylaydi!\n\n🛠 Texnologik Stek:\n• Python, RSS News Scraper, AI Translation Engine, Telegram Channel Bot API\n• Dublikatlarni 100% filtrlash va avtomatik reaksiyalar hisobi.\n\n💰 Upwork Shartnoma Qiymati: .5K\n🌐 Jonli Boshqaruv Paneli: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-80-newsauto-bot/index.html\n\n#telegrambot #ai #automation #news #python #cron #channelpublisher #upwork",
+    "img": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=900&auto=format&fit=crop"
   }
 }

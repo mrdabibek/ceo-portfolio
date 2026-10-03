@@ -4,291 +4,429 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Daily Meridian — Breaking News</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Libre+Franklin:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-* {
+
+*{
 margin:0;
 padding:0;
 box-sizing:border-box
 }
-:root {
---ink:#141414;
---mut:#6e6e6e;
---line:#ddd6c7;
---red:#c1121f;
---red2:#8f0d16;
---paper:#faf7f0
+
+:root{
+--ink:#16130e;
+--mut:#7c7565;
+--line:#ddd3bd;
+--red:#b3091c;
+--red2:#7e0714;
+--paper:#faf6ec;
+--card:#fffdf6;
+--gold:#a8842c
 }
-body {
+
+body{
 background:var(--paper);
 color:var(--ink);
-font-family:'Source Serif 4',serif
+font-family:Georgia,'Times New Roman',serif
 }
-h1,h2,h3,.head { font-family:'Playfair Display',serif }
-.wrap {
-max-width:1180px;
+
+.head{
+font-family:'Playfair Display',serif
+}
+
+.wrap{
+max-width:1200px;
 margin:auto;
-padding:0 22px
+padding:0 24px
 }
-/* ticker */
-.tick {
+
+.ui{
+font-family:'Libre Franklin',sans-serif
+}
+
+/* breaking ticker */
+.tick{
 background:var(--red);
 color:#fff;
 display:flex;
 align-items:stretch;
 overflow:hidden;
-font-family:Inter;
+font-family:'Libre Franklin';
 font-size:13px
 }
-.tick b {
+
+.tick b{
 background:var(--red2);
 padding:10px 18px;
-font-size:12px;
-letter-spacing:2px;
+font-size:11.5px;
+letter-spacing:2.5px;
 flex-shrink:0;
 display:flex;
 align-items:center;
 animation:blink 1.2s infinite
 }
-@keyframes blink { 50% { opacity:.55 }
+
+@keyframes blink{
+50%{
+opacity:.55
 }
-.tick .lane {
+
+}
+
+.tick .lane{
 overflow:hidden;
 white-space:nowrap;
 display:flex;
-align-items:center
+align-items:center;
+flex:1
 }
-.tick span {
+
+.tick span{
 display:inline-block;
-animation:mq 30s linear infinite;
+animation:mq 32s linear infinite;
 padding-left:20px
 }
-@keyframes mq { to { transform:translateX(-50%) }
+
+@keyframes mq{
+to{
+transform:translateX(-50%)
 }
+
+}
+
 /* masthead */
-.mast {
+.mast{
 text-align:center;
-padding:30px 22px 18px;
+padding:32px 22px 16px;
 border-bottom:3px double var(--ink)
 }
-.mast .date {
+
+.mast .date{
 display:flex;
 justify-content:space-between;
-font-family:Inter;
+font-family:'Libre Franklin';
 font-size:12px;
 color:var(--mut);
-max-width:1180px;
-margin:0 auto 10px
+max-width:1200px;
+margin:0 auto 10px;
+font-weight:600
 }
-.mast h1 {
-font-size:clamp(44px,7vw,88px);
+
+.mast h1{
+font-family:'Playfair Display',serif;
+font-size:clamp(44px,7vw,84px);
 font-weight:900;
-letter-spacing:1px
+letter-spacing:-2px;
+line-height:1
 }
-.mast h1 span { color:var(--red) }
-.mast p {
-font-family:Inter;
+
+.mast h1 span{
+color:var(--red)
+}
+
+.mast .sub{
+font-family:'Libre Franklin';
 font-size:12px;
-letter-spacing:4px;
+letter-spacing:3px;
 color:var(--mut);
-margin-top:6px
+margin-top:8px;
+font-weight:600
 }
-.sections {
+
+/* section nav */
+.sections{
 display:flex;
 gap:4px;
 justify-content:center;
 flex-wrap:wrap;
 border-bottom:1px solid var(--ink);
-padding:10px;
-font-family:Inter;
-position:sticky;
-top:0;
-background:var(--paper);
-z-index:50
+padding:0;
+background:var(--card)
 }
-.sections button {
+
+.sections button{
+border:0;
 background:none;
-border:none;
-font-family:Inter;
+font-family:'Libre Franklin';
+font-size:12.5px;
 font-weight:700;
-font-size:13px;
-padding:9px 18px;
+letter-spacing:1px;
+padding:14px 16px;
 cursor:pointer;
-letter-spacing:.5px
+color:var(--ink);
+opacity:.6;
+border-bottom:3px solid transparent
 }
-.sections button.on,.sections button:hover { background:var(--ink); color:#fff }
-/* lead */
-.lead {
-display:grid;
-grid-template-columns:1.5fr 1fr;
-gap:26px;
-padding:30px 0;
-border-bottom:1px solid var(--ink)
-}
-.main .kicker {
-font-family:Inter;
-font-size:11px;
-letter-spacing:2px;
+
+.sections button.on{
+opacity:1;
 color:var(--red);
-font-weight:800
+border-bottom-color:var(--red)
 }
-.main h2 {
-font-size:clamp(30px,4vw,52px);
-line-height:1.08;
-margin:10px 0;
-font-weight:900;
-cursor:pointer
+
+.sections button:hover{
+opacity:1
 }
-.main h2:hover { color:var(--red2) }
-.main .img {
-font-size:100px;
-background:#e9e2d0;
-text-align:center;
-padding:44px 10px;
-margin:16px 0
-}
-.main .dek {
-font-style:italic;
-font-size:18px;
-color:#444;
-line-height:1.6
-}
-.byline {
-font-family:Inter;
+
+/* edition bar */
+.edbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-family:'Libre Franklin';
 font-size:12px;
 color:var(--mut);
-margin-top:12px
+padding:12px 0;
+font-weight:600
 }
-.byline b { color:var(--ink) }
-.sideList h4 {
-font-family:Inter;
-font-size:12px;
-letter-spacing:2px;
-border-bottom:2px solid var(--red);
-padding-bottom:8px;
-margin-bottom:6px
+
+.edbar b{
+color:var(--ink)
 }
-.sideList article {
-padding:14px 0;
-border-bottom:1px solid var(--line);
-cursor:pointer
-}
-.sideList article:hover h3 { color:var(--red) }
-.sideList h3 { font-size:19px; line-height:1.3 }
-.sideList small {
-font-family:Inter;
-font-size:11.5px;
-color:var(--mut)
-}
-/* grid */
-section { padding:30px 0 50px }
-.cols3 {
+
+/* front grid */
+.front{
 display:grid;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:1.9fr .9fr;
 gap:0;
-border:1px solid var(--ink)
+border:1px solid var(--ink);
+background:var(--card);
+margin-top:6px
 }
-.cols3 article {
-padding:26px;
-border-left:1px solid var(--ink);
-cursor:pointer
+
+.main{
+padding:28px;
+border-right:1px solid var(--ink)
 }
-.cols3 article:first-child { border:none }
-.cols3 article:hover h3 { color:var(--red) }
-.cols3 .img {
-font-size:56px;
-background:#e9e2d0;
-text-align:center;
-padding:22px;
-margin-bottom:14px
-}
-.cols3 .kicker {
-font-family:Inter;
-font-size:10.5px;
-letter-spacing:2px;
+
+.kicker{
+font-family:'Libre Franklin';
+font-size:11px;
+letter-spacing:2.5px;
 color:var(--red);
 font-weight:800
 }
-.cols3 h3 {
-font-size:22px;
-line-height:1.3;
-margin:8px 0
+
+.main h2{
+font-size:clamp(28px,3.6vw,44px);
+line-height:1.08;
+letter-spacing:-1px;
+margin:10px 0;
+cursor:pointer
 }
-.cols3 p {
-font-size:15px;
-color:#444;
-line-height:1.65;
-font-style:italic
+
+.main h2:hover{
+color:var(--red)
 }
-.cols3 small {
-font-family:Inter;
-font-size:11.5px;
-color:var(--mut)
+
+.main .img{
+background:linear-gradient(135deg,#efe6cf,#d9cba6);
+border:1px solid var(--line);
+font-size:110px;
+text-align:center;
+padding:34px 10px;
+margin:16px 0
 }
-/* markets */
-.markets { border:1px solid var(--ink); margin-top:26px }
-.markets h4 {
-font-family:Inter;
+
+.dek{
+font-style:italic;
+font-size:17px;
+color:#3d382c
+}
+
+.byline{
+font-family:'Libre Franklin';
 font-size:12px;
-letter-spacing:2px;
+color:var(--mut);
+margin-top:10px;
+font-weight:600
+}
+
+.sidecol{
+padding:0
+}
+
+.sidecol h5{
+font-family:'Libre Franklin';
+font-size:11px;
+letter-spacing:2.5px;
 background:var(--ink);
 color:#fff;
 padding:10px 18px
 }
-.mrow { display:grid; grid-template-columns:repeat(4,1fr); }
-.mrow div {
+
+.sidecol article{
 padding:16px 18px;
-border-left:1px solid var(--line);
-font-family:Inter
-}
-.mrow div:first-child { border:none }
-.mrow small {
-color:var(--mut);
-font-size:11px;
-letter-spacing:1px
-}
-.mrow b { font-size:20px; display:block }
-.up { color:#0a7a3d }
-.down { color:var(--red) }
-/* opinion */
-.opinion {
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:26px;
-margin-top:26px
-}
-.op {
-background:#fff;
-border:1px solid var(--line);
-padding:30px;
+border-bottom:1px solid var(--line);
 cursor:pointer
 }
-.op:hover { border-color:var(--ink) }
-.op .kicker {
-font-family:Inter;
-font-size:10.5px;
-letter-spacing:2px;
-color:var(--red);
-font-weight:800
+
+.sidecol article:hover h3{
+color:var(--red)
 }
-.op h3 { font-size:25px; margin:8px 0 }
-.op p {
-font-style:italic;
-color:#444;
-line-height:1.7
+
+.sidecol h3{
+font-size:16.5px;
+line-height:1.3
 }
-.op .who {
-display:flex;
-gap:12px;
-align-items:center;
-margin-top:16px;
-font-family:Inter;
-font-size:12.5px;
+
+.sidecol small{
+font-family:'Libre Franklin';
+font-size:11.5px;
 color:var(--mut)
 }
-.op .av {
-width:42px;
-height:42px;
+
+/* 3-col grid */
+.cols3{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+margin-top:18px
+}
+
+.cols3 article{
+background:var(--card);
+border:1px solid var(--line);
+cursor:pointer;
+display:flex;
+flex-direction:column
+}
+
+.cols3 article:hover{
+box-shadow:0 12px 26px rgba(22,19,14,.1)
+}
+
+.cols3 .img{
+font-size:56px;
+text-align:center;
+padding:26px;
+background:linear-gradient(135deg,#f2ead4,#e0d2ae);
+border-bottom:1px solid var(--line)
+}
+
+.cols3 .tx{
+padding:16px 18px
+}
+
+.cols3 h3{
+font-size:19px;
+line-height:1.3;
+margin:8px 0
+}
+
+.cols3 p{
+font-size:14px;
+color:#4c4636;
+font-style:italic
+}
+
+.cols3 small{
+font-family:'Libre Franklin';
+font-size:11.5px;
+color:var(--mut)
+}
+
+/* markets strip */
+.strip{
+margin-top:18px;
+border:1px solid var(--ink);
+background:var(--ink);
+color:#f2ecdb;
+font-family:'Libre Franklin';
+padding:16px 20px
+}
+
+.strip h4{
+font-size:11px;
+letter-spacing:2.5px;
+color:var(--gold);
+margin-bottom:10px
+}
+
+.strip .row{
+display:flex;
+gap:26px;
+flex-wrap:wrap;
+font-size:13px;
+font-weight:600
+}
+
+.up{
+color:#7ee2a8
+}
+.dn{
+color:#ff8f9a
+}
+
+#clock{
+color:#fff;
+font-variant-numeric:tabular-nums
+}
+
+/* opinion */
+.opwrap{
+margin-top:26px
+}
+
+.opwrap h4{
+font-family:'Libre Franklin';
+font-size:12px;
+letter-spacing:3px;
+text-align:center;
+margin-bottom:4px
+}
+
+.opwrap h4::after{
+content:"";
+display:block;
+width:120px;
+height:2px;
+background:var(--ink);
+margin:10px auto 16px
+}
+
+.opinion{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px
+}
+
+.op{
+background:var(--card);
+border:1px solid var(--line);
+border-top:4px solid var(--ink);
+padding:22px;
+cursor:pointer
+}
+
+.op:hover{
+border-top-color:var(--red)
+}
+
+.op h3{
+font-size:21px;
+font-style:italic;
+margin:8px 0
+}
+
+.op p{
+font-size:14px;
+color:#4c4636
+}
+
+.who{
+display:flex;
+gap:10px;
+align-items:center;
+margin-top:12px;
+font-family:'Libre Franklin';
+font-size:12px;
+color:var(--mut)
+}
+
+.av{
+width:34px;
+height:34px;
 border-radius:50%;
 background:var(--ink);
 color:#fff;
@@ -297,434 +435,214 @@ align-items:center;
 justify-content:center;
 font-weight:800
 }
-/* newsletter */
-.news {
-background:var(--ink);
-color:#f3eee1;
-padding:46px 34px;
-text-align:center;
-margin-top:30px
-}
-.news h2 { font-size:clamp(26px,3.4vw,40px); color:#fff }
-.news h2 span { color:#ff6b6b }
-.news p {
-font-family:Inter;
-font-size:14px;
-opacity:.7;
-margin:10px auto 20px;
-max-width:480px
-}
-.news form {
-display:flex;
-gap:10px;
-justify-content:center;
-flex-wrap:wrap
-}
-.news input {
-padding:13px 20px;
-width:min(320px,85%);
-font-family:Inter;
-border:none
-}
-.news button {
-background:var(--red);
-color:#fff;
-border:none;
-padding:13px 30px;
-font-weight:800;
-cursor:pointer;
-font-family:Inter
-}
-/* weather + faq */
-.misc {
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:26px;
-margin-top:26px
-}
-.wx {
-border:1px solid var(--ink);
-padding:26px;
-font-family:Inter
-}
-.wx h4 {
-font-size:12px;
-letter-spacing:2px;
-margin-bottom:14px
-}
-.wx .day {
-display:flex;
-justify-content:space-between;
-padding:9px 0;
-border-bottom:1px dashed var(--line);
-font-size:14px
-}
-.faq h4 {
-font-family:Inter;
-font-size:12px;
-letter-spacing:2px;
-margin-bottom:6px
-}
-.qa { border-bottom:1px solid var(--line) }
-.qa button {
-width:100%;
-background:none;
-border:none;
-padding:15px 4px;
-display:flex;
-justify-content:space-between;
-cursor:pointer;
-font-family:'Playfair Display',serif;
-font-size:18px;
-text-align:left
-}
-.qa p {
-display:none;
-padding:0 4px 16px;
-font-size:14.5px;
-color:#555;
-line-height:1.75
-}
-.qa p.open { display:block }
-/* footer */
-footer {
-background:var(--ink);
-color:#8f8a7c;
-padding:40px 22px;
-text-align:center;
-font-family:Inter;
-font-size:12.5px;
-margin-top:50px
-}
+
 /* reader */
-#reader {
+#reader{
 position:fixed;
 inset:0;
-background:rgba(20,20,20,.65);
+background:rgba(20,16,8,.6);
 display:none;
-align-items:flex-start;
-justify-content:center;
 z-index:100;
-padding:40px 18px;
-overflow:auto
+overflow:auto;
+padding:28px 14px
 }
-#reader.show { display:flex }
-.sheet {
-background:var(--paper);
-max-width:700px;
-width:100%;
-padding:50px 48px;
-position:relative
+
+#reader.show{
+display:block
 }
-.sheet .img {
-font-size:80px;
+
+.sheet{
+max-width:680px;
+margin:auto;
+background:#fffdf6;
+border:3px double var(--ink);
+padding:36px 38px
+}
+
+.sheet .img{
+font-size:84px;
 text-align:center;
-background:#e9e2d0;
-padding:30px;
-margin:16px 0
+background:#f3ecd9;
+border:1px solid var(--line);
+padding:22px;
+margin:14px 0
 }
-.sheet h2 {
-font-size:34px;
-line-height:1.2;
+
+.sheet h2{
+font-size:30px;
+line-height:1.15;
 margin:10px 0
 }
-.sheet .meta {
-font-family:Inter;
-font-size:12px;
-color:var(--mut);
-border-bottom:1px solid var(--ink);
-padding-bottom:14px;
-margin-bottom:20px
+
+.body{
+font-size:17.5px;
+line-height:1.8;
+margin-top:14px;
+color:#2c2820
 }
-.sheet p.body {
-font-size:17px;
-line-height:1.9;
-margin-bottom:16px
+
+.body::first-letter{
+font-size:50px;
+float:left;
+line-height:.85;
+margin:8px 10px 0 0;
+font-weight:900
 }
-.x {
-position:absolute;
-top:12px;
-right:16px;
-background:none;
-border:none;
-font-size:24px;
-cursor:pointer
-}
-#toast {
+
+#toast{
 position:fixed;
-bottom:26px;
 left:50%;
-transform:translateX(-50%) translateY(80px);
+bottom:24px;
+transform:translateX(-50%) translateY(16px);
 background:var(--ink);
 color:#fff;
-padding:13px 28px;
-font-family:Inter;
-font-size:14px;
-transition:.3s;
-z-index:120
+padding:12px 22px;
+border-radius:4px;
+font-family:'Libre Franklin';
+font-size:13px;
+font-weight:700;
+opacity:0;
+transition:.25s;
+z-index:200
 }
-#toast.show { transform:translateX(-50%) }
-@media(max-width:900px) { .lead,.opinion,.misc { grid-template-columns:1fr }
-.cols3 { grid-template-columns:1fr }
-.cols3 article { border-left:none; border-top:1px solid var(--ink) }
-.cols3 article:first-child { border:none }
-.mrow { grid-template-columns:repeat(2,1fr) }
-.sheet { padding:32px 22px }
+
+#toast.show{
+opacity:1;
+transform:translateX(-50%) translateY(0)
 }
+
+footer{
+margin:34px 0 40px;
+text-align:center;
+font-family:'Libre Franklin';
+font-size:12px;
+color:var(--mut);
+border-top:3px double var(--ink);
+padding-top:18px
+}
+
+@media(max-width:900px){
+.front,.opinion,.cols3{
+grid-template-columns:1fr
+}
+.main{
+border-right:0;
+border-bottom:1px solid var(--ink)
+}
+
+}
+
 </style>
 </head>
 <body>
-<div class="tick">
-<b>● LIVE</b>
-<div class="lane">
-<span>&nbsp;BREAKING: Metro Line 3 reopens after upgrades &nbsp;·&nbsp; MARKETS: Index hits record 4,812 (+1.8%) &nbsp;·&nbsp; WEATHER: Clear weekend, 24°C &nbsp;·&nbsp; TECH: City launches free downtown Wi-Fi &nbsp;·&nbsp; SPORTS: Finals set — Meridian FC vs Harbor Utd Sunday &nbsp;·&nbsp; BREAKING: Metro Line 3 reopens after upgrades &nbsp;·&nbsp; MARKETS: Index hits record 4,812 (+1.8%) &nbsp;·&nbsp; WEATHER: Clear weekend, 24°C &nbsp;·&nbsp; TECH: City launches free downtown Wi-Fi &nbsp;·&nbsp; SPORTS: Finals set — Meridian FC vs Harbor Utd Sunday&nbsp;</span>
-</div>
-</div>
+<div class="tick"><b>● BREAKING</b><div class="lane"><span>Metro Line 3 reopens with 2-minute headways &nbsp;·&nbsp; Meridian Index closes at record 4,812 &nbsp;·&nbsp; Free downtown Wi-Fi goes live &nbsp;·&nbsp; Finals set: Meridian FC vs Harbor Utd — 80,000 tickets gone in 9 minutes &nbsp;·&nbsp; Metro Line 3 reopens with 2-minute headways &nbsp;·&nbsp; Meridian Index closes at record 4,812 &nbsp;·&nbsp; Free downtown Wi-Fi goes live &nbsp;·&nbsp; Finals set: Meridian FC vs Harbor Utd</span></div></div>
 <div class="mast">
-<div class="date">
-<span id="dleft">Friday Edition</span>
-<span>Vol. CXII · Nº 214</span>
-<span id="dright">$2.50 · meridian.daily</span>
+<div class="date"><span id="dleft">Friday Edition</span><span>Vol. CXII · Nº 248</span><span id="dright">$2.50 · meridian.daily</span></div>
+<h1 class="head">The Daily <span>Meridian</span></h1>
+<div class="sub">ALL THE NEWS THAT CROSSES THE RIVER · SINCE 1911</div>
 </div>
-<h1>The Daily <span>Meridian</span>
-</h1>
-<p>ALL THE NEWS THAT FITS — SINCE 1912</p>
-</div>
-<div class="sections" id="secs">
-</div>
+<div class="sections" id="secs"></div>
 <div class="wrap">
-<div class="lead">
-<div class="main" id="leadMain">
+<div class="edbar"><span><b>☀ 21°</b> Downtown · H 24° L 16° · Weekend: fair</span><span><b>◉ LIVE</b> <span id="clock">—</span></span><span>Markets: <b>MDX 4,812 <span class="up">▲1.2%</span></b> · BTC <b>$97k <span class="up">▲2.1%</span></b></span></div>
+<div class="front">
+<div class="main" id="leadMain"></div>
+<div class="sidecol"><h5 class="ui">✦ THE LATEST — UPDATED HOURLY</h5><div id="latest"></div></div>
 </div>
-<div class="sideList">
-<h4>⚡ LATEST UPDATES</h4>
-<div id="latest">
+<div class="cols3" id="grid3"></div>
+<div class="strip"><h4 class="ui">📊 MARKETS &amp; WEATHER — <span id="clock2">LIVE DESK</span></h4>
+<div class="row"><span>MDX <b>4,812.44 <span class="up">▲ +1.2%</span></b></span><span>S&P <b>6,102 <span class="up">▲ +0.4%</span></b></span><span>BTC <b>$97,410 <span class="up">▲ +2.1%</span></b></span><span>Gold <b>$2,901 <span class="dn">▼ −0.3%</span></b></span><span>Weather <b>☀ 21° · air good</b></span></div></div>
+<div class="opwrap"><h4 class="ui">✒ OPINION &amp; LETTERS</h4><div class="opinion" id="opinion"></div></div>
+<footer>© 2026 The Daily Meridian · Printed on 100% recycled pixels · <a href="../index.html" style="color:inherit">66 Projects Hub</a></footer>
 </div>
-</div>
-</div>
-</div>
-<section>
-<div class="wrap">
-<div class="cols3" id="grid3">
-</div>
-<div class="markets">
-<h4>📊 MARKETS &amp; WEATHER — <span id="clock">
-</span>
-</h4>
-<div class="mrow">
-<div>
-<small>MERIDIAN INDEX</small>
-<b class="up">4,812 ▲ 1.8%</b>
-</div>
-<div>
-<small>USD / LOCAL</small>
-<b>12,450 ▼ 0.3%</b>
-</div>
-<div>
-<small>GOLD (OZ)</small>
-<b class="up">$2,912 ▲ 0.6%</b>
-</div>
-<div>
-<small>TOMORROW</small>
-<b>☀️ 24°C clear</b>
-</div>
-</div>
-</div>
-<div class="opinion" id="opinion">
-</div>
-<div class="news">
-<h2>Never miss the <span>front page.</span>
-</h2>
-<p>The 7am briefing: 5 stories, 3 minutes, zero noise. Read by 48,000 subscribers.</p>
-<form onsubmit="event.preventDefault();toast('Subscribed — see you at 7am');this.reset()">
-<input required type="email" placeholder="you@example.com">
-<button type="submit">SUBSCRIBE FREE</button>
-</form>
-</div>
-<div class="misc">
-<div class="wx">
-<h4>🌤️ 5-DAY FORECAST</h4>
-<div class="day">
-<span>Today</span>
-<span>☀️ 24° / 16°</span>
-</div>
-<div class="day">
-<span>Saturday</span>
-<span>☀️ 25° / 17°</span>
-</div>
-<div class="day">
-<span>Sunday</span>
-<span>⛅ 23° / 16°</span>
-</div>
-<div class="day">
-<span>Monday</span>
-<span>🌧️ 19° / 14°</span>
-</div>
-<div class="day">
-<span>Tuesday</span>
-<span>⛅ 21° / 13°</span>
-</div>
-</div>
-<div class="faq">
-<h4>❓ ABOUT THE MERIDIAN</h4>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Is the Meridian independent? <span>+</span>
-</button>
-<p>Yes — reader-funded since 2018. No oligarch owners, no sponsored front pages. Our corrections box runs daily, prominently.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">How do I submit a news tip? <span>+</span>
-</button>
-<p>Email tips@meridian.daily or use the anonymous drop box. Encrypted options available; we protect sources by policy and by law.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Print or digital subscription? <span>+</span>
-</button>
-<p>Digital $6/mo, print + digital $11/mo, Sunday-only print $5/mo. Students half price. Cancel in two clicks, keep the tote bag.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Can I advertise? <span>+</span>
-</button>
-<p>Clearly labelled ads only — church and state stay separate. Media kit on request; we refuse gambling and payday-loan advertisers.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<footer>
-<b style="color:#fff;font-family:'Playfair Display',serif;font-size:22px">The Daily Meridian</b>
-<p>114 Press House Lane · Editor: A. Whitmore · Printed on 100% recycled paper · © 2026</p>
-</footer>
-<div id="reader">
-<div class="sheet">
-<button class="x" onclick="closeR()">✕</button>
-<div class="kicker" id="rK" style="font-family:Inter;font-size:11px;letter-spacing:2px;color:var(--red);font-weight:800">
-</div>
-<h2 class="head" id="rT">
-</h2>
-<div class="meta" id="rM">
-</div>
-<div class="img" id="rE">
-</div>
-<div id="rB">
-</div>
-<button style="width:100%;background:var(--ink);color:#fff;border:none;padding:13px;font-weight:800;cursor:pointer;font-family:Inter" onclick="toast('Link copied — pass it on')">SHARE STORY ↗</button>
-</div>
-</div>
-<div id="toast">
-</div>
+<div id="reader"><div class="sheet">
+<div class="kicker ui" id="rK"></div>
+<h2 class="head" id="rT"></h2>
+<div class="byline ui" id="rM"></div>
+<div class="img" id="rE"></div>
+<div id="rB"></div>
+<button style="width:100%;background:var(--ink);color:#fff;border:none;padding:13px;font-weight:800;cursor:pointer;font-family:'Libre Franklin';margin-top:18px" onclick="toast('Link copied — pass it on')">SHARE STORY ↗</button>
+<button style="width:100%;background:none;border:1px solid var(--line);padding:11px;font-weight:700;cursor:pointer;font-family:'Libre Franklin';margin-top:8px" onclick="closeR()">✕ CLOSE</button>
+</div></div>
+<div id="toast"></div>
 <script>
 const NEWS=[
-{
-s:'politics',e:'🏛️',k:'CITY HALL',t:'Metro Line 3 reopens after $40M upgrade',d:'Two-minute headways, step-free stations, and — officials promise — working air conditioning.',by:'By L. Fontaine · Politics · 8 min ago',b:['After eleven months of replacement buses and infamous apologies, Metro Line 3 reopened this morning with two-minute headways and step-free access at all nine stations.','The $40M overhaul adds platform doors, live crowding displays and a fleet of 18 air-conditioned trains. The mayor rode the first service at 6:04am, declaring the "era of the sauna carriage over."','Commuters were cautiously optimistic. "I\'ll believe the air-con in August," said nurse D. Karimova, 34. Full timetables inside; weekend engineering works continue on Line 1.'],lead:1}
-, {
-s:'economy',e:'📈',k:'MARKETS',t:'Index hits record as tech rally broadens',d:'The Meridian Index closed at 4,812 — analysts split on what comes next.',by:'By R. Osei · Economy · 32 min ago',b:['The Meridian Index closed at a record 4,812 on Thursday, lifted by chipmakers and a surprise rate-hold from the central bank.','Bulls point to broadening breadth: gainers outnumbered losers three to one. Bears note valuations last seen before the 2022 wobble.','Our markets desk breaks down the five charts that matter — and the two that are noise.']}
-, {
-s:'tech',e:'📡',k:'TECHNOLOGY',t:'Free downtown Wi-Fi goes live for 200,000 residents',d:'No login walls, no data resale — the city\'s boldest digital promise yet.',by:'By J. Lindqvist · Tech · 1 hr ago',b:['The city flipped the switch on free downtown Wi-Fi covering 12 square kilometres — no login walls, no data resale, officials insist.','Early speed tests show 180 Mbps median. Privacy advocates praised the no-tracking charter but urged independent audits.','Phase two extends to parks and the stadium district by spring. Map of live hotspots inside.']}
-, {
-s:'sport',e:'⚽',k:'SPORT',t:'Finals set: Meridian FC vs Harbor Utd on Sunday',d:'80,000 tickets gone in nine minutes. The city braces for the derby of the decade.',by:'By T. Adeyemi · Sport · 2 hrs ago',b:['Meridian FC survived a nervy semifinal to set up a dream final against Harbor Utd on Sunday — the first all-city final in 31 years.','80,000 tickets sold out in nine minutes. Police advise arriving early; fan zones open at noon on Cathedral Square.','Tactical preview: Harbor\'s press against Meridian\'s counter. Our columnist picks a 2–1 classic.']}
-, {
-s:'culture',e:'🎭',k:'CULTURE',t:'Riverside theatre season sells out in a day',d:'A 400-year-old playhouse bets on new writing — and wins.',by:'By E. Marsh · Culture · 3 hrs ago',b:['The Riverside\'s bold all-premiere season sold out within 24 hours, vindicating a gamble that had board members sweating.','Standouts include a dockworkers\' musical and a one-woman "Odyssey" performed in the round. Returns queue opens Monday.','Review roundup and the three shows to beg, borrow or steal tickets for.']}
-, {
-s:'science',e:'🔬',k:'SCIENCE',t:'Night-sky reserve approved over the northern hills',d:'Streetlights dim, stars return: the county votes for darkness.',by:'By Dr. P. Anand · Science · 4 hrs ago',b:['The county approved the region\'s first dark-sky reserve, dimming 2,000 streetlights to bring back the Milky Way.','Astronomers predict 5,000+ visible stars on clear nights, up from 400 today. Stargazing platforms open next month.','What to look for this weekend: Jupiter at opposition and the year\'s best meteor shower.']}
-, {
-s:'opinion',e:'✒️',k:'OPINION',t:'The city that fixed buses can fix anything',d:'Line 3 proves competence is a choice. Column by A. Whitmore.',by:'By A. Whitmore · Opinion · 5 hrs ago',b:['Eleven months of pain, one morning of pride. Line 3\'s reopening is proof that this city can still do hard things on schedule.','The formula was boring: honest timelines, weekly updates, engineers — not spin doctors — at the microphone.','Now apply it to housing. The buses are watching.'],op:1}
-, {
-s:'opinion',e:'🖋️',k:'OPINION',t:'In defence of the slow news morning',d:'Read one thing properly. Essay by M. Bell.',by:'By M. Bell · Opinion · 6 hrs ago',b:['The briefing paradox: the more we skim, the less we know. My cure is a 20-minute slow read with coffee, phone in another room.','Start with one story that matters to your street, not your feed. Depth first, breadth later — if at all.','The Meridian\'s print edition was designed for exactly this. Just saying.'],op:1}
-, {
-s:'economy',e:'🏘️',k:'HOUSING',t:'Rents cool for third straight month',d:'New supply finally bites — but buyers still wait on rates.',by:'By S. Park · Economy · 7 hrs ago',b:['Average asking rents fell 0.8% — the third straight monthly drop as 4,000 new units hit the market.','Vacancy hit a five-year high of 6.1%. Agents report "polite negotiations" — a first since 2019.','Analysis: why mortgage rates, not rents, now decide where the city sleeps.']}
+{s:'politics',e:'🏛️',k:'CITY HALL',t:'Metro Line 3 reopens after $40M upgrade',d:'Two-minute headways, step-free stations, and — officials promise — working air conditioning.',by:'By L. Fontaine · Politics · 8 min ago',b:['After eleven months of replacement buses and infamous apologies, Metro Line 3 reopened this morning with two-minute headways and step-free access at all nine stations.','The $40M overhaul adds platform doors, live crowding displays and a fleet of 18 air-conditioned trains. The mayor rode the first service at 6:04am, declaring the "era of the sauna carriage over."','Commuters were cautiously optimistic. "I\'ll believe the air-con in August," said nurse D. Karimova, 34. Full timetables inside; weekend engineering works continue on Line 1.'],lead:1},
+{s:'economy',e:'📈',k:'MARKETS',t:'Index hits record as tech rally broadens',d:'The Meridian Index closed at 4,812 — analysts split on what comes next.',by:'By R. Osei · Economy · 32 min ago',b:['The Meridian Index closed at a record 4,812 on Thursday, lifted by chipmakers and a surprise rate-hold from the central bank.','Bulls point to broadening breadth: gainers outnumbered losers three to one. Bears note valuations last seen before the 2022 wobble.','Our markets desk breaks down the five charts that matter — and the two that are noise.']},
+{s:'tech',e:'📡',k:'TECHNOLOGY',t:'Free downtown Wi-Fi goes live for 200,000 residents',d:'No login walls, no data resale — the city\'s boldest digital promise yet.',by:'By J. Lindqvist · Tech · 1 hr ago',b:['The city flipped the switch on free downtown Wi-Fi covering 12 square kilometres — no login walls, no data resale, officials insist.','Early speed tests show 180 Mbps median. Privacy advocates praised the no-tracking charter but urged independent audits.','Phase two extends to parks and the stadium district by spring. Map of live hotspots inside.']},
+{s:'sport',e:'⚽',k:'SPORT',t:'Finals set: Meridian FC vs Harbor Utd on Sunday',d:'80,000 tickets gone in nine minutes. The city braces for the derby of the decade.',by:'By T. Adeyemi · Sport · 2 hrs ago',b:['Meridian FC survived a nervy semifinal to set up a dream final against Harbor Utd on Sunday — the first all-city final in 31 years.','80,000 tickets sold out in nine minutes. Police advise arriving early; fan zones open at noon on Cathedral Square.','Tactical preview: Harbor\'s press against Meridian\'s counter. Our columnist picks a 2–1 classic.']},
+{s:'culture',e:'🎭',k:'CULTURE',t:'Riverside theatre season sells out in a day',d:'A 400-year-old playhouse bets on new writing — and wins.',by:'By E. Marsh · Culture · 3 hrs ago',b:['The Riverside\'s bold all-premiere season sold out within 24 hours, vindicating a gamble that had board members sweating.','Standouts include a dockworkers\' musical and a one-woman "Odyssey" performed in the round. Returns queue opens Monday.','Review roundup and the three shows to beg, borrow or steal tickets for.']},
+{s:'science',e:'🔬',k:'SCIENCE',t:'Night-sky reserve approved over the northern hills',d:'Streetlights dim, stars return: the county votes for darkness.',by:'By Dr. P. Anand · Science · 4 hrs ago',b:['The county approved the region\'s first dark-sky reserve, dimming 2,000 streetlights to bring back the Milky Way.','Astronomers predict 5,000+ visible stars on clear nights, up from 400 today. Stargazing platforms open next month.','What to look for this weekend: Jupiter at opposition and the year\'s best meteor shower.']},
+{s:'opinion',e:'✒️',k:'OPINION',t:'The city that fixed buses can fix anything',d:'Line 3 proves competence is a choice. Column by A. Whitmore.',by:'By A. Whitmore · Opinion · 5 hrs ago',b:['Eleven months of pain, one morning of pride. Line 3\'s reopening is proof that this city can still do hard things on schedule.','The formula was boring: honest timelines, weekly updates, engineers — not spin doctors — at the microphone.','Now apply it to housing. The buses are watching.'],op:1},
+{s:'opinion',e:'🖋️',k:'OPINION',t:'In defence of the slow news morning',d:'Read one thing properly. Essay by M. Bell.',by:'By M. Bell · Opinion · 6 hrs ago',b:['The briefing paradox: the more we skim, the less we know. My cure is a 20-minute slow read with coffee, phone in another room.','Start with one story that matters to your street, not your feed. Depth first, breadth later — if at all.','The Meridian\'s print edition was designed for exactly this. Just saying.'],op:1},
+{s:'economy',e:'🏘️',k:'HOUSING',t:'Rents cool for third straight month',d:'New supply finally bites — but buyers still wait on rates.',by:'By S. Park · Economy · 7 hrs ago',b:['Average asking rents fell 0.8% — the third straight monthly drop as 4,000 new units hit the market.','Vacancy hit a five-year high of 6.1%. Agents report "polite negotiations" — a first since 2019.','Analysis: why mortgage rates, not rents, now decide where the city sleeps.']}
 ];
 const SECS=[['all','Front Page'],['politics','Politics'],['economy','Economy'],['tech','Tech'],['sport','Sport'],['culture','Culture'],['science','Science'],['opinion','Opinion']];
-let cat='all'; const sw=document.getElementById('secs'); SECS.forEach(([v,l],i)=>{
-const b=document.createElement('button');b.className=i?'':'on';b.textContent=l;b.onclick=()=>{
-cat=v;[...sw.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');render()}
-;sw.appendChild(b)}
-); function card(n){
-return `<div class="kicker">${NEWS[n].k} · ${NEWS[n].s.toUpperCase()}</div><h3 class="head">${NEWS[n].t}</h3><p>${NEWS[n].d}</p><small>${NEWS[n].by}</small>`}
+let cat='all';
+const sw=document.getElementById('secs');
+SECS.forEach(([v,l],i)=>{const b=document.createElement('button');b.className=i?'':'on';b.textContent=l;b.onclick=()=>{cat=v;[...sw.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');render()};sw.appendChild(b)});
+function card(n){return `<div class="kicker ui">${NEWS[n].k} · ${NEWS[n].s.toUpperCase()}</div><h3 class="head">${NEWS[n].t}</h3><p>${NEWS[n].d}</p><small class="ui">${NEWS[n].by}</small>`}
 function render(){
-const list=NEWS.map((n,i)=>({
-...n,i}
-)).filter(n=>cat==='all'||n.s===cat); const lead=list.find(n=>n.lead)||list[0];
-document.getElementById('leadMain').innerHTML=`<div class="main"><div class="kicker">${lead.k} — LEAD STORY</div><h2 onclick="openR(${lead.i})">${lead.t}</h2><div class="img">${lead.e}</div><p class="dek">${lead.d}</p><div class="byline">${lead.by}</div></div>`;
-const lat=document.getElementById('latest');lat.innerHTML='';list.filter(n=>n.i!==lead.i).slice(0,5).forEach(n=>{
-const a=document.createElement('article');a.innerHTML=`<h3 class="head">${n.t}</h3><small>${n.by}</small>`;a.onclick=()=>openR(n.i);lat.appendChild(a)}
-); const g=document.getElementById('grid3');g.innerHTML='';list.filter(n=>n.i!==lead.i).slice(0,6).forEach(n=>{
-const a=document.createElement('article');a.innerHTML=`<div class="img">${n.e}</div>`+card(n.i);a.onclick=()=>openR(n.i);g.appendChild(a)}
-); if(!list.length){
-g.innerHTML='<p style="padding:26px">No stories in this section today.</p>'}
-const op=document.getElementById('opinion');op.innerHTML='';NEWS.filter(n=>n.op&&(cat==='all'||cat==='opinion')).forEach(n=>{
-const d=document.createElement('div');d.className='op';d.innerHTML=`<div class="kicker">${n.k}</div><h3 class="head">${n.t}</h3><p>"${n.d}"</p><div class="who"><div class="av">${n.by[3]}</div><div>${n.by}</div></div>`;d.onclick=()=>openR(n.i);op.appendChild(d)}
-)}
-function openR(i){
-const n=NEWS[i];rK.textContent=n.k+' · '+n.s.toUpperCase();rT.textContent=n.t;rM.textContent=n.by+' · 4 min read';rE.textContent=n.e;rB.innerHTML=n.b.map(t=>`<p class="body">${t}</p>`).join('');reader.classList.add('show');document.body.style.overflow='hidden'}
-function closeR(){
-reader.classList.remove('show');document.body.style.overflow=''}
-reader.addEventListener('click',e=>{
-if(e.target.id==='reader')closeR()}
-); document.addEventListener('keydown',e=>{
-if(e.key==='Escape')closeR()}
-); function toast(m){
-const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2600)}
-function tick(){
-const d=new Date();clock.textContent=d.toLocaleDateString('en-GB',{
-weekday:'long',day:'numeric',month:'long'}
-)+' · '+d.toLocaleTimeString('en-GB',{
-hour:'2-digit',minute:'2-digit',second:'2-digit'}
-)}
+const list=NEWS.map((n,i)=>({...n,i})).filter(n=>cat==='all'||n.s===cat);
+const lead=list.find(n=>n.lead)||list[0];
+document.getElementById('leadMain').innerHTML=`<div class="kicker ui">${lead.k} — LEAD STORY</div><h2 class="head" onclick="openR(${lead.i})">${lead.t}</h2><div class="img">${lead.e}</div><p class="dek">${lead.d}</p><div class="byline ui">${lead.by} · 4 min read</div>`;
+const lat=document.getElementById('latest');lat.innerHTML='';
+list.filter(n=>n.i!==lead.i).slice(0,5).forEach(n=>{const a=document.createElement('article');a.innerHTML=`<h3 class="head">${n.t}</h3><small class="ui">${n.by}</small>`;a.onclick=()=>openR(n.i);lat.appendChild(a)});
+const g=document.getElementById('grid3');g.innerHTML='';
+list.filter(n=>n.i!==lead.i).slice(0,6).forEach(n=>{const a=document.createElement('article');a.innerHTML=`<div class="img">${n.e}</div><div class="tx">`+card(n.i)+`</div>`;a.onclick=()=>openR(n.i);g.appendChild(a)});
+if(!list.length){g.innerHTML='<p style="padding:26px">No stories in this section today.</p>'}
+const op=document.getElementById('opinion');op.innerHTML='';
+NEWS.filter(n=>n.op&&(cat==='all'||cat==='opinion')).forEach(n=>{const d=document.createElement('div');d.className='op';d.innerHTML=`<div class="kicker ui">${n.k}</div><h3 class="head">${n.t}</h3><p>"${n.d}"</p><div class="who"><div class="av">${n.by[3]}</div><div class="ui">${n.by}</div></div>`;d.onclick=()=>openR(n.i);op.appendChild(d)});
+}
+function openR(i){const n=NEWS[i];rK.textContent=n.k+' · '+n.s.toUpperCase();rT.textContent=n.t;rM.textContent=n.by+' · 4 min read';rE.textContent=n.e;rB.innerHTML=n.b.map(t=>`<p class="body">${t}</p>`).join('');reader.classList.add('show');document.body.style.overflow='hidden'}
+function closeR(){reader.classList.remove('show');document.body.style.overflow=''}
+reader.addEventListener('click',e=>{if(e.target.id==='reader')closeR()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeR()});
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2600)}
+function tick(){const d=new Date();clock.textContent=d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})+' · '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
 setInterval(tick,1000);tick();render();
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
 <style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
 
-  <script src="../api-runtime.js"></script>
+.ceo-hub-floating-badge{
+position:fixed;
+bottom:22px;
+right:22px;
+z-index:99999;
+background:rgba(12,12,20,.88);
+backdrop-filter:blur(14px);
+border:1px solid rgba(233,196,106,.4);
+color:#f4f2ea!important;
+text-decoration:none!important;
+padding:8px 16px;
+border-radius:9999px;
+font-family:Inter,system-ui,sans-serif;
+font-size:12px;
+font-weight:700;
+display:inline-flex;
+align-items:center;
+gap:8px;
+box-shadow:0 10px 30px rgba(0,0,0,.8)
+}
+
+.ceo-hub-floating-badge:hover{
+transform:translateY(-2px);
+border-color:#e9c46a;
+color:#fff!important
+}
+
+@media(max-width:640px){
+.ceo-hub-floating-badge{
+bottom:12px;
+right:12px;
+padding:6px 12px;
+font-size:11px
+}
+
+}
+
+</style>
+<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
+<a href="../index.html" class="ceo-hub-floating-badge">◈ 66 Projects Hub <span style="font-size:10px;background:rgba(233,196,106,.18);border:1px solid rgba(233,196,106,.3);color:#e9c46a;padding:1px 6px;border-radius:99px">CEO·LAB</span></a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>

@@ -1,558 +1,525 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Harbor GP — Night Racer by Kai Tanaka</title>
+<title>Harbor GP — Night Racer · Kai Tanaka, Game Dev</title>
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box
-}
-:root{
-  --bg:#0d0a1a;
-  --mag:#f0f;
-  --mag2:#ff2fb3;
-  --cy:#22d3ee;
-  --panel:#161130
-}
-body{
-  font-family:Verdana,'Segoe UI',sans-serif;
-  background:var(--bg);
-  color:#efeaff;
-  overflow-x:hidden
-}
-/* niche loader: chequered flag */
-#loader{
-  position:fixed;
-  inset:0;
-  background:#0a0716;
-  z-index:200;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  align-items:center;
-  justify-content:center;
-  transition:.5s
-}
-#loader.done{
-  opacity:0;
-  visibility:hidden
-}
-#loader .flag{
-  font-size:16px;
-  letter-spacing:2px
-}
-#loader .car{
-  font-size:46px;
-  animation:rev 0.5s infinite alternate
-}
-@keyframes rev{
-  from{
-  transform:translateX(-10px)
-}
-to{
-  transform:translateX(10px)
-}
-}
-#loader .track{
-  width:190px;
-  height:6px;
-  background:#ffffff1c;
-  border-radius:99px;
-  overflow:hidden
-}
-#loader .track i{
-  display:block;
-  height:100%;
-  background:repeating-linear-gradient(90deg,#fff 0 10px,#000 10px 20px);
-  animation:mv 0.6s linear infinite
-}
-@keyframes mv{
-  to{
-  transform:translateX(-20px)
-}
-}
-#loader small{
-  letter-spacing:3px;
-  color:#8b86ad;
-  font-size:11px
-}
-header.top{
-  border-bottom:1px solid #ffffff18;
-  background:#0d0a1af2;
-  position:sticky;
-  top:0;
-  z-index:60
-}
-.nin{
-  max-width:1080px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  gap:16px;
-  padding:13px 20px
-}
-.nin .lamp{
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  background:#22c55e;
-  box-shadow:0 0 10px #22c55e
-}
-.nin a{
-  color:#efeaff;
-  text-decoration:none;
-  font-size:13px;
-  opacity:.7
-}
-.nin a:hover{
-  opacity:1
-}
-.nin .sp{
-  flex:1
-}
-.sbtn{
-  background:linear-gradient(90deg,var(--mag2),#7c3aed);
-  color:#fff;
-  border:0;
-  padding:10px 22px;
-  border-radius:10px;
-  font-weight:800;
-  cursor:pointer;
-  font-style:italic
-}
-.hero{
-  max-width:1080px;
-  margin:auto;
-  padding:46px 20px 8px;
-  display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:26px;
-  align-items:center
-}
-.eyebrow{
-  color:var(--cy);
-  font-weight:800;
-  letter-spacing:2px;
-  font-size:11.5px;
-  border:1px solid #22d3ee55;
-  display:inline-block;
-  padding:6px 14px;
-  border-radius:99px
-}
-h1{
-  font-size:clamp(30px,5vw,54px);
-  font-style:italic;
-  line-height:1.02;
-  margin:12px 0
-}
-h1 span{
-  background:linear-gradient(90deg,#ff2fb3,#7c3aed,#22d3ee);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent
-}
-.hero p{
-  opacity:.7;
-  font-size:14px;
-  line-height:1.6
-}
-.spec{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:16px
-}
-.spec div{
-  background:var(--panel);
-  border:1px solid #ffffff1a;
-  border-radius:12px;
-  padding:12px;
-  font-size:12px
-}
-.spec b{
-  font-size:17px;
-  font-style:italic
-}
-#gameSec{
-  max-width:1080px;
-  margin:auto;
-  padding:12px 20px
-}
-#gwrap{
-  position:relative;
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid #ff2fb355;
-  box-shadow:0 0 60px #ff2fb322
-}
-canvas{
-  display:block;
-  width:100%;
-  height:440px;
-  background:#0b0e1e
-}
-#hudTop{
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  display:flex;
-  gap:8px;
-  padding:12px;
-  z-index:5;
-  font-weight:800;
-  font-size:12.5px;
-  flex-wrap:wrap
-}
-.chip{
-  background:#0d0a1acc;
-  border:1px solid #ffffff2c;
-  padding:7px 13px;
-  border-radius:8px;
-  font-variant-numeric:tabular-nums;
-  transform:skewX(-8deg)
-}
-#msg{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  align-items:center;
-  justify-content:center;
-  background:#0a0716e6;
-  z-index:6;
-  text-align:center;
-  padding:20px
-}
-#msg.hide{
-  display:none
-}
-#startBtn{
-  background:linear-gradient(90deg,#ff2fb3,#7c3aed);
-  border:0;
-  color:#fff;
-  font-weight:900;
-  padding:14px 44px;
-  border-radius:10px;
-  font-size:16px;
-  cursor:pointer;
-  font-style:italic
-}
-#hudBottom{
-  display:flex;
-  gap:0;
-  background:var(--panel);
-  border-top:1px solid #ffffff18;
-  font-size:12px
-}
-#hudBottom div{
-  flex:1;
-  padding:12px;
-  text-align:center;
-  border-right:1px solid #ffffff12
-}
-#hudBottom b{
-  display:block;
-  font-size:17px;
-  font-style:italic
-}
-.ctl{
-  display:flex;
-  gap:8px;
-  margin-top:10px;
-  flex-wrap:wrap;
-  font-size:12px
-}
-.ctl span{
-  background:var(--panel);
-  border:1px solid #ffffff1c;
-  padding:8px 14px;
-  border-radius:99px
-}
-section{
-  max-width:1080px;
-  margin:auto;
-  padding:30px 20px
-}
-h2.t{
-  font-size:clamp(22px,3vw,30px);
-  font-style:italic
-}
-.sub{
-  opacity:.6;
-  margin-bottom:18px;
-  font-size:13.5px
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:14px
-}
-.card{
-  background:var(--panel);
-  border:1px solid #ffffff1a;
-  border-radius:14px;
-  overflow:hidden
-}
-.card img{
-  width:100%;
-  height:140px;
-  object-fit:cover;
-  filter:saturate(1.4) contrast(1.1)
-}
-.card .bd{
-  padding:14px;
-  font-size:13px
-}
-.card .bd p{
-  opacity:.6;
-  margin-top:5px
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:13px;
-  background:var(--panel);
-  border-radius:12px;
-  overflow:hidden
-}
-td,th{
-  padding:12px 14px;
-  border-bottom:1px solid #ffffff12;
-  text-align:left
-}
-.skills{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-  gap:12px
-}
-.skills div{
-  background:var(--panel);
-  border:1px solid #ffffff1a;
-  border-radius:12px;
-  padding:20px;
-  text-align:center;
-  font-size:13px
-}
-.cta{
-  margin:14px auto;
-  max-width:1040px;
-  background:linear-gradient(90deg,#ff2fb3,#7c3aed 60%,#22d3ee);
-  border-radius:16px;
-  text-align:center;
-  padding:48px 24px;
-  font-weight:800;
-  font-style:italic
-}
-footer{
-  text-align:center;
-  opacity:.55;
-  font-size:13px;
-  padding:26px
-}
-.reveal{
-  opacity:0;
-  transform:translateY(24px);
-  transition:.7s
-}
-.reveal.vis{
-  opacity:1;
-  transform:none
-}
-#signin{
-  position:fixed;
-  inset:0;
-  background:#000a;
-  z-index:300;
-  display:none;
-  align-items:center;
-  justify-content:center
-}
-#signin.open{
-  display:flex
-}
-.scard{
-  width:min(370px,92vw);
-  background:var(--panel);
-  border:1px solid #ff2fb355;
-  border-radius:16px;
-  padding:32px 28px;
-  text-align:center
-}
-.scard input{
-  width:100%;
-  margin-top:10px;
-  padding:12px;
-  border-radius:9px;
-  border:1px solid #ffffff2c;
-  background:#ffffff10;
-  color:#fff;
-  outline:0
-}
-@media(max-width:860px){
-  .hero{
-  grid-template-columns:1fr
-}
-#hudBottom{
-  flex-wrap:wrap
-}
-}
+ * {
+ margin:0;
+ padding:0;
+ box-sizing:border-box
+}
+ :root {
+ --bg:#0d0a1a;
+ --mag:#ff2fb3;
+ --cy:#22d3ee;
+ --panel:#161130;
+ --line:#ffffff1c
+}
+ body {
+ font-family:Verdana,'Segoe UI',sans-serif;
+ background:var(--bg);
+ color:#efeaff;
+ overflow-x:hidden
+}
+ #loader {
+ position:fixed;
+ inset:0;
+ background:#0a0716;
+ z-index:200;
+ display:flex;
+ flex-direction:column;
+ gap:14px;
+ align-items:center;
+ justify-content:center;
+ transition:.5s
+}
+ #loader.done {
+ opacity:0;
+ visibility:hidden
+}
+ #loader .car {
+ font-size:46px;
+ animation:rev .5s infinite alternate
+}
+ @keyframes rev {
+ from {
+ transform:translateX(-10px)
+ }
+ to {
+ transform:translateX(10px)
+ }
+ 
+}
+ #loader .track {
+ width:190px;
+ height:6px;
+ background:#ffffff1c;
+ border-radius:99px;
+ overflow:hidden
+}
+ #loader .track i {
+ display:block;
+ height:100%;
+ background:repeating-linear-gradient(90deg,#fff 0 10px,#000 10px 20px);
+ animation:mv .6s linear infinite
+}
+ @keyframes mv {
+ to {
+ transform:translateX(-20px)
+ }
+ 
+}
+ #loader small {
+ letter-spacing:3px;
+ color:#8b86ad;
+ font-size:11px
+}
+ header.top {
+ border-bottom:1px solid var(--line);
+ background:#0d0a1af2;
+ position:sticky;
+ top:0;
+ z-index:60
+}
+ .nin {
+ max-width:1080px;
+ margin:auto;
+ display:flex;
+ align-items:center;
+ gap:16px;
+ padding:13px 20px
+}
+ .nin .lamp {
+ width:11px;
+ height:11px;
+ border-radius:50%;
+ background:#22c55e;
+ box-shadow:0 0 10px #22c55e
+}
+ .nin a {
+ color:#efeaff;
+ text-decoration:none;
+ font-size:13px;
+ opacity:.7
+}
+.nin a:hover {
+ opacity:1
+}
+ .nin .sp {
+ flex:1
+}
+ .sbtn {
+ background:linear-gradient(90deg,var(--mag),#7c3aed);
+ color:#fff;
+ border:0;
+ padding:10px 24px;
+ border-radius:99px;
+ font-weight:800;
+ cursor:pointer;
+ font-size:13px
+}
+ .hero {
+ max-width:1080px;
+ margin:auto;
+ padding:44px 20px 6px;
+ display:grid;
+ grid-template-columns:1.1fr .9fr;
+ gap:26px;
+ align-items:center
+}
+ @media(max-width:880px) {
+ .hero {
+ grid-template-columns:1fr
+ }
+ 
+}
+ .hero h1 {
+ font-size:clamp(30px,4.6vw,54px);
+ line-height:1.03;
+ font-style:italic
+}
+ .hero h1 span {
+ background:linear-gradient(90deg,var(--mag),var(--cy));
+ -webkit-background-clip:text;
+ background-clip:text;
+ color:transparent
+}
+ .hero p {
+ color:#b9b4d6;
+ margin-top:12px;
+ font-size:14px;
+ line-height:1.7
+}
+ .kpis {
+ display:flex;
+ gap:10px;
+ flex-wrap:wrap;
+ margin-top:14px;
+ font-size:12.5px
+}
+ .kpis div {
+ border:1px solid var(--line);
+ background:var(--panel);
+ padding:8px 16px;
+ border-radius:99px
+}
+ .gsec {
+ max-width:1080px;
+ margin:auto;
+ padding:14px 20px
+}
+ .gbox {
+ background:#000;
+ border:1px solid var(--line);
+ border-radius:18px;
+ overflow:hidden;
+ position:relative;
+ box-shadow:0 0 60px #ff2fb322,0 30px 80px #000a
+}
+ canvas {
+ display:block;
+ width:100%;
+ height:380px;
+ touch-action:none
+}
+ .hud {
+ position:absolute;
+ top:0;
+ left:0;
+ right:0;
+ display:flex;
+ gap:10px;
+ padding:12px 14px;
+ font-size:13px;
+ font-weight:800
+}
+ .hud div {
+ background:#000c;
+ padding:8px 16px;
+ border-radius:99px;
+ border:1px solid var(--line)
+}
+ .hud .r {
+ margin-left:auto;
+ color:var(--cy)
+}
+ .count {
+ position:absolute;
+ inset:0;
+ display:grid;
+ place-items:center;
+ font-size:110px;
+ font-weight:900;
+ font-style:italic;
+ color:#fff;
+ text-shadow:0 0 40px var(--mag);
+ pointer-events:none;
+ opacity:0
+}
+ .count.pop {
+ animation:pop .8s
+}
+ @keyframes pop {
+ 20% {
+ opacity:1;
+ transform:scale(1.1)
+ }
+ 100% {
+ opacity:0
+ }
+ 
+}
+ .ctl {
+ display:flex;
+ gap:10px;
+ padding:12px 14px;
+ background:var(--panel);
+ align-items:center;
+ flex-wrap:wrap
+}
+ .ctl button {
+ background:#ffffff14;
+ border:1px solid var(--line);
+ color:#fff;
+ font-size:19px;
+ min-width:58px;
+ height:50px;
+ border-radius:13px;
+ cursor:pointer
+}
+ .ctl button:active {
+ background:var(--mag)
+}
+ .ctl .go {
+ background:linear-gradient(90deg,var(--mag),#7c3aed);
+ border:0;
+ font-size:14px;
+ font-weight:900;
+ padding:0 28px
+}
+ .ctl small {
+ color:#8b86ad;
+ font-size:12px
+}
+ .tune {
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+ margin-top:12px
+}
+ @media(max-width:700px) {
+ .tune {
+ grid-template-columns:1fr
+ }
+ 
+}
+ .tcard {
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:14px;
+ padding:16px;
+ font-size:12.5px
+}
+ .tcard b {
+ font-size:13.5px
+}
+.tcard input {
+ width:100%;
+ accent-color:var(--mag);
+ margin-top:8px
+}
+ .feat {
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:14px;
+ margin-top:14px
+}
+ @media(max-width:880px) {
+ .feat {
+ grid-template-columns:1fr
+ }
+ 
+}
+ .fcard {
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:16px;
+ padding:22px;
+ font-size:13px;
+ line-height:1.65
+}
+ .fcard h3 {
+ margin:8px 0 6px;
+ font-size:15px
+}
+.fcard p {
+ color:#b9b4d6
+}
+ .svc {
+ margin-top:14px;
+ background:linear-gradient(120deg,#2b1245,#131032);
+ border:1px solid var(--mag);
+ border-radius:16px;
+ padding:26px;
+ display:flex;
+ gap:20px;
+ align-items:center;
+ flex-wrap:wrap
+}
+ .svc h2 {
+ font-size:22px;
+ font-style:italic
+}
+.svc p {
+ color:#b9b4d6;
+ font-size:13.5px;
+ margin-top:6px
+}
+ footer {
+ text-align:center;
+ padding:26px;
+ color:#8b86ad;
+ font-size:12.5px
+}
+ #toast {
+ position:fixed;
+ bottom:24px;
+ left:50%;
+ transform:translateX(-50%) translateY(90px);
+ background:#fff;
+ color:#0d0a1a;
+ font-weight:900;
+ padding:12px 28px;
+ border-radius:99px;
+ z-index:300;
+ transition:.3s
+}
+ #toast.show {
+ transform:translateX(-50%)
+}
+ .school {
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+ margin-top:12px
+}
+@media(max-width:700px) {
+ .school {
+ grid-template-columns:1fr
+}
+}
+ .tip {
+ background:#00000055;
+ border:1px dashed var(--line);
+ border-radius:14px;
+ padding:16px;
+ font-size:12.5px;
+ line-height:1.65;
+ color:#b9b4d6
+}
+ .tip b {
+ color:#fff;
+ display:block;
+ margin-bottom:4px;
+ font-size:13px
+}
+ .patch {
+ margin-top:12px;
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:14px;
+ padding:18px 20px;
+ font-size:12.5px;
+ line-height:2;
+ color:#b9b4d6
+}
+ .patch b {
+ color:var(--cy)
+}
+ .patch .v {
+ display:inline-block;
+ background:var(--mag);
+ color:#fff;
+ font-weight:800;
+ border-radius:6px;
+ padding:0 10px;
+ margin-right:8px
+}
+
 </style>
 </head>
 <body>
-<div id="loader"><div class="flag">ðŸðŸðŸ</div><div class="car">ðŸŽï¸ðŸ’¨</div><div class="track"><i></i></div><small>HARBOR GP · GRID READY</small></div>
-<header class="top"><div class="nin"><span class="lamp"></span><b style="font-style:italic">HARBOR·GP</b><a href="#gameSec">Night Race</a><a href="#work">Paddock</a><a href="#laps">Timing</a><span class="sp"></span><button class="sbtn" onclick="openSign()">PIT PASS · Sign in</button></div></header>
-<header class="hero"><div><span class="eyebrow">â—‰ LIVE · HARBOR CIRCUIT · 3 LAPS · DRIFT ON</span><h1>Kai Tanaka makes <span>harbors drift.</span></h1><p>Top-down night racer: velocity + grip-lerp drift, 4 checkpoints per lap, handbrake on Space. Off-track = gravel trap. Beat 45s and take the podium.</p><div class="spec"><div>ðŸ <b>3 laps</b><br>4 checkpoints each</div><div>ðŸ’¨ <b>Drift</b><br>Space = handbrake</div><div>âš¡ <b>Top speed</b><br><span id="specTop">—</span> km/h</div><div>ðŸ† <b>Best</b><br><span id="specBest">—</span></div></div></div><div><img src="https://picsum.photos/seed/harborhero/480/340" style="width:100%;border-radius:14px;border:1px solid #ff2fb355" alt=""></div></header>
-<div id="gameSec"><div id="gwrap">
-<div id="hudTop"><span class="chip">â± <span id="hTime">0.00</span>s</span><span class="chip">LAP <span id="hLap">1</span>/3</span><span class="chip">DRIFT <span id="hDrift">0</span>m</span><span class="chip">SPD <span id="hSpeed">0</span></span><span class="chip">BEST <span id="hBest">--</span></span></div>
-<canvas id="cv" width="960" height="440"></canvas>
-<div id="msg"><div style="font-size:46px">ðŸŒƒðŸ</div><h2 style="font-size:30px;font-style:italic">HARBOR GP · NIGHT</h2><p style="opacity:.7;font-size:14px">WASD / arrows · Space = handbrake · hit glowing checkpoints in order</p><button id="startBtn" onclick="startGame()">▶ LIGHTS OUT</button></div>
-<div id="hudBottom"><div>P1 <b id="bSpeed">0 km/h</b>speed</div><div>P2 <b id="bDrift">0 m</b>drift</div><div>P3 <b id="bLap">–</b>last lap</div><div>P4 <b id="bBest2">–</b>best total</div></div>
-</div><div class="ctl"><span>W accelerate</span><span>S brake</span><span>A/D steer</span><span>Space drift</span><span>off-track slows you</span></div></div>
-<section id="work"><h2 class="t reveal">Paddock ðŸ› ï¸</h2><p class="sub reveal">Games from the pit lane.</p><div class="grid">
-<div class="card reveal"><img src="https://picsum.photos/seed/hb1/500/300"><div class="bd"><b>Neon GP</b> — arcade · 800K plays<p>Custom drift engine</p></div></div>
-<div class="card reveal"><img src="https://picsum.photos/seed/hb2/500/300"><div class="bd"><b>Drift Kings</b> — mobile · 4.7★<p>Unity · 200K installs</p></div></div>
-<div class="card reveal"><img src="https://picsum.photos/seed/hb3/500/300"><div class="bd"><b>Pixel Kart</b> — 8p multiplayer<p>Node + WebSockets</p></div></div>
-</div></section>
-<section id="laps"><h2 class="t reveal">Timing tower â±ï¸</h2><p class="sub reveal">Live in this browser.</p><table class="reveal"><tr><th>Lap</th><th>Time</th><th>Top speed</th></tr><tbody id="lapBoard"><tr><td colspan="3" style="opacity:.6">No laps yet — lights out to start.</td></tr></tbody></table></section>
-<section><h2 class="t reveal">Telemetry ðŸ”§</h2><p class="sub reveal">Why it feels fast.</p><div class="skills">
-<div class="reveal"><div style="font-size:28px">ðŸŒ€</div><b>Drift model</b><br><small style="opacity:.6">Grip lerp 0.06–0.16</small></div>
-<div class="reveal"><div style="font-size:28px">ðŸš¦</div><b>Checkpoints</b><br><small style="opacity:.6">Angle state machine</small></div>
-<div class="reveal"><div style="font-size:28px">ðŸ›ž</div><b>Skid marks</b><br><small style="opacity:.6">Fading trail pool</small></div>
-<div class="reveal"><div style="font-size:28px">ðŸŒƒ</div><b>Night render</b><br><small style="opacity:.6">Neon glow pass</small></div>
-</div></section>
-<div class="cta reveal">BRANDED MINI-GAME IN 3 WEEKS →<br><button class="sbtn" style="margin-top:14px;background:#fff;color:#000" onclick="openSign()">Hire Kai — $62/hr</button></div>
-<footer>Â© 2026 Kai Tanaka · Harbor GP · <a href="#" onclick="openSign();return false" style="color:#ff2fb3">Pit pass</a></footer>
-<div id="signin"><div class="scard"><div style="font-size:42px">ðŸ</div><h3>Pit pass</h3><input placeholder="Driver tag"><input type="password" placeholder="Password"><button class="sbtn" style="width:100%;margin-top:14px" onclick="closeSign()">Join Race →</button><p style="margin-top:10px;font-size:12px;opacity:.6;cursor:pointer" onclick="closeSign()">Cancel</p></div></div>
+<div id="loader"><div class="car">🏎️</div><div class="track"><i></i></div><small>HEATING TIRES …</small></div>
+<header class="top"><div class="nin"><span class="lamp"></span><b>HARBOR<i style="color:var(--mag)">GP</i></b><a href="#race">Race</a><a href="#tune">Tuning</a><a href="#hire">Hire</a><span class="sp"></span><span style="font-size:12px;opacity:.6">Kai T. · $34/hr</span><button class="sbtn" onclick="hire()">HIRE</button></div></header>
+<div class="hero"><div>
+<h1>NIGHT RACING with <span>real arcade physics.</span></h1>
+<p>I'm Kai — gameplay dev. Drift, grip, boost, slipstream. This Harbor GP demo runs a pseudo-3D road renderer + bicycle-ish car model in vanilla canvas. Steer with arrows, drift corners, beat your best lap.</p>
+<div class="kpis"><div>🏁 best lap <b id="kBest">—</b></div><div>⚡ top speed 248 km/h</div><div>⭐ 5.0 · 38 reviews</div></div>
+</div>
+<div class="fcard"><div style="font-size:30px">🎮</div><h3>Controls</h3><p><b>← →</b> steer · <b>↑ / W</b> throttle · <b>↓ / S</b> brake · <b>Space</b> handbrake-drift · <b>R</b> reset. Grab <b>⚡</b> boosts on the road.</p></div></div>
+<div class="gsec" id="race"><div class="gbox">
+<div class="hud"><div>⏱ <span id="hLap">0.0</span>s</div><div>🏁 lap <span id="hNLap">1</span>/3</div><div>⚡ <span id="hSpd">0</span> km/h</div><div class="r">POS P1 · Harbor Loop</div></div>
+<canvas id="cv" width="900" height="380"></canvas>
+<div class="count" id="count">3</div>
+<div class="ctl"><button id="bL">◀</button><button id="bR">▶</button><button id="bG">▲</button><button id="bB">▼</button><button class="go" onclick="race()">↻ Restart race</button><small>drift: hold Space in a turn · <span id="driftTag">grip: 100%</span></small></div>
+</div>
+<div class="tune" id="tune">
+<div class="tcard"><b>🏎️ Grip — <span id="vGrip">70</span>%</b><input type="range" id="rGrip" min="30" max="100" value="70" oninput="T.grip=this.value/100;document.getElementById('vGrip').textContent=this.value"><br>Slide vs stick. Low = drift king.</div>
+<div class="tcard"><b>⚡ Boost power — <span id="vBoost">140</span>%</b><input type="range" id="rBoost" min="100" max="200" value="140" oninput="T.boost=this.value/100;document.getElementById('vBoost').textContent=this.value"><br>Pickup strength on ⚡ pads.</div>
+<div class="tcard"><b>🌧️ Rain — <span id="vRain">0</span>%</b><input type="range" id="rRain" min="0" max="80" value="0" oninput="T.rain=this.value/100;document.getElementById('vRain').textContent=this.value"><br>Less grip, more glory.</div>
+</div>
+<div class="school">
+<div class="tip"><b>🎓 Lesson 1 — brake before, not in</b>Enter turns at 60% throttle, apex, then full send. Braking mid-corner kills your lap by ~1.5s.</div>
+<div class="tip"><b>🎓 Lesson 2 — drift the hairpin</b>Tap Space + steer at the S-curves. A clean drift keeps 80% speed vs 45% gripping.</div>
+<div class="tip"><b>🎓 Lesson 3 — boost on straights</b>⚡ pads fire you +40% — but only useful on straights. Save the dock-straight pad for the final lap.</div>
+</div>
+<div class="patch"><span class="v">v1.3</span><b>patch notes:</b> rain physics added 🌧️ · boost rebalanced (+40%) · touch controls for mobile · leaderboard persists · <b>next:</b> ghost car of your best lap 👻</div>
+<div class="feat">
+<div class="fcard"><div style="font-size:28px">🌉</div><h3>Harbor Loop (this demo)</h3><p>Night docks, neon barriers, 3 boost pads. Best line: late apex, drift turn 2. Your best lap saves below.</p></div>
+<div class="fcard"><div style="font-size:28px">🏆</div><h3>Local leaderboard</h3><p id="board">No laps yet — finish 3 laps and your name goes here (saved in this browser).</p></div>
+<div class="fcard"><div style="font-size:28px">🛠️</div><h3>Client builds</h3><p>Arcade prototype <b>$1,200+</b> · full mobile racer <b>$3,500+</b> · drift tuning pass on your project <b>$400</b>.</p></div>
+</div>
+<div class="feat">
+<div class="fcard"><div style="font-size:28px">🔬</div><h3>Physics kept honest</h3><p>Speed-sensitive steering, lateral slide, handbrake lock, off-track drag, boost impulse. Tune it live above — feel the difference instantly.</p></div>
+<div class="fcard"><div style="font-size:28px">🧩</div><h3>Freelance builds</h3><p>Arcade racer prototype from <b>$1,200</b> (2–3 wks). Unity / Godot / HTML5. Mobile tilt + touch included.</p></div>
+<div class="fcard"><div style="font-size:28px">⭐</div><h3>Reviews</h3><p>"Kai's drift feel is better than our last contractor's Unity build." — racing studio · "Kids playtested 2h straight." — client</p></div>
+</div>
+<div class="svc" id="hire"><div style="flex:1;min-width:220px"><h2>Want this feel in your game?</h2><p>📧 kai@harborgp.dev · 💵 $34/hr · ⏱ replies in ~5h</p></div><button class="sbtn" style="padding:14px 36px;font-size:15px" onclick="hire()">Start my racer →</button></div>
+</div>
+<footer>© 2026 Kai Tanaka · kai@harborgp.dev · arrows + space to drive</footer>
+<div id="toast"></div>
 <script>
-addEventListener('load',()=>setTimeout(()=>loader.classList.add('done'),1200));
-setTimeout(()=>loader.classList.add('done'),2600);
-const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
-const W=cv.width,H=cv.height,keys={};
-addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true;if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(e.key.toLowerCase()))e.preventDefault();});
-addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
-const CX=W/2,CY=H/2,RX=340,RY=140;
-const car={x:CX+RX,y:CY,a:-Math.PI/2,vx:0,vy:0,spd:0};
-let run=false,t0=0,elapsed=0,lap=1,cp=0,driftM=0,marks=[],laps=[],best=+localStorage.getItem('td_best')||0;
-if(best){hBest.textContent=best.toFixed(2)+'s';specBest.textContent=best.toFixed(2)+'s';bBest2.textContent=best.toFixed(2)+'s';}
-const cps=[0,Math.PI/2,Math.PI,-Math.PI/2];
-function trackPoint(a,w){return{x:CX+Math.cos(a)*RX*w,y:CY+Math.sin(a)*RY*w};}
-function onTrack(x,y){const dx=(x-CX)/RX,dy=(y-CY)/RY;const d=dx*dx+dy*dy;return d>0.55&&d<1.35;}
-function startGame(){msg.classList.add('hide');Object.assign(car,{x:CX+RX,y:CY,a:-Math.PI/2,vx:0,vy:0,spd:0});run=true;lap=1;cp=0;elapsed=0;driftM=0;marks=[];laps=[];renderLaps();t0=performance.now();loop();}
-function angOf(x,y){return Math.atan2((y-CY)/RY,(x-CX)/RX);}
-function near(a,b){let d=Math.abs(a-b)%(Math.PI*2);return Math.min(d,Math.PI*2-d)<0.35;}
-function renderLaps(){lapBoard.innerHTML=laps.length?laps.map((l,i)=>`<tr><td>Lap ${i+1}</td><td>${l.t.toFixed(2)}s</td><td>${l.top} km/h</td></tr>`).join(''):'<tr><td colspan="3" style="opacity:.6">Racing”¦ hit all 4 checkpoints.</td></tr>';if(laps.length){bLap.textContent=laps[laps.length-1].t.toFixed(2)+'s';}}
-let top=0,lapStart=0;
-function loop(){if(!run)return;requestAnimationFrame(loop);
-const up=keys['w']||keys['arrowup'],dn=keys['s']||keys['arrowdown'],lf=keys['a']||keys['arrowleft'],rt=keys['d']||keys['arrowright'],hb=keys[' '];
-const acc=up?0.28:0,brk=dn?0.32:0;
-const fx=Math.cos(car.a),fy=Math.sin(car.a);
-const sf=Math.min(Math.abs(car.spd)/4,1);
-if(lf)car.a-=0.045*sf-(hb?0.02:0);
-if(rt)car.a+=0.045*sf+(hb?0.02:0);
-car.vx+=fx*acc;car.vy+=fy*acc;
-car.vx*=(dn?0.96:0.992);car.vy*=(dn?0.96:0.992);
-const sp=Math.hypot(car.vx,car.vy);
-const grip=hb?0.06:0.16;
-const tx=fx*sp,ty=fy*sp;
-car.vx+=(tx-car.vx)*grip;car.vy+=(ty-car.vy)*grip;
-car.x+=car.vx;car.y+=car.vy;
-car.spd=sp;top=Math.max(top,sp*38);
-const kmh=Math.round(sp*38);
-const off=!onTrack(car.x,car.y);
-if(off){car.vx*=0.94;car.vy*=0.94;}
-const lat=Math.abs(-Math.sin(car.a)*car.vx+Math.cos(car.a)*car.vy);
-const drifting=lat>1.4&&sp>2;
-if(drifting){driftM+=sp*0.12;marks.push({x:car.x,y:car.y,a:car.a,l:50});}
-marks=marks.filter(m=>m.l-->0);
-const ca=angOf(car.x,car.y);
-if(near(ca,cps[cp])){cp++;if(cp>=4){cp=0;const lt=(performance.now()-t0-lapStartTotal())/1000;laps.push({t:lt,top:Math.round(top)});top=0;lapStart=performance.now();renderLaps();if(lap>=3){finish();return;}lap++;}}
-elapsed=(performance.now()-t0)/1000;
-hTime.textContent=elapsed.toFixed(2);hLap.textContent=Math.min(lap,3);hDrift.textContent=Math.floor(driftM);hSpeed.textContent=kmh;
-bSpeed.textContent=kmh+' km/h';bDrift.textContent=Math.floor(driftM)+' m';specTop.textContent=kmh+' km/h';
-ctx.clearRect(0,0,W,H);
-ctx.fillStyle='#0a0d20';ctx.fillRect(0,0,W,H);
-ctx.fillStyle='#ff2fb322';
-for(let i=0;i<50;i++){const gx=(i*173)%W,gy=(i*97)%H;ctx.fillRect(gx,gy,2,2);}
-ctx.lineWidth=64;ctx.strokeStyle='#1a1440';ctx.beginPath();ctx.ellipse(CX,CY,RX,RY,0,0,7);ctx.stroke();
-ctx.lineWidth=56;ctx.strokeStyle='#2c2560';ctx.beginPath();ctx.ellipse(CX,CY,RX,RY,0,0,7);ctx.stroke();
-ctx.lineWidth=3;ctx.strokeStyle='#ff2fb388';ctx.setLineDash([18,14]);ctx.beginPath();ctx.ellipse(CX,CY,RX,RY,0,0,7);ctx.stroke();ctx.setLineDash([]);
-const s=trackPoint(-Math.PI/2,1);ctx.fillStyle='#fff';for(let i=0;i<6;i++)ctx.fillRect(s.x-20+i*7,s.y-28,(i%2?4:2),10);
-cps.forEach((a,i)=>{const p=trackPoint(a,1);ctx.fillStyle=i===cp?'#22d3ee':'#ffffff22';ctx.shadowColor=i===cp?'#22d3ee':'transparent';ctx.shadowBlur=i===cp?14:0;ctx.beginPath();ctx.arc(p.x,p.y,8,0,7);ctx.fill();ctx.shadowBlur=0;});
-for(const m of marks){ctx.save();ctx.translate(m.x,m.y);ctx.rotate(m.a);ctx.fillStyle=`rgba(255,47,179,${m.l/90})`;ctx.fillRect(-8,-9,14,3);ctx.fillRect(-8,7,14,3);ctx.restore();}
-ctx.save();ctx.translate(car.x,car.y);ctx.rotate(car.a);
-ctx.shadowColor=drifting?'#22d3ee':'#ff2fb3';ctx.shadowBlur=18;
-ctx.fillStyle=drifting?'#22d3ee':'#ff2fb3';
-roundRect(-16,-9,32,18,5);ctx.fill();
-ctx.shadowBlur=0;ctx.fillStyle='#0b0e18';ctx.fillRect(2,-6,7,12);
-ctx.fillStyle='#fff';ctx.fillRect(-14,-6,4,3);ctx.fillRect(-14,3,4,3);
-ctx.restore();
-if(drifting){ctx.font='italic 14px Verdana';ctx.fillStyle='#22d3ee';ctx.fillText('ðŸ’¨ DRIFT',car.x+20,car.y-18);}
+setTimeout(()=>document.getElementById('loader').classList.add('done'),1100);
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2300);}
+function hire(){toast('Race brief → kai@harborgp.dev 🏁');}
+/* ===== PSEUDO-3D RACER + ARCADE PHYSICS (preserved) ===== */
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+const T={grip:.7,boost:1.4,rain:0};
+let seg=80,roadW=140,dist=0,speed=0,maxS=8.2,px=0,slide=0,lap=1,lapT=0,raceOn=false,state='idle';
+let best=+(localStorage.getItem('gpBest')||0);
+if(best)document.getElementById('kBest').textContent=best.toFixed(1)+'s';
+const keys={};
+const boosts=[];for(let i=0;i<6;i++)boosts.push({d:i*1400+700,got:false});
+function curveAt(d){return Math.sin(d*.004)*1.6+Math.sin(d*.0013+2)*2.2;}
+function race(){dist=0;speed=0;px=0;slide=0;lap=1;lapT=0;boosts.forEach((b,i)=>{b.d=i*1400+700;b.got=false;});state='count';raceOn=false;
+const c=document.getElementById('count');let n=3;c.textContent=n;c.classList.remove('pop');void c.offsetWidth;c.classList.add('pop');
+const iv=setInterval(()=>{n--;if(n>0){c.textContent=n;c.classList.remove('pop');void c.offsetWidth;c.classList.add('pop');}else if(n===0){c.textContent='GO!';c.classList.remove('pop');void c.offsetWidth;c.classList.add('pop');state='run';raceOn=true;}else{clearInterval(iv);}},850);
+toast('🏁 Lap 1/3 — GO on green!');}
+function loop(){requestAnimationFrame(loop);
+let g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0d0a2e');g.addColorStop(.55,'#2b1245');g.addColorStop(.551,'#131032');g.addColorStop(1,'#0d0a1a');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ctx.fillStyle='#ffd166';ctx.beginPath();ctx.arc(700,70,26,0,7);ctx.fill();
+ctx.fillStyle='#ff2fb322';for(let i=0;i<26;i++){let bx=(i*211)%W,by=(i*89)%150;ctx.fillRect(bx,by,3,3);}
+let horizon=H*.52;
+ctx.fillStyle='#161130';ctx.fillRect(0,horizon,W,H-horizon);
+for(let r=0;r<40;r++){let z=r/40,pY=horizon+Math.pow(z,2.1)*(H-horizon),prevY=horizon+Math.pow((r-1)/40,2.1)*(H-horizon);
+let worldD=dist+r*seg,c=curveAt(worldD),off=(c-curveAt(dist))*roadW*1.4 - px*z*1.2;
+let rw=roadW*(0.25+z*1.6),cx=W/2+off*z*2;
+let grass=(Math.floor(worldD/seg)%2)?'#141b3a':'#10152e';ctx.fillStyle=grass;ctx.fillRect(0,prevY,W,pY-prevY+1);
+ctx.fillStyle=(Math.floor(worldD/seg)%2)?'#3a3f5e':'#343a55';ctx.fillRect(cx-rw-14*z,pY,rw*2+28*z,pY-prevY+1);
+ctx.fillStyle=(Math.floor(worldD/seg)%2)?'#232a45':'#20263f';ctx.fillRect(cx-rw,pY,rw*2,pY-prevY+1);
+if(Math.floor(worldD/(seg*2))%2===0){ctx.fillStyle=z>.5?'#ff2fb3':'#ff2fb377';let lw=6*z+1;ctx.fillRect(cx-rw,pY,lw,pY-prevY+1);ctx.fillRect(cx+rw-lw,pY,lw,pY-prevY+1);}
+if(r%4===0){ctx.fillStyle='#efeaffaa';let dw=10*z+2;ctx.fillRect(cx-dw/2,pY,dw,Math.max(1,(pY-prevY)/2));}
+boosts.forEach(b=>{let rel=((b.d-dist)%(40*seg)+(40*seg))%(40*seg);let br=Math.floor(rel/seg);if(br===r&&!b.got){ctx.font=Math.floor(10+z*22)+'px serif';ctx.fillText('⚡',cx-10,pY-4);}});}
+let carY=H-86,carX=W/2+px*40+slide*30;
+if(Math.abs(slide)>.5){ctx.fillStyle='#ffffff33';for(let i=0;i<8;i++)ctx.fillRect(carX-24+Math.random()*48,carY+52+Math.random()*10,5,3);}
+ctx.fillStyle='#000a';ctx.beginPath();ctx.ellipse(carX,carY+58,52,10,0,0,7);ctx.fill();
+ctx.fillStyle='#7c3aed';ctx.fillRect(carX-46,carY+18,92,32);
+ctx.fillStyle='#ff2fb3';ctx.fillRect(carX-46,carY+40,92,10);
+ctx.fillStyle='#0d0a1a';ctx.fillRect(carX-30,carY+4,60,20);
+ctx.fillStyle='#22d3ee88';ctx.fillRect(carX-26,carY+6,52,14);
+ctx.fillStyle='#ffd166';ctx.fillRect(carX-44,carY+22,8,8);ctx.fillRect(carX+36,carY+22,8,8);
+ctx.fillStyle='#ff3131';ctx.fillRect(carX-44,carY+42,10,6);ctx.fillRect(carX+34,carY+42,10,6);
+if(T.rain>0){ctx.strokeStyle='#22d3ee44';ctx.beginPath();for(let i=0;i<40;i++){let rx=(i*167+Date.now()*.4)%W;ctx.moveTo(rx,(i*311+Date.now()*.9)%H);ctx.lineTo(rx-6,(i*311+Date.now()*.9)%H+14);}ctx.stroke();}
+if(state==='run'){
+let grip=T.grip*(1-T.rain*.5);
+let steer=(keys.r?1:0)-(keys.l?1:0);
+let sf=Math.max(.35,1-speed/maxS*.6);
+px+=steer*sf*.028*(0.5+speed/maxS);slide+=(steer*speed*.004-slide)*grip;
+if(keys.up)speed=Math.min(maxS,speed+.09);else if(keys.dn)speed=Math.max(0,speed-.16);else speed=Math.max(0,speed-.025);
+if(keys.hb){speed=Math.max(1.5,speed-.06);slide+=(steer*.09-slide*.2);grip*=.9;}
+if(Math.abs(px)>1){speed=Math.max(1.2,speed-.05);}
+px-=curveAt(dist)*speed*.0016;px-=slide*.02;
+px=Math.max(-1.6,Math.min(1.6,px));slide*=.97;
+dist+=speed*seg/10;lapT+=1/60;
+boosts.forEach(b=>{if(!b.got&&Math.abs(dist-b.d)<60&&Math.abs(px)<.7){b.got=true;speed=Math.min(maxS*1.25,speed+2.2*T.boost);toast('⚡ BOOST!');}});
+let lapLen=40*seg*8;
+if(dist>=lapLen*lap){if(lap>=3){state='done';raceOn=false;const tot=lapT;let hist=[];try{hist=JSON.parse(localStorage.getItem('gpHist')||'[]');}catch(_){hist=[];}hist.push(tot);hist=hist.sort((a,b)=>a-b).slice(0,5);localStorage.setItem('gpHist',JSON.stringify(hist));if(!best||tot<best){best=tot;localStorage.setItem('gpBest',best);document.getElementById('kBest').textContent=best.toFixed(1)+'s';}renderBoard(hist);toast('🏆 Finished! '+tot.toFixed(1)+'s — R to retry');}else{lap++;toast('🏁 Lap '+lap+'/3');}}
+document.getElementById('hLap').textContent=lapT.toFixed(1);
+document.getElementById('hNLap').textContent=Math.min(lap,3);
+document.getElementById('hSpd').textContent=Math.round(speed/maxS*248);
+document.getElementById('driftTag').textContent='grip: '+Math.round(grip*100)+'%'+(Math.abs(slide)>1?' · DRIFT!':'');
+}else{document.getElementById('hSpd').textContent=Math.round(speed/maxS*248);}
 }
-function lapStartTotal(){return laps.reduce((a,l)=>a+l.t*1000,0);}
-function roundRect(x,y,w,h,r){ctx.beginPath();ctx.roundRect?ctx.roundRect(x,y,w,h,r):ctx.rect(x,y,w,h);}
-function finish(){run=false;const total=elapsed;if(!best||total<best){best=total;localStorage.setItem('td_best',best);}hBest.textContent=best.toFixed(2)+'s';bBest2.textContent=best.toFixed(2)+'s';specBest.textContent=best.toFixed(2)+'s';msg.innerHTML=`<div style="font-size:46px">ðŸ†</div><h2 style="font-size:30px;font-style:italic">PODIUM · P1</h2><p>Total ${total.toFixed(2)}s · Drift ${Math.floor(driftM)}m · Best ${best.toFixed(2)}s</p><button id="startBtn" onclick="startGame()">â†» BACK TO GRID</button>`;msg.classList.remove('hide');}
-(function idle(){if(run)return;requestAnimationFrame(idle);ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0d20';ctx.fillRect(0,0,W,H);ctx.lineWidth=64;ctx.strokeStyle='#1a1440';ctx.beginPath();ctx.ellipse(CX,CY,RX,RY,0,0,7);ctx.stroke();ctx.lineWidth=56;ctx.strokeStyle='#2c2560';ctx.beginPath();ctx.ellipse(CX,CY,RX,RY,0,0,7);ctx.stroke();ctx.save();ctx.translate(CX+RX,CY);ctx.rotate(-Math.PI/2+Math.sin(Date.now()/900)*0.2);ctx.fillStyle='#ff2fb3';roundRect(-16,-9,32,18,5);ctx.fill();ctx.restore();})();
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}}),{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-function openSign(){signin.classList.add('open');}function closeSign(){signin.classList.remove('open');}
+document.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' '].includes(e.key))e.preventDefault();if(e.key==='ArrowLeft'||e.key==='a')keys.l=true;if(e.key==='ArrowRight'||e.key==='d')keys.r=true;if(e.key==='ArrowUp'||e.key==='w')keys.up=true;if(e.key==='ArrowDown'||e.key==='s')keys.dn=true;if(e.key===' ')keys.hb=true;if(e.key==='r'||e.key==='R')race();});
+document.addEventListener('keyup',e=>{if(['ArrowLeft','a'].includes(e.key))keys.l=false;if(['ArrowRight','d'].includes(e.key))keys.r=false;if(['ArrowUp','w'].includes(e.key))keys.up=false;if(['ArrowDown','s'].includes(e.key))keys.dn=false;if(e.key===' ')keys.hb=false;});
+function bind(id,k){const b=document.getElementById(id);b.addEventListener('pointerdown',e=>{e.preventDefault();keys[k]=true;});['pointerup','pointerleave'].forEach(ev=>b.addEventListener(ev,()=>keys[k]=false));}
+function renderBoard(hist){hist=hist||[];try{hist=JSON.parse(localStorage.getItem('gpHist')||'[]');}catch(_){}const el=document.getElementById('board');if(!el)return;el.innerHTML=hist.length?hist.map((t,i)=>'<b>'+(i+1)+'.</b> '+t.toFixed(1)+'s'+(i===0?' 🥇':'')).join('<br>'):'No laps yet — finish 3 laps and your name goes here (saved in this browser).';}
+renderBoard();
+bind('bL','l');bind('bR','r');bind('bG','up');bind('bB','dn');
+race();loop();
+document.addEventListener('DOMContentLoaded',()=>document.getElementById('loader').classList.add('done'));
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
-<style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
-
-  <script src="../api-runtime.js"></script>
 </body>
 </html>

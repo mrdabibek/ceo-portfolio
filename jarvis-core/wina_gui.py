@@ -216,22 +216,6 @@ class WinaApp(ctk.CTk):
         self.provider_menu.set(self.provider)
         self.provider_menu.pack(fill="x", padx=14)
 
-        ctk.CTkLabel(side, text="Telegram", font=("", 13, "bold"),
-                     text_color=TEXT_DIM).pack(pady=(14, 6), padx=14, anchor="w")
-        self.tg_contact = ctk.CTkEntry(side, placeholder_text="Kontakt",
-                                       fg_color=BG, border_color="#2A2F3A", corner_radius=12)
-        self.tg_contact.pack(fill="x", padx=14, pady=(0, 6))
-        self.tg_contact.insert(0, getattr(agent_core, "DEFAULT_CONTACT", "Fazliddin"))
-        self.tg_msg = ctk.CTkEntry(side, placeholder_text="Xabar",
-                                   fg_color=BG, border_color="#2A2F3A", corner_radius=12)
-        self.tg_msg.pack(fill="x", padx=14, pady=(0, 6))
-        ctk.CTkButton(side, text="Telegram Yuborish", corner_radius=12,
-                      fg_color=ACCENT, hover_color=ACCENT_HOVER,
-                      command=self.on_telegram).pack(fill="x", padx=14, pady=(0, 6))
-        ctk.CTkButton(side, text="📷 Screenshot", corner_radius=12,
-                      fg_color="#2A2F3A",
-                      command=self.on_screenshot).pack(fill="x", padx=14, pady=(0, 6))
-
     # --- chat bubbles --------------------------------------------------------
     def add_message(self, who: str, text: str, kind: str = "wina") -> None:
         text = (text or "").strip() or "(bo'sh)"
@@ -414,33 +398,7 @@ class WinaApp(ctk.CTk):
     def on_daemon_stop(self) -> None:
         threading.Thread(target=self._daemon_cmd, args=("stop",), daemon=True).start()
 
-    # --- telegram -----------------------------------------------------------------
-    def on_telegram(self) -> None:
-        contact = self.tg_contact.get().strip()
-        message = self.tg_msg.get().strip()
-        if not contact or not message:
-            self.add_message("wina", "Kontakt va xabarni kiriting.", kind="error")
-            return
-        self.add_message("user", f"Telegram → {contact}: {message}")
-        self.ui_queue.put(("status", "telegram yuborilmoqda..."))
-        threading.Thread(target=self._run_telegram,
-                         args=(contact, message), daemon=True).start()
-
-    def _run_telegram(self, contact: str, message: str) -> None:
-        try:
-            res = agent_core.run_telegram_scenario(contact, message)
-            if res.ok:
-                self.ui_queue.put(("wina", f"✅ Telegram: '{contact}' ga yuborildi "
-                                           f"({res.steps_passed}/{res.steps_total}, "
-                                           f"{res.duration_s:.1f}s)"))
-            else:
-                self.ui_queue.put(("error", f"❌ Telegram: {res.error or 'muvaffaqiyatsiz'}"))
-        except Exception as exc:
-            self.ui_queue.put(("error", f"Telegram xatosi: {type(exc).__name__}: {exc}"))
-        finally:
-            self.ui_queue.put(("status", "tayyor"))
-
-    # --- provider / screenshot ------------------------------------------------------
+    # --- provider ---------------------------------------------------------------
     def on_provider(self, value: str) -> None:
         value = (value or "").strip().lower()
         if value not in PROVIDERS:
@@ -448,19 +406,6 @@ class WinaApp(ctk.CTk):
         self.provider = value
         os.environ["WINA_DEFAULT_PROVIDER"] = value
         self.add_message("wina", f"Provayder: {value}")
-
-    def on_screenshot(self) -> None:
-        self.ui_queue.put(("status", "screenshot..."))
-        threading.Thread(target=self._take_shot, daemon=True).start()
-
-    def _take_shot(self) -> None:
-        try:
-            path = agent_core.TOOLS.take_screenshot()
-            self.ui_queue.put(("wina", f"📷 Screenshot: {path}"))
-        except Exception as exc:
-            self.ui_queue.put(("error", f"Screenshot xatosi: {type(exc).__name__}: {exc}"))
-        finally:
-            self.ui_queue.put(("status", "tayyor"))
 
 
 def ask_lock(app: ctk.CTk) -> bool:

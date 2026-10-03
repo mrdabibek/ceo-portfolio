@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import sys
 import re
 import urllib.error
 import urllib.request
@@ -110,18 +111,29 @@ HARD RULES (violating any of these invalidates the whole plan):
 """
 
 
+def _app_dirs() -> list[Path]:
+    """Candidate dirs for .env/config: source tree first, then frozen exe dir."""
+    dirs = [Path(__file__).resolve().parent]
+    if getattr(sys, "frozen", False):
+        exe_dir = Path(sys.executable).resolve().parent
+        if exe_dir not in dirs:
+            dirs.append(exe_dir)
+    return dirs
+
+
 def load_env() -> dict[str, str]:
-    """Load sibling .env (same dir as this file) into os.environ. Returns loaded mapping."""
-    env_path = Path(__file__).resolve().parent / ".env"
+    """Load sibling .env (same dir as this file, or next to frozen exe)."""
     loaded: dict[str, str] = {}
-    try:
-        text = env_path.read_text(encoding="utf-8")
-    except FileNotFoundError:
-        log.debug("wina.brain: no .env at %s", env_path)
-        return loaded
-    except OSError as exc:
-        log.warning("wina.brain: cannot read .env %s: %s", env_path, exc)
-        return loaded
+    for base in _app_dirs():
+        env_path = base / ".env"
+        try:
+            text = env_path.read_text(encoding="utf-8")
+        except FileNotFoundError:
+            log.debug("wina.brain: no .env at %s", env_path)
+            continue
+        except OSError as exc:
+            log.warning("wina.brain: cannot read .env %s: %s", env_path, exc)
+            continue
     for lineno, raw in enumerate(text.splitlines(), 1):
         line = raw.strip()
         if not line or line.startswith("#"):
@@ -382,7 +394,7 @@ def _validate_plan(obj: object) -> list[dict]:
     return plan
 
 
-def plan_task(task: str) -> list[dict]:
+def plan_task(task: str, provider: str | None = None) -> list[dict]:
     """Convert natural-language task into validated AAP plan. Retries once on parse error."""
     if not isinstance(task, str) or not task.strip():
         raise ValueError("task must be a non-empty string")
@@ -392,7 +404,7 @@ def plan_task(task: str) -> list[dict]:
     for attempt in (1, 2):
         try:
             if attempt == 1:
-                raw = chat(prompt, system=_PLANNER_SYSTEM, timeout=60)
+                raw = chat(prompt, system=_PLANNER_SYSTEM, timeout=60, provider=provider)
             else:
                 fix = (
                     "Your previous response was NOT valid. "
@@ -402,7 +414,7 @@ def plan_task(task: str) -> list[dict]:
                     "Every step needs integer 'id', non-empty 'description', "
                     "'primitive' from the allowed set. No prose."
                 )
-                raw = chat(fix, system=_PLANNER_SYSTEM, timeout=60)
+                raw = chat(fix, system=_PLANNER_SYSTEM, timeout=60, provider=provider)
             plan = _validate_plan(_extract_json(raw))
             log.info("wina.brain: planned %d steps for task %r", len(plan), task[:60])
             return plan

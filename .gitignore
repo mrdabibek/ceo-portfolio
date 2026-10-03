@@ -28,3 +28,9 @@ bot_config.json
 *.exe
 *.pdb
 
+
+# Build artifacts
+build/
+dist/
+*.spec
+salom.txt

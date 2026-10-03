@@ -4,588 +4,686 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ember — Concierge Chatbots by Noah Finn</title>
+<meta name="description" content="Ember concierge chatbots: RAG oracles, sales closers, voice receptionists. Live demo — ask Ember about pricing, Telegram or booking.">
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box
-}
-:root{
-  --bg:#faf3e8;
-  --ink:#2d1f14;
-  --ember:#e8590c;
-  --gold:#fab005;
-  --card:#fffdf7;
-  --mut:#8a7a64
-}
-body{
-  font-family:'Sora','Outfit',Verdana,sans-serif;
-  background:var(--bg);
-  color:var(--ink);
-  overflow-x:hidden
-}
-::selection{
-  background:var(--ember);
-  color:#fff
-}
-/* niche loader: hearth */
-#loader{
-  position:fixed;
-  inset:0;
-  background:#1c1008;
-  z-index:200;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  align-items:center;
-  justify-content:center;
-  transition:.5s
-}
-#loader.off{
-  opacity:0;
-  visibility:hidden
-}
-#loader .fire{
-  font-size:52px;
-  animation:flick .5s infinite alternate
-}
-@keyframes flick{
-  from{
-  transform:scale(1) rotate(-3deg)
-}
-to{
-  transform:scale(1.14) rotate(3deg)
-}
-}
-#loader .track{
-  width:150px;
-  height:4px;
-  background:#ffffff1c;
-  border-radius:99px;
-  overflow:hidden
-}
-#loader .track i{
-  display:block;
-  height:100%;
-  background:linear-gradient(90deg,var(--ember),var(--gold));
-  animation:ld 1.1s forwards
-}
-@keyframes ld{
-  from{
-  width:0
-}
-to{
-  width:100%
-}
-}
-#loader small{
-  letter-spacing:3px;
-  color:#c9a87f;
-  font-size:11px
-}
-nav{
-  position:sticky;
-  top:0;
-  z-index:60;
-  background:#faf3e8ee;
-  backdrop-filter:blur(12px);
-  border-bottom:2px solid var(--ink)
-}
-.nin{
-  max-width:1160px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  gap:16px;
-  padding:14px 20px;
-  font-size:13.5px
-}
-.nin b{
-  font-size:19px
-}
-.nin b span{
-  color:var(--ember)
-}
-.nin a{
-  color:var(--ink);
-  text-decoration:none;
-  opacity:.7
-}
-.nin a:hover{
-  opacity:1
-}
-.nin .sp{
-  flex:1
-}
-.btn{
-  background:var(--ink);
-  color:#fff;
-  border:0;
-  padding:11px 24px;
-  font-weight:800;
-  cursor:pointer;
-  font-family:inherit;
-  font-size:13.5px;
-  border-radius:99px
-}
-.btn:hover{
-  background:var(--ember)
-}
-.btn.fire{
-  background:linear-gradient(135deg,var(--ember),#f76707 60%,var(--gold));
-  border:0
-}
-.hero{
-  max-width:1160px;
-  margin:auto;
-  padding:52px 20px 10px;
-  display:grid;
-  grid-template-columns:.95fr 1.05fr;
-  gap:32px;
-  align-items:start
-}
-.kicker{
-  display:inline-block;
-  border:2px solid var(--ink);
-  padding:7px 16px;
-  border-radius:99px;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:1px;
-  background:var(--gold)
-}
-h1{
-  font-size:clamp(34px,5vw,60px);
-  line-height:1.03;
-  margin:14px 0 10px;
-  letter-spacing:-1px
-}
-h1 em{
-  color:var(--ember);
-  font-style:normal
-}
-.hero p{
-  color:var(--mut);
-  font-size:15px;
-  line-height:1.65
-}
-.ticks{
-  display:flex;
-  gap:10px;
-  margin-top:16px;
-  flex-wrap:wrap;
-  font-size:12.5px
-}
-.ticks span{
-  background:var(--card);
-  border:1.5px solid var(--ink);
-  padding:8px 15px;
-  border-radius:99px;
-  font-weight:700
-}
-/* chat */
-.shell{
-  background:var(--ink);
-  border-radius:26px;
-  padding:14px;
-  box-shadow:10px 10px 0 #e8590c33
-}
-.phone{
-  background:var(--card);
-  border-radius:18px;
-  overflow:hidden
-}
-.chead{
-  background:linear-gradient(135deg,#2d1f14,#5a2c0d);
-  color:#fff;
-  padding:16px 18px;
-  display:flex;
-  gap:12px;
-  align-items:center
-}
-.ava{
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--ember),var(--gold));
-  display:grid;
-  place-items:center;
-  font-size:24px;
-  border:2px solid #ffffff44
-}
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#51cf66;
-  display:inline-block;
-  margin-right:6px;
-  box-shadow:0 0 8px #51cf66
-}
-#chat{
-  height:340px;
-  overflow:auto;
-  padding:18px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  background:radial-gradient(circle at 80% 10%,#fab00514,transparent),var(--card)
-}
-.msg{
-  max-width:82%;
-  padding:12px 16px;
-  border-radius:16px;
-  font-size:13.5px;
-  line-height:1.55
-}
-.msg.bot{
-  background:#f1e8d5;
-  border-bottom-left-radius:4px;
-  align-self:flex-start;
-  border:1px solid #e0d3b8
-}
-.msg.user{
-  background:var(--ink);
-  color:#fff;
-  border-bottom-right-radius:4px;
-  align-self:flex-end
-}
-.msg.typing i{
-  display:inline-block;
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--ember);
-  margin:0 2px;
-  animation:tp 1s infinite
-}
-.msg.typing i:nth-child(2){
-  animation-delay:.15s
-}
-.msg.typing i:nth-child(3){
-  animation-delay:.3s
-}
-@keyframes tp{
-  40%{
-  transform:translateY(-5px)
-}
-}
-.quick{
-  display:flex;
-  gap:8px;
-  padding:0 18px 10px;
-  flex-wrap:wrap;
-  background:var(--card)
-}
-.quick button{
-  background:#fff;
-  border:1.5px solid var(--ink);
-  padding:8px 15px;
-  border-radius:99px;
-  font-family:inherit;
-  font-size:12px;
-  font-weight:700;
-  cursor:pointer
-}
-.quick button:hover{
-  background:var(--ink);
-  color:#fff
-}
-.cin{
-  display:flex;
-  gap:8px;
-  padding:14px 16px;
-  background:var(--card);
-  border-top:1.5px solid #e0d3b8
-}
-.cin input{
-  flex:1;
-  border:1.5px solid var(--ink);
-  border-radius:99px;
-  padding:12px 18px;
-  outline:0;
-  font-family:inherit;
-  font-size:13.5px
-}
-.cin button{
-  border-radius:50%;
-  width:46px;
-  height:46px;
-  border:0;
-  cursor:pointer;
-  font-size:18px
-}
-#sendBtn{
-  background:var(--ember);
-  color:#fff
-}
-#micBtn{
-  background:var(--ink);
-  color:#fff
-}
-#micBtn.live{
-  background:#fa5252;
-  animation:flick .4s infinite alternate
-}
-section{
-  max-width:1160px;
-  margin:auto;
-  padding:34px 20px
-}
-main{
-  max-width:1160px;
-  margin:auto
-}
-h2{
-  font-size:clamp(24px,3.2vw,34px);
-  letter-spacing:-.5px
-}
-.sub{
-  color:var(--mut);
-  font-size:14px;
-  margin:8px 0 20px
-}
-.cards3{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:14px
-}
-.cards3 div{
-  background:var(--card);
-  border:2px solid var(--ink);
-  border-radius:18px;
-  padding:24px 20px;
-  box-shadow:5px 5px 0 var(--ink)
-}
-.cards3 .ic{
-  font-size:32px
-}
-.steps{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:12px
-}
-.steps div{
-  background:var(--ink);
-  color:#fff;
-  border-radius:16px;
-  padding:24px 20px;
-  font-size:13.5px
-}
-.steps b{
-  color:var(--gold)
-}
-.demo{
-  font-size:12.5px;
-  color:var(--mut);
-  margin-top:10px;
-  text-align:center
-}
-.prices{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:14px
-}
-.prices>div{
-  background:var(--card);
-  border:2px solid var(--ink);
-  border-radius:18px;
-  padding:30px 26px;
-  text-align:center
-}
-.prices .hot{
-  background:var(--ink);
-  color:#fff
-}
-.amount{
-  font-size:36px;
-  font-weight:900;
-  margin:10px 0
-}
-#toast{
-  position:fixed;
-  bottom:24px;
-  left:50%;
-  transform:translateX(-50%) translateY(80px);
-  background:var(--ink);
-  color:#fff;
-  padding:12px 26px;
-  border-radius:99px;
-  font-size:13px;
-  z-index:200;
-  transition:.3s
-}
-#toast.show{
-  transform:translateX(-50%) translateY(0)
-}
-#auth{
-  position:fixed;
-  inset:0;
-  background:#2d1f14aa;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:150
-}
-#auth.open{
-  display:flex
-}
-.abox{
-  width:min(400px,92vw);
-  background:var(--card);
-  border:2px solid var(--ink);
-  border-radius:20px;
-  padding:32px 28px;
-  box-shadow:8px 8px 0 var(--ink)
-}
-.abox input{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:1.5px solid var(--ink);
-  border-radius:10px;
-  outline:0;
-  font-family:inherit
-}
-footer{
-  text-align:center;
-  color:var(--mut);
-  font-size:12.5px;
-  padding:30px
-}
-.rv{
-  opacity:0;
-  transform:translateY(22px);
-  transition:.7s
-}
-.rv.vis{
-  opacity:1;
-  transform:none
-}
-@media(max-width:940px){
-  .hero{
-  grid-template-columns:1fr
-}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --bg: #faf3e8;
+  --ink: #2d1f14;
+  --ember: #e8590c;
+  --gold: #fab005;
+  --card: #fffdf7;
+  --mut: #8a7a64;
+  --line: #e7dcc4;
+}
+body {
+  font-family: 'Sora', 'Outfit', Verdana, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(700px 320px at 85% 0%, #fab00522, transparent),
+    radial-gradient(600px 300px at 0% 40%, #e8590c12, transparent);
+}
+::selection {
+  background: var(--ember);
+  color: #fff;
+}
+/* ---------- niche loader: hearth ---------- */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: #1c1008;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  transition: .5s;
+}
+#loader.off {
+  opacity: 0;
+  visibility: hidden;
+}
+#loader .fire {
+  font-size: 52px;
+  animation: flick .5s infinite alternate;
+}
+@keyframes flick {
+  from {
+    transform: scale(1) rotate(-3deg);
+  }
+  to {
+    transform: scale(1.14) rotate(3deg);
+  }
+}
+#loader .track {
+  width: 150px;
+  height: 4px;
+  background: #ffffff1c;
+  border-radius: 99px;
+  overflow: hidden;
+}
+#loader .track i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--ember), var(--gold));
+  animation: ld 1.1s forwards;
+}
+@keyframes ld {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+#loader small {
+  letter-spacing: 3px;
+  color: #c9a87f;
+  font-size: 11px;
+}
+/* ---------- nav ---------- */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: #faf3e8ee;
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--ink);
+}
+.nin {
+  max-width: 1160px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  font-size: 13.5px;
+}
+.nin b {
+  font-size: 19px;
+}
+.nin b span {
+  color: var(--ember);
+}
+.nin a {
+  color: var(--ink);
+  text-decoration: none;
+  opacity: .7;
+}
+.nin a:hover {
+  opacity: 1;
+}
+.nin .sp {
+  flex: 1;
+}
+.btn {
+  background: var(--ink);
+  color: #fff;
+  border: 0;
+  padding: 11px 24px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13.5px;
+  border-radius: 99px;
+  transition: .15s;
+}
+.btn:hover {
+  background: var(--ember);
+  transform: translateY(-1px);
+}
+.btn.fire {
+  background: linear-gradient(135deg, var(--ember), #f76707 60%, var(--gold));
+  border: 0;
+}
+/* ---------- hero ---------- */
+.hero {
+  max-width: 1160px;
+  margin: auto;
+  padding: 52px 20px 10px;
+  display: grid;
+  grid-template-columns: .95fr 1.05fr;
+  gap: 32px;
+  align-items: start;
+  position: relative;
+}
+.kicker {
+  display: inline-block;
+  border: 2px solid var(--ink);
+  padding: 7px 16px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: var(--gold);
+}
+h1 {
+  font-size: clamp(34px, 5vw, 60px);
+  line-height: 1.03;
+  margin: 14px 0 10px;
+  letter-spacing: -1px;
+}
+h1 em {
+  color: var(--ember);
+  font-style: normal;
+}
+.hero p {
+  color: var(--mut);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.ticks {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+}
+.ticks span {
+  background: var(--card);
+  border: 1.5px solid var(--ink);
+  padding: 8px 15px;
+  border-radius: 99px;
+  font-weight: 700;
+}
+/* ---------- chat ---------- */
+.shell {
+  background: var(--ink);
+  border-radius: 26px;
+  padding: 14px;
+  box-shadow: 10px 10px 0 #e8590c33;
+}
+.phone {
+  background: var(--card);
+  border-radius: 18px;
+  overflow: hidden;
+}
+.chead {
+  background: linear-gradient(135deg, #2d1f14, #5a2c0d);
+  color: #fff;
+  padding: 16px 18px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.ava {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ember), var(--gold));
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  border: 2px solid #ffffff44;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #51cf66;
+  display: inline-block;
+  margin-right: 6px;
+  box-shadow: 0 0 8px #51cf66;
+}
+#chat {
+  height: 340px;
+  overflow: auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: radial-gradient(circle at 80% 10%, #fab00514, transparent), var(--card);
+}
+.msg {
+  max-width: 82%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.msg.bot {
+  background: #f1e8d5;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  border: 1px solid #e0d3b8;
+}
+.msg.user {
+  background: var(--ink);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+.msg.typing i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ember);
+  margin: 0 2px;
+  animation: tp 1s infinite;
+}
+.msg.typing i:nth-child(2) {
+  animation-delay: .15s;
+}
+.msg.typing i:nth-child(3) {
+  animation-delay: .3s;
+}
+@keyframes tp {
+  40% {
+    transform: translateY(-5px);
+  }
+}
+.quick {
+  display: flex;
+  gap: 8px;
+  padding: 0 18px 10px;
+  flex-wrap: wrap;
+  background: var(--card);
+}
+.quick button {
+  background: #fff;
+  border: 1.5px solid var(--ink);
+  padding: 8px 15px;
+  border-radius: 99px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.quick button:hover {
+  background: var(--ink);
+  color: #fff;
+}
+.cmeta {
+  display: flex;
+  gap: 10px;
+  padding: 0 18px 8px;
+  background: var(--card);
+  font-size: 11px;
+  color: var(--mut);
+}
+.cin {
+  display: flex;
+  gap: 8px;
+  padding: 14px 16px;
+  background: var(--card);
+  border-top: 1.5px solid #e0d3b8;
+}
+.cin input {
+  flex: 1;
+  border: 1.5px solid var(--ink);
+  border-radius: 99px;
+  padding: 12px 18px;
+  outline: 0;
+  font-family: inherit;
+  font-size: 13.5px;
+}
+.cin button {
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  cursor: pointer;
+  font-size: 18px;
+}
+#sendBtn {
+  background: var(--ember);
+  color: #fff;
+}
+#micBtn {
+  background: var(--ink);
+  color: #fff;
+}
+#micBtn.live {
+  background: #fa5252;
+  animation: flick .4s infinite alternate;
+}
+/* ---------- sections ---------- */
+section {
+  max-width: 1160px;
+  margin: auto;
+  padding: 34px 20px;
+}
+main {
+  max-width: 1160px;
+  margin: auto;
+}
+h2 {
+  font-size: clamp(24px, 3.2vw, 34px);
+  letter-spacing: -.5px;
+}
+.sub {
+  color: var(--mut);
+  font-size: 14px;
+  margin: 8px 0 20px;
+}
+.cards3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+.cards3 div {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  padding: 24px 20px;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.cards3 .ic {
+  font-size: 32px;
+}
+.cards3 p {
+  color: var(--mut);
+  font-size: 13.5px;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+.stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.stats div {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 16px;
+  padding: 20px 22px;
+  font-size: 13.5px;
+  flex: 1;
+  min-width: 180px;
+}
+.stats b {
+  color: var(--gold);
+  font-size: 28px;
+  display: block;
+}
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.steps div {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 16px;
+  padding: 24px 20px;
+  font-size: 13.5px;
+}
+.steps b {
+  color: var(--gold);
+}
+.demo {
+  font-size: 12.5px;
+  color: var(--mut);
+  margin-top: 10px;
+  text-align: center;
+}
+.prices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+}
+.prices > div {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  padding: 30px 26px;
+  text-align: center;
+}
+.prices .hot {
+  background: var(--ink);
+  color: #fff;
+}
+.prices ul {
+  list-style: none;
+  font-size: 13px;
+  line-height: 2;
+  margin: 12px 0;
+  opacity: .9;
+}
+.amount {
+  font-size: 36px;
+  font-weight: 900;
+  margin: 10px 0;
+}
+.faq {
+  margin-top: 16px;
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.faq details {
+  padding: 16px 22px;
+  border-bottom: 1.5px solid var(--line);
+  font-size: 13.5px;
+}
+.faq details:last-child {
+  border-bottom: 0;
+}
+.faq summary {
+  cursor: pointer;
+  font-weight: 800;
+}
+.faq p {
+  color: var(--mut);
+  margin-top: 8px;
+  line-height: 1.6;
+}
+/* ---------- toast / auth / footer ---------- */
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 26px;
+  border-radius: 99px;
+  font-size: 13px;
+  z-index: 200;
+  transition: .3s;
+}
+#toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+#auth {
+  position: fixed;
+  inset: 0;
+  background: #2d1f14aa;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 150;
+}
+#auth.open {
+  display: flex;
+}
+.abox {
+  width: min(400px, 92vw);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  padding: 32px 28px;
+  box-shadow: 8px 8px 0 var(--ink);
+}
+.abox input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: 1.5px solid var(--ink);
+  border-radius: 10px;
+  outline: 0;
+  font-family: inherit;
+}
+footer {
+  text-align: center;
+  color: var(--mut);
+  font-size: 12.5px;
+  padding: 30px;
+}
+.rv {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: .7s;
+}
+.rv.vis {
+  opacity: 1;
+  transform: none;
+}
+@media (max-width: 940px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
 <body>
-<div id="loader"><div class="fire">ðŸ”¥</div><div class="track"><i></i></div><small>EMBER · STOKING HEARTH</small></div>
-<nav><div class="nin"><b>ðŸ”¥ Em<b style="display:inline;color:var(--ember)">ber</b></b><a href="#chatSec">Live demo</a><a href="#feat">Powers</a><a href="#price">Pricing</a><span class="sp"></span><button class="btn" onclick="openAuth()">Get your bot</button></div></nav>
+<div id="loader"><div class="fire">&#128293;</div><div class="track"><i></i></div><small>EMBER &middot; STOKING HEARTH</small></div>
+<nav><div class="nin"><b>Ember</b><a href="#chatSec">Live demo</a><a href="#feat">Powers</a><a href="#price">Pricing</a><span class="sp"></span><button class="btn" onclick="openAuth()">Get your bot</button></div></nav>
 <header class="hero">
-<div><span class="kicker">ðŸ¤– RAG · VOICE · 40+ BOTS SHIPPED</span><h1>Chatbots that <em>close sales</em> while you sleep.</h1><p>I'm <b>Noah Finn</b> — concierge bots for shops, clinics & agencies. The hearth on the right <b>is</b> my portfolio: ask it about pricing, integrations or booking. Voice included — tap ðŸŽ¤.</p><div class="ticks"><span>âœˆï¸ Telegram + WhatsApp</span><span>ðŸ“š Answers from your docs</span><span>ðŸŽ™ï¸ Voice receptionist</span><span>+38% conversion</span></div><div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap"><button class="btn fire" onclick="document.getElementById('chatSec').scrollIntoView({behavior:'smooth'})">Talk to Ember →</button><button class="btn" style="background:#fff;color:var(--ink);border:2px solid var(--ink)" onclick="openAuth()">Book free consult</button></div></div>
+<div><span class="kicker">RAG &middot; VOICE &middot; 40+ BOTS SHIPPED</span><h1>Chatbots that <em>close sales</em> while you sleep.</h1><p>I&rsquo;m <b>Noah Finn</b> &mdash; concierge bots for shops, clinics &amp; agencies. The hearth on the right <b>is</b> my portfolio: ask it about pricing, integrations or booking. Voice included &mdash; tap the mic.</p><div class="ticks"><span>Telegram + WhatsApp</span><span>Answers from your docs</span><span>Voice receptionist</span><span>+38% conversion</span></div><div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap"><button class="btn fire" onclick="document.getElementById('chatSec').scrollIntoView({behavior:'smooth'})">Talk to Ember &rarr;</button><button class="btn" style="background:#fff;color:var(--ink);border:2px solid var(--ink)" onclick="openAuth()">Book free consult</button></div></div>
 <div class="shell" id="chatSec"><div class="phone">
-<div class="chead"><div class="ava">ðŸ”¥</div><div><b>Ember · Concierge</b><br><small><span class="dot"></span>online · replies instantly</small></div><span style="margin-left:auto;font-size:20px">â‹¯</span></div>
+<div class="chead"><div class="ava">&#128293;</div><div><b>Ember &middot; Concierge</b><br><small><span class="dot"></span>online &middot; replies instantly</small></div><span style="margin-left:auto;font-size:20px">&#8942;</span></div>
 <div id="chat"></div>
-<div class="quick"><button onclick="ask('How much does a sales bot cost?')">ðŸ’° Pricing?</button><button onclick="ask('Do you integrate Telegram?')">âœˆï¸ Telegram?</button><button onclick="ask('Book a demo call')">ðŸ“… Book demo</button></div>
-<div class="cin"><input id="qin" placeholder="Ask Ember anything”¦ (Enter)" onkeydown="if(event.key==='Enter')send()"><button id="micBtn" onclick="voice()">ðŸŽ¤</button><button id="sendBtn" onclick="send()">âž¤</button></div>
-</div><p class="demo" style="color:#c9a87f">Live demo · rule-based brain · production bots use RAG + your docs</p></div>
+<div class="quick"><button onclick="ask('How much does a sales bot cost?')">Pricing?</button><button onclick="ask('Do you integrate Telegram?')">Telegram?</button><button onclick="ask('Book a demo call')">Book demo</button></div>
+<div class="cmeta"><span>demo brain: rule-based</span><span>&middot;</span><span>production: RAG + your docs</span></div>
+<div class="cin"><input id="qin" placeholder="Ask Ember anything… (Enter)" onkeydown="if(event.key==='Enter')send()"><button id="micBtn" onclick="voice()">&#127908;</button><button id="sendBtn" onclick="send()">&#10148;</button></div>
+</div><p class="demo" style="color:#c9a87f">Live demo &middot; rule-based brain &middot; production bots use RAG + your docs</p></div>
 </header>
 <main>
 <section id="feat">
-<h2 class="rv">What Ember's siblings do ðŸ›Žï¸</h2>
+<h2 class="rv">What Ember&rsquo;s siblings do</h2>
 <p class="sub rv">Four bots, one brain pattern.</p>
 <div class="cards3">
-<div class="rv"><div class="ic">ðŸ“š</div><b>Docs oracle (RAG)</b><p style="color:var(--mut);font-size:13.5px;margin-top:8px">Answers from PDFs, Notion & sites — with sources. âˆ’70% support tickets.</p></div>
-<div class="rv"><div class="ic">ðŸ’°</div><b>Sales closer</b><p style="color:var(--mut);font-size:13.5px;margin-top:8px">Qualifies, quotes, books calls. +38% conversion on pilot shops.</p></div>
-<div class="rv"><div class="ic">ðŸŽ™ï¸</div><b>Voice receptionist</b><p style="color:var(--mut);font-size:13.5px;margin-top:8px">Whisper + natural TTS. Books, reschedules, takes messages 24/7.</p></div>
-<div class="rv"><div class="ic">ðŸ›Žï¸</div><b>Concierge widget</b><p style="color:var(--mut);font-size:13.5px;margin-top:8px">One brain for site + Telegram + WhatsApp + Instagram DM.</p></div>
+<div class="rv"><div class="ic">&#128218;</div><b>Docs oracle (RAG)</b><p>Answers from PDFs, Notion &amp; sites &mdash; with sources. &minus;70% support tickets.</p></div>
+<div class="rv"><div class="ic">&#128176;</div><b>Sales closer</b><p>Qualifies, quotes, books calls. +38% conversion on pilot shops.</p></div>
+<div class="rv"><div class="ic">&#127908;</div><b>Voice receptionist</b><p>Whisper + natural TTS. Books, reschedules, takes messages 24/7.</p></div>
+<div class="rv"><div class="ic">&#128715;</div><b>Concierge widget</b><p>One brain for site + Telegram + WhatsApp + Instagram DM.</p></div>
+</div>
+<div class="stats">
+<div class="rv"><b>+38%</b>conversion on pilot shops</div>
+<div class="rv"><b>&minus;70%</b>support tickets after RAG launch</div>
+<div class="rv"><b>24/7</b>voice + chat coverage, zero missed leads</div>
 </div>
 </section>
 <section>
-<h2 class="rv">Lit in 10 days ðŸ”¥</h2>
-<p class="sub rv">Docs → brain → channels.</p>
+<h2 class="rv">Lit in 10 days</h2>
+<p class="sub rv">Docs &rarr; brain &rarr; channels.</p>
 <div class="steps">
-<div class="rv"><b>DAY 1–2</b><br><br>Feed me your docs, FAQs & price list. I map intents + edge cases.</div>
+<div class="rv"><b>DAY 1–2</b><br><br>Feed me your docs, FAQs &amp; price list. I map intents + edge cases.</div>
 <div class="rv"><b>DAY 3–6</b><br><br>Brain + voice + widget build. Daily demo videos in Telegram.</div>
 <div class="rv"><b>DAY 7–8</b><br><br>Connect Telegram / WhatsApp / site. Handover + analytics.</div>
-<div class="rv"><b>DAY 9–10</b><br><br> staff training + 30-day tune-up. You own everything.</div>
+<div class="rv"><b>DAY 9–10</b><br><br>Staff training + 30-day tune-up. You own everything.</div>
 </div>
 </section>
 <section id="price">
-<h2 class="rv">Hearth rates ðŸ”¥</h2>
+<h2 class="rv">Hearth rates</h2>
 <p class="sub rv">Fixed, quoted in 24h.</p>
 <div class="prices">
-<div class="rv"><small>FAQ BOT</small><div class="amount">$350</div><p style="font-size:13px;color:var(--mut)">Widget + 50 FAQs. 5 days.</p><br><button class="btn" style="width:100%" onclick="openAuth()">Start</button></div>
-<div class="rv hot"><small>â­ SMART RAG · POPULAR</small><div class="amount">$900</div><p style="font-size:13px;opacity:.75">Docs brain + 3 channels.</p><br><button class="btn fire" style="width:100%" onclick="openAuth()">Claim slot</button></div>
-<div class="rv"><small>VOICE + SUITE</small><div class="amount">$2,400+</div><p style="font-size:13px;color:var(--mut)">Voice, sales flows, dashboard.</p><br><button class="btn" style="width:100%" onclick="openAuth()">Contact</button></div>
+<div class="rv"><small>FAQ BOT</small><div class="amount">$350</div><ul><li>Widget + 50 FAQs</li><li>5-day delivery</li><li>1 channel included</li></ul><button class="btn" style="width:100%" onclick="openAuth()">Start</button></div>
+<div class="rv hot"><small>SMART RAG &middot; POPULAR</small><div class="amount">$900</div><ul><li>Docs brain + 3 channels</li><li>Voice add-on ready</li><li>Analytics + tune-up</li></ul><button class="btn fire" style="width:100%" onclick="openAuth()">Claim slot</button></div>
+<div class="rv"><small>VOICE + SUITE</small><div class="amount">$2,400+</div><ul><li>Voice, sales flows</li><li>Dashboard + CRM sync</li><li>Team training</li></ul><button class="btn" style="width:100%" onclick="openAuth()">Contact</button></div>
+</div>
+<div class="faq rv">
+<details open><summary>Which channels can one bot cover?</summary><p>One brain for your site widget, Telegram, WhatsApp and Instagram DM — same memory, same tone everywhere.</p></details>
+<details><summary>How does the docs oracle avoid hallucinations?</summary><p>Production bots answer from your docs via RAG with quoted sources — and escalate to a human when confidence is low.</p></details>
+<details><summary>What do you need from me to start?</summary><p>Your FAQs, price list and one contact for approvals. I handle intents, voice, integrations and training.</p></details>
 </div>
 </section>
 </main>
-<footer>Ember·AI — chatbots that close · press Enter to chat</footer>
-<div id="auth"><div class="abox"><h3>Get your bot ðŸ¤–</h3><p style="color:var(--mut);font-size:13.5px">Free 15-min consult + quote in 24h.</p><input id="aemail" placeholder="Email address"><input id="aurl" placeholder="Your website or shop link"><button class="btn fire" style="width:100%;margin-top:10px" onclick="doAuth()">Claim free consult</button><button class="btn" style="width:100%;margin-top:8px;background:#fff;color:var(--ink);border:2px solid var(--ink)" onclick="closeAuth()">Cancel</button></div></div>
+<footer>Ember&middot;AI &mdash; chatbots that close &middot; press Enter to chat</footer>
+<div id="auth"><div class="abox"><h3>Get your bot</h3><p style="color:var(--mut);font-size:13.5px">Free 15-min consult + quote in 24h.</p><input id="aemail" placeholder="Email address"><input id="aurl" placeholder="Your website or shop link"><button class="btn fire" style="width:100%;margin-top:10px" onclick="doAuth()">Claim free consult</button><button class="btn" style="width:100%;margin-top:8px;background:#fff;color:var(--ink);border:2px solid var(--ink)" onclick="closeAuth()">Cancel</button></div></div>
 <div id="toast"></div>
 <script>
 addEventListener('load',()=>setTimeout(()=>loader.classList.add('off'),1000));
 setTimeout(()=>loader.classList.add('off'),2400);
 const chat=document.getElementById('chat');
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200);}
+function toast(m){
+  const t=document.getElementById('toast');
+  t.textContent=m;t.classList.add('show');
+  clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200);
+}
 function openAuth(){document.getElementById('auth').classList.add('open');}
 function closeAuth(){document.getElementById('auth').classList.remove('open');}
-function doAuth(){const e=document.getElementById('aemail').value;if(!e||!e.includes('@'))return toast('Enter a valid email');closeAuth();toast('Request sent! Check your inbox ðŸ“©');}
+function doAuth(){
+  const e=document.getElementById('aemail').value;
+  if(!e||!e.includes('@'))return toast('Enter a valid email');
+  closeAuth();toast('Request sent! Check your inbox');
+}
 document.getElementById('auth').addEventListener('click',e=>{if(e.target.id==='auth')closeAuth();});
-function bubble(text,who){const d=document.createElement('div');d.className='msg '+who;d.innerHTML=text;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d;}
-function typeReply(full){const b=document.createElement('div');b.className='msg bot typing';b.innerHTML='<i></i><i></i><i></i>';chat.appendChild(b);chat.scrollTop=chat.scrollHeight;setTimeout(()=>{b.classList.remove('typing');b.innerHTML='';let i=0;const iv=setInterval(()=>{b.innerHTML=full.slice(0,++i);chat.scrollTop=chat.scrollHeight;if(i>=full.length)clearInterval(iv);},14);},700+Math.random()*600);}
-function brain(q){q=q.toLowerCase();if(/price|cost|much|quote/.test(q))return 'Great question! ðŸ’° FAQ bots from <b>$350</b>, smart RAG bots at <b>$900</b>, voice suites from <b>$2,400</b>. Tell me your use-case and I quote exactly in 24h.';if(/demo|book|call|meet/.test(q))return 'ðŸ“… Love it! Slots <b>Tue & Thu, 10:00–18:00 GMT+5</b>. Drop your email via <b>Get your bot</b> and I send a Calendly link.';if(/telegram|whatsapp|integrat/.test(q))return 'âœˆï¸ Yes — <b>Telegram, WhatsApp, Instagram DM</b> + site widget from one brain. Same memory everywhere. Which channel first?';if(/feature|do|can you|service/.test(q))return 'âœ¨ <b>RAG oracles</b>, <b>sales closers</b> (+38%), <b>voice receptionists</b>, <b>support agents</b> (âˆ’70% tickets). Which fits you?';if(/voice|speak|call|audio/.test(q))return 'ðŸŽ™ï¸ Voice bots use <b>Whisper + natural TTS</b> — press ðŸŽ¤ and try! They book appointments 24/7.';if(/hi|hello|salom|hey/.test(q))return 'Hey! ðŸ‘‹ I am <b>Ember</b>, a live demo. Ask about <b>pricing</b>, <b>features</b> or type <b>book demo</b>.';if(/who|owner|human|developer/.test(q))return 'Crafted by <b>Noah Finn (Top Rated, 40+ bots)</b> — this chat UI is part of the portfolio. Want one? ðŸ˜Ž';if(/thank|great|cool|nice/.test(q))return 'Anytime! ðŸ™Œ Hit <b>Get your bot</b> and automate this week.';return 'Smart question ðŸ¤” — in production I answer from <b>your docs via RAG</b> with sources. For now I do <b>FAQs, sales, booking & support</b>. Try <b>pricing</b> or <b>Telegram</b>!';}
-function send(){const inp=document.getElementById('qin');const v=inp.value.trim();if(!v)return;ask(v);inp.value='';}
+function bubble(text,who){
+  const d=document.createElement('div');
+  d.className='msg '+who;d.innerHTML=text;
+  chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
+  return d;
+}
+function typeReply(full){
+  const b=document.createElement('div');
+  b.className='msg bot typing';b.innerHTML='<i></i><i></i><i></i>';
+  chat.appendChild(b);chat.scrollTop=chat.scrollHeight;
+  setTimeout(()=>{
+    b.classList.remove('typing');b.innerHTML='';
+    let i=0;
+    const iv=setInterval(()=>{b.innerHTML=full.slice(0,++i);chat.scrollTop=chat.scrollHeight;if(i>=full.length)clearInterval(iv);},14);
+  },700+Math.random()*600);
+}
+function brain(q){
+  q=q.toLowerCase();
+  if(/price|cost|much|quote/.test(q))return 'Great question! FAQ bots from <b>$350</b>, smart RAG bots at <b>$900</b>, voice suites from <b>$2,400</b>. Tell me your use-case and I quote exactly in 24h.';
+  if(/demo|book|call|meet/.test(q))return 'Love it! Slots <b>Tue & Thu, 10:00–18:00 GMT+5</b>. Drop your email via <b>Get your bot</b> and I send a Calendly link.';
+  if(/telegram|whatsapp|integrat/.test(q))return 'Yes — <b>Telegram, WhatsApp, Instagram DM</b> + site widget from one brain. Same memory everywhere. Which channel first?';
+  if(/feature|do|can you|service/.test(q))return '<b>RAG oracles</b>, <b>sales closers</b> (+38%), <b>voice receptionists</b>, <b>support agents</b> (−70% tickets). Which fits you?';
+  if(/voice|speak|call|audio/.test(q))return 'Voice bots use <b>Whisper + natural TTS</b> — press the mic and try! They book appointments 24/7.';
+  if(/hi|hello|salom|hey/.test(q))return 'Hey! I am <b>Ember</b>, a live demo. Ask about <b>pricing</b>, <b>features</b> or type <b>book demo</b>.';
+  if(/who|owner|human|developer/.test(q))return 'Crafted by <b>Noah Finn (Top Rated, 40+ bots)</b> — this chat UI is part of the portfolio. Want one?';
+  if(/thank|great|cool|nice/.test(q))return 'Anytime! Hit <b>Get your bot</b> and automate this week.';
+  return 'Smart question — in production I answer from <b>your docs via RAG</b> with sources. For now I do <b>FAQs, sales, booking & support</b>. Try <b>pricing</b> or <b>Telegram</b>!';
+}
+function send(){
+  const inp=document.getElementById('qin');
+  const v=inp.value.trim();
+  if(!v)return;
+  ask(v);inp.value='';
+}
 function ask(text){bubble(text,'user');setTimeout(()=>typeReply(brain(text)),350);}
-function voice(){const m=document.getElementById('micBtn');m.classList.add('live');m.textContent='ðŸ”´';toast('Listening”¦ speak now ðŸŽ¤');setTimeout(()=>{m.classList.remove('live');m.textContent='ðŸŽ¤';const samples=['How much does a sales bot cost?','Do you integrate Telegram?','Book a demo call'];const s=samples[Math.floor(Math.random()*samples.length)];ask(s);},1800);}
-setTimeout(()=>typeReply('ðŸ‘‹ Hi! I am <b>Ember</b> — ask about <b>pricing</b>, <b>features</b>, or tap a quick prompt ðŸ‘‡'),1400);
+function copyChat(){
+  const t=[...chat.querySelectorAll('.msg')].map(m=>m.innerText).join('\n');
+  if(navigator.clipboard)navigator.clipboard.writeText(t).catch(()=>{});
+  toast('Chat copied');
+}
+function voice(){
+  const m=document.getElementById('micBtn');
+  m.classList.add('live');m.textContent='🔴';
+  toast('Listening… speak now');
+  setTimeout(()=>{
+    m.classList.remove('live');m.textContent='🎤';
+    const samples=['How much does a sales bot cost?','Do you integrate Telegram?','Book a demo call'];
+    const s=samples[Math.floor(Math.random()*samples.length)];
+    ask(s);
+  },1800);
+}
+setTimeout(()=>typeReply('Hi! I am <b>Ember</b> — ask about <b>pricing</b>, <b>features</b>, or tap a quick prompt 👇'),1400);
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
-<style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
-
-  <script src="../api-runtime.js"></script>
+<style>.ceo-hub-floating-badge{position:fixed;bottom:22px;right:22px;z-index:99999;background:rgba(12,12,20,.88);backdrop-filter:blur(14px);border:1px solid rgba(233,196,106,.4);color:#f4f2ea!important;text-decoration:none!important;padding:8px 16px;border-radius:9999px;font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.8);transition:.25s}@media(max-width:640px){.ceo-hub-floating-badge{bottom:12px;right:12px;padding:6px 12px;font-size:11px}}</style>
+<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects">&#9672; 66 Projects Hub <span style="font-size:10px;background:rgba(233,196,106,.18);border:1px solid rgba(233,196,106,.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span></a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>

@@ -338,8 +338,34 @@ function copyModalPitch() {
   const cleanPath = currentModalWork[4].replace(/^\.\./, '');
   const fullLiveUrl = getLiveBaseUrl() + cleanPath;
   const pitch = `Hi! I have built and launched "${currentModalWork[1]}" (${currentModalWork[3]} tier) with this exact architecture: ${currentModalWork[2]}. Live case study: ${fullLiveUrl}. I can build your system on time and within fixed budget. Let's discuss your roadmap!`;
-  navigator.clipboard.writeText(pitch);
-  alert('✓ Proposal pitch copied to clipboard!');
+  copyText(pitch, '✓ Proposal pitch copied to clipboard!');
+}
+
+function copyText(t, okMsg) {
+  if (navigator.clipboard && window.isSecureContext !== false) {
+    navigator.clipboard.writeText(t).then(
+      () => alert(okMsg),
+      () => fallbackCopy(t, okMsg)
+    );
+  } else {
+    fallbackCopy(t, okMsg);
+  }
+}
+
+function fallbackCopy(t, okMsg) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = t;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    alert(okMsg);
+  } catch (e) {
+    alert(t);
+  }
 }
 
 document.getElementById('wmodal').addEventListener('click', e => {
@@ -383,8 +409,7 @@ function copyScopeSummary() {
 - Guaranteed Timeline: ${weeks}
 - Stack: Go/Python Backend, Production Frontend, Custom APIs & QA
 - Guarantee: 100% on-time delivery + 30-day post-launch support.`;
-  navigator.clipboard.writeText(summary);
-  alert('✓ Scope summary copied to clipboard!');
+  copyText(summary, '✓ Scope summary copied to clipboard!');
 }
 
 // Reflex Speed Benchmark
@@ -447,28 +472,28 @@ function send() {
 
   let r = "I build $10K-grade digital products across SaaS, mobile, games, and AI pipelines. Share your specs and I will draft a fixed-scope roadmap within 24 hours.";
   if (v.includes('price') || v.includes('tier') || v.includes('cost')) {
-    r = "Pricing Tiers:
+    r = `Pricing Tiers:
 • Sprint MVP: $1,500 (7 business days)
 • Product $10K Build: $9,800 (4–6 weeks full SaaS / Mobile App)
-• Partner / CTO: $3,000/mo (Ongoing weekly sprints & architecture)";
+• Partner / CTO: $3,000/mo (Ongoing weekly sprints & architecture)`;
   } else if (v.includes('stack') || v.includes('tech')) {
-    r = "Technical Stack:
+    r = `Technical Stack:
 • Core: Python, Go (Golang), C++, REST, WebSocket
 • Graphics & Games: Godot Engine, Three.js, Canvas 2D, WebGL
 • Mobile: Flutter, Dart, Swift (iOS 18), Kotlin
-• Data: SQLite, PostgreSQL, Redis, Docker";
+• Data: SQLite, PostgreSQL, Redis, Docker`;
   } else if (v.includes('time') || v.includes('deadline')) {
-    r = "Delivery Milestones:
+    r = `Delivery Milestones:
 • MVP Slices: 7–10 days
 • Full SaaS Platforms: 4–5 weeks
 • Mobile & Games: 4–6 weeks
-We operate with strict weekly sprint demos and 100% on-time record.";
+We operate with strict weekly sprint demos and 100% on-time record.`;
   } else if (v.includes('mobile') || v.includes('app')) {
-    r = "Mobile Architecture:
-We build high-performance cross-platform Flutter and native Swift iOS apps with offline-first SQLite synchronization, dynamic animations, and App Store readiness.";
+    r = `Mobile Architecture:
+We build high-performance cross-platform Flutter and native Swift iOS apps with offline-first SQLite synchronization, dynamic animations, and App Store readiness.`;
   } else if (v.includes('game') || v.includes('godot')) {
-    r = "Game Development:
-We engineer 2D/3D browser games (Three.js/Canvas) and Godot Engine commercial builds with responsive controls, custom physics, and particle shaders.";
+    r = `Game Development:
+We engineer 2D/3D browser games (Three.js/Canvas) and Godot Engine commercial builds with responsive controls, custom physics, and particle shaders.`;
   } else if (v.includes('hi') || v.includes('hello')) {
     r = "Greetings! What type of product are you aiming to launch? A SaaS platform, mobile application, or high-performance game?";
   }
@@ -538,3 +563,14 @@ document.getElementById('burger').onclick = () => {
 function closeM() {
   document.getElementById('mmenu').style.display = 'none';
 }
+
+// ESC closes modal / mobile menu; resize resets stale mobile menu
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('wmodal').style.display === 'flex') closeW();
+    closeM();
+  }
+});
+addEventListener('resize', () => {
+  if (innerWidth > 900) closeM();
+});

@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>FutureConf 2026 — Design Forward</title>
 <style>
+
 *{
 margin:0;
 padding:0;
-box-sizing:border-box;
+box-sizing:border-box
 }
+
 :root{
 --bg:#150826;
 --bg2:#1e0a38;
@@ -18,25 +20,53 @@ box-sizing:border-box;
 --vio:#a855f7;
 --pink:#ec4899;
 --txt:#f5efff;
---mut:#b9a8dd;
+--mut:#b9a8dd
 }
+
 body{
 font-family:"Segoe UI",Inter,Arial,sans-serif;
 background:radial-gradient(900px 400px at 20% -5%,#4c1d95 0%,transparent 60%),radial-gradient(800px 400px at 90% 10%,#831843 0%,transparent 55%),var(--bg);
-color:var(--txt);
+color:var(--txt)
 }
-.wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+.wrap{
+max-width:1120px;
+margin:0 auto;
+padding:0 24px
+}
+
 .nav{
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:20px 0;
+padding:20px 0
 }
-.logo{font-weight:900;letter-spacing:1px;}
-.logo span{color:var(--vio);}
-.links{display:flex;gap:26px;font-size:14px;color:var(--mut);}
-.links a{color:inherit;text-decoration:none;}
-.links a:hover{color:#fff;}
+
+.logo{
+font-weight:900;
+letter-spacing:1px
+}
+
+.logo span{
+color:var(--vio)
+}
+
+.links{
+display:flex;
+gap:26px;
+font-size:14px;
+color:var(--mut)
+}
+
+.links a{
+color:inherit;
+text-decoration:none
+}
+
+.links a:hover{
+color:#fff
+}
+
 .btn{
 background:linear-gradient(135deg,var(--vio),var(--pink));
 border:0;
@@ -45,160 +75,302 @@ font-weight:800;
 padding:11px 24px;
 border-radius:99px;
 cursor:pointer;
-font-size:14px;
+font-size:14px
 }
+
+.btn.ghost{
+background:rgba(255,255,255,.08);
+border:1px solid var(--line)
+}
+
+.btn:hover{
+filter:brightness(1.12)
+}
+
 .hero{
 text-align:center;
-padding:56px 0 30px;
+padding:56px 0 30px
 }
+
 .hero small{
 letter-spacing:3px;
 font-size:12px;
 color:var(--vio);
-font-weight:800;
+font-weight:800
 }
+
 .hero h1{
 font-size:clamp(38px,6vw,66px);
 letter-spacing:-2px;
 line-height:1.02;
-margin:14px 0;
+margin:14px 0
 }
+
 .hero h1 em{
 font-style:normal;
 background:linear-gradient(90deg,var(--vio),var(--pink));
 -webkit-background-clip:text;
 background-clip:text;
-color:transparent;
+color:transparent
 }
-.hero p{color:var(--mut);max-width:560px;margin:0 auto;}
+
+.hero p{
+color:var(--mut);
+max-width:560px;
+margin:0 auto
+}
+
+.meta{
+display:flex;
+gap:16px;
+justify-content:center;
+margin-top:14px;
+color:var(--mut);
+font-size:13.5px;
+flex-wrap:wrap
+}
+
 .count{
 display:flex;
 gap:12px;
 justify-content:center;
 margin:26px 0;
-flex-wrap:wrap;
+flex-wrap:wrap
 }
+
 .cd{
-background:rgba(255,255,255,.06);
+background:rgba(255,255,255,.05);
 border:1px solid var(--line);
 border-radius:16px;
-min-width:92px;
-padding:14px 10px;
+min-width:96px;
+padding:14px
 }
-.cd b{font-size:28px;display:block;}
-.cd span{font-size:11px;letter-spacing:2px;color:var(--mut);}
-.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-.ghost{
-background:transparent;
-border:1px solid var(--line);
-color:var(--txt);
+
+.cd b{
+font-size:32px;
+font-variant-numeric:tabular-nums;
+display:block
 }
-.meta{
+
+.cd span{
+font-size:11px;
+letter-spacing:2px;
+color:var(--mut)
+}
+
+.cta{
 display:flex;
+gap:12px;
 justify-content:center;
-gap:26px;
-flex-wrap:wrap;
-margin-top:22px;
-color:var(--mut);
-font-size:13px;
+flex-wrap:wrap
 }
+
+/* stats */
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+margin:26px 0
+}
+
+.stat{
+background:rgba(255,255,255,.04);
+border:1px solid var(--line);
+border-radius:16px;
+padding:18px;
+text-align:center
+}
+
+.stat b{
+font-size:26px;
+display:block
+}
+.stat span{
+color:var(--mut);
+font-size:12px
+}
+
 /* schedule */
 .sched{
-background:var(--card);
+background:rgba(255,255,255,.03);
 border:1px solid var(--line);
-border-radius:24px;
-padding:28px;
-margin:36px 0;
+border-radius:20px;
+padding:26px;
+margin:10px 0
 }
-.sched h2{letter-spacing:-.5px;}
-.sched>p{color:var(--mut);font-size:13px;margin:4px 0 16px;}
-.days{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+
+.sched h2{
+font-size:22px;
+letter-spacing:-.5px
+}
+
+.days{
+display:flex;
+gap:10px;
+margin:16px 0;
+flex-wrap:wrap
+}
+
 .days button{
+background:rgba(255,255,255,.06);
 border:1px solid var(--line);
-background:transparent;
 color:var(--mut);
-padding:9px 20px;
+padding:10px 20px;
 border-radius:99px;
-font-size:13px;
-font-weight:700;
 cursor:pointer;
+font-weight:700;
+font-size:13px
 }
+
 .days button.on{
-background:#fff;
-color:#1e0a38;
-border-color:#fff;
+background:linear-gradient(135deg,var(--vio),var(--pink));
+color:#fff;
+border-color:transparent
 }
+
 .slot{
-display:grid;
-grid-template-columns:110px 1fr auto;
+display:flex;
 gap:16px;
-padding:15px 16px;
+align-items:center;
+background:rgba(255,255,255,.04);
 border:1px solid var(--line);
 border-radius:14px;
-margin-bottom:10px;
-background:rgba(255,255,255,.02);
-align-items:center;
+padding:14px 16px;
+margin-top:10px
 }
-.slot .t{font-weight:800;color:var(--vio);font-size:13px;}
-.slot small{color:var(--mut);font-size:12px;}
-.slot .go{
-border:1px solid var(--vio);
-background:transparent;
-color:#fff;
-border-radius:99px;
-padding:8px 16px;
-font-size:12px;
-cursor:pointer;
-font-weight:700;
+
+.slot.live{
+border-color:var(--pink)
 }
-.slot .go.add{background:var(--vio);}
-.slot.live{border-color:var(--pink);box-shadow:0 0 0 1px var(--pink);}
+
+.slot .t{
+font-variant-numeric:tabular-nums;
+font-weight:800;
+min-width:64px
+}
+
 .lbadge{
 font-size:10px;
 background:var(--pink);
 border-radius:99px;
 padding:2px 9px;
-font-weight:800;
 margin-left:8px;
+letter-spacing:1px
 }
-/* speakers */
-.spk{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:10px 0 36px;}
-.s{
-background:var(--card);
+
+.slot small{
+color:var(--mut)
+}
+
+.go{
+margin-left:auto;
 border:1px solid var(--line);
-border-radius:18px;
-padding:20px;
-text-align:center;
+background:none;
+color:var(--txt);
+border-radius:99px;
+padding:8px 16px;
+cursor:pointer;
+font-size:12.5px;
+font-weight:700;
+white-space:nowrap
 }
+
+.go.add{
+background:var(--vio);
+border-color:var(--vio)
+}
+
+/* speakers */
+.spk{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+margin:22px 0
+}
+
+.scard{
+background:linear-gradient(180deg,#2b1452,#1c0b36);
+border:1px solid var(--line);
+border-radius:16px;
+padding:20px;
+text-align:center
+}
+
 .face{
-width:64px;
-height:64px;
+width:58px;
+height:58px;
 border-radius:50%;
 margin:0 auto 10px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-weight:900;
-font-size:20px;
-color:#fff;
+font-size:24px;
+font-weight:800
 }
-.s small{color:var(--mut);}
+
+/* tickets */
 .tickets{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:14px;
-margin-bottom:36px;
+gap:12px;
+margin:10px 0 26px
 }
+
 .tk{
-background:var(--card);
+background:rgba(255,255,255,.04);
 border:1px solid var(--line);
 border-radius:18px;
 padding:24px;
+text-align:center
 }
-.tk.hot{border-color:var(--pink);box-shadow:0 8px 40px rgba(236,72,153,.25);}
-.tk .pr{font-size:30px;font-weight:900;margin:8px 0;}
-.tk ul{list-style:none;font-size:13px;color:var(--mut);display:flex;flex-direction:column;gap:7px;margin:12px 0 18px;}
-.tk button{width:100%;}
+
+.tk.hot{
+border-color:var(--pink);
+background:linear-gradient(180deg,rgba(236,72,153,.14),rgba(255,255,255,.03))
+}
+
+.tk h3{
+font-size:16px
+}
+.tk .pr{
+font-size:36px;
+font-weight:900;
+margin:8px 0
+}
+
+.tk ul{
+list-style:none;
+color:var(--mut);
+font-size:13px;
+margin:10px 0 16px
+}
+.tk li{
+padding:4px 0
+}
+
+/* venue */
+.venue{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-bottom:30px
+}
+
+.venue div{
+background:rgba(255,255,255,.04);
+border:1px solid var(--line);
+border-radius:18px;
+padding:24px
+}
+
+.venue h3{
+margin-bottom:8px
+}
+.venue p{
+color:var(--mut);
+font-size:14px
+}
+
 /* modal */
 .modal{
 position:fixed;
@@ -207,256 +379,125 @@ background:rgba(10,4,20,.7);
 display:none;
 align-items:center;
 justify-content:center;
-padding:20px;
-z-index:50;
+z-index:100;
+padding:16px
 }
-.modal.show{display:flex;}
-.box{
+
+.modal.show{
+display:flex
+}
+
+.mbox{
 background:#fff;
-color:#1e0a38;
-border-radius:20px;
+color:#222;
+border-radius:18px;
 padding:28px;
-max-width:420px;
-width:100%;
+max-width:380px;
+width:100%
 }
-.box input,.box select{
+
+.mbox h3{
+font-size:20px
+}
+.mbox p{
+color:#666;
+font-size:13px;
+margin:6px 0 14px
+}
+
+.mbox input,.mbox select{
 width:100%;
-border:1.5px solid #ddd;
+border:1px solid #ddd;
 border-radius:10px;
 padding:11px 13px;
-margin:7px 0;
-font-size:14px;
-}
-.box .btn{width:100%;margin-top:10px;}
-.venue{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-margin-bottom:36px;
-}
-.vcard{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:18px;
-padding:24px;
-}
-.vcard h3{
-font-size:17px;
-margin-bottom:8px;
-}
-.vcard p{
-color:var(--mut);
+font:inherit;
 font-size:13.5px;
-line-height:1.6;
-}
-.vcard ul{
-list-style:none;
-margin-top:12px;
-font-size:13px;
-display:flex;
-flex-direction:column;
-gap:8px;
-color:var(--mut);
-}
-.vcard ul b{
-color:#fff;
-}
-.sponsors{
-display:flex;
-gap:12px;
-flex-wrap:wrap;
-margin-bottom:36px;
-}
-.sponsors span{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:99px;
-padding:10px 22px;
-font-size:13px;
-font-weight:700;
-color:var(--mut);
-}
-.faqc{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:18px;
-padding:24px;
-margin-bottom:36px;
-}
-.faqc h2{
-margin-bottom:14px;
-}
-.faqc details{
-border:1px solid var(--line);
-border-radius:12px;
-padding:14px 18px;
-margin-bottom:10px;
-font-size:14px;
-background:rgba(255,255,255,.02);
-}
-.faqc summary{
-font-weight:700;
-cursor:pointer;
-}
-.faqc p{
-color:var(--mut);
 margin-top:8px;
-font-size:13.5px;
+box-sizing:border-box
 }
-.news{
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-gap:14px;
-margin-bottom:36px;
-}
-.ncard{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:18px;
-padding:22px;
-}
-.ncard small{
-color:var(--vio);
-font-size:11px;
-font-weight:800;
-letter-spacing:2px;
-}
-.ncard h4{
-margin:8px 0 6px;
-font-size:15px;
-}
-.ncard p{
+
+footer{
+text-align:center;
 color:var(--mut);
-font-size:13px;
+font-size:12.5px;
+padding:0 0 40px
 }
-footer{text-align:center;color:var(--mut);font-size:12px;padding:0 0 36px;}
+
 @media(max-width:900px){
-.spk{grid-template-columns:1fr 1fr;}
-.tickets{grid-template-columns:1fr;}
-.links{display:none;}
-.slot{grid-template-columns:1fr;}
+.stats,.spk,.tickets,.venue{
+grid-template-columns:1fr 1fr
 }
+.links{
+display:none
+}
+
+}
+
+@media(max-width:600px){
+.stats,.spk,.tickets,.venue{
+grid-template-columns:1fr
+}
+
+}
+
 </style>
 </head>
 <body>
 <div class="wrap">
-<nav class="nav">
-<div class="logo">FUTURE<span>CONF</span> ’26</div>
-<div class="links"><a href="#">Speakers</a><a href="#">Schedule</a><a href="#">Venue</a><a href="#">Sponsors</a></div>
-<button class="btn" onclick="openM('Pro Pass')">Get tickets</button>
-</nav>
-<header class="hero">
+<div class="nav"><div class="logo">FUTURE<span>CONF</span> ’26</div>
+<div class="links"><a href="#sched">Schedule</a><a href="#">Speakers</a><a href="#">Tickets</a><a href="#">Venue</a></div>
+<button class="btn" onclick="openM('Pro Pass')">Get tickets</button></div>
+<section class="hero">
 <small>◆ OCT 14–16 · TASHKENT EXPO HALL · 2,000 SEATS</small>
-<h1>Design <em>forward.</em><br>Ship what's next.</h1>
-<p>Three days of product, AI and motion design with 40 speakers, live workshops and an afterparty on the rooftop.</p>
+<h1>Design <em>forward.</em></h1>
+<p>Three days on interfaces, motion and AI-era craft — keynotes, hands-on labs and a rooftop afterparty. Early birds save 40%.</p>
+<div class="meta"><span>📍 Tashkent Expo Hall</span><span>🎙 24 speakers</span><span>★★★★★ 4.9 (800 reviews)</span></div>
 <div class="count">
 <div class="cd"><b id="d">00</b><span>DAYS</span></div>
 <div class="cd"><b id="h">00</b><span>HOURS</span></div>
 <div class="cd"><b id="m">00</b><span>MIN</span></div>
 <div class="cd"><b id="s">00</b><span>SEC</span></div>
 </div>
-<div class="cta">
-<button class="btn" onclick="openM('Pro Pass')">Get tickets — from $49</button>
-<button class="btn ghost" onclick="document.getElementById('sched').scrollIntoView({behavior:'smooth'})">View schedule</button>
+<div class="cta"><button class="btn" onclick="openM('Pro Pass')">🎟 Get Pro Pass — $149</button><button class="btn ghost" onclick="document.getElementById('sched').scrollIntoView({behavior:'smooth'})">View schedule</button></div>
+</section>
+<div class="stats">
+<div class="stat"><b>2,000</b><span>attendees</span></div>
+<div class="stat"><b>24</b><span>speakers</span></div>
+<div class="stat"><b>18</b><span>workshops</span></div>
+<div class="stat"><b>3</b><span>days + afterparty</span></div>
 </div>
-<div class="meta"><span>✦ 40 speakers</span><span>✦ 24 talks</span><span>✦ 6 workshops</span><span>✦ Afterparty included</span></div>
-</header>
 <section class="sched" id="sched">
 <h2>Schedule <span style="font-size:12px;color:var(--mut)">· <span id="mine">0</span> in my agenda</span></h2>
-<p>Tap + My agenda to build your day. Live badge marks what's on now.</p>
-<div class="days" id="days">
-<button class="on" data-d="1">Day 1 — Oct 14</button>
-<button data-d="2">Day 2 — Oct 15</button>
-<button data-d="3">Day 3 — Oct 16</button>
-</div>
+<p style="color:var(--mut);font-size:13px">Tap a day, build your agenda, grab a pass before Friday.</p>
+<div class="days" id="days"><button class="on" data-d="1">Day 1 · Oct 14</button><button data-d="2">Day 2 · Oct 15</button><button data-d="3">Day 3 · Oct 16</button></div>
 <div id="slots"></div>
 </section>
-<h2 style="margin-bottom:14px">Speakers</h2>
 <div class="spk">
-<div class="s"><div class="face" style="background:#8b5cf6">AK</div><b>A. Karimova</b><br><small>Design Lead · Figma</small></div>
-<div class="s"><div class="face" style="background:#ec4899">JM</div><b>J. Miller</b><br><small>Motion · Apple</small></div>
-<div class="s"><div class="face" style="background:#06b6d4">SL</div><b>S. Lee</b><br><small>AI Product · Linear</small></div>
-<div class="s"><div class="face" style="background:#f59e0b">DR</div><b>D. Rossi</b><br><small>Type · Dinamo</small></div>
+<div class="scard"><div class="face" style="background:#a855f7">AK</div><b>A. Karimova</b><br><small style="color:var(--mut)">Keynote · ex-Figma</small></div>
+<div class="scard"><div class="face" style="background:#ec4899">JM</div><b>J. Miller</b><br><small style="color:var(--mut)">Motion · Studio Norm</small></div>
+<div class="scard"><div class="face" style="background:#22d3ee">SL</div><b>S. Lee</b><br><small style="color:var(--mut)">AI prototyping</small></div>
+<div class="scard"><div class="face" style="background:#f59e0b">DR</div><b>D. Rossi</b><br><small style="color:var(--mut)">Type · Lab 2</small></div>
 </div>
-<h2 style="margin-bottom:14px">Tickets</h2>
-<div class="tickets">
-<div class="tk"><h4>Day pass</h4><div class="pr">$49</div><ul><li>✓ 1 day access</li><li>✓ Talks + expo</li><li>✕ Workshops</li></ul><button class="btn ghost" onclick="openM('Day pass')">Choose</button></div>
-<div class="tk hot"><h4>Pro pass ★</h4><div class="pr">$129</div><ul><li>✓ All 3 days</li><li>✓ 2 workshops</li><li>✓ Afterparty + swag</li></ul><button class="btn" onclick="openM('Pro Pass')">Choose</button></div>
-<div class="tk"><h4>Team ×5</h4><div class="pr">$449</div><ul><li>✓ 5 pro passes</li><li>✓ Hiring booth</li><li>✓ Invoice + VAT</li></ul><button class="btn ghost" onclick="openM('Team x5')">Choose</button></div>
+<section class="tickets">
+<div class="tk"><h3>Day Pass</h3><div class="pr">$79</div><ul><li>1 day access</li><li>2 workshops</li><li>Lunch included</li></ul><button class="btn ghost" style="width:100%" onclick="openM('Day Pass')">Select</button></div>
+<div class="tk hot"><h3>⭐ Pro Pass</h3><div class="pr">$149</div><ul><li>All 3 days</li><li>All workshops + labs</li><li>Afterparty + swag</li></ul><button class="btn" style="width:100%" onclick="openM('Pro Pass')">Get Pro Pass</button></div>
+<div class="tk"><h3>Team ×5</h3><div class="pr">$499</div><ul><li>5 Pro passes</li><li>Reserved row</li><li>Invoice + discount</li></ul><button class="btn ghost" style="width:100%" onclick="openM('Team ×5')">Select</button></div>
+</section>
+<section class="venue">
+<div><h3>📍 Getting there</h3><p>Expo Hall, Hall B. Metro Line 3 to Expo stop — 4 min walk. Parking for 800 cars, bike valet at Gate 2.</p></div>
+<div><h3>❓ Good to know</h3><p>Doors open 8:30. Sessions in English with live captions. Full refund until Oct 1 — no questions asked.</p></div>
+</section>
+<footer>© 2026 FutureConf · Design Forward · <a href="../index.html" style="color:inherit">66 Projects Hub</a></footer>
 </div>
-<h2 style="margin-bottom:14px">Venue &amp; experience</h2>
-<div class="venue">
-<div class="vcard"><h3>◆ Tashkent Expo Hall</h3><p>10,000 m² of halls, labs and a rooftop stage. Metro + shuttle from the airport every 15 min.</p><ul><li><b>Main hall</b> — 2,000 seats, 4K wall</li><li><b>Lab wing</b> — 6 hands-on rooms</li><li><b>Rooftop</b> — afterparty + food trucks</li></ul></div>
-<div class="vcard"><h3>◆ Good to know</h3><p>Everything is included in the Pro pass — no upsells at the door.</p><ul><li><b>Lunch</b> — halal / vegan options daily</li><li><b>Wi-Fi</b> — 1 Gbps, press lounge</li><li><b>Visa</b> — free invitation letters</li></ul></div>
-</div>
-<h2 style="margin-bottom:14px">Sponsors</h2>
-<div class="sponsors"><span>◆ FIGMA</span><span>● LINEAR</span><span>▲ VERCIA</span><span>■ CRAFTBASE</span><span>◆ NOTION</span></div>
-<h2 style="margin-bottom:14px">News</h2>
-<div class="news">
-<div class="ncard"><small>SEP 20</small><h4>Workshop seats 80% gone</h4><p>Type and motion labs fill first every year.</p></div>
-<div class="ncard"><small>SEP 12</small><h4>Afterparty DJ announced</h4><p>Rooftop set, vinyl only, doors at 20:00.</p></div>
-<div class="ncard"><small>SEP 01</small><h4>Student grants open</h4><p>100 free passes for students with portfolio.</p></div>
-</div>
-<h2 style="margin-bottom:14px">Community partners</h2>
-<div class="sponsors">
-<span>GDG Tashkent</span>
-<span>Women in Tech</span>
-<span>Startup Garage</span>
-<span>Design Club</span>
-</div>
-<div class="venue">
-<div class="vcard">
-<h3>◆ Scholarship wall</h3>
-<p>Every sponsor funds 10 student seats. This year's wall:</p>
-<ul>
-<li><b>Figma</b> — 20 seats</li>
-<li><b>Linear</b> — 15 seats</li>
-<li><b>Craftbase</b> — 10 seats</li>
-</ul>
-</div>
-<div class="vcard">
-<h3>◆ Volunteer crew</h3>
-<p>60 volunteers, one legendary crew tee.</p>
-<ul>
-<li><b>Perks</b> — free Pro pass + meals</li>
-<li><b>Shifts</b> — 2 × half days</li>
-<li><b>Apply</b> — crew@futureconf.io</li>
-</ul>
-</div>
-</div>
-<h2 style="margin-bottom:14px">Afterparty lineup</h2>
-<div class="venue">
-<div class="vcard"><h3>◆ Rooftop stage — Day 1</h3><p>Doors 20:00. Badge = entry, +1 allowed.</p><ul><li><b>20:30</b> — Vinyl set · DJ Umida</li><li><b>22:00</b> — Live electronica · Moonlane</li><li><b>23:30</b> — Closing · fireworks</li></ul></div>
-<div class="vcard"><h3>◆ Food &amp; drink</h3><p>All included with any pass, even Day pass.</p><ul><li><b>6 trucks</b> — plov, vegan, burgers</li><li><b>Craft bar</b> — local brews + mocktails</li><li><b>Coffee</b> — bottomless till midnight</li></ul></div>
-</div>
-<div class="faqc">
-<h2>Code of conduct</h2>
-<p style="color:var(--mut);font-size:13.5px;margin-bottom:12px">FutureConf is for everyone. Harassment of any kind is not tolerated — report to any volunteer in a purple tee or mail conduct@futureconf.io.</p>
-<details open><summary>Be kind, be curious</summary><p>Critique ideas, not people. Assume good intent, ask before photographing.</p></details>
-<details><summary>Accessible for all</summary><p>Step-free venue, live captions, quiet room on level 2, childcare on Day 2–3.</p></details>
-<details><summary>COVID &amp; health</summary><p>Masks available at every entrance. Stay home if sick — recordings included.</p></details>
-<details><summary>Press policy</summary><p>Badge required. Off-record conversations stay off-record, no exceptions.</p></details>
-</div>
-<div class="faqc">
-<h2>FAQ</h2>
-<details open><summary>Can I get a refund?</summary><p>Yes — full refund until Sep 1, 50% until Oct 1.</p></details>
-<details><summary>Are talks recorded?</summary><p>Yes, all Pro holders get recordings within a week.</p></details>
-<details><summary>Is there a student discount?</summary><p>50% off with student ID, plus 100 free grants.</p></details>
-<details><summary>Language of talks?</summary><p>English with live Uzbek / Russian subtitles.</p></details>
-</div>
-<footer>FutureConf 2026 · hello@futureconf.io · refundable until Sep 1</footer>
-</div>
-<div class="modal" id="modal">
-<div class="box">
+<div class="modal" id="modal"><div class="mbox">
 <h3 id="mt">Pro Pass</h3>
-<p style="color:#666;font-size:13px">Checkout demo — no charge.</p>
+<p>Reserve in 20 seconds — pay at the door or by card. Confirmation by email.</p>
 <input id="nm" placeholder="Full name">
 <input id="em" placeholder="Email">
 <select><option>1 ticket</option><option>2 tickets</option><option>Team ×5</option></select>
-<button class="btn" onclick="pay()">Pay →</button>
+<button class="btn" style="width:100%;margin-top:10px" onclick="pay()">Pay →</button>
 <button class="btn ghost" style="width:100%;margin-top:8px;color:#333" onclick="closeM()">Cancel</button>
-</div>
-</div>
+</div></div>
 <script>
 var data={
 1:[["09:00","Opening keynote — Design in the AI era","A. Karimova · Main hall",1],["11:00","Motion systems that scale","J. Miller · Room A",0],["14:00","Type workshop (hands-on)","D. Rossi · Lab 2",0],["16:30","Panel: hiring designers","All speakers · Main hall",0]],
@@ -481,13 +522,15 @@ document.getElementById('slots').addEventListener('click',function(e){
 if(!e.target.classList.contains('go'))return;
 e.target.classList.toggle('add');
 var on=e.target.classList.contains('add');
-e.target.textContent=on?'✓ Added':'＋ My agenda';
+e.target.textContent=on?'✓ Added':'+ My agenda';
 mine+=on?1:-1;document.getElementById('mine').textContent=mine;
 });
 function openM(t){document.getElementById('mt').textContent=t;document.getElementById('modal').classList.add('show');}
 function closeM(){document.getElementById('modal').classList.remove('show');}
 function pay(){
 var n=document.getElementById('nm').value||'Guest';
+var em=document.getElementById('em').value;
+if(em&&em.indexOf('@')<0){alert('Enter a valid email');return;}
 alert('Thanks '+n+'! Demo ticket reserved.');
 closeM();
 }
@@ -502,58 +545,47 @@ document.getElementById('s').textContent=String(s).padStart(2,'0');
 }
 tick();setInterval(tick,1000);
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
 <style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
 
-  <script src="../api-runtime.js"></script>
+.ceo-hub-floating-badge{
+position:fixed;
+bottom:22px;
+right:22px;
+z-index:99999;
+background:rgba(12,12,20,.88);
+backdrop-filter:blur(14px);
+border:1px solid rgba(233,196,106,.4);
+color:#f4f2ea!important;
+text-decoration:none!important;
+padding:8px 16px;
+border-radius:9999px;
+font-family:Inter,system-ui,sans-serif;
+font-size:12px;
+font-weight:700;
+display:inline-flex;
+align-items:center;
+gap:8px
+}
+
+.ceo-hub-floating-badge:hover{
+transform:translateY(-2px);
+border-color:#e9c46a;
+color:#fff!important
+}
+
+@media(max-width:640px){
+.ceo-hub-floating-badge{
+bottom:12px;
+right:12px;
+padding:6px 12px;
+font-size:11px
+}
+
+}
+
+</style>
+<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
+<a href="../index.html" class="ceo-hub-floating-badge">◈ 66 Projects Hub <span style="font-size:10px;background:rgba(233,196,106,.18);border:1px solid rgba(233,196,106,.3);color:#e9c46a;padding:1px 6px;border-radius:99px">CEO·LAB</span></a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>

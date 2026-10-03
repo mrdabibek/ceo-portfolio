@@ -1084,6 +1084,7 @@ section {
   border-radius: 16px;
   font-size: 14px;
   line-height: 1.5;
+  white-space: pre-line;
 }
 .bot {
   background: #171724;
@@ -1298,6 +1299,43 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+/* FAQ (details-driven, no JS required) */
+.faq {
+  max-width: 860px;
+  margin: 26px auto 0;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+}
+.faq details {
+  padding: 20px 26px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  transition: background 0.3s ease;
+}
+.faq details:last-child { border-bottom: 0; }
+.faq details[open] { background: rgba(233, 196, 106, 0.05); }
+.faq summary {
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before {
+  content: "+";
+  color: var(--gold);
+  font-size: 20px;
+  font-weight: 800;
+  transition: transform 0.3s ease;
+}
+.faq details[open] summary::before { transform: rotate(45deg); }
+.faq p { color: var(--text-dim); margin-top: 10px; font-size: 14.5px; }
+
 /* Animations */
 .rv {
   opacity: 0;
@@ -1331,4 +1369,19 @@ footer {
     height: 96vh;
     border-radius: 16px;
   }
+}
+
+/* Touch + reduced-motion polish */
+@media (hover: none) {
+  #cursor, #cdot { display: none; }
+  .btn:hover, .ghost:hover { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+  .rv { opacity: 1; transform: none; }
+}
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }

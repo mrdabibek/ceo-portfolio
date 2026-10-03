@@ -3,694 +3,807 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JULES KRAMER — Full-Stack Developer</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Archivo:wght@500;700;900&display=swap" rel="stylesheet">
+<title>DAN CARTER — Design Engineer &amp; Freelancer</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+
 * {
-margin:0;
-padding:0;
-box-sizing:border-box
+  margin:0;
+  padding:0;
+  box-sizing:border-box
 }
 :root {
---bg:#f2f0e9;
---ink:#111;
---acc:#ff4d00;
---lime:#d7ff3e;
---pink:#ffb3e6;
---cyan:#9be8ff
+  --paper:#f2efe6;
+  --ink:#111;
+  --red:#ff3d2e;
+  --blue:#2b3bff;
+  --yel:#ffd02e;
+  --grn:#0fa968
 }
 body {
-background:var(--bg);
-color:var(--ink);
-font-family:'Space Mono',monospace;
-font-size:15px
+  background:var(--paper);
+  color:var(--ink);
+  font-family:Archivo,sans-serif;
+  overflow-x:hidden
 }
-h1,h2,h3,.big {
-font-family:Archivo,sans-serif;
-font-weight:900;
-text-transform:uppercase
+body.inv {
+  --paper:#111;
+  --ink:#f2efe6
+}
+body.inv .card,body.inv .box,body.inv .win {
+  border-color:#f2efe6
+}
+.mono {
+  font-family:'Space Mono',monospace
 }
 .wrap {
-max-width:1100px;
-margin:auto;
-padding:0 20px
+  max-width:1140px;
+  margin:auto;
+  padding:0 20px
 }
-/* header */
+.tick {
+  background:var(--ink);
+  color:var(--paper);
+  overflow:hidden;
+  white-space:nowrap;
+  padding:9px 0;
+  font-family:'Space Mono',monospace;
+  font-size:12px
+}
+body.inv .tick {
+  background:var(--red);
+  color:#111
+}
+.tick span {
+  display:inline-block;
+  animation:mq 20s linear infinite;
+  padding-right:30px
+}
+@keyframes mq {
+  to {
+  transform:translateX(-50%)
+}
+}
 header {
-border-bottom:4px solid var(--ink);
-background:var(--bg);
-position:sticky;
-top:0;
-z-index:50
+  border-bottom:3px solid var(--ink)
+}
+body.inv header {
+  border-color:#f2efe6
 }
 .hd {
-max-width:1140px;
-margin:auto;
-display:flex;
-align-items:center;
-gap:16px;
-padding:14px 20px
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 20px
 }
 .logo {
-background:var(--ink);
-color:var(--lime);
-font-weight:700;
-padding:8px 14px;
-font-size:15px
+  font-weight:900;
+  font-size:20px;
+  background:var(--ink);
+  color:var(--paper);
+  padding:6px 12px
+}
+body.inv .logo {
+  background:var(--red);
+  color:#111
 }
 nav {
-display:flex;
-gap:4px;
-margin-left:8px
+  display:flex;
+  gap:20px
 }
 nav a {
-color:var(--ink);
-text-decoration:none;
-font-weight:700;
-font-size:13px;
-padding:8px 14px;
-border:2px solid transparent
+  color:var(--ink);
+  text-decoration:none;
+  font-weight:700;
+  font-size:13px;
+  text-transform:uppercase
 }
-nav a:hover { border-color:var(--ink); background:var(--lime) }
-.hbtn {
-margin-left:auto;
-background:var(--acc);
-color:#fff;
-border:3px solid var(--ink);
-padding:10px 20px;
-font-family:'Space Mono';
-font-weight:700;
-cursor:pointer;
-box-shadow:4px 4px 0 var(--ink);
-font-size:13px
+nav a:hover {
+  background:var(--yel);
+  padding:0 4px
 }
-.hbtn:hover { transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink) }
-/* hero */
+.hbtns {
+  display:flex;
+  gap:8px;
+  align-items:center
+}
+.sqbtn {
+  border:3px solid var(--ink);
+  background:#fff;
+  color:#111;
+  padding:9px 16px;
+  font-weight:900;
+  font-size:12px;
+  cursor:pointer;
+  font-family:Archivo;
+  text-transform:uppercase;
+  box-shadow:4px 4px 0 var(--ink)
+}
+body.inv .sqbtn {
+  border-color:#f2efe6;
+  background:#111;
+  color:#f2efe6;
+  box-shadow:4px 4px 0 #f2efe6
+}
+.sqbtn:active {
+  transform:translate(3px,3px);
+  box-shadow:1px 1px 0 var(--ink)
+}
+.burger {
+  display:none;
+  background:none;
+  border:0;
+  font-size:24px;
+  cursor:pointer;
+  color:var(--ink)
+}
 .hero {
-border-bottom:4px solid var(--ink);
-background:var(--lime);
-padding:60px 20px 50px;
-position:relative;
-overflow:hidden
+  max-width:1200px;
+  margin:auto;
+  padding:56px 20px 40px;
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:36px;
+  align-items:center
 }
-.hero .wrap { position:relative }
-.hero h1 { font-size:clamp(44px,8vw,96px); line-height:.92 }
-.hero h1 .out { color:transparent; -webkit-text-stroke:3px var(--ink) }
+.tag {
+  display:inline-block;
+  border:3px solid var(--ink);
+  padding:7px 16px;
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  font-weight:700;
+  background:var(--grn);
+  color:#fff;
+  margin-bottom:18px;
+  box-shadow:4px 4px 0 var(--ink)
+}
+body.inv .tag {
+  border-color:#f2efe6
+}
+.hero h1 {
+  font-size:clamp(52px,8vw,110px);
+  font-weight:900;
+  line-height:.92;
+  letter-spacing:-2px;
+  text-transform:uppercase
+}
+.hero h1 span {
+  background:var(--yel);
+  padding:0 12px;
+  display:inline-block;
+  border:3px solid var(--ink);
+  transform:rotate(-2deg)
+}
+.hero h1 em {
+  font-style:normal;
+  color:var(--red)
+}
 .hero p {
-max-width:560px;
-margin:20px 0;
-font-weight:400;
-line-height:1.7;
-background:var(--bg);
-border:3px solid var(--ink);
-padding:16px 20px;
-box-shadow:6px 6px 0 var(--ink)
+  margin:22px 0;
+  font-size:16px;
+  line-height:1.7;
+  max-width:520px
+}
+.hero p b {
+  background:var(--ink);
+  color:var(--paper);
+  padding:0 6px
 }
 .hrow {
-display:flex;
-gap:12px;
-flex-wrap:wrap
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap
 }
-.btn {
-border:3px solid var(--ink);
-padding:14px 28px;
-font-family:'Space Mono';
-font-weight:700;
-cursor:pointer;
-box-shadow:5px 5px 0 var(--ink);
-font-size:14px
+.stats {
+  display:flex;
+  border:3px solid var(--ink);
+  background:#fff;
+  margin-top:28px;
+  box-shadow:6px 6px 0 var(--ink)
 }
-.btn:hover { transform:translate(2px,2px); box-shadow:3px 3px 0 var(--ink) }
-.btn.b { background:var(--ink); color:#fff }
-.btn.w { background:#fff; color:var(--ink) }
-.sticker {
-position:absolute;
-top:30px;
-right:4%;
-background:var(--acc);
-color:#fff;
-font-weight:700;
-padding:14px 20px;
-border:3px solid var(--ink);
-transform:rotate(8deg);
-box-shadow:5px 5px 0 var(--ink)
+body.inv .stats {
+  background:#111
 }
-/* marquee */
-.mq {
-background:var(--ink);
-color:var(--lime);
-overflow:hidden;
-white-space:nowrap;
-padding:12px 0;
-font-weight:700;
-border-bottom:4px solid var(--ink)
+.stats div {
+  flex:1;
+  padding:16px 10px;
+  text-align:center;
+  border-left:3px solid var(--ink)
 }
-.mq span { display:inline-block; animation:mq 22s linear infinite }
-@keyframes mq { to { transform:translateX(-50%) }
+body.inv .stats div {
+  border-color:#f2efe6
 }
-/* sections */
-section { padding:56px 0 }
+.stats div:first-child {
+  border:none
+}
+.stats b {
+  font-size:30px;
+  font-weight:900;
+  display:block
+}
+.stats span {
+  font-family:'Space Mono',monospace;
+  font-size:10px
+}
+.photo {
+  border:3px solid var(--ink);
+  box-shadow:8px 8px 0 var(--red);
+  position:relative;
+  background:#fff
+}
+.photo img {
+  width:100%;
+  height:480px;
+  object-fit:cover;
+  display:block;
+  filter:contrast(1.1)
+}
+.photo .cap {
+  border-top:3px solid var(--ink);
+  padding:12px 16px;
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  display:flex;
+  justify-content:space-between;
+  background:var(--yel);
+  color:#111
+}
+section {
+  padding:60px 0
+}
 .st {
-display:flex;
-align-items:center;
-gap:14px;
-margin-bottom:28px;
-flex-wrap:wrap
+  margin-bottom:28px;
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px
 }
-.st h2 { font-size:clamp(30px,4.5vw,52px) }
-.st .n {
-background:var(--acc);
-color:#fff;
-padding:4px 14px;
-font-size:20px;
-border:3px solid var(--ink)
+.st h2 {
+  font-size:clamp(36px,5vw,64px);
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-1px
 }
-.st p { width:100%; color:#444 }
-/* stack */
+.st h2 span {
+  color:var(--red)
+}
+.st p {
+  font-family:'Space Mono',monospace;
+  font-size:13px
+}
 .stack {
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:12px
+  border:3px solid var(--ink);
+  background:#fff;
+  box-shadow:6px 6px 0 var(--ink)
 }
-.sk {
-background:#fff;
-border:3px solid var(--ink);
-padding:20px 14px;
-text-align:center;
-box-shadow:5px 5px 0 var(--ink);
-transition:.15s
+body.inv .stack {
+  background:#111
 }
-.sk:hover {
-background:var(--pink);
-transform:translate(-2px,-2px);
-box-shadow:7px 7px 0 var(--ink)
+.srow {
+  display:grid;
+  grid-template-columns:60px 1fr auto;
+  gap:16px;
+  align-items:center;
+  padding:18px 22px;
+  border-bottom:3px solid var(--ink)
 }
-.sk b { display:block; font-size:15px }
-.sk small { color:#555; font-size:12px }
-.sk .bar {
-height:10px;
-border:2px solid var(--ink);
-margin-top:10px;
-background:var(--bg)
+body.inv .srow {
+  border-color:#f2efe6
 }
-.sk .bar i {
-display:block;
-height:100%;
-background:var(--acc)
+.srow:last-child {
+  border:none
 }
-/* projects */
-.proj {
-border:4px solid var(--ink);
-background:#fff;
-margin-bottom:20px;
-box-shadow:8px 8px 0 var(--ink);
-display:grid;
-grid-template-columns:1fr 1.4fr
+.srow .n {
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  background:var(--ink);
+  color:var(--paper);
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center
 }
-.proj .ph {
-font-size:90px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-right:4px solid var(--ink);
-min-height:220px
+.srow h3 {
+  font-size:18px
 }
-.proj .tx { padding:28px }
-.proj .tx small {
-background:var(--ink);
-color:var(--lime);
-padding:4px 12px;
-font-size:11px;
-font-weight:700
+.srow p {
+  font-size:13px;
+  color:#666;
+  font-family:'Space Mono',monospace
 }
-.proj h3 { font-size:26px; margin:12px 0 8px }
-.proj p {
-color:#333;
-line-height:1.7;
-font-size:14px;
-margin-bottom:12px
+body.inv .srow p {
+  color:#aaa
 }
-.tags {
-display:flex;
-gap:8px;
-flex-wrap:wrap;
-margin-bottom:16px
+.bars {
+  display:flex;
+  gap:4px;
+  margin-top:8px
 }
-.tags span {
-border:2px solid var(--ink);
-padding:3px 12px;
-font-size:12px;
-font-weight:700;
-background:var(--bg)
+.bars i {
+  width:34px;
+  height:10px;
+  border:2px solid var(--ink);
+  display:block
 }
-.proj .links { display:flex; gap:10px }
-.proj .links button { flex:1 }
-/* timeline */
-.tl { border-left:4px solid var(--ink); margin-left:10px }
-.job {
-background:#fff;
-border:3px solid var(--ink);
-margin:0 0 16px 26px;
-padding:22px;
-position:relative;
-box-shadow:5px 5px 0 var(--ink)
+.bars i.f {
+  background:var(--ink)
 }
-.job::before {
-content:'';
-position:absolute;
-left:-38px;
-top:24px;
-width:16px;
-height:16px;
-background:var(--acc);
-border:3px solid var(--ink);
-border-radius:50%
+.srow:nth-child(2n) .bars i.f {
+  background:var(--blue)
 }
-.job .yr {
-background:var(--cyan);
-border:2px solid var(--ink);
-padding:2px 12px;
-font-size:12px;
-font-weight:700;
-display:inline-block;
-margin-bottom:10px
+.srow:nth-child(3n) .bars i.f {
+  background:var(--red)
 }
-.job h3 { font-size:19px; text-transform:none }
-.job small { color:#555; font-weight:700 }
-.job p {
-font-size:13.5px;
-color:#333;
-margin-top:8px;
-line-height:1.7
+.filters {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:24px
 }
-/* services/pricing */
-.rates {
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:14px
+.f {
+  border:3px solid var(--ink);
+  background:#fff;
+  padding:10px 20px;
+  font-weight:900;
+  font-size:12px;
+  cursor:pointer;
+  font-family:Archivo;
+  text-transform:uppercase;
+  color:var(--ink)
 }
-.rate {
-border:3px solid var(--ink);
-background:#fff;
-padding:28px 24px;
-box-shadow:6px 6px 0 var(--ink)
+body.inv .f {
+  background:#111;
+  color:#f2efe6;
+  border-color:#f2efe6
 }
-.rate.hot { background:var(--ink); color:#fff }
-.rate h3 { font-size:18px }
-.rate .pr {
-font-family:Archivo;
-font-size:38px;
-font-weight:900;
-margin:10px 0
+.f.on,.f:hover {
+  background:var(--ink);
+  color:var(--paper)
 }
-.rate.hot .pr { color:var(--lime) }
-.rate ul { list-style:none; margin:14px 0 20px }
-.rate li {
-padding:6px 0;
-font-size:13.5px;
-border-bottom:2px dashed #99999955
+body.inv .f.on {
+  background:var(--red);
+  border-color:var(--red);
+  color:#111
 }
-/* testimonials */
-.tests {
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:14px
+.grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:24px
 }
-.test {
-border:3px solid var(--ink);
-background:var(--pink);
-padding:24px;
-box-shadow:5px 5px 0 var(--ink)
+.card {
+  border:3px solid var(--ink);
+  background:#fff;
+  box-shadow:6px 6px 0 var(--ink);
+  transition:.2s
 }
-.test:nth-child(2) { background:var(--cyan) }
-.test:nth-child(3) { background:var(--lime) }
-.test p {
-font-size:14px;
-line-height:1.7;
-margin-bottom:12px
+body.inv .card {
+  background:#111
 }
-.test b { font-size:13px }
-/* contact */
+.card:hover {
+  transform:translate(-2px,-2px);
+  box-shadow:9px 9px 0 var(--blue)
+}
+.card img {
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  border-bottom:3px solid var(--ink)
+}
+.cb {
+  padding:22px
+}
+.cb .k {
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  background:var(--blue);
+  color:#fff;
+  padding:4px 10px;
+  display:inline-block;
+  margin-bottom:12px
+}
+.cb h3 {
+  font-size:24px;
+  font-weight:900;
+  margin-bottom:8px
+}
+.cb p {
+  font-size:14px;
+  line-height:1.65;
+  color:#444;
+  margin-bottom:14px
+}
+body.inv .cb p {
+  color:#bbb
+}
+.cb .links {
+  display:flex;
+  gap:10px
+}
+.cb button {
+  flex:1;
+  border:3px solid var(--ink);
+  padding:10px;
+  font-weight:900;
+  font-size:12px;
+  cursor:pointer;
+  font-family:Archivo;
+  text-transform:uppercase;
+  background:var(--yel);
+  color:#111
+}
+.cb button:last-child {
+  background:#fff;
+  color:var(--ink)
+}
+body.inv .cb button:last-child {
+  background:#111;
+  color:#f2efe6;
+  border-color:#f2efe6
+}
+.tl {
+  border:3px solid var(--ink);
+  background:#fff;
+  box-shadow:6px 6px 0 var(--ink)
+}
+body.inv .tl {
+  background:#111
+}
+.ti {
+  padding:20px 24px;
+  border-bottom:3px solid var(--ink);
+  display:grid;
+  grid-template-columns:130px 1fr auto;
+  gap:16px;
+  align-items:center
+}
+body.inv .ti {
+  border-color:#f2efe6
+}
+.ti:last-child {
+  border:none
+}
+.ti .yr {
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  background:var(--red);
+  color:#fff;
+  padding:5px 10px;
+  text-align:center;
+  font-size:12px
+}
+.ti h3 {
+  font-size:17px
+}
+.ti p {
+  font-size:13px;
+  color:#666;
+  font-family:'Space Mono',monospace
+}
+body.inv .ti p {
+  color:#aaa
+}
+.svc {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px
+}
+.box {
+  border:3px solid var(--ink);
+  padding:30px 24px;
+  background:#fff;
+  box-shadow:6px 6px 0 var(--ink)
+}
+body.inv .box {
+  background:#111
+}
+.box:nth-child(1) {
+  background:var(--yel);
+  color:#111
+}
+.box:nth-child(2) {
+  background:var(--blue);
+  color:#fff
+}
+.box:nth-child(3) {
+  background:var(--grn);
+  color:#fff
+}
+.box h3 {
+  font-size:22px;
+  font-weight:900;
+  margin-bottom:8px;
+  text-transform:uppercase
+}
+.box .pr {
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  font-size:15px;
+  margin-bottom:12px
+}
+.box p {
+  font-size:14px;
+  line-height:1.65;
+  margin-bottom:16px
+}
+.box button {
+  width:100%;
+  border:3px solid currentColor;
+  background:transparent;
+  color:inherit;
+  padding:11px;
+  font-weight:900;
+  cursor:pointer;
+  font-family:Archivo;
+  text-transform:uppercase;
+  font-size:12px
+}
 .contact {
-border:4px solid var(--ink);
-background:var(--ink);
-color:#fff;
-padding:48px 36px;
-box-shadow:8px 8px 0 var(--acc)
+  border:3px solid var(--ink);
+  background:var(--ink);
+  color:var(--paper);
+  box-shadow:8px 8px 0 var(--red);
+  display:grid;
+  grid-template-columns:1fr 1fr
 }
-.contact h2 { font-size:clamp(30px,4.5vw,54px) }
-.contact h2 .y { color:var(--lime) }
-.contact p { opacity:.7; margin:12px 0 22px }
-.cform {
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px
+body.inv .contact {
+  border-color:#f2efe6
 }
-.cform input,.cform textarea {
-border:3px solid #fff;
-background:#222;
-color:#fff;
-padding:13px 16px;
-font-family:'Space Mono';
-font-size:14px;
-width:100%
+.cinfo {
+  padding:44px 40px
 }
-.cform textarea { grid-column:1/-1 }
-.cform button {
-grid-column:1/-1;
-background:var(--lime);
-color:var(--ink)
+.cinfo h2 {
+  font-size:clamp(34px,4.5vw,56px);
+  font-weight:900;
+  text-transform:uppercase;
+  line-height:1
 }
-/* faq */
-.faq { margin-top:44px }
-.qa {
-border:3px solid var(--ink);
-background:#fff;
-margin-bottom:10px;
-box-shadow:4px 4px 0 var(--ink)
+.cinfo h2 span {
+  color:var(--yel)
 }
-.qa button {
-width:100%;
-background:none;
-border:none;
-padding:16px 20px;
-display:flex;
-justify-content:space-between;
-cursor:pointer;
-font-weight:700;
-font-size:15px;
-font-family:'Space Mono';
-text-align:left
+.cinfo p {
+  margin:16px 0;
+  font-family:'Space Mono',monospace;
+  font-size:13px;
+  line-height:1.8
 }
-.qa p {
-display:none;
-padding:0 20px 18px;
-font-size:14px;
-line-height:1.7;
-color:#333
+.mail {
+  border:3px solid var(--paper);
+  padding:14px 18px;
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:18px 0;
+  cursor:pointer;
+  background:none;
+  color:var(--paper);
+  font-size:14px;
+  width:100%
 }
-.qa p.open { display:block }
-/* footer */
+.mail:hover {
+  background:var(--yel);
+  color:#111;
+  border-color:var(--yel)
+}
+form.cf {
+  padding:44px 40px;
+  background:var(--paper);
+  color:#111;
+  border-left:3px solid var(--paper)
+}
+label {
+  display:block;
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  font-weight:700;
+  margin:12px 0 6px
+}
+input,textarea,select {
+  width:100%;
+  border:3px solid #111;
+  padding:12px;
+  font-family:'Space Mono',monospace;
+  font-size:14px;
+  background:#fff;
+  color:#111
+}
+input:focus,textarea:focus {
+  outline:3px solid var(--blue)
+}
 footer {
-border-top:4px solid var(--ink);
-padding:30px 20px;
-text-align:center;
-font-size:13px;
-background:var(--bg)
+  border-top:3px solid var(--ink);
+  padding:34px 0;
+  margin-top:60px
 }
-#toast {
-position:fixed;
-bottom:26px;
-left:50%;
-transform:translateX(-50%) translateY(80px);
-background:var(--ink);
-color:var(--lime);
-padding:13px 28px;
-font-weight:700;
-transition:.3s;
-z-index:120;
-border:3px solid var(--lime)
+body.inv footer {
+  border-color:#f2efe6
 }
-#toast.show { transform:translateX(-50%) }
-@media(max-width:860px) { .proj { grid-template-columns:1fr }
-.proj .ph {
-border-right:none;
-border-bottom:4px solid var(--ink);
-min-height:150px
+.fbot {
+  max-width:1140px;
+  margin:auto;
+  padding:0 20px;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+  font-family:'Space Mono',monospace;
+  font-size:12px
 }
-.rates { grid-template-columns:1fr }
-.cform { grid-template-columns:1fr }
-nav { display:none }
-.sticker { display:none }
+.toast {
+  position:fixed;
+  bottom:26px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--ink);
+  color:var(--paper);
+  border:3px solid var(--red);
+  padding:13px 28px;
+  font-family:'Space Mono',monospace;
+  font-size:13px;
+  z-index:400;
+  transition:.3s;
+  opacity:0;
+  font-weight:700
 }
+.toast.show {
+  transform:translateX(-50%);
+  opacity:1
+}
+.rv {
+  opacity:0;
+  transform:translateY(24px);
+  transition:.6s
+}
+.rv.vis {
+  opacity:1;
+  transform:none
+}
+@media(max-width:960px) {
+  .hero,.contact {
+  grid-template-columns:1fr
+}
+.svc {
+  grid-template-columns:1fr
+}
+form.cf {
+  border-left:0;
+  border-top:3px solid var(--paper)
+}
+nav {
+  display:none
+}
+.burger {
+  display:block
+}
+.ti {
+  grid-template-columns:1fr
+}
+}
+@media(max-width:600px) {
+  .grid {
+  grid-template-columns:1fr
+}
+.stats b {
+  font-size:22px
+}
+}
+.mnav {
+  display:none;
+  border-bottom:3px solid var(--ink);
+  padding:20px;
+  flex-direction:column;
+  gap:12px;
+  background:var(--paper)
+}
+.mnav.open {
+  display:flex
+}
+.mnav a {
+  text-decoration:none;
+  color:var(--ink);
+  font-size:22px;
+  font-weight:900;
+  text-transform:uppercase
+}
+
 </style>
 </head>
 <body>
-<header>
-<div class="hd">
-<div class="logo">JK.DEV</div>
-<nav>
-<a href="#stack">STACK</a>
-<a href="#work">WORK*</a>
-<a href="#cv">CV</a>
-<a href="#rates">RATES</a>
-</nav>
-<button class="hbtn" onclick="scrollToId('contact')">HIRE ME →</button>
-</div>
-</header>
+<div class="tick"><span>OPEN FOR PROJECTS ✦ 12 YRS EXPERIENCE ✦ 90+ SHIPPED ✦ NO AGENCIES, JUST ME ✦ OPEN FOR PROJECTS ✦ 12 YRS EXPERIENCE ✦&nbsp;</span><span>OPEN FOR PROJECTS ✦ 12 YRS EXPERIENCE ✦ 90+ SHIPPED ✦ NO AGENCIES, JUST ME ✦ OPEN FOR PROJECTS ✦ 12 YRS EXPERIENCE ✦&nbsp;</span></div>
+<header><div class="hd">
+<div class="logo">DC©</div>
+<nav><a href="#stack">Stack</a><a href="#work">Work</a><a href="#exp">Career</a><a href="#svc">Rates</a><a href="#contact">Contact</a></nav>
+<div class="hbtns"><button class="sqbtn" id="invBtn">Invert*</button><a href="#contact"><button class="sqbtn" style="background:var(--red);color:#fff;border-color:var(--ink)">Hire me</button></a><button class="burger" id="burger">☰</button></div>
+</div></header>
+<div class="mnav" id="mnav"><a href="#stack">Stack</a><a href="#work">Work</a><a href="#exp">Career</a><a href="#svc">Rates</a><a href="#contact">Contact</a></div>
 <div class="hero">
-<div class="wrap">
-<div class="sticker">★ OPEN FOR Q3</div>
-<h1>SHIP FAST.<br>
-<span class="out">NO MEETINGS</span>
-<br>ABOUT MEETINGS.</h1>
-<p>I'm Jules — full-stack developer, 8 yrs. I turn Figma files and napkin sketches into production apps. 60+ projects, 0 missed deadlines that were my fault. (*One was a volcano. Ask me.)</p>
-<div class="hrow">
-<button class="btn b" onclick="scrollToId('work')">SEE WORK* ↓</button>
-<button class="btn w" onclick="toast('CV downloaded — check your downloads folder')">DOWNLOAD CV ⬇</button>
+<div><div class="tag">● AVAILABLE FROM NOV 2026 — <span id="clock" class="mono"></span> LOCAL</div>
+<h1>I build <span>loud</span> websites for <em>quiet</em> budgets.</h1>
+<p>I'm <b>Dan Carter</b> — design engineer, 12 years in. I take founders from "we need a site" to launched-and-converting in 2–4 weeks. No meetings about meetings.</p>
+<div class="hrow"><a href="#work"><button class="sqbtn" style="background:var(--ink);color:var(--paper)">See the work ↓</button></a><a href="#contact"><button class="sqbtn">Get a quote</button></a></div>
+<div class="stats"><div><b>90+</b><span>PROJECTS</span></div><div><b>12y</b><span>EXPERIENCE</span></div><div><b>40+</b><span>5-STAR REVIEWS</span></div><div><b>48h</b><span>REPLY TIME*</span></div></div>
+<p class="mono" style="font-size:11px;margin-top:10px">*usually 4h. 48h if I'm kayaking.</p></div>
+<div class="photo"><img src="https://picsum.photos/seed/dan-portrait/600/700" alt="Dan Carter"><div class="cap"><span>FIG.01 — THE FREELANCER</span><span>EST. 2014</span></div></div>
 </div>
+<section id="stack" style="padding-top:20px"><div class="wrap">
+<div class="st rv"><h2>What I <span>wield</span></h2><p>[01] — HONEST SKILL BARS</p></div>
+<div class="stack rv">
+<div class="srow"><div class="n">FE</div><div><h3>Frontend — React / Next.js / TypeScript</h3><div class="bars" data-l="5"></div></div><p>DAILY DRIVER</p></div>
+<div class="srow"><div class="n">BE</div><div><h3>Backend — Node / Postgres / APIs</h3><div class="bars" data-l="4"></div></div><p>SOLID</p></div>
+<div class="srow"><div class="n">UI</div><div><h3>Design — Figma / Motion / 3D</h3><div class="bars" data-l="4"></div></div><p>TASTEFUL*</p></div>
+<div class="srow"><div class="n">MO</div><div><h3>Mobile — React Native / Flutter</h3><div class="bars" data-l="3"></div></div><p>DANGEROUS</p></div>
+<div class="srow"><div class="n">AI</div><div><h3>AI integration — RAG / Agents / APIs</h3><div class="bars" data-l="4"></div></div><p>HOT &amp; FRESH</p></div>
 </div>
+<p class="mono" style="font-size:11px;margin-top:10px">*my mom disagrees about the tasteful part.</p>
+</div></section>
+<section id="work" style="padding-top:0"><div class="wrap">
+<div class="st rv"><h2>Selected <span>work</span></h2><p>[02] — CLICK TO FILTER</p></div>
+<div class="filters" id="filters"></div>
+<div class="grid" id="grid"></div>
+</div></section>
+<section id="exp" style="padding-top:0"><div class="wrap">
+<div class="st rv"><h2>Where I've <span>been</span></h2><p>[03] — NO GAPS, NO LIES</p></div>
+<div class="tl rv">
+<div class="ti"><span class="yr">2021—NOW</span><div><h3>Independent design engineer</h3><p>90+ client projects · SaaS, e-commerce, AI tools</p></div><span class="mono" style="font-size:12px">★ 5.0 RATED</span></div>
+<div class="ti"><span class="yr">2018—21</span><div><h3>Senior frontend — Brightline (fintech)</h3><p>Led dashboard rebuild · 2M users</p></div><span class="mono" style="font-size:12px">BERLIN</span></div>
+<div class="ti"><span class="yr">2015—18</span><div><h3>Web developer — Studio North</h3><p>30+ agency sites shipped</p></div><span class="mono" style="font-size:12px">LONDON</span></div>
+<div class="ti"><span class="yr">2014—15</span><div><h3>Freelance beginnings</h3><p>WordPress mines. We don't talk about it.</p></div><span class="mono" style="font-size:12px">ANYWHERE</span></div>
 </div>
-<div class="mq">
-<span>&nbsp;★ PYTHON ★ REACT ★ GO ★ FLUTTER ★ POSTGRES ★ DOCKER ★ GODOT ★ THREE.JS ★ PYTHON ★ REACT ★ GO ★ FLUTTER ★ POSTGRES ★ DOCKER ★ GODOT ★ THREE.JS&nbsp;</span>
+</div></section>
+<section id="svc" style="padding-top:0"><div class="wrap">
+<div class="st rv"><h2>Hire me <span>like this</span></h2><p>[04] — FIXED PRICES. NO HOURLY MAZE.</p></div>
+<div class="svc">
+<div class="box rv"><h3>Landing page</h3><div class="pr">FROM $1,200 / 1 WEEK</div><p>One killer page: copy polish, design, build, analytics. Perfect for launches &amp; validation.</p><button onclick="toast('Landing package noted — send details below')">PICK THIS →</button></div>
+<div class="box rv"><h3>Full website</h3><div class="pr">FROM $3,500 / 3 WEEKS</div><p>Multi-page site or marketing engine. CMS included so you can edit without me.</p><button onclick="toast('Website package noted — send details below')">PICK THIS →</button></div>
+<div class="box rv"><h3>Product sprint</h3><div class="pr">FROM $6,000 / 4 WEEKS</div><p>App UI + working frontend + API wiring. For founders who need momentum, not decks.</p><button onclick="toast('Sprint noted — send details below')">PICK THIS →</button></div>
 </div>
-<section id="stack">
-<div class="wrap">
-<div class="st">
-<span class="n">01</span>
-<h2>Weapons of choice</h2>
-<p>Honest bars. 100% = "I dream in it". 60% = "docs open, still fast".</p>
+</div></section>
+<section id="contact" style="padding-top:0"><div class="wrap">
+<div class="contact rv">
+<div class="cinfo"><h2>Say hi. <span>I reply.</span></h2><p>Currently booking: NOV–DEC 2026.<br>One slot left. Probably yours.</p>
+<button class="mail" id="mailBtn">hello@dancarter.dev <span>⧉ COPY</span></button>
+<p>Prefer forms? This one goes straight to my inbox. No newsletter trap.</p></div>
+<form class="cf" id="cForm" novalidate><label>YOUR NAME *</label><input id="cName" placeholder="Ada Lovelace">
+<label>EMAIL *</label><input id="cMail" type="email" placeholder="ada@analytical.engine">
+<label>PROJECT TYPE</label><select><option>Landing page ($1.2k+)</option><option>Full website ($3.5k+)</option><option>Product sprint ($6k+)</option><option>Something weird</option></select>
+<label>DETAILS *</label><textarea id="cMsg" rows="4" placeholder="What are we building? Timeline? Links help."></textarea>
+<button class="sqbtn" style="width:100%;margin-top:16px;background:var(--red);color:#fff" type="submit">SEND IT →</button></form>
 </div>
-<div class="stack" id="skills">
-</div>
-</div>
-</section>
-<section id="work" style="padding-top:0">
-<div class="wrap">
-<div class="st">
-<span class="n">02</span>
-<h2>Selected work*</h2>
-<p>*Selected = clients who paid on time and let me show it.</p>
-</div>
-<div id="projs">
-</div>
-</div>
-</section>
-<section id="cv" style="padding-top:0">
-<div class="wrap">
-<div class="st">
-<span class="n">03</span>
-<h2>CV, no fluff</h2>
-</div>
-<div class="tl">
-<div class="job">
-<span class="yr">2022 → NOW</span>
-<h3>Senior Full-Stack Dev — Freelance</h3>
-<small>REMOTE · 40+ CLIENTS</small>
-<p>SaaS dashboards, marketplaces, mobile apps. Average project: 6 weeks, 5 stars. Top Rated on Upwork 3 years running.</p>
-</div>
-<div class="job">
-<span class="yr">2020 → 2022</span>
-<h3>Lead Developer — OrbitPay</h3>
-<small>FINTECH · BERLIN</small>
-<p>Led 4 devs, rebuilt payments dashboard. Signup conversion +64%. Left because startups = chaos (loved it).</p>
-</div>
-<div class="job">
-<span class="yr">2018 → 2020</span>
-<h3>Frontend Dev — Studio Mono</h3>
-<small>AGENCY · AMSTERDAM</small>
-<p>30+ marketing sites. Learned that Comic Sans is never ironic. Learned WebGL. Kept WebGL.</p>
-</div>
-<div class="job">
-<span class="yr">2016 → 2018</span>
-<h3>Junior Dev — First job</h3>
-<small>ANYWHERE WITH WIFI</small>
-<p>WordPress mines. Survived. Vowed to learn proper engineering. Did.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="rates" style="padding-top:0">
-<div class="wrap">
-<div class="st">
-<span class="n">04</span>
-<h2>Rude? No. Rates? Yes.</h2>
-<p>No hourly billing theatre. Fixed quotes after a 30-min call. These are starting points.</p>
-</div>
-<div class="rates">
-<div class="rate">
-<h3>☕ SMALL FIX</h3>
-<div class="pr">$150+</div>
-<ul>
-<li>✓ Bug hunt &amp; squash</li>
-<li>✓ 48h turnaround</li>
-<li>✓ Loom walkthrough</li>
-<li>✓ 14-day bug warranty</li>
-</ul>
-<button class="btn w" style="width:100%" onclick="hire('Small fix')">BOOK FIX</button>
-</div>
-<div class="rate hot">
-<h3>🚀 PROJECT</h3>
-<div class="pr">$2,500+</div>
-<ul>
-<li>✓ MVP in 4–8 weeks</li>
-<li>✓ Design + code + deploy</li>
-<li>✓ Weekly demos</li>
-<li>✓ 30-day free support</li>
-</ul>
-<button class="btn" style="width:100%;background:var(--lime)" onclick="hire('Project')">START PROJECT</button>
-</div>
-<div class="rate">
-<h3>🤝 MONTHLY</h3>
-<div class="pr">$3,000/mo</div>
-<ul>
-<li>✓ ~80 hrs, your backlog</li>
-<li>✓ Same-day replies</li>
-<li>✓ Pause anytime</li>
-<li>✓ Docs included</li>
-</ul>
-<button class="btn w" style="width:100%" onclick="hire('Monthly')">GO MONTHLY</button>
-</div>
-</div>
-<div class="tests" style="margin-top:40px">
-<div class="test">
-<p>"Jules deleted 4,000 lines of our code and everything got faster. Hiring him felt like cheating."</p>
-<b>— ANNA K., CEO ORBITPAY</b>
-</div>
-<div class="test">
-<p>"Speaks human, ships Friday, documents everything. Our team still uses his README as the template."</p>
-<b>— MARC D., CTO PULSEFIT</b>
-</div>
-<div class="test">
-<p>"The volcano delay was real (Iceland, ash, no wifi). He still delivered early. Witchcraft."</p>
-<b>— SARA R., FOUNDER KIDDO</b>
-</div>
-</div>
-<div class="contact" id="contact" style="margin-top:44px">
-<h2>SAY HI. <span class="y">GET QUOTE IN 24H.</span>
-</h2>
-<p>Worst case: free advice + a meme. Best case: your project shipped. Currently booking August 2026.</p>
-<div class="cform">
-<input id="cn" placeholder="Your name">
-<input id="ce" type="email" placeholder="Email">
-<textarea id="cm" rows="4" placeholder="Project in 3 sentences: WHAT / WHEN / BUDGET">
-</textarea>
-<button class="btn" onclick="send()">SEND → (REPLIES IN 24H)</button>
-</div>
-</div>
-<div class="faq">
-<div class="st" style="margin-bottom:16px">
-<span class="n">05</span>
-<h2>FAQ (asked, answered)</h2>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Why no hourly rate? <span>+</span>
-</button>
-<p>Hourly billing rewards slowness. Fixed quotes reward shipping. You know the price before I type a character.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Do you design too? <span>+</span>
-</button>
-<p>Yes — clean, functional UI in Figma. For award-bait visuals I partner with a designer friend (she's expensive, worth it).</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Can you take over my half-built project? <span>+</span>
-</button>
-<p>Favourite kind of work. I audit first ($150, deducted from the project), then tell you honestly: rescue or rebuild.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Timezone &amp; communication? <span>+</span>
-</button>
-<p>GMT+5, overlapping EU mornings + US evenings. Async-first: Loom + Notion. Calls only when decisions need voices.</p>
-</div>
-</div>
-</div>
-</section>
-<footer>
-<b>JK.DEV</b> — built by hand, no page builders harmed · © 2026 · <span onclick="toast('No cookies. No tracking. Just vibes.')" style="text-decoration:underline;cursor:pointer">cookie policy: there are none</span>
-</footer>
-<div id="toast">
-</div>
+</div></section>
+<footer><div class="fbot"><span>© 2026 DAN CARTER — ALL RIGHTS RESERVED*</span><span>*SOME WRONGS TOO.</span><span>BUILT RAW. NO TEMPLATES.</span></div></footer>
+<div class="toast" id="toast"></div>
 <script>
-const SKILLS=[['Python',95,'APIs · bots · scrapers'],['React / Next',90,'dashboards · sites'],['Go',80,'backends · CLIs'],['Flutter',85,'iOS + Android'],['Postgres',88,'schemas that scale'],['Docker',82,'deploy & CI'],['Three.js',75,'WebGL moments'],['Godot',70,'2D games']];
-const sk=document.getElementById('skills'); SKILLS.forEach(([n,v,d])=>{
-const el=document.createElement('div');el.className='sk';el.innerHTML=`<b>${n} — ${v}%</b><small>${d}</small><div class="bar"><i style="width:${v}%"></i></div>`;sk.appendChild(el)}
-); const PROJS=[
-{
-ph:'💸',bg:'var(--lime)',tag:'FINTECH · 2025',t:'OrbitPay Dashboard',d:'Real-time payments dashboard: 40 charts, WebSocket updates, role-based access. 64% signup lift post-launch.',tags:['React','Go','Postgres','WebSocket']}
-, {
-ph:'🏋️',bg:'var(--pink)',tag:'MOBILE · 2024',t:'PulseFit App',d:'Flutter fitness app, 40k users. Offline-first workouts, Apple Health sync, 4.8★ on both stores.',tags:['Flutter','Firebase','HealthKit']}
-, {
-ph:'🤖',bg:'var(--cyan)',tag:'AI · 2024',t:'MediBook Assistant',d:'Appointment bot over WhatsApp for 14 clinics. No-shows −70%. Doctor-approved triage flow.',tags:['Python','OpenAI','WhatsApp API']}
-, {
-ph:'🛒',bg:'#fff',tag:'E-COMMERCE · 2023',t:'Bloom&Co Storefront',d:'Headless Shopify rebuild, 0.9s loads. Revenue +212% in one quarter. Confetti on checkout (optional).',tags:['Next.js','Shopify','Tailwind']}
-]; const pw=document.getElementById('projs');PROJS.forEach(p=>{
-const d=document.createElement('div');d.className='proj';d.innerHTML=`<div class="ph" style="background:${p.bg}">${p.ph}</div><div class="tx"><small>${p.tag}</small><h3>${p.t}</h3><p>${p.d}</p><div class="tags">${p.tags.map(t=>`<span>${
-t}
-</span>`).join('')}</div><div class="links"><button class="btn b" onclick="toast('Case study PDF on its way — leave email below')">CASE STUDY</button><button class="btn w" onclick="toast('Live demo link sent — check console… kidding, email me')">LIVE ↗</button></div></div>`;pw.appendChild(d)}
-); function hire(s){
-scrollToId('contact');cm.value='Hi Jules! I need: '+s+'. ';toast(s+' — tell me the details below')}
-function send(){
-if(!cn.value||!ce.value||!cm.value)return toast('Fill all three boxes. I believe in you.');toast('Sent! Reply within 24h (usually 4h)');cn.value=ce.value=cm.value=''}
-function toast(m){
-const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2600)}
-function scrollToId(i){
-document.getElementById(i).scrollIntoView({
-behavior:'smooth'}
-)}
+document.querySelectorAll(".bars").forEach(b=>{const l=+b.dataset.l;for(let i=0;i<5;i++){const el=document.createElement("i");if(i<l)el.className="f";b.appendChild(el);}});
+const W=[
+{t:"Fintech dashboard",c:"saas",img:"https://picsum.photos/seed/dan-w1/600/400",d:"React + D3 rebuild for 2M users. Load time cut 64%."},
+{t:"Skate shop D2C",c:"ecom",img:"https://picsum.photos/seed/dan-w2/600/400",d:"Headless store. 2.4x conversion after redesign."},
+{t:"AI meeting notes",c:"saas",img:"https://picsum.photos/seed/dan-w3/600/400",d:"Landing + app UI for YC startup. $2M raised after."},
+{t:"Ramen finder app",c:"apps",img:"https://picsum.photos/seed/dan-w4/600/400",d:"React Native app. 50k downloads, 4.8 stars."},
+{t:"Law firm rebrand",c:"sites",img:"https://picsum.photos/seed/dan-w5/600/400",d:"From 2008 called, it wants its site back — fixed."},
+{t:"Gym booking PWA",c:"apps",img:"https://picsum.photos/seed/dan-w6/600/400",d:"Offline-first PWA. Churn down 31%."}];
+const cats=["all","saas","ecom","apps","sites"];
+const fl=document.getElementById("filters"),gr=document.getElementById("grid");
+fl.innerHTML=cats.map(c=>`<button class="f${c==="all"?" on":""}" data-c="${c}">${c}</button>`).join("");
+let cur="all";
+fl.onclick=e=>{const b=e.target.closest(".f");if(!b)return;cur=b.dataset.c;[...fl.children].forEach(x=>x.classList.toggle("on",x===b));draw();};
+function draw(){gr.innerHTML=W.filter(w=>cur==="all"||w.c===cur).map(w=>`<div class="card rv vis"><img loading="lazy" src="${w.img}" alt="${w.t}"><div class="cb"><span class="k">${w.c.toUpperCase()}</span><h3>${w.t}</h3><p>${w.d}</p><div class="links"><button onclick="toast('Case study PDF on request — email me')">CASE STUDY</button><button onclick="toast('Live link shared after NDA-friendly demo')">LIVE ↗</button></div></div></div>`).join("");}
+draw();
+document.getElementById("mailBtn").onclick=()=>{const em="hello@dancarter.dev";(navigator.clipboard?navigator.clipboard.writeText(em):Promise.reject()).then(()=>toast("Email copied — talk soon")).catch(()=>toast(em));};
+document.getElementById("cForm").onsubmit=e=>{e.preventDefault();const n=document.getElementById("cName").value.trim(),m=document.getElementById("cMail").value.trim(),g=document.getElementById("cMsg").value.trim();if(n.length<2)return toast("GIVE ME A NAME FIRST");if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m))return toast("THAT EMAIL LOOKS FAKE");if(g.length<10)return toast("TELL ME MORE (2 SENTENCES MIN)");toast("RECEIVED. REPLY WITHIN 48H, SCOUT'S HONOR");e.target.reset();};
+document.getElementById("invBtn").onclick=()=>{document.body.classList.toggle("inv");toast(document.body.classList.contains("inv")?"DARK BRUTALISM ENGAGED":"LIGHT BRUTALISM RESTORED");};
+function tick(){document.getElementById("clock").textContent=new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});}
+tick();setInterval(tick,20000);
+let tt;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2600);}
+document.getElementById("burger").onclick=()=>document.getElementById("mnav").classList.toggle("open");
+document.getElementById("mnav").onclick=()=>document.getElementById("mnav").classList.remove("open");
+const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&x.target.classList.add("vis")),{threshold:.1});
+document.querySelectorAll(".rv").forEach(el=>io.observe(el));
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
-<style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
-
-  <script src="../api-runtime.js"></script>
 </body>
 </html>

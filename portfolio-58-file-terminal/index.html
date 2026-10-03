@@ -1,622 +1,520 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Phosphor — File Desk + Terminal</title>
+<title>root@devops — Timur R. · Backend Engineer</title>
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box
-}
-:root{
-  --amber:#ffb000;
-  --dim:#8a5f00;
-  --bg:#0a0700;
-  --panel:#120d02
-}
-body{
-  font-family:ui-monospace,'JetBrains Mono',Menlo,Consolas,monospace;
-  background:var(--bg);
-  color:var(--amber);
-  min-height:100vh;
-  overflow-x:hidden
-}
-/* CRT overlay */
-body::after{
-  content:'';
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:90;
-  background:repeating-linear-gradient(0deg,#0006 0 1px,transparent 1px 3px);
-  opacity:.5
-}
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:91;
-  background:radial-gradient(ellipse at center,transparent 55%,#000a 100%)
-}
-/* niche loader: BIOS */
-#loader{
-  position:fixed;
-  inset:0;
-  background:#000;
-  z-index:200;
-  padding:40px;
-  font-size:13px;
-  line-height:1.9;
-  transition:opacity .4s
-}
-#loader.off{
-  opacity:0;
-  visibility:hidden
-}
-#loader .ok{
-  color:#33ff66
-}
-#loader .warn{
-  color:var(--amber)
-}
-::selection{
-  background:var(--amber);
-  color:#000
-}
-nav{
-  border-bottom:1px solid #ffb00044;
-  background:#000000aa;
-  position:sticky;
-  top:0;
-  z-index:60
-}
-.nin{
-  max-width:1120px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  gap:16px;
-  padding:13px 20px;
-  font-size:13px
-}
-.nin .cur{
-  animation:blink 1s infinite
-}
-@keyframes blink{
-  50%{
-  opacity:0
-}
-}
-.nin a{
-  color:var(--amber);
-  text-decoration:none;
-  opacity:.75
-}
-.nin a:hover{
-  opacity:1
-}
-.nin .sp{
-  flex:1
-}
-.sbtn{
-  background:var(--amber);
-  color:#000;
-  border:0;
-  padding:8px 18px;
-  font-weight:800;
-  cursor:pointer;
-  font-family:inherit;
-  font-size:13px
-}
-.sbtn:hover{
-  background:#ffd166
-}
-.hero{
-  max-width:1120px;
-  margin:auto;
-  padding:52px 20px 10px
-}
-.eyebrow{
-  color:#33ff66;
-  font-size:12px;
-  letter-spacing:2px
-}
-h1{
-  font-size:clamp(30px,5vw,54px);
-  margin:10px 0;
-  line-height:1.05;
-  text-shadow:0 0 18px #ffb00088
-}
-.hero p{
-  opacity:.8;
-  font-size:14px;
-  line-height:1.7;
-  max-width:640px
-}
-.hero p .b{
-  color:#fff
-}
-#desk{
-  max-width:1120px;
-  margin:auto;
-  padding:20px;
-  display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:18px
-}
-.panel{
-  background:var(--panel);
-  border:1px solid #ffb00055;
-  border-radius:10px;
-  overflow:hidden;
-  box-shadow:0 0 40px #ffb00018
-}
-.phead{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:11px 14px;
-  border-bottom:1px solid #ffb00033;
-  font-size:12.5px;
-  background:#00000066
-}
-.phead .dots{
-  display:flex;
-  gap:6px
-}
-.phead .dots i{
-  width:11px;
-  height:11px;
-  border-radius:50%;
-  background:#ffb00044
-}
-.phead .dots i:first-child{
-  background:#ff5f56
-}
-.tools{
-  display:flex;
-  gap:8px;
-  padding:12px 14px;
-  flex-wrap:wrap;
-  border-bottom:1px dashed #ffb00033
-}
-.tool{
-  background:transparent;
-  border:1px solid #ffb00066;
-  color:var(--amber);
-  padding:7px 14px;
-  font-family:inherit;
-  font-size:12px;
-  cursor:pointer;
-  border-radius:6px
-}
-.tool:hover{
-  background:var(--amber);
-  color:#000
-}
-#crumb{
-  padding:12px 14px;
-  font-size:12.5px;
-  color:#33ff66
-}
-#crumb b{
-  cursor:pointer
-}
-#crumb b:hover{
-  color:#fff
-}
-#fgrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  padding:0 14px 14px
-}
-.f{
-  border:1px solid #ffb00044;
-  border-radius:8px;
-  padding:16px 10px;
-  text-align:center;
-  font-size:12px;
-  cursor:pointer;
-  background:#00000055;
-  transition:.2s;
-  word-break:break-all
-}
-.f:hover{
-  border-color:var(--amber);
-  box-shadow:0 0 14px #ffb00044
-}
-.f.sel{
-  background:#ffb00022;
-  border-color:var(--amber)
-}
-.f i{
-  font-size:28px;
-  display:block;
-  margin-bottom:8px
-}
-.f small{
-  display:block;
-  opacity:.55;
-  margin-top:6px;
-  font-size:11px
-}
-#preview{
-  margin:0 14px 14px;
-  border:1px dashed #ffb00055;
-  border-radius:8px;
-  padding:14px;
-  display:flex;
-  gap:12px;
-  align-items:center;
-  font-size:12.5px;
-  min-height:88px
-}
-#preview img{
-  width:56px;
-  height:56px;
-  object-fit:cover;
-  border-radius:8px;
-  filter:sepia(1) saturate(3) hue-rotate(-15deg)
-}
-.search{
-  flex:1;
-  background:#000;
-  border:1px solid #ffb00055;
-  color:var(--amber);
-  padding:8px 12px;
-  border-radius:6px;
-  font-family:inherit;
-  font-size:12px;
-  outline:0;
-  min-width:140px
-}
-/* terminal */
-#tout{
-  background:#000;
-  border-top:1px solid #ffb00033;
-  height:300px;
-  overflow:auto;
-  padding:14px;
-  font-size:12.5px;
-  line-height:1.8;
-  white-space:pre-wrap
-}
-#tout .p{
-  color:#33ff66
-}
-#tout .b{
-  color:#fff
-}
-#tout .w{
-  color:#ff5f56
-}
-.tinrow{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:12px 14px;
-  border-top:1px solid #ffb00033;
-  background:#000
-}
-.tinrow input{
-  flex:1;
-  background:transparent;
-  border:0;
-  outline:0;
-  color:#fff;
-  font-family:inherit;
-  font-size:13px
-}
-.prompt{
-  color:#33ff66;
-  font-size:13px;
-  white-space:nowrap
-}
-section{
-  max-width:1120px;
-  margin:auto;
-  padding:30px 20px
-}
-h2{
-  font-size:clamp(22px,3vw,30px);
-  text-shadow:0 0 14px #ffb00066
-}
-.sub{
-  opacity:.65;
-  font-size:13px;
-  margin:8px 0 18px
-}
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:14px
-}
-.cards div{
-  background:var(--panel);
-  border:1px solid #ffb00044;
-  border-radius:10px;
-  padding:20px;
-  font-size:13px
-}
-.cards b{
-  color:#fff
-}
-.cmdgrid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:10px;
-  margin-top:14px
-}
-.cmdgrid button{
-  background:#000;
-  border:1px solid #33ff6655;
-  color:#33ff66;
-  padding:12px;
-  font-family:inherit;
-  font-size:12px;
-  border-radius:8px;
-  cursor:pointer;
-  text-align:left
-}
-.cmdgrid button:hover{
-  background:#33ff66;
-  color:#000
-}
-.cmdgrid small{
-  display:block;
-  opacity:.7
-}
-.prices{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:14px
-}
-.prices div{
-  background:var(--panel);
-  border:1px solid #ffb00044;
-  border-radius:10px;
-  padding:26px 22px
-}
-.amount{
-  font-size:32px;
-  color:#fff;
-  margin:10px 0
-}
-#authModal{
-  position:fixed;
-  inset:0;
-  background:#000c;
-  z-index:150;
-  display:none;
-  align-items:center;
-  justify-content:center
-}
-#authModal.open{
-  display:flex
-}
-.abox{
-  width:min(390px,92vw);
-  background:var(--panel);
-  border:1px solid var(--amber);
-  border-radius:12px;
-  padding:30px 26px
-}
-.abox input{
-  width:100%;
-  background:#000;
-  border:1px solid #ffb00055;
-  color:var(--amber);
-  padding:11px;
-  border-radius:7px;
-  margin-top:10px;
-  font-family:inherit;
-  outline:0
-}
-.tabs{
-  display:flex;
-  gap:8px;
-  margin-bottom:6px
-}
-.tabs button{
-  flex:1;
-  background:transparent;
-  border:1px solid #ffb00055;
-  color:var(--amber);
-  padding:9px;
-  font-family:inherit;
-  cursor:pointer;
-  border-radius:7px
-}
-.tabs button.on{
-  background:var(--amber);
-  color:#000;
-  font-weight:800
-}
-#toast{
-  position:fixed;
-  bottom:24px;
-  left:50%;
-  transform:translateX(-50%) translateY(80px);
-  background:var(--amber);
-  color:#000;
-  padding:11px 24px;
-  font-size:13px;
-  z-index:180;
-  transition:.3s;
-  font-weight:700
-}
-footer{
-  text-align:center;
-  opacity:.55;
-  font-size:12px;
-  padding:28px
-}
-.rv{
-  opacity:0;
-  transform:translateY(20px);
-  transition:.6s
-}
-.rv.vis{
-  opacity:1;
-  transform:none
-}
-@media(max-width:900px){
-  #desk{
-  grid-template-columns:1fr
-}
-}
+ * {
+ margin:0;
+ padding:0;
+ box-sizing:border-box
+}
+ :root {
+ --grn:#33ff77;
+ --dim:#1d7a3f;
+ --bg:#050805;
+ --panel:#0a0f0a;
+ --line:#33ff7733;
+ --amber:#ffb000
+}
+ body {
+ font-family:ui-monospace,'JetBrains Mono',Menlo,Consolas,monospace;
+ background:var(--bg);
+ color:var(--grn);
+ min-height:100vh;
+ overflow-x:hidden
+}
+ body::after {
+ content:'';
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ z-index:90;
+ background:repeating-linear-gradient(0deg,#0007 0 1px,transparent 1px 3px);
+ opacity:.45
+}
+ body::before {
+ content:'';
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ z-index:91;
+ background:radial-gradient(ellipse at center,transparent 55%,#000b 100%)
+}
+ ::selection {
+ background:var(--grn);
+ color:#000
+}
+ #loader {
+ position:fixed;
+ inset:0;
+ background:#000;
+ z-index:200;
+ padding:36px;
+ font-size:13px;
+ line-height:2;
+ transition:opacity .4s;
+ overflow:auto
+}
+ #loader.off {
+ opacity:0;
+ visibility:hidden
+}
+ #loader .ok {
+ color:var(--grn)
+}
+#loader .warn {
+ color:var(--amber)
+}
+ nav {
+ border-bottom:1px solid var(--line);
+ background:#000000cc;
+ position:sticky;
+ top:0;
+ z-index:60;
+ backdrop-filter:blur(8px)
+}
+ .nin {
+ max-width:1120px;
+ margin:auto;
+ display:flex;
+ align-items:center;
+ gap:16px;
+ padding:13px 20px;
+ font-size:13px
+}
+ .nin a {
+ color:var(--grn);
+ text-decoration:none;
+ opacity:.7
+}
+.nin a:hover {
+ opacity:1
+}
+ .nin .sp {
+ flex:1
+}
+.nin .cur {
+ animation:blink 1s infinite
+}
+@keyframes blink {
+ 50% {
+ opacity:0
+ }
+ 
+}
+ .hbtn {
+ background:var(--grn);
+ color:#000;
+ border:0;
+ padding:8px 20px;
+ font-weight:800;
+ cursor:pointer;
+ font-family:inherit;
+ font-size:13px
+}
+ .hbtn:hover {
+ background:#a7ffcc
+}
+ .hero {
+ max-width:1120px;
+ margin:auto;
+ padding:48px 20px 8px
+}
+ .hero h1 {
+ font-size:clamp(26px,4.5vw,46px);
+ line-height:1.15
+}
+ .hero h1 span {
+ background:var(--grn);
+ color:#000;
+ padding:0 10px
+}
+ .hero p {
+ color:#9fe8b8;
+ opacity:.85;
+ margin-top:14px;
+ max-width:640px;
+ line-height:1.7;
+ font-size:14px
+}
+ .stats {
+ display:flex;
+ gap:12px;
+ flex-wrap:wrap;
+ margin-top:18px;
+ font-size:12.5px
+}
+ .stats div {
+ border:1px solid var(--line);
+ padding:9px 16px;
+ background:#00000088
+}
+ .stats b {
+ color:#fff
+}
+ .wrap {
+ max-width:1120px;
+ margin:auto;
+ padding:18px 20px 60px;
+ display:grid;
+ grid-template-columns:1fr 1.2fr;
+ gap:18px
+}
+ @media(max-width:860px) {
+ .wrap {
+ grid-template-columns:1fr
+ }
+ 
+}
+ .panel {
+ border:1px solid var(--line);
+ background:var(--panel);
+ border-radius:4px;
+ overflow:hidden
+}
+ .phead {
+ background:#33ff7714;
+ border-bottom:1px solid var(--line);
+ padding:10px 14px;
+ font-size:12.5px;
+ display:flex;
+ gap:8px;
+ align-items:center
+}
+ .phead .dots {
+ display:flex;
+ gap:6px
+}
+.phead .dots i {
+ width:11px;
+ height:11px;
+ border-radius:50%;
+ background:var(--dim)
+}
+ .phead .dots i:first-child {
+ background:#ff5f57
+}
+ .pbody {
+ padding:16px;
+ min-height:280px
+}
+ .fitem {
+ display:flex;
+ gap:10px;
+ align-items:center;
+ padding:9px 10px;
+ border:1px solid transparent;
+ cursor:pointer;
+ font-size:13px;
+ border-radius:3px
+}
+ .fitem:hover,.fitem.sel {
+ border-color:var(--line);
+ background:#33ff7710
+}
+ .fitem .s {
+ margin-left:auto;
+ opacity:.55;
+ font-size:11.5px
+}
+ .crumbs {
+ font-size:12px;
+ opacity:.75;
+ margin-bottom:10px;
+ word-break:break-all
+}
+ .crumbs b {
+ color:#fff
+}
+ .svc {
+ border:1px solid var(--line);
+ padding:14px;
+ margin:10px 0;
+ font-size:13px;
+ line-height:1.65;
+ background:#00000066
+}
+ .svc b {
+ color:#fff
+}
+.svc .pr {
+ color:var(--amber);
+ font-weight:800
+}
+ .svc button {
+ margin-top:8px;
+ background:0;
+ border:1px solid var(--grn);
+ color:var(--grn);
+ padding:7px 16px;
+ font-family:inherit;
+ cursor:pointer
+}
+ .svc button:hover {
+ background:var(--grn);
+ color:#000
+}
+ #term {
+ background:#020402;
+ border:1px solid var(--line);
+ border-radius:4px;
+ overflow:hidden
+}
+ #tout {
+ height:330px;
+ overflow-y:auto;
+ padding:16px;
+ font-size:13px;
+ line-height:1.75;
+ white-space:pre-wrap;
+ word-break:break-word
+}
+ #tout .w {
+ color:#fff
+}
+#tout .a {
+ color:var(--amber)
+}
+#tout .d {
+ opacity:.6
+}
+ #tinrow {
+ display:flex;
+ border-top:1px solid var(--line);
+ background:#000
+}
+ #tinrow span {
+ padding:12px 0 12px 14px;
+ font-size:13px;
+ white-space:nowrap
+}
+ #tin {
+ flex:1;
+ background:0;
+ border:0;
+ color:var(--grn);
+ outline:0;
+ font-family:inherit;
+ font-size:13px;
+ padding:12px 14px 12px 8px
+}
+ .hint {
+ font-size:11.5px;
+ opacity:.6;
+ padding:10px 14px;
+ border-top:1px dashed var(--line)
+}
+ .cmds {
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ padding:0 14px 14px
+}
+ .cmds button {
+ background:0;
+ border:1px solid var(--dim);
+ color:var(--grn);
+ font-family:inherit;
+ font-size:11.5px;
+ padding:6px 12px;
+ cursor:pointer;
+ border-radius:3px
+}
+ .cmds button:hover {
+ background:var(--grn);
+ color:#000
+}
+ footer {
+ border-top:1px solid var(--line);
+ text-align:center;
+ padding:22px;
+ font-size:12px;
+ opacity:.65
+}
+ .toast {
+ position:fixed;
+ bottom:24px;
+ left:50%;
+ transform:translateX(-50%) translateY(80px);
+ background:var(--grn);
+ color:#000;
+ font-weight:800;
+ font-size:13px;
+ padding:12px 26px;
+ z-index:300;
+ transition:.3s;
+ border-radius:3px
+}
+ .toast.show {
+ transform:translateX(-50%)
+}
+ .row2 {
+ max-width:1120px;
+ margin:auto;
+ padding:0 20px 10px;
+ display:grid;
+ grid-template-columns:1fr 1fr 1fr;
+ gap:18px
+}
+@media(max-width:860px) {
+ .row2 {
+ grid-template-columns:1fr
+}
+}
+ .logline {
+ font-size:12.5px;
+ line-height:2;
+ border-bottom:1px dashed var(--line);
+ padding:6px 0
+}
+ .logline b {
+ color:#fff
+}
+ .faq {
+ font-size:13px;
+ line-height:1.7
+}
+ .faq details {
+ border:1px solid var(--line);
+ margin:8px 0;
+ padding:10px 14px;
+ background:#00000066
+}
+ .faq summary {
+ cursor:pointer;
+ font-weight:800;
+ color:#fff
+}
+ .faq p {
+ margin-top:8px;
+ color:#9fe8b8
+}
+ .cbtn {
+ display:block;
+ width:100%;
+ margin:8px 0;
+ background:0;
+ border:1px solid var(--grn);
+ color:var(--grn);
+ padding:12px;
+ font-family:inherit;
+ font-size:13px;
+ cursor:pointer;
+ text-align:left
+}
+ .cbtn:hover {
+ background:var(--grn);
+ color:#000
+}
+ .cbtn b {
+ font-weight:800
+}
+ .pipe {
+ max-width:1120px;
+ margin:auto;
+ padding:0 20px 40px;
+ font-size:12.5px;
+ line-height:2
+}
+ .pipe .flow {
+ border:1px solid var(--line);
+ background:var(--panel);
+ padding:16px 20px;
+ overflow-x:auto;
+ white-space:nowrap
+}
+ .pipe .flow b {
+ color:#fff
+}
+ .pipe small {
+ opacity:.6
+}
+ 
 </style>
 </head>
 <body>
-<div id="loader">PHOSPHOR BIOS v2.4 ... <span class="ok">OK</span><br>MEM 640K ... <span class="ok">OK</span><br>DISK /dev/portfolio ... <span class="ok">MOUNTED</span><br>TTY READY<span class="warn">_</span></div>
-<nav><div class="nin"><b>◮ phosphor<span class="cur">_</span></b><a href="#desk">files</a><a href="#cmds">commands</a><a href="#work">work</a><a href="#hire">hire</a><span class="sp"></span><span style="opacity:.6">guest@portfolio:~$</span><button class="sbtn" onclick="openAuth()">login</button></div></nav>
-<header class="hero">
-<div class="eyebrow">[ BOOT COMPLETE · BUILD 2026.10 ]</div>
-<h1>Files you can touch.<br>Terminal you can type in.</h1>
-<p>I'm <span class="b">Alex Morgan</span> — file systems, CLIs & dev tools. Click files on the left, or type <span class="b">help</span> on the right. Everything below is live: <span class="b">ls · open · cat · touch</span>.</p>
-</header>
-<div id="desk">
-<div class="panel">
-<div class="phead"><span class="dots"><i></i><i></i><i></i></span> /home/guest/portfolio — file manager <span style="margin-left:auto;opacity:.6">ext4 · 82%</span></div>
-<div class="tools"><button class="tool" onclick="goUp()">↑ up</button><button class="tool" onclick="addFile()">+ touch</button><button class="tool" onclick="toggleView()">⧉ view</button><input class="search" placeholder="filter files…" oninput="searchFiles(this.value)"><button class="tool" onclick="focusTerm()">⌨ terminal</button></div>
-<div id="crumb"></div>
-<div id="fgrid"></div>
-<div id="preview"></div>
-</div>
-<div class="panel">
-<div class="phead"><span class="dots"><i></i><i></i><i></i></span> guest@phosphor: ~ — zsh <span style="margin-left:auto;opacity:.6">utf-8</span></div>
-<div id="tout"></div>
-<div class="tinrow"><span class="prompt">visitor@flux:~$</span><input id="tin" placeholder="type 'help' + Enter" onkeydown="if(event.key==='Enter')runCmd()"></div>
-</div>
-</div>
-<section id="cmds">
-<h2 class="rv">$ try these commands</h2>
-<p class="sub rv">One click = typed for you.</p>
-<div class="cmdgrid rv">
-<button onclick="term('help')">help<small>list all commands</small></button>
-<button onclick="term('ls')">ls<small>list portfolio files</small></button>
-<button onclick="term('whoami')">whoami<small>who built this?</small></button>
-<button onclick="term('date')">date<small>server time</small></button>
-<button onclick="term('cat resume.pdf')">cat resume.pdf<small>read my resume</small></button>
-<button onclick="term('hire')">hire<small>how to hire me</small></button>
-<button onclick="term('touch idea.txt')">touch idea.txt<small>create a file</small></button>
-<button onclick="term('clear')">clear<small>wipe screen</small></button>
-</div>
-</section>
-<section id="work">
-<h2 class="rv">~/shipped — selected work</h2>
-<p class="sub rv">CLIs, dashboards & internal tools.</p>
-<div class="cards">
-<div class="rv"><b>📦 shipctl</b><br><br>Deploy CLI in Go. 4k stars on GitHub. <br><br><span style="opacity:.6">$ shipctl deploy --prod ✓ in 11s</span></div>
-<div class="rv"><b>📊 loglens</b><br><br>Log explorer for SRE teams. <br><br><span style="opacity:.6">$ loglens tail --err | spark ✓</span></div>
-<div class="rv"><b>🗂️ vaultfs</b><br><br>Encrypted file sync client.<br><br><span style="opacity:.6">$ vaultfs sync ~/vault ✓ 2.1GB</span></div>
-</div>
-</section>
-<section id="hire">
-<h2 class="rv">$ hire --now</h2>
-<p class="sub rv">Flat rates, no agencies, async-friendly.</p>
-<div class="prices">
-<div class="rv"><small>SCRIPT</small><div class="amount">$290</div><p style="font-size:13px;opacity:.75">One automation script + docs. 3-day delivery.</p><br><button class="sbtn" style="width:100%" onclick="openAuth()">hire --script</button></div>
-<div class="rv" style="border-color:#33ff66"><small>CLI TOOL ★ POPULAR</small><div class="amount">$890</div><p style="font-size:13px;opacity:.75">Full CLI + tests + Homebrew release.</p><br><button class="sbtn" style="width:100%;background:#33ff66" onclick="openAuth()">hire --cli</button></div>
-<div class="rv"><small>PLATFORM</small><div class="amount">$2,400+</div><p style="font-size:13px;opacity:.75">File platform / dashboard, monthly support.</p><br><button class="sbtn" style="width:100%" onclick="openAuth()">hire --platform</button></div>
-</div>
-</section>
-<footer>phosphor desk · typed with care · 5.0★ on Upwork · <a href="#" onclick="openAuth();return false" style="color:var(--amber)">login</a></footer>
-<div id="authModal"><div class="abox">
-<div class="tabs"><button id="tIn" class="on" onclick="tab('in')">sign in</button><button id="tUp" onclick="tab('up')">sign up</button></div>
-<h3 id="authTitle">Welcome back</h3>
-<p style="opacity:.6;font-size:12.5px">SSH into hiring.</p>
-<input id="aEmail" placeholder="you@company.com">
-<button class="sbtn" style="width:100%;margin-top:12px" onclick="doAuth()">send magic link →</button>
-<p id="authMsg" style="font-size:12.5px;margin-top:10px;color:#33ff66"></p>
-<p style="font-size:12px;opacity:.6;margin-top:8px;cursor:pointer" onclick="closeAuth()">[ esc ] cancel</p>
+<div id="loader"><span class="ok">[ OK ]</span> BIOS v2.4 — memory 640K ✓<br><span class="ok">[ OK ]</span> mounting /dev/timur … portfolio filesystem ready<br><span class="warn">[ .. ]</span> starting shell — backend.engineer v6.2<br><span class="ok">[ OK ]</span> uptime 99.98% · latency 41ms · <span id="ldPct">0%</span></div>
+<nav><div class="nin"><b>root@devops:~<span class="cur">█</span></b><a href="#files">files</a><a href="#term">terminal</a><a href="#svc">services</a><span class="sp"></span><span style="opacity:.6">$35/hr · available</span><button class="hbtn" onclick="hire()">HIRE</button></div></nav>
+<div class="hero"><h1>Timur R. — I build backends<br>that survive <span>prod traffic.</span></h1>
+<p>Backend / DevOps engineer · Node.js · Go · PostgreSQL · Docker · K8s. 7 yrs, 40+ APIs, 99.98% uptime. Try the live terminal below — it actually runs.</p>
+<div class="stats"><div><b>7</b> yrs</div><div><b>40+</b> APIs shipped</div><div><b>99.98%</b> uptime</div><div><b>4.9★</b> Upwork (112)</div><div>⏱ replies &lt; 6h</div></div></div>
+<div class="wrap">
+<div>
+<div class="panel" id="files"><div class="phead"><span class="dots"><i></i><i></i><i></i></span> /home/timur — <span id="fCount">6 objects</span></div><div class="pbody"><div class="crumbs" id="crumbs">path: <b>/home/timur</b></div><div id="flist"></div></div></div>
+<div class="panel" id="svc" style="margin-top:18px"><div class="phead">💼 services.yml</div><div class="pbody">
+<div class="svc"><b>🔌 REST / GraphQL API — <span class="pr">from $1,200</span></b><br>Auth, RBAC, Postgres, tests, Docker, CI. Delivery 2–4 wks.<br><button onclick="hire('API')">$ hire api</button></div>
+<div class="svc"><b>⚙️ DevOps pipeline — <span class="pr">from $800</span></b><br>Docker → GH Actions → VPS/K8s, monitoring, backups.<br><button onclick="hire('DevOps')">$ hire devops</button></div>
+<div class="svc"><b>🚀 Performance rescue — <span class="pr">from $500</span></b><br>p95 halved or you don't pay. Profiling + caching + indexes.<br><button onclick="hire('perf')">$ hire perf</button></div>
 </div></div>
-<div id="toast"></div>
+</div>
+<div>
+<div id="term"><div class="phead"><span class="dots"><i></i><i></i><i></i></span> timur@prod: ~ — zsh · <span id="upT">up 00:00</span></div>
+<div id="tout"></div>
+<div id="tinrow"><span>➜&nbsp;~&nbsp;</span><input id="tin" autocomplete="off" spellcheck="false" placeholder="type 'help' …"></div>
+<div class="cmds"><button onclick="run('help')">help</button><button onclick="run('ls')">ls</button><button onclick="run('cat about.txt')">about</button><button onclick="run('cat stack.txt')">stack</button><button onclick="run('cat pricing.txt')">pricing</button><button onclick="run('uptime')">uptime</button><button onclick="run('hire')">hire</button><button onclick="run('clear')">clear</button></div>
+<div class="hint">commands: help · ls · cd &lt;dir&gt; · cat &lt;file&gt; · whoami · stack · pricing · uptime · hire · clear — ↑/↓ history</div>
+</div>
+</div>
+</div>
+<div class="row2">
+<div class="panel"><div class="phead"><span class="dots"><i></i><i></i><i></i></span> experience.log</div><div class="pbody">
+<div class="logline"><b>2023–now</b> · Senior backend @ Payline (fintech)<br>Ledger API · 2M req/day · p95 120ms · Go + Postgres</div>
+<div class="logline"><b>2021–23</b> · Backend dev @ CargoFlow<br>Tracking platform · WS live map · 40k drivers · Node.js</div>
+<div class="logline"><b>2019–21</b> · Freelance · 30+ Upwork contracts<br>MVPs, scrapers, bots, dashboards · 4.9★ avg</div>
+<div class="logline"><b>2018</b> · BSc Computer Science<br>Linux, networks, distributed systems</div>
+</div></div>
+<div class="panel"><div class="phead"><span class="dots"><i></i><i></i><i></i></span> faq.md</div><div class="pbody faq">
+<details open><summary>$ how fast can you start?</summary><p>Within 48h. Discovery call → scope doc → first PR in week one.</p></details>
+<details><summary>$ fixed price or hourly?</summary><p>Both. Fixed for defined scope (API $1,200+), $35/hr for ongoing work.</p></details>
+<details><summary>$ do you write tests?</summary><p>Yes — integration tests + CI on every repo. Coverage ≥ 70%.</p></details>
+<details><summary>$ who owns the code?</summary><p>You. Full repo transfer + deploy docs at handover.</p></details>
+<details><summary>$ which timezone?</summary><p>GMT+5, overlap with EU mornings + US evenings. Standups at your time.</p></details>
+<details><summary>$ can you rescue my slow app?</summary><p>Yes — perf audit in 3 days, fixed fee $500, you pay only if p95 drops.</p></details>
+</div></div>
+<div class="panel"><div class="phead"><span class="dots"><i></i><i></i><i></i></span> contact.sh</div><div class="pbody">
+<p style="font-size:13px;line-height:1.7">Pick a channel — median reply <b style="color:#fff">4h</b>:</p>
+<button class="cbtn" onclick="hire('email')">✉️ <b>hire@timur.dev</b> — email</button>
+<button class="cbtn" onclick="hire('telegram')">✈️ <b>@timur_builds</b> — telegram</button>
+<button class="cbtn" onclick="hire('call')">📞 <b>book a 20-min call</b> — calendly</button>
+<button class="cbtn" onclick="run('cat pricing.txt')">💰 <b>cat pricing.txt</b> — rates again</button>
+</div></div>
+</div>
+<div class="pipe"><div class="flow">push → <b>lint+test</b> → <b>build image</b> → <b>staging deploy</b> → <b>e2e smoke</b> → <b>prod (1-click rollback)</b> &nbsp;·&nbsp; <span style="color:var(--amber)">every client gets this pipeline, day one</span></div><small>$ every repo ships with CI, staging env, Grafana dashboard, PagerDuty alerts</small></div>
+<footer>© 2026 Timur R. · hire@timur.dev · ssh port 22 always open 🔓</footer>
+<div class="toast" id="toast"></div>
 <script>
-setTimeout(()=>loader.classList.add('off'),1200);
-let path=['home','guest'],selFile=null,filter='',listView=false;
-let FS=[{n:'resume.pdf',t:'pdf',s:'88 KB · hire me',seed:'ph1'},{n:'projects/',t:'dir',s:'18 items',seed:'ph2'},{n:'shipctl.go',t:'code',s:'12 KB · main tool',seed:'ph3'},{n:'notes.md',t:'txt',s:'3 KB · ideas',seed:'ph4'},{n:'invoice-q3.csv',t:'csv',s:'5 KB · finance',seed:'ph5'},{n:'demo.mp4',t:'vid',s:'24 MB · walkthrough',seed:'ph6'}];
-const ICONS={pdf:'📕',dir:'📁',code:'💾',txt:'📝',csv:'📊',vid:'🎬'};
-const tout=document.getElementById('tout');
-print('<span class="p">phosphor v2.4</span> — type <span class="b">help</span> to begin.');
-function renderFiles(){const c=document.getElementById('crumb');c.innerHTML=path.map((p,i)=>`<b onclick="goPath(${i})">${p}</b>`).join(' <span>/</span> ');const g=document.getElementById('fgrid');g.style.gridTemplateColumns=listView?'1fr':'repeat(3,1fr)';const list=FS.filter(f=>f.n.toLowerCase().includes(filter.toLowerCase()));g.innerHTML=list.length?list.map(f=>`<div class="f ${selFile===f.n?'sel':''}" onclick="selectFile('${f.n}')"><i>${ICONS[f.t]||'📦'}</i>${f.n}<small>${f.s}</small></div>`).join(''):'<p style="opacity:.6">No files match.</p>';const p=document.getElementById('preview');if(selFile){const f=FS.find(x=>x.n===selFile);p.innerHTML=`<img src="https://picsum.photos/seed/${f.seed||f.n}/120/120"><div><b>${f.n}</b><br><small style="opacity:.6">${f.s} · /${path.join('/')}</small><br><button class="tool" style="margin-top:6px" onclick="term('open ${f.n}')">Open in terminal →</button></div>`;}else{p.innerHTML='<small style="opacity:.6">Select a file to preview 👆</small>';}}
-function selectFile(n){selFile=n;renderFiles();print(`<span class="b">selected</span> ${n}`);}
-function goUp(){if(path.length>1)path.pop();renderFiles();}
-function goPath(i){path=path.slice(0,i+1);renderFiles();}
-function addFile(){const n='untitled-'+(FS.length+1)+'.txt';FS.push({n,t:'txt',s:'0 KB · new'});renderFiles();print(`<span class="p">created</span> ${n}`);toast(n+' created ✓');}
-function toggleView(){listView=!listView;renderFiles();}
-function searchFiles(v){filter=v;renderFiles();}
-function print(h){tout.innerHTML+=h+'\n';tout.scrollTop=tout.scrollHeight;}
-function focusTerm(){document.getElementById('desk').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('tin').focus(),400);}
-function term(cmd){document.getElementById('tin').value=cmd;runCmd();}
-function runCmd(){const inp=document.getElementById('tin');const raw=inp.value.trim();print(`<span class="p">visitor@flux</span>:~$ ${raw||''}`);inp.value='';if(!raw)return;const [c,...a]=raw.split(' ');const arg=a.join(' ');const cmds={help:()=>print('commands: <span class="b">help · ls · cd · open &lt;file&gt; · cat &lt;file&gt; · touch &lt;name&gt; · whoami · date · hire · clear</span>'),ls:()=>print(FS.map(f=>`<span class="b">${f.n}</span>`).join('   ')),whoami:()=>print('visitor — guest of Alex Morgan\'s portfolio'),date:()=>print(new Date().toString()),hire:()=>print('<span class="w">✉ hire@phosphor.dev — available now, 5.0★ on Upwork</span>'),clear:()=>{tout.innerHTML='';}};if(cmds[c]){cmds[c]();return;}if(c==='cd'){if(arg==='..')goUp();else if(arg){path.push(arg);renderFiles();print(`moved to /${path.join('/')}`);}else print('/'+path.join('/'));return;}if(c==='open'){const f=FS.find(x=>x.n.toLowerCase().startsWith((arg||'').toLowerCase()));if(!f){print(`<span class="w">open: '${arg}' not found. Try ls.</span>`);return;}selFile=f.n;renderFiles();print(`<span class="p">opening</span> ${f.n} … ✓`);toast('Opened '+f.n);return;}if(c==='cat'){const f=FS.find(x=>x.n.toLowerCase()===arg.toLowerCase());print(f?`—— ${f.n} ——\n${f.s}\n<span class="b">Lorem ipsum demo content for ${f.n}.</span>`:`<span class="w">cat: no such file.</span>`);return;}if(c==='touch'&&arg){FS.push({n:arg,t:'txt',s:'0 KB · new'});renderFiles();print(`<span class="p">created</span> ${arg}`);return;}print(`<span class="w">'${c}' not found. Type help.</span>`);}
-function openAuth(){document.getElementById('authModal').classList.add('open');}
-function closeAuth(){document.getElementById('authModal').classList.remove('open');}
-function tab(m){document.getElementById('tIn').classList.toggle('on',m==='in');document.getElementById('tUp').classList.toggle('on',m==='up');document.getElementById('authTitle').textContent=m==='in'?'Welcome back':'Create account';}
-function doAuth(){const e=document.getElementById('aEmail').value;document.getElementById('authMsg').textContent=e.includes('@')?'✓ Magic link sent!':'Enter a valid email.';}
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.transform='translateX(-50%) translateY(0)';clearTimeout(t._x);t._x=setTimeout(()=>t.style.transform='translateX(-50%) translateY(80px)',2000);}
-renderFiles();
-document.getElementById('authModal').addEventListener('click',e=>{if(e.target.id==='authModal')closeAuth();});
-addEventListener('keydown',e=>{if(e.key==='Escape')closeAuth();if(e.key==='/'){focusTerm();}});
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}}),{threshold:.12});
-document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+(function(){let p=0;const t=setInterval(()=>{p=Math.min(100,p+Math.random()*22);const e=document.getElementById('ldPct');if(e)e.textContent=Math.floor(p)+'%';if(p>=100){clearInterval(t);document.getElementById('loader').classList.add('off');boot();}},220);})();
+const FS={'/home/timur':['projects/','about.txt','stack.txt','pricing.txt','reviews.txt','contact.txt'],'/home/timur/projects':['billing-api/','realtime-chat/','etl-pipeline/','README.txt']};
+const FILES={'about.txt':'Timur R. — backend engineer, Tashkent (GMT+5).\n7 yrs: fintech, logistics, SaaS. Ex-senior @ payment co (2M req/day).\nUpwork Top Rated · 4.9★ · 112 reviews · $35/hr.','stack.txt':'LANGUAGES: Node.js/TypeScript, Go, Python\nDATA: PostgreSQL, Redis, Kafka, ClickHouse\nOPS: Docker, K8s, GH Actions, Terraform, Grafana\nCLOUD: AWS, Hetzner, Cloudflare','pricing.txt':'API build ............ from $1,200 (2-4 wks)\nDevOps setup ......... from $800 (1 wk)\nPerf rescue ........... from $500 (pay-if-faster)\nHourly ................ $35/hr, 25h/wk free','reviews.txt':'★★★★★ "Cut our p95 from 900ms to 120ms." — fintech CTO\n★★★★★ "Zero-downtime migration, flawless." — SaaS founder\n★★★★★ "Best DevOps hire on Upwork." — logistics lead','contact.txt':'email: hire@timur.dev\ntelegram: @timur_builds\ngithub: github.com/timur-builds\ntype "hire" to start a contract →','/home/timur/projects/README.txt':'billing-api/ .... Stripe-like ledger, idempotent, 2M req/day\nrealtime-chat/ .. WS fan-out 50k conn single node\netl-pipeline/ ... Kafka→ClickHouse, 40M rows/day'};
+let cwd='/home/timur',hist=[],hi=-1,booted=false,sec=0;
+setInterval(()=>{sec++;const e=document.getElementById('upT');if(e)e.textContent='up '+String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');},1000);
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function out(html){const t=document.getElementById('tout');t.innerHTML+=html+'\n';t.scrollTop=t.scrollHeight;}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2200);}
+function renderFiles(){const l=document.getElementById('flist');l.innerHTML='';const items=FS[cwd]||[];document.getElementById('crumbs').innerHTML='path: <b>'+esc(cwd)+'</b>';document.getElementById('fCount').textContent=items.length+' objects';items.forEach(n=>{const d=document.createElement('div');d.className='fitem';const isDir=n.endsWith('/');d.innerHTML='<span>'+(isDir?'📁':'📄')+'</span><span>'+esc(n)+'</span><span class="s">'+(isDir?'dir':((FILES[n]||FILES[cwd+'/'+n]||'').length||128)+' b')+'</span>';d.onclick=()=>{if(isDir)run('cd '+n.replace('/',''));else run('cat '+n);document.querySelectorAll('.fitem').forEach(x=>x.classList.remove('sel'));d.classList.add('sel');};l.appendChild(d);});}
+function boot(){if(booted)return;booted=true;renderFiles();out('<span class="d">Last login: '+new Date().toLocaleString()+' on pts/0</span>');out('<span class="w">Welcome.</span> Type <span class="a">help</span> to list commands, or click the buttons below.');run('ls',true);}
+function hire(what){toast('Contract draft → hire@timur.dev ✉️'+(what?' ('+what+')':''));out('<span class="a">➜</span> <span class="w">hire request sent</span> — I reply within 6h. Email: hire@timur.dev');}
+function run(raw,silent){const input=document.getElementById('tin');const line=(raw!==undefined?raw:input.value).trim();if(!silent&&line)out('<span class="a">➜ ~</span> <span class="w">'+esc(line)+'</span>');if(line)hist.push(line);hi=hist.length;if(input&&raw===undefined)input.value='';if(!line)return;const parts=line.split(/\s+/),cmd=parts[0].toLowerCase(),arg=parts.slice(1).join(' ');
+if(cmd==='help')out('commands:\n  <span class="w">ls</span>              list files         <span class="w">cd &lt;dir&gt;</span>   enter dir (.., projects)\n  <span class="w">cat &lt;file&gt;</span>    read file          <span class="w">whoami</span>       who is this guy\n  <span class="w">stack</span>           tech stack         <span class="w">pricing</span>      rates\n  <span class="w">uptime</span>          server stats       <span class="w">hire</span>         start contract\n  <span class="w">clear</span>           wipe screen');
+else if(cmd==='ls'){const items=FS[cwd]||[];out(items.map(n=>n.endsWith('/')?'<span class="w">'+esc(n)+'</span>':esc(n)).join('   ')||'<span class="d">(empty)</span>');renderFiles();}
+else if(cmd==='cd'){if(arg==='..'){cwd='/home/timur';}else if(arg===''||arg==='~'||arg==='/home/timur'){cwd='/home/timur';}else if(arg==='projects'&&(FS[cwd]||[]).includes('projects/')){cwd='/home/timur/projects';}else{out('<span class="a">cd: no such directory:</span> '+esc(arg));return;}out('<span class="d">'+esc(cwd)+'</span>');renderFiles();}
+else if(cmd==='cat'){if(!arg){out('usage: cat &lt;file&gt;');return;}const key=FILES[arg]?arg:(FILES[cwd+'/'+arg]?cwd+'/'+arg:null);if(!key){out('<span class="a">cat: '+esc(arg)+': No such file.</span> Try <span class="w">ls</span>.');return;}out('<span class="w">── '+esc(arg)+' ──</span>\n'+esc(FILES[key]));}
+else if(cmd==='whoami')out('timur — backend engineer. <span class="w">not</span> root, but can fix your prod. Try <span class="w">cat about.txt</span>.');
+else if(cmd==='stack')out(esc(FILES['stack.txt']));
+else if(cmd==='pricing'||cmd==='rates')out(esc(FILES['pricing.txt']));
+else if(cmd==='reviews')out(esc(FILES['reviews.txt']));
+else if(cmd==='uptime')out('load 0.41 · APIs served 40+ · uptime <span class="w">99.98%</span> · p95 120ms');
+else if(cmd==='sudo')out('<span class="a">timur is not in the sudoers file.</span> This incident will be invoiced. 🧾');
+else if(cmd==='hire'||cmd==='contact')hire();
+else if(cmd==='clear')document.getElementById('tout').innerHTML='';
+else if(cmd==='hello'||cmd==='hi')out('hey 👋 — type <span class="w">help</span>, or <span class="w">cat about.txt</span>.');
+else out('<span class="a">zsh: command not found:</span> '+esc(cmd)+' — try <span class="w">help</span>');
+if(!silent){const t=document.getElementById('tout');t.scrollTop=t.scrollHeight;}}
+document.getElementById('tin').addEventListener('keydown',e=>{if(e.key==='Enter')run();else if(e.key==='ArrowUp'){e.preventDefault();if(hi>0){hi--;e.target.value=hist[hi]||'';}}else if(e.key==='ArrowDown'){e.preventDefault();if(hi<hist.length-1){hi++;e.target.value=hist[hi];}else{hi=hist.length;e.target.value='';}}});
+document.getElementById('term').addEventListener('click',()=>document.getElementById('tin').focus());
+document.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>document.getElementById('loader').classList.add('off'),2600);setTimeout(boot,2800);});
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
-<style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
-
-  <script src="../api-runtime.js"></script>
 </body>
 </html>

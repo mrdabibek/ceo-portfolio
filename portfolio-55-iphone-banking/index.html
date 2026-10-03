@@ -1,392 +1,606 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nova Bank — iPhone Banking</title>
+<title>Aurum Bank â€” Private iPhone Banking</title>
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
-:root{
---bg:#eef1f6;
---ink:#0b0b10;
---mut:#7c7f8c;
---acc:#0071e3;
+:root {
+  --bg:#0c0c10;
+  --ink:#f5f1e6;
+  --mut:#9a94a8;
+  --gold:#d4af37;
+  --gold2:#f5d67b;
+  --card:#16161d;
+  --line:#26262f;
+  --grn:#34c759;
 }
-body{
-font-family:-apple-system,"SF Pro Display","Segoe UI",sans-serif;
-background:linear-gradient(160deg,#dfe7f5,#f6f4ef);
-min-height:100vh;
-color:var(--ink);
+body {
+  font-family:-apple-system,"SF Pro Display","Segoe UI",sans-serif;
+  background:radial-gradient(800px 400px at 20% 0%,#2a2113,transparent),linear-gradient(160deg,#0c0c10,#141019);
+  min-height:100vh;
+  color:var(--ink);
 }
-.nav{
-max-width:1120px;
-margin:0 auto;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:20px 26px;
+.nav {
+  max-width:1140px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 26px;
 }
-.logo{font-weight:800;font-size:18px;}
-.links{display:flex;gap:24px;font-size:14px;color:#4b4e5a;}
-.badge{
-background:#0b0b10;color:#fff;border-radius:99px;
-padding:9px 20px;font-size:13.5px;font-weight:700;
+.logo {
+  font-weight:800;
+  font-size:18px;
+  letter-spacing:.5px;
 }
-.hero{
-max-width:1120px;
-margin:0 auto;
-padding:20px 26px 60px;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:40px;
-align-items:center;
+.logo i {
+  font-style:normal;
+  color:var(--gold);
+  margin-right:7px;
 }
-.copy h1{
-font-size:clamp(32px,4.5vw,54px);
-letter-spacing:-2.5px;
-line-height:1.02;
+.links {
+  display:flex;
+  gap:24px;
+  font-size:14px;
+  color:#9a94a8;
 }
-.copy h1 em{font-style:normal;color:var(--acc);}
-.copy p{color:#4b4e5a;margin:14px 0 22px;max-width:440px;font-size:16px;}
-.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
-.chips span{
-background:#fff;border:1px solid #dde2ec;border-radius:99px;
-padding:8px 16px;font-size:13px;font-weight:600;
-box-shadow:0 2px 8px rgba(0,0,0,.05);
+.badge {
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#1a1405;
+  border-radius:99px;
+  padding:10px 21px;
+  font-size:13px;
+  font-weight:800;
 }
-.cta{display:flex;gap:10px;}
-.cta button{
-border:0;border-radius:14px;padding:14px 26px;
-font-size:15px;font-weight:700;cursor:pointer;
+.hero {
+  max-width:1140px;
+  margin:0 auto;
+  padding:20px 26px 56px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:44px;
+  align-items:center;
 }
-.cta .b{background:#0b0b10;color:#fff;}
-.cta .w{background:#fff;border:1px solid #dde2ec;}
-/* iPhone */
-.stage{display:flex;justify-content:center;}
-.iphone{
-width:302px;
-height:624px;
-background:#000;
-border-radius:54px;
-padding:11px;
-box-shadow:0 40px 90px rgba(0,0,0,.35),inset 0 0 0 2px #3a3a3f;
-position:relative;
+.copy h1 {
+  font-size:clamp(32px,4.5vw,54px);
+  letter-spacing:-2px;
+  line-height:1.03;
 }
-.island{
-position:absolute;
-top:22px;left:50%;
-transform:translateX(-50%);
-width:100px;height:28px;
-background:#000;
-border-radius:99px;
-z-index:6;
-display:flex;align-items:center;justify-content:flex-end;
-padding-right:12px;
+.copy h1 em {
+  font-style:normal;
+  background:linear-gradient(90deg,var(--gold2),var(--gold));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
 }
-.island i{width:9px;height:9px;border-radius:50%;background:#1a2340;display:block;}
-.scr{
-background:#f5f5f7;
-border-radius:44px;
-height:100%;
-overflow:hidden;
-display:flex;
-flex-direction:column;
-position:relative;
+.copy p {
+  color:#9a94a8;
+  margin:14px 0 22px;
+  max-width:450px;
+  font-size:16px;
+  line-height:1.6;
 }
-.status{
-display:flex;
-justify-content:space-between;
-padding:14px 26px 4px;
-font-size:12px;
-font-weight:700;
+.chips {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:22px;
 }
-.hello{padding:8px 20px 0;}
-.hello small{color:var(--mut);font-size:12px;}
-.hello h2{font-size:22px;letter-spacing:-.5px;}
-.bal{
-margin:12px 16px;
-background:linear-gradient(135deg,#0b0b10,#2b3a67 60%,#0071e3);
-color:#fff;
-border-radius:24px;
-padding:20px;
-position:relative;
-overflow:hidden;
+.chips span {
+  background:#16161d;
+  border:1px solid #33333f;
+  border-radius:99px;
+  padding:9px 17px;
+  font-size:13px;
+  font-weight:600;
 }
-.bal::after{
-content:"";
-position:absolute;right:-40px;top:-40px;width:150px;height:150px;
-background:radial-gradient(circle,rgba(255,255,255,.35),transparent 70%);
+.cta {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
 }
-.bal small{opacity:.75;font-size:11px;letter-spacing:1.5px;}
-.bal b{font-size:32px;letter-spacing:-1px;display:block;margin:2px 0 12px;}
-.bal .row{display:flex;gap:8px;}
-.bal button{
-flex:1;border:0;border-radius:12px;padding:10px;
-font-weight:700;font-size:12.5px;cursor:pointer;
+.cta button {
+  border:0;
+  border-radius:15px;
+  padding:15px 27px;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+  font-family:inherit;
 }
-.bal .t{background:#fff;}
-.bal .r{background:rgba(255,255,255,.2);color:#fff;}
-.acts{display:flex;gap:8px;padding:0 16px;}
-.acts button{
-flex:1;border:0;background:#fff;border-radius:14px;
-padding:10px 4px;font-size:11px;font-weight:700;cursor:pointer;
-box-shadow:0 1px 4px rgba(0,0,0,.06);
+.cta .b { background:linear-gradient(135deg,var(--gold),var(--gold2)); color:#1a1405; }
+.cta .w {
+  background:transparent;
+  border:1.5px solid #3a3a45;
+  color:#fff;
 }
-.acts span{font-size:17px;display:block;}
-.txn{flex:1;overflow:auto;padding:12px 16px 6px;}
-.txn h4{font-size:12px;color:var(--mut);letter-spacing:1px;margin:4px 0 8px;}
-.t{
-background:#fff;border-radius:14px;padding:11px 13px;
-display:flex;gap:11px;align-items:center;margin-bottom:8px;
-box-shadow:0 1px 4px rgba(0,0,0,.05);
+.stage { display:flex; justify-content:center; }
+.iphone {
+  width:304px;
+  height:628px;
+  background:#000;
+  border-radius:54px;
+  padding:11px;
+  box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 60px rgba(212,175,55,.12),inset 0 0 0 2px #3a3a3f;
+  position:relative;
 }
-.t .ic{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
-.t small{color:var(--mut);font-size:11.5px;}
-.t b{margin-left:auto;font-size:13.5px;}
-.homebar{
-display:flex;background:rgba(255,255,255,.9);
-border-top:1px solid #e5e5ea;
-padding:10px 8px 20px;
-backdrop-filter:blur(10px);
+.island {
+  position:absolute;
+  top:22px;
+  left:50%;
+  transform:translateX(-50%);
+  width:100px;
+  height:28px;
+  background:#000;
+  border-radius:99px;
+  z-index:6;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding-right:12px;
 }
-.homebar button{flex:1;border:0;background:transparent;font-size:10px;color:var(--mut);font-weight:700;cursor:pointer;}
-.homebar button.on{color:var(--ink);}
-.homebar span{font-size:19px;display:block;}
-/* faceid overlay */
-.face{
-position:absolute;inset:0;
-background:rgba(11,11,16,.92);
-backdrop-filter:blur(8px);
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:12px;
-color:#fff;
-z-index:8;
-border-radius:44px;
-transition:opacity .5s,visibility .5s;
+.island i {
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#1a2340;
+  display:block;
 }
-.face.hide{opacity:0;visibility:hidden;}
-.face .sq{
-width:84px;height:84px;
-border:2px solid #34c759;
-border-radius:24px;
-display:flex;align-items:center;justify-content:center;
-font-size:38px;
-animation:pulse 1.6s infinite;
+.scr {
+  background:#f5f5f7;
+  border-radius:44px;
+  height:100%;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  color:#0b0b10;
 }
-@keyframes pulse{50%{transform:scale(1.07);box-shadow:0 0 0 12px rgba(52,199,89,.15);}}
-.face button{
-background:#34c759;border:0;color:#06280f;font-weight:800;
-border-radius:99px;padding:13px 34px;font-size:14px;cursor:pointer;
+.status {
+  display:flex;
+  justify-content:space-between;
+  padding:15px 27px 4px;
+  font-size:12px;
+  font-weight:700;
 }
-/* sheet */
-.sheet{
-position:absolute;left:0;right:0;bottom:0;
-background:#fff;border-radius:26px 26px 44px 44px;
-padding:20px 20px 30px;z-index:7;
-transform:translateY(110%);transition:transform .35s;
+.hello { padding:8px 20px 0; }
+.hello small {
+  color:#7c7f8c;
+  font-size:11px;
+  letter-spacing:1.5px;
+  font-weight:800;
 }
-.sheet.show{transform:translateY(0);}
-.sheet input,.sheet select{
-width:100%;border:1.5px solid #e2e2e8;border-radius:12px;
-padding:11px 13px;margin:6px 0;font-size:14px;font-family:inherit;
+.hello h2 { font-size:22px; letter-spacing:-.5px; }
+.bal {
+  margin:12px 16px;
+  background:linear-gradient(135deg,#0b0b10,#3a2d10 60%,#b8860b);
+  color:#fff;
+  border-radius:25px;
+  padding:21px;
+  position:relative;
+  overflow:hidden;
 }
-.sheet button{width:100%;margin-top:8px;}
-.insights{
-max-width:1120px;
-margin:0 auto;
-padding:0 26px 14px;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
+.bal::after {
+  content:"";
+  position:absolute;
+  right:-40px;
+  top:-40px;
+  width:150px;
+  height:150px;
+  background:radial-gradient(circle,rgba(245,214,123,.4),transparent 70%);
 }
-.ins{
-background:#0b0b10;
-color:#fff;
-border-radius:18px;
-padding:22px;
+.bal small {
+  opacity:.8;
+  font-size:10.5px;
+  letter-spacing:1.5px;
+  font-weight:800;
+  color:var(--gold2);
 }
-.ins small{color:#8e8ea0;font-size:11px;letter-spacing:2px;font-weight:800;}
-.ins b{font-size:22px;display:block;margin:6px 0;}
-.ins p{color:#a9a9b8;font-size:13px;}
-.ins .bar2{height:8px;background:#26262e;border-radius:99px;overflow:hidden;margin-top:12px;}
-.ins .bar2 i{display:block;height:100%;background:#34c759;border-radius:99px;}
-.cards-row{
-max-width:1120px;
-margin:0 auto;
-padding:0 26px 14px;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
+.bal b {
+  font-size:32px;
+  letter-spacing:-1px;
+  display:block;
+  margin:2px 0 12px;
 }
-.ccard{
-border-radius:18px;
-padding:20px;
-color:#fff;
-min-height:130px;
-display:flex;
-flex-direction:column;
-justify-content:space-between;
+.bal .row {
+  display:flex;
+  gap:8px;
+  position:relative;
+  z-index:1;
 }
-.ccard small{opacity:.75;font-size:11px;letter-spacing:1.5px;}
-.ccard b{font-size:17px;letter-spacing:2px;}
-.secure{
-max-width:1120px;
-margin:0 auto;
-padding:0 26px 14px;
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
+.bal button {
+  flex:1;
+  border:0;
+  border-radius:13px;
+  padding:11px;
+  font-weight:800;
+  font-size:12.5px;
+  cursor:pointer;
+  font-family:inherit;
 }
-.sec2{background:#fff;border:1px solid #dde2ec;border-radius:16px;padding:18px;text-align:center;}
-.sec2 .e{font-size:24px;}
-.sec2 b{display:block;font-size:13px;margin:8px 0 3px;}
-.sec2 small{color:#7c7f8c;font-size:11.5px;}
-.faqn{
-max-width:760px;
-margin:0 auto;
-padding:8px 26px 20px;
+.bal .t { background:#fff; }
+.bal .r { background:rgba(255,255,255,.2); color:#fff; }
+.acts {
+  display:flex;
+  gap:8px;
+  padding:0 16px;
 }
-.faqn details{
-background:#fff;
-border:1px solid #dde2ec;
-border-radius:14px;
-padding:15px 19px;
-margin-bottom:10px;
-font-size:14px;
+.acts button {
+  flex:1;
+  border:0;
+  background:#fff;
+  border-radius:15px;
+  padding:11px 4px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:inherit;
+  box-shadow:0 1px 4px rgba(0,0,0,.06);
 }
-.faqn summary{font-weight:700;cursor:pointer;}
-.faqn p{color:#666;margin-top:6px;font-size:13px;}
-.perks{
-max-width:1120px;margin:0 auto;padding:0 26px 50px;
-display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+.acts span { font-size:17px; display:block; }
+.txn {
+  flex:1;
+  overflow:auto;
+  padding:12px 16px 6px;
 }
-.perk{background:#fff;border:1px solid #dde2ec;border-radius:18px;padding:20px;}
-.perk small{color:var(--acc);font-weight:800;font-size:12px;letter-spacing:1px;}
-.press{
-max-width:1120px;
-margin:0 auto;
-padding:0 26px 14px;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
+.txn h4 {
+  font-size:11px;
+  color:#7c7f8c;
+  letter-spacing:1.5px;
+  margin:4px 0 8px;
+  font-weight:800;
 }
-.quote{
-background:#fff;
-border:1px solid #dde2ec;
-border-radius:16px;
-padding:20px;
-font-size:14px;
+.t {
+  background:#fff;
+  border-radius:15px;
+  padding:11px 13px;
+  display:flex;
+  gap:11px;
+  align-items:center;
+  margin-bottom:8px;
+  box-shadow:0 1px 4px rgba(0,0,0,.05);
 }
-.quote .stars{
-color:#f5a623;
-letter-spacing:2px;
-font-size:12px;
-margin-bottom:8px;
+.t .ic {
+  width:37px;
+  height:37px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:17px;
+  flex-shrink:0;
 }
-.quote small{
-color:#7c7f8c;
+.t small { color:#7c7f8c; font-size:11.5px; }
+.t b { margin-left:auto; font-size:13.5px; }
+.homebar {
+  display:flex;
+  background:rgba(255,255,255,.92);
+  border-top:1px solid #e5e5ea;
+  padding:10px 8px 20px;
 }
-.rates{
-max-width:1120px;
-margin:0 auto;
-padding:0 26px 18px;
-background:transparent;
+.homebar button {
+  flex:1;
+  border:0;
+  background:transparent;
+  font-size:10px;
+  color:#7c7f8c;
+  font-weight:700;
+  cursor:pointer;
+  font-family:inherit;
 }
-.rates-in{
-background:#fff;
-border:1px solid #dde2ec;
-border-radius:18px;
-padding:22px 24px;
-display:grid;
-grid-template-columns:1fr 1fr 1fr 1fr;
-gap:14px;
+.homebar button.on { color:#0b0b10; }
+.homebar span { font-size:19px; display:block; }
+.face {
+  position:absolute;
+  inset:0;
+  background:rgba(12,12,16,.94);
+  backdrop-filter:blur(10px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  color:#fff;
+  z-index:8;
+  border-radius:44px;
+  transition:opacity .5s,visibility .5s;
 }
-.rates-in small{
-color:#7c7f8c;
-font-size:11px;
-letter-spacing:1.5px;
-font-weight:800;
+.face.hide { opacity:0; visibility:hidden; }
+.face .sq {
+  width:86px;
+  height:86px;
+  border:2px solid var(--gold);
+  border-radius:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:38px;
+  animation:pulse 1.6s infinite;
+  color:var(--gold2);
 }
-.rates-in b{
-font-size:22px;
-display:block;
-margin-top:3px;
+@keyframes pulse { 50%{transform:scale(1.07); box-shadow:0 0 0 12px rgba(212,175,55,.15)}; }
+.face button {
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:0;
+  color:#1a1405;
+  font-weight:800;
+  border-radius:99px;
+  padding:14px 34px;
+  font-size:14px;
+  cursor:pointer;
+  font-family:inherit;
 }
-@media(max-width:960px){
-.hero{grid-template-columns:1fr;}
-.perks{grid-template-columns:1fr;}
-.links{display:none;}
+.sheet {
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#fff;
+  border-radius:26px 26px 44px 44px;
+  padding:20px 20px 30px;
+  z-index:7;
+  transform:translateY(110%);
+  transition:transform .35s;
+  color:#0b0b10;
 }
+.sheet.show { transform:translateY(0); }
+.sheet input,.sheet select {
+  width:100%;
+  border:1.5px solid #e2e2e8;
+  border-radius:12px;
+  padding:11px 13px;
+  margin:6px 0;
+  font-size:14px;
+  font-family:inherit;
+}
+.sheet button { width:100%; margin-top:8px; }
+.insights {
+  max-width:1140px;
+  margin:0 auto;
+  padding:0 26px 14px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.ins {
+  background:#16161d;
+  border:1px solid #2a2a34;
+  border-radius:19px;
+  padding:23px;
+}
+.ins small {
+  color:var(--gold);
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight:800;
+}
+.ins b {
+  font-size:22px;
+  display:block;
+  margin:6px 0;
+}
+.ins p { color:#9a94a8; font-size:13px; }
+.ins .bar2 {
+  height:8px;
+  background:#26262e;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:12px;
+}
+.ins .bar2 i {
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,var(--gold),var(--gold2));
+  border-radius:99px;
+}
+.cards-row {
+  max-width:1140px;
+  margin:0 auto;
+  padding:0 26px 14px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.ccard {
+  border-radius:19px;
+  padding:22px;
+  color:#fff;
+  min-height:132px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  border:1px solid rgba(212,175,55,.3);
+}
+.ccard small {
+  opacity:.75;
+  font-size:11px;
+  letter-spacing:1.5px;
+}
+.ccard b { font-size:17px; letter-spacing:2px; }
+.secure {
+  max-width:1140px;
+  margin:0 auto;
+  padding:0 26px 14px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.sec2 {
+  background:#16161d;
+  border:1px solid #2a2a34;
+  border-radius:17px;
+  padding:19px;
+  text-align:center;
+}
+.sec2 .e { font-size:24px; }
+.sec2 b {
+  display:block;
+  font-size:13px;
+  margin:8px 0 3px;
+}
+.sec2 small { color:#9a94a8; font-size:11.5px; }
+.faqn {
+  max-width:780px;
+  margin:0 auto;
+  padding:8px 26px 20px;
+}
+.faqn details {
+  background:#16161d;
+  border:1px solid #2a2a34;
+  border-radius:15px;
+  padding:16px 20px;
+  margin-bottom:10px;
+  font-size:14px;
+}
+.faqn summary { font-weight:700; cursor:pointer; }
+.faqn p {
+  color:#9a94a8;
+  margin-top:6px;
+  font-size:13px;
+}
+.rates {
+  max-width:1140px;
+  margin:0 auto;
+  padding:0 26px 18px;
+}
+.rates-in {
+  background:#16161d;
+  border:1px solid #2a2a34;
+  border-radius:19px;
+  padding:23px 25px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr;
+  gap:14px;
+}
+.rates-in small {
+  color:#9a94a8;
+  font-size:11px;
+  letter-spacing:1.5px;
+  font-weight:800;
+}
+.rates-in b {
+  font-size:22px;
+  display:block;
+  margin-top:3px;
+}
+.press {
+  max-width:1140px;
+  margin:0 auto;
+  padding:0 26px 14px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.quote {
+  background:#16161d;
+  border:1px solid #2a2a34;
+  border-radius:17px;
+  padding:21px;
+  font-size:14px;
+  line-height:1.6;
+}
+.quote .stars {
+  color:var(--gold);
+  letter-spacing:2px;
+  font-size:12px;
+  margin-bottom:8px;
+}
+.quote small { color:#9a94a8; }
+.perks {
+  max-width:1140px;
+  margin:0 auto;
+  padding:0 26px 54px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.perk {
+  background:#16161d;
+  border:1px solid #2a2a34;
+  border-radius:19px;
+  padding:21px;
+}
+.perk small {
+  color:var(--gold);
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:1px;
+}
+.perk p {
+  color:#9a94a8;
+  font-size:13px;
+  margin-top:6px;
+}
+@media(max-width:960px) { .hero{grid-template-columns:1fr}.perks,.press,.secure,.cards-row{grid-template-columns:1fr}.links{display:none}.insights{grid-template-columns:1fr}.rates-in{grid-template-columns:1fr 1fr}; }
 </style>
 </head>
 <body>
 <nav class="nav">
-<div class="logo">⬢ Nova Bank</div>
-<div class="links"><span>Accounts</span><span>Cards</span><span>Invest</span><span>Support</span></div>
-<div class="badge"> App of the Day</div>
+<div class="logo"><i>â—†</i>Aurum Private</div>
+<div class="links"><span>Accounts</span><span>Cards</span><span>Wealth</span><span>Concierge</span></div>
+<div class="badge">âœ¦ Private Client</div>
 </nav>
 <div class="hero">
 <div class="copy">
-<h1>Banking that unlocks <em>with a glance.</em></h1>
-<p>Try the iPhone on the right — tap <b>Face ID</b> to unlock, send money, freeze your card. Fully interactive demo.</p>
-<div class="chips"><span>⊕ Face ID login</span><span>⚡ Instant transfers</span><span>◍ 3% cashback</span><span>✈ No FX fees</span></div>
+<h1>Wealth that unlocks <em>with a glance.</em></h1>
+<p>Try the iPhone on the right â€” tap <b style="color:var(--gold2)">Face ID</b> to unlock, send money, freeze your card. Vault-grade demo, fully interactive.</p>
+<div class="chips"><span>â—† Face ID vault</span><span>âš¡ Instant transfers</span><span>â— 3% metal cashback</span><span>âœˆ Zero FX fees</span></div>
 <div class="cta">
-<button class="b">Download on iOS</button>
-<button class="w" onclick="relock()">↻ Replay Face ID</button>
+<button class="b">Open private account</button>
+<button class="w" onclick="relock()">â†» Replay Face ID</button>
 </div>
 </div>
 <div class="stage">
 <div class="iphone">
 <div class="island"><i></i></div>
 <div class="scr">
-<div class="status"><span>9:41</span><span>📶 📡 🔋</span></div>
-<div class="hello"><small>TUESDAY · GOOD MORNING</small><h2>Daler 👋</h2></div>
+<div class="status"><span>9:41</span><span>ðŸ“¶ ðŸ“¡ ðŸ”‹</span></div>
+<div class="hello"><small>TUESDAY Â· GOOD MORNING</small><h2>Daler ðŸ‘‹</h2></div>
 <div class="bal">
-<small>TOTAL BALANCE · ••4821</small>
+<small>TOTAL BALANCE Â· â€¢â€¢4821</small>
 <b>$<span id="bal">18,240</span>.55</b>
 <div class="row">
-<button class="t" onclick="sheet(true)">＋ Send</button>
-<button class="r" onclick="sheet(true)">⇄ Request</button>
+<button class="t" onclick="sheet(true)">ï¼‹ Send</button>
+<button class="r" onclick="sheet(true)">â‡„ Request</button>
 </div>
 </div>
 <div class="acts">
-<button onclick="alert('Top-up sheet (demo)')"><span>＋</span>Top up</button>
-<button onclick="freeze(this)"><span>❄</span><em id="fz">Freeze</em></button>
-<button onclick="alert('Statement exported (demo)')"><span>⤓</span>Statement</button>
-<button onclick="alert('Support chat (demo)')"><span>◍</span>Help</button>
+<button onclick="alert('Top-up sheet (demo)')"><span>ï¼‹</span>Top up</button>
+<button onclick="freeze(this)"><span>â„</span><em id="fz">Freeze</em></button>
+<button onclick="alert('Statement exported (demo)')"><span>â¤“</span>Statement</button>
+<button onclick="alert('Support chat (demo)')"><span>â—</span>Help</button>
 </div>
 <div class="txn">
 <h4>TODAY</h4>
 <div id="txns"></div>
 </div>
 <div class="homebar">
-<button class="on"><span>◉</span>Home</button>
-<button><span>▤</span>Cards</button>
-<button><span>◎</span>Stats</button>
-<button><span>◍</span>More</button>
+<button class="on"><span>â—‰</span>Home</button>
+<button><span>â–¤</span>Cards</button>
+<button><span>â—Ž</span>Stats</button>
+<button><span>â—</span>More</button>
 </div>
 <div class="face" id="face">
-<div class="sq">◍</div>
+<div class="sq">â—†</div>
 <b>Face ID</b>
-<small style="color:#9a9aa5">glance to unlock Nova</small>
-<button onclick="unlock()">⊕ Unlock with Face ID</button>
-<small style="color:#9a9aa5;font-size:11px" onclick="unlock()" >or tap to use demo passcode</small>
+<small style="color:#9a94a5">glance to unlock Aurum vault</small>
+<button onclick="unlock()">â—† Unlock with Face ID</button>
+<small style="color:#9a94a5;font-size:11px" onclick="unlock()">or tap to use demo passcode</small>
 </div>
 <div class="sheet" id="sheet">
 <h3>Send money</h3>
-<p style="color:var(--mut);font-size:12.5px">Instant · 0 fee between Nova users.</p>
+<p style="color:#7c7f8c;font-size:12.5px">Instant Â· 0 fee between Aurum members.</p>
 <input id="who" value="Mom" placeholder="To whom?">
 <input id="amt" type="number" value="50" placeholder="Amount">
-<select><option>Nova ••4821 — $18,240</option><option>Savings ••9910 — $6,100</option></select>
-<button class="cta b" style="width:100%;border:0;border-radius:12px;padding:13px;font-weight:800;cursor:pointer" onclick="sendM()">Send →</button>
-<button style="width:100%;margin-top:8px;border:0;background:#f0f0f4;border-radius:12px;padding:11px;cursor:pointer" onclick="sheet(false)">Cancel</button>
+<select><option>Aurum â€¢â€¢4821 â€” $18,240</option><option>Vault â€¢â€¢9910 â€” $6,100</option></select>
+<button style="border:0;border-radius:12px;padding:14px;font-weight:800;cursor:pointer;background:#0b0b10;color:#fff;font-family:inherit" onclick="sendM()">Send â†’</button>
+<button style="width:100%;margin-top:8px;border:0;background:#f0f0f4;border-radius:12px;padding:12px;cursor:pointer;font-family:inherit" onclick="sheet(false)">Cancel</button>
 </div>
 </div>
 </div>
@@ -394,71 +608,53 @@ margin-top:3px;
 </div>
 <div class="insights">
 <div class="ins"><small>OCTOBER SPEND</small><b>$2,140 of $3,000</b><p>Dining is 31% over pace. Nudge: cook twice, save ~$180.</p><div class="bar2"><i style="width:71%"></i></div></div>
-<div class="ins"><small>SAVINGS AUTOPILOT</small><b>+$420 this month</b><p>Round-ups + Friday sweep moved 6 times. On track for $5k.</p><div class="bar2"><i style="width:56%;background:#0071e3"></i></div></div>
+<div class="ins"><small>VAULT AUTOPILOT</small><b>+$420 this month</b><p>Round-ups + Friday sweep moved 6 times. On track for $5k.</p><div class="bar2"><i style="width:56%"></i></div></div>
 </div>
 <div class="cards-row">
-<div class="ccard" style="background:linear-gradient(135deg,#0b0b10,#3a3a45)"><small>NOVA METAL · ••4821</small><b>5312 •••• •••• 4821</b></div>
-<div class="ccard" style="background:linear-gradient(135deg,#0071e3,#34c759)"><small>NOVA VIRTUAL · ••9910</small><b>5399 •••• •••• 9910</b></div>
-<div class="ccard" style="background:linear-gradient(135deg,#6d28d9,#ec4899)"><small>NOVA TRAVEL · ••3302</small><b>4242 •••• •••• 3302</b></div>
+<div class="ccard" style="background:linear-gradient(135deg,#0b0b10,#3a2d10)"><small>AURUM METAL Â· â€¢â€¢4821</small><b>5312 â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ 4821</b></div>
+<div class="ccard" style="background:linear-gradient(135deg,#3a2d10,#b8860b)"><small>AURUM VIRTUAL Â· â€¢â€¢9910</small><b>5399 â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ 9910</b></div>
+<div class="ccard" style="background:linear-gradient(135deg,#2a1a3e,#7c3aed)"><small>AURUM TRAVEL Â· â€¢â€¢3302</small><b>4242 â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ 3302</b></div>
 </div>
 <div class="secure">
-<div class="sec2"><div class="e">◍</div><b>Face ID</b><small>biometric gate</small></div>
-<div class="sec2"><div class="e">❄</div><b>Freeze</b><small>one tap</small></div>
-<div class="sec2"><div class="e">🔔</div><b>Alerts</b><small>every charge</small></div>
-<div class="sec2"><div class="e">🛡️</div><b>$0 fraud</b><small>liability cover</small></div>
+<div class="sec2"><div class="e">â—†</div><b>Face ID</b><small>biometric vault</small></div>
+<div class="sec2"><div class="e">â„</div><b>Freeze</b><small>one tap</small></div>
+<div class="sec2"><div class="e">ðŸ””</div><b>Alerts</b><small>every charge</small></div>
+<div class="sec2"><div class="e">ðŸ›¡ï¸</div><b>$0 fraud</b><small>liability cover</small></div>
 </div>
 <div class="faqn">
-<details open><summary>Is Nova a real bank?</summary><p>Demo page — but the concept mirrors licensed e-money: deposits segregated, cards Mastercard.</p></details>
+<details open><summary>Is Aurum a real bank?</summary><p>Demo page â€” but the concept mirrors licensed e-money: deposits segregated, cards Mastercard.</p></details>
 <details><summary>Fees abroad?</summary><p>Zero FX markup to $2k/mo on Metal, then 0.5%. ATMs free to $800.</p></details>
 <details><summary>Lost phone?</summary><p>Freeze from any browser, Face ID re-enrolls on the new device.</p></details>
 </div>
 <div class="rates">
 <div class="rates-in">
-<div><small>APP STORE</small><b>4.9 ★ · 82k</b></div>
+<div><small>APP STORE</small><b>4.9 â˜… Â· 82k</b></div>
 <div><small>FX MARKUP</small><b>0% to $2k</b></div>
 <div><small>SUPPORT REPLY</small><b>~40 sec</b></div>
 <div><small>CASHBACK</small><b>up to 3%</b></div>
 </div>
 </div>
 <div class="press">
-<div class="quote">
-<div class="stars">★★★★★</div>
-"The first banking app my mom and my CFO both understand."
-<br>
-<small>— TechCrunch review</small>
-</div>
-<div class="quote">
-<div class="stars">★★★★★</div>
-"Face ID login so fast it feels like no login at all."
-<br>
-<small>— The Verge, apps of 2026</small>
-</div>
-<div class="quote">
-<div class="stars">★★★★★</div>
-"Travel mode killed my stack of currency cards."
-<br>
-<small>— Nomad List community</small>
-</div>
+<div class="quote"><div class="stars">â˜…â˜…â˜…â˜…â˜…</div>"The first banking app my mom and my CFO both understand."<br><small>â€” TechCrunch review</small></div>
+<div class="quote"><div class="stars">â˜…â˜…â˜…â˜…â˜…</div>"Face ID login so fast it feels like no login at all."<br><small>â€” The Verge, apps of 2026</small></div>
+<div class="quote"><div class="stars">â˜…â˜…â˜…â˜…â˜…</div>"Travel mode killed my stack of currency cards."<br><small>â€” Nomad List community</small></div>
 </div>
 <div class="faqn">
-<details><summary>Joint accounts?</summary><p>Shared pots with per-person cards — 2 free on Metal, launch Q4.</p></details>
+<details><summary>Joint vaults?</summary><p>Shared pots with per-person cards â€” 2 free on Metal, launch Q4.</p></details>
 <details><summary>Referral bonus?</summary><p>$15 each after the first card payment. No cap, paid weekly.</p></details>
-<details>
-<summary>Metal card?</summary>
-<p>18g steel, engraved, free ATM priority lanes. Ships in 3 days.</p>
-</details>
+<details><summary>Metal card?</summary><p>18g steel, engraved, free ATM priority lanes. Ships in 3 days.</p></details>
 </div>
 <div class="perks">
-<div class="perk"><small>SECURITY</small><br><b>Face ID + chip</b><p style="color:#666;font-size:13px;margin-top:6px">Biometric gate on every open. Lost phone? Freeze in one tap.</p></div>
-<div class="perk"><small>CASHBACK</small><br><b>3% on dining</b><p style="color:#666;font-size:13px;margin-top:6px">Auto-categorized, paid weekly. No points maze.</p></div>
-<div class="perk"><small>SUPPORT</small><br><b>Humans, 24/7</b><p style="color:#666;font-size:13px;margin-top:6px">Median reply 40 seconds. Real people, no bots.</p></div>
+<div class="perk"><small>SECURITY</small><br><b>Face ID + chip</b><p>Biometric gate on every open. Lost phone? Freeze in one tap.</p></div>
+<div class="perk"><small>CASHBACK</small><br><b>3% on dining</b><p>Auto-categorized, paid weekly. No points maze.</p></div>
+<div class="perk"><small>CONCIERGE</small><br><b>Humans, 24/7</b><p>Median reply 40 seconds. Real people, no bots.</p></div>
 </div>
 <script>
 var txns=[
-["☕","Blue Cup Coffee","Food · 9:12 AM",-4.5,"#fef3c7"],
-["▲","Salary — Acme","Income · 8:00 AM",+3200,"#dcfce7"],
-["✈","Uzbek Airways","Travel · yesterday",-210,"#e0e7ff"],
-["◍","Netflix","Subs · yesterday",-9.99,"#fee2e2"]
+["â˜•","Blue Cup Coffee","Food Â· 9:12 AM",-4.5,"#fef3c7"],
+["â–²","Salary â€” Acme","Income Â· 8:00 AM",+3200,"#dcfce7"],
+["âœˆ","Uzbek Airways","Travel Â· yesterday",-210,"#e0e7ff"],
+["â—","Netflix","Subs Â· yesterday",-9.99,"#fee2e2"]
 ];
 var bal=18240.55;
 function renderT(){
@@ -470,13 +666,13 @@ document.getElementById('bal').textContent=Math.floor(bal).toLocaleString();
 }
 function unlock(){
 var f=document.getElementById('face');
-f.querySelector('.sq').textContent='✓';
+f.querySelector('.sq').textContent='âœ“';
 setTimeout(function(){f.classList.add('hide');},450);
 }
 function relock(){
 var f=document.getElementById('face');
 f.classList.remove('hide');
-f.querySelector('.sq').textContent='◍';
+f.querySelector('.sq').textContent='â—†';
 }
 function sheet(open){document.getElementById('sheet').classList.toggle('show',open);}
 function sendM(){
@@ -485,71 +681,22 @@ var a=parseFloat(document.getElementById('amt').value)||0;
 if(a<=0){alert('Enter an amount');return;}
 if(a>bal){alert('Insufficient funds (demo)');return;}
 bal-=a;
-txns.unshift(["➤",who,"Sent · just now",-a,"#e0e7ff"]);
+txns.unshift(["âž¤",who,"Sent Â· just now",-a,"#e0e7ff"]);
 renderT();sheet(false);
 }
 function freeze(b){
 var e=document.getElementById('fz');
 var f=e.textContent==='Freeze';
-e.textContent=f?'Frozen ❄':'Freeze';
-b.querySelector('span').textContent=f?'🧊':'❄';
+e.textContent=f?'Frozen â„':'Freeze';
+b.querySelector('span').textContent=f?'ðŸ§Š':'â„';
 alert(f?'Card frozen.':'Card unfrozen. Welcome back.');
 }
 renderT();
 setTimeout(unlock,2500);
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
-<style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
-
-  <script src="../api-runtime.js"></script>
+<style>.ceo-hub-floating-badge{position:fixed;bottom:22px;right:22px;z-index:99999;background:rgba(12,12,20,.88);backdrop-filter:blur(14px);border:1px solid rgba(233,196,106,.4);color:#f4f2ea!important;text-decoration:none!important;padding:8px 16px;border-radius:9999px;font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.8)}@media(max-width:640px){.ceo-hub-floating-badge{bottom:12px;right:12px;padding:6px 12px;font-size:11px}}</style>
+<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
+<a href="../index.html" class="ceo-hub-floating-badge">â—ˆ 66 Projects Hub</a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>

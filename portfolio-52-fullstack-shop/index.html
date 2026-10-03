@@ -3,314 +3,447 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Marlow &amp; Co. — Shop Admin</title>
+<title>Everline Goods Ã¢â‚¬â€ Shop Admin</title>
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
-:root{
---bg:#f5efe3;
---card:#fffdf7;
---ink:#2b2118;
---mut:#8a7a66;
---line:#e3d8c2;
---brn:#6b4226;
---grn:#3f7d44;
---red:#b3261e;
+:root {
+  --bg:#f2f5f0;
+  --card:#ffffff;
+  --ink:#14211a;
+  --mut:#6f7f74;
+  --line:#dfe7de;
+  --pine:#14532d;
+  --pine2:#166534;
+  --sage:#dcfce7;
+  --amber:#b45309;
+  --red:#b3261e;
+  --r:18px;
 }
-body{
-font-family:Georgia,"Times New Roman",serif;
-background:var(--bg);
-color:var(--ink);
+body {
+  font-family:Inter,"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
 }
-.top{
-background:var(--ink);
-color:#f5efe3;
-padding:13px 30px;
-display:flex;
-align-items:center;
-gap:26px;
+.top {
+  background:#0d1f14;
+  color:#eef5ee;
+  padding:13px 30px;
+  display:flex;
+  align-items:center;
+  gap:26px;
+  position:sticky;
+  top:0;
+  z-index:20;
 }
-.logo{font-size:19px;letter-spacing:1px;}
-.logo em{font-style:italic;color:#d9b77c;}
-.links{display:flex;gap:22px;font-size:14px;font-style:italic;}
-.links a{color:#cbbfa8;text-decoration:none;}
-.links a:hover{color:#fff;}
-.btn{
-background:var(--brn);
-color:#fff;
-border:0;
-border-radius:10px;
-padding:10px 20px;
-font-family:inherit;
-font-size:14px;
-cursor:pointer;
+.logo {
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:-.3px;
 }
-.btn.light{background:transparent;border:1.5px solid #6b6a62;color:#f5efe3;}
-.app{display:flex;min-height:calc(100vh - 52px);}
-.side{
-width:250px;
-background:var(--card);
-border-right:1px solid var(--line);
-padding:22px 16px;
+.logo em {
+  font-style:normal;
+  background:#4ade80;
+  color:#0d1f14;
+  padding:2px 10px;
+  border-radius:99px;
+  font-size:13px;
+  margin-left:6px;
 }
-.side h4{
-font-size:11px;
-letter-spacing:2.5px;
-color:var(--mut);
-margin:14px 10px 8px;
-font-family:Arial,sans-serif;
+.links {
+  display:flex;
+  gap:22px;
+  font-size:13.5px;
+  font-weight:600;
 }
-.cat{
-display:flex;
-justify-content:space-between;
-padding:10px 12px;
-border-radius:10px;
-font-size:15px;
-cursor:pointer;
-border:1px solid transparent;
+.links a { color:#a9bfae; text-decoration:none; }
+.links a:hover { color:#fff; }
+.btn {
+  background:var(--pine);
+  color:#fff;
+  border:0;
+  border-radius:11px;
+  padding:11px 21px;
+  font-size:13.5px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:inherit;
 }
-.cat.on,.cat:hover{background:#f3e9d3;border-color:var(--line);}
-.cat span{font-family:Arial,sans-serif;font-size:12px;color:var(--mut);}
-.note{
-margin-top:16px;
-background:#2b2118;
-color:#f5efe3;
-border-radius:14px;
-padding:16px;
-font-size:13px;
-font-style:italic;
+.btn:hover { background:var(--pine2); }
+.btn.light {
+  background:transparent;
+  border:1.5px solid #3a5546;
+  color:#eef5ee;
 }
-.main{flex:1;padding:26px 30px;min-width:0;}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:14px 0 20px;}
-.st{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:16px;
-padding:17px 19px;
-box-shadow:0 2px 10px rgba(43,33,24,.05);
+.btn.soft { background:var(--sage); color:var(--pine); }
+.app { display:flex; min-height:calc(100vh - 54px); }
+.side {
+  width:252px;
+  background:var(--card);
+  border-right:1px solid var(--line);
+  padding:22px 16px;
+  flex-shrink:0;
 }
-.st small{font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;color:var(--mut);}
-.st b{font-size:24px;display:block;margin-top:2px;}
-.st em{font-family:Arial,sans-serif;font-style:normal;font-size:12px;color:var(--grn);}
-h1{font-size:30px;letter-spacing:-.5px;font-weight:400;}
-h1 em{font-style:italic;color:var(--brn);}
-.sub{font-family:Arial,sans-serif;color:var(--mut);font-size:13px;}
-.cols{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;align-items:start;}
-.card{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:18px;
-padding:20px;
+.side h4 {
+  font-size:10.5px;
+  letter-spacing:2.5px;
+  color:var(--mut);
+  margin:14px 10px 8px;
 }
-.card h3{font-size:18px;font-style:italic;}
-.card>p{font-family:Arial,sans-serif;font-size:12.5px;color:var(--mut);margin:3px 0 12px;}
-.prod{
-display:flex;
-gap:13px;
-align-items:center;
-border:1px solid var(--line);
-border-radius:14px;
-padding:12px 14px;
-margin-bottom:10px;
-background:#fff;
+.cat {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:11px 13px;
+  border-radius:11px;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  border:1.5px solid transparent;
 }
-.pic{
-width:52px;height:52px;border-radius:12px;
-display:flex;align-items:center;justify-content:center;
-font-size:26px;flex-shrink:0;
+.cat.on,.cat:hover { background:#eef5ee; border-color:var(--line); }
+.cat span {
+  font-size:12px;
+  color:var(--mut);
+  background:var(--bg);
+  border-radius:99px;
+  padding:2px 10px;
 }
-.prod small{font-family:Arial,sans-serif;color:var(--mut);font-size:12px;}
-.stock{
-margin-left:auto;
-display:flex;
-align-items:center;
-gap:8px;
-font-family:Arial,sans-serif;
+.note {
+  margin-top:16px;
+  background:linear-gradient(135deg,#0d1f14,#14532d);
+  color:#e8f5e9;
+  border-radius:15px;
+  padding:17px;
+  font-size:13px;
+  line-height:1.6;
 }
-.stock button{
-width:30px;height:30px;border-radius:50%;
-border:1.5px solid var(--brn);
-background:transparent;
-font-size:16px;cursor:pointer;color:var(--brn);
+.note b { color:#4ade80; }
+.main {
+  flex:1;
+  padding:26px 30px;
+  min-width:0;
+  max-width:1160px;
 }
-.stock button:hover{background:var(--brn);color:#fff;}
-.stock b{min-width:30px;text-align:center;}
-.low{color:var(--red);font-weight:700;}
-.bars{display:flex;gap:10px;align-items:end;height:150px;margin-top:14px;padding-top:10px;border-top:1px dashed var(--line);}
-.bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
-.bar i{width:100%;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#8a5a33,#6b4226);display:block;}
-.bar small{font-family:Arial,sans-serif;font-size:11px;color:var(--mut);}
-.ord{
-display:flex;
-justify-content:space-between;
-font-family:Arial,sans-serif;
-font-size:13px;
-padding:10px 2px;
-border-bottom:1px dashed var(--line);
+.eyebrow {
+  display:inline-block;
+  background:var(--sage);
+  border:1.5px solid var(--pine);
+  padding:6px 15px;
+  border-radius:99px;
+  font-size:12px;
+  font-weight:800;
+  color:var(--pine);
 }
-.pill{font-size:11px;font-weight:700;padding:3px 11px;border-radius:99px;}
-.p{color:var(--grn);background:#e6f2e7;}
-.s{color:#7a5b00;background:#fff3cf;}
-.c{color:var(--mut);background:#eee;}
-.story{
-margin-top:16px;
-background:var(--card);
-border:1px solid var(--line);
-border-radius:18px;
-padding:24px;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
+h1 {
+  font-size:31px;
+  letter-spacing:-1px;
+  margin-top:10px;
 }
-.story h3{font-size:19px;font-style:italic;}
-.story p{font-family:Arial,sans-serif;font-size:13.5px;color:var(--mut);margin-top:8px;line-height:1.65;}
-.values{
-margin-top:16px;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
+h1 em { font-style:normal; color:var(--pine); }
+.sub {
+  color:var(--mut);
+  font-size:13.5px;
+  margin-top:4px;
 }
-.val{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:16px;
-padding:20px;
+.stats {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:16px 0 20px;
 }
-.val .e{font-size:26px;}
-.val b{display:block;margin:8px 0 4px;font-size:15px;}
-.val p{font-family:Arial,sans-serif;font-size:12.5px;color:var(--mut);}
-.revs{
-margin-top:16px;
-background:#2b2118;
-color:#f5efe3;
-border-radius:18px;
-padding:24px;
+.st {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:18px 20px;
+  box-shadow:0 2px 12px rgba(20,83,45,.06);
+  position:relative;
+  overflow:hidden;
 }
-.revs h3{font-style:italic;font-size:19px;}
-.rev-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
-margin-top:14px;
+.st::after {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--pine),#4ade80);
 }
-.rev{
-background:rgba(255,255,255,.06);
-border:1px solid rgba(255,255,255,.14);
-border-radius:14px;
-padding:17px;
-font-family:Arial,sans-serif;
-font-size:13px;
+.st small {
+  font-size:10.5px;
+  letter-spacing:1.5px;
+  color:var(--mut);
+  font-weight:800;
 }
-.rev small{color:#d9b77c;}
-.wholes{
-margin-top:16px;
-background:var(--card);
-border:1px dashed var(--brn);
-border-radius:18px;
-padding:24px;
-display:flex;
-gap:18px;
-align-items:center;
-flex-wrap:wrap;
+.st b {
+  font-size:25px;
+  display:block;
+  margin-top:2px;
+  letter-spacing:-.5px;
 }
-.wholes div{flex:1;min-width:220px;}
-.wholes h3{font-style:italic;}
-.wholes p{font-family:Arial,sans-serif;font-size:13px;color:var(--mut);margin-top:6px;}
-.look{
-margin-top:16px;
+.st em {
+  font-style:normal;
+  font-size:12px;
+  color:var(--pine2);
+  font-weight:700;
 }
-.look h3{
-font-size:19px;
-font-style:italic;
+.cols {
+  display:grid;
+  grid-template-columns:1.6fr 1fr;
+  gap:16px;
+  align-items:start;
 }
-.look>p{
-font-family:Arial,sans-serif;
-font-size:12.5px;
-color:var(--mut);
-margin:3px 0 12px;
+.card {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:19px;
+  padding:21px;
 }
-.look-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
+.card h3 { font-size:17px; letter-spacing:-.3px; }
+.card>p {
+  font-size:12.5px;
+  color:var(--mut);
+  margin:3px 0 13px;
 }
-.look-item{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:16px;
-overflow:hidden;
+.prod {
+  display:flex;
+  gap:13px;
+  align-items:center;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:12px 14px;
+  margin-bottom:10px;
+  background:#fff;
 }
-.look-item .ph{
-height:110px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:44px;
+.pic {
+  width:53px;
+  height:53px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  flex-shrink:0;
 }
-.look-item .tx{
-padding:12px 14px;
-font-family:Arial,sans-serif;
+.prod small { color:var(--mut); font-size:12px; }
+.stock {
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
-.look-item .tx b{
-font-family:Georgia,serif;
-font-size:14px;
+.stock button {
+  width:31px;
+  height:31px;
+  border-radius:50%;
+  border:1.5px solid var(--pine);
+  background:transparent;
+  font-size:16px;
+  cursor:pointer;
+  color:var(--pine);
+  font-weight:800;
 }
-.look-item .tx small{
-color:var(--mut);
-font-size:11.5px;
+.stock button:hover { background:var(--pine); color:#fff; }
+.stock b { min-width:30px; text-align:center; }
+.low { color:var(--red); font-weight:700; }
+.bars {
+  display:flex;
+  gap:10px;
+  align-items:end;
+  height:150px;
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px dashed var(--line);
 }
-.ship{
-margin-top:16px;
-background:var(--card);
-border:1px solid var(--line);
-border-radius:18px;
-padding:24px;
+.bar {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
 }
-.ship h3{
-font-style:italic;
-font-size:19px;
+.bar i {
+  width:100%;
+  border-radius:8px 8px 4px 4px;
+  background:linear-gradient(180deg,#4ade80,#14532d);
+  display:block;
 }
-.ship>p{
-font-family:Arial,sans-serif;
-font-size:12.5px;
-color:var(--mut);
-margin:3px 0 12px;
+.bar small {
+  font-size:11px;
+  color:var(--mut);
+  font-weight:700;
 }
-.ship table{
-width:100%;
-border-collapse:collapse;
-font-family:Arial,sans-serif;
-font-size:13px;
+.ord {
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  padding:11px 2px;
+  border-bottom:1px dashed var(--line);
 }
-.ship th{
-text-align:left;
-font-size:11px;
-letter-spacing:1.5px;
-color:var(--mut);
-padding:9px 10px;
-border-bottom:1px solid var(--line);
+.pill {
+  font-size:11px;
+  font-weight:700;
+  padding:4px 12px;
+  border-radius:99px;
 }
-.ship td{
-padding:10px;
-border-bottom:1px dashed var(--line);
+.p { color:#14532d; background:#dcfce7; }
+.s { color:#7a5b00; background:#fff3cf; }
+.c { color:var(--mut); background:#eee; }
+.story {
+  margin-top:16px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:19px;
+  padding:26px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
 }
-footer{text-align:center;font-family:Arial,sans-serif;color:var(--mut);font-size:12px;padding:20px;}
-@media(max-width:1000px){
-.cols{grid-template-columns:1fr;}
-.stats{grid-template-columns:1fr 1fr;}
-.side{display:none;}
+.story h3 { font-size:19px; letter-spacing:-.4px; }
+.story p {
+  font-size:13.5px;
+  color:var(--mut);
+  margin-top:8px;
+  line-height:1.7;
 }
+.values {
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.val {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:21px;
+}
+.val .e { font-size:26px; }
+.val b {
+  display:block;
+  margin:9px 0 4px;
+  font-size:15px;
+}
+.val p {
+  font-size:12.5px;
+  color:var(--mut);
+  line-height:1.6;
+}
+.revs {
+  margin-top:16px;
+  background:#0d1f14;
+  color:#eef5ee;
+  border-radius:19px;
+  padding:26px;
+}
+.revs h3 { font-size:19px; }
+.rev-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:14px;
+}
+.rev {
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:14px;
+  padding:18px;
+  font-size:13px;
+  line-height:1.6;
+}
+.rev small { color:#4ade80; }
+.wholes {
+  margin-top:16px;
+  background:var(--card);
+  border:2px dashed var(--pine);
+  border-radius:19px;
+  padding:24px;
+  display:flex;
+  gap:18px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.wholes div { flex:1; min-width:220px; }
+.wholes p {
+  font-size:13px;
+  color:var(--mut);
+  margin-top:6px;
+}
+.look { margin-top:20px; }
+.look h3 { font-size:20px; letter-spacing:-.4px; }
+.look>p {
+  font-size:12.5px;
+  color:var(--mut);
+  margin:3px 0 12px;
+}
+.look-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.look-item {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:17px;
+  overflow:hidden;
+  transition:.2s;
+}
+.look-item:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(20,83,45,.12); }
+.look-item .ph {
+  height:108px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:44px;
+}
+.look-item .tx { padding:13px 15px; font-size:13px; }
+.look-item .tx small { color:var(--mut); font-size:11.5px; }
+.ship {
+  margin-top:16px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:19px;
+  padding:25px;
+}
+.ship h3 { font-size:19px; }
+.ship>p {
+  font-size:12.5px;
+  color:var(--mut);
+  margin:3px 0 12px;
+}
+.ship table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+.ship th {
+  text-align:left;
+  font-size:11px;
+  letter-spacing:1.5px;
+  color:var(--mut);
+  padding:9px 10px;
+  border-bottom:1px solid var(--line);
+}
+.ship td { padding:10px; border-bottom:1px dashed var(--line); }
+footer {
+  text-align:center;
+  color:var(--mut);
+  font-size:12px;
+  padding:22px;
+}
+@media(max-width:1000px) { .cols{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.side{display:none}.look-grid{grid-template-columns:1fr 1fr}.rev-grid,.story,.values{grid-template-columns:1fr}; }
 </style>
 </head>
 <body>
 <div class="top">
-<div class="logo">Marlow <em>&amp; Co.</em></div>
+<div class="logo">Everline<em>EST. 2016</em></div>
 <div class="links"><a href="#">Storefront</a><a href="#">Orders</a><a href="#">Customers</a><a href="#">Ledger</a></div>
 <button class="btn light" style="margin-left:auto" onclick="alert('Store preview opened (demo)')">View store</button>
-<button class="btn" onclick="addP()">＋ Add product</button>
+<button class="btn" style="background:#4ade80;color:#0d1f14" onclick="addP()">Ã¯Â¼â€¹ Add product</button>
 </div>
 <div class="app">
 <aside class="side">
@@ -322,24 +455,25 @@ footer{text-align:center;font-family:Arial,sans-serif;color:var(--mut);font-size
 <div class="cat">Textiles <span>2</span></div>
 </div>
 <h4>CHANNELS</h4>
-<div class="cat">● Online <span>$12.4k</span></div>
-<div class="cat">● Flagship <span>$8.1k</span></div>
-<div class="cat">● Wholesale <span>$3.9k</span></div>
-<div class="note">“Slow goods for fast lives.” — low stock on No. 04, reorder by Friday.</div>
+<div class="cat">Ã¢â€”Â Online <span>$12.4k</span></div>
+<div class="cat">Ã¢â€”Â Flagship <span>$8.1k</span></div>
+<div class="cat">Ã¢â€”Â Wholesale <span>$3.9k</span></div>
+<div class="note">Ã°Å¸â€™Â¡ <b>Slow goods for fast lives.</b><br>Low stock on No. 04 Ã¢â‚¬â€ reorder by Friday to hold the autumn set.</div>
 </aside>
 <div class="main">
-<h1>Good evening, <em>Marlow.</em></h1>
-<p class="sub">Thursday · stock edits update revenue instantly · beige is load-bearing.</p>
+<span class="eyebrow">Ã°Å¸Å’Â¿ AUTUMN DROP Ã‚Â· NO. 04Ã¢â‚¬â€œ24 LIVE</span>
+<h1>Good evening, <em>Everline.</em></h1>
+<p class="sub">Thursday Ã‚Â· stock edits update revenue instantly Ã‚Â· nothing needs saving.</p>
 <div class="stats">
-<div class="st"><small>REVENUE · OCT</small><b>$<span id="rev">24,410</span></b><em>▲ +9.4% vs Sep</em></div>
-<div class="st"><small>ORDERS</small><b>486</b><em>▲ +41 this week</em></div>
-<div class="st"><small>AVG. BASKET</small><b>$50.2</b><em>▲ +$2.1</em></div>
+<div class="st"><small>REVENUE Ã‚Â· OCT</small><b>$<span id="rev">24,410</span></b><em>Ã¢â€“Â² +9.4% vs Sep</em></div>
+<div class="st"><small>ORDERS</small><b>486</b><em>Ã¢â€“Â² +41 this week</em></div>
+<div class="st"><small>AVG. BASKET</small><b>$50.2</b><em>Ã¢â€“Â² +$2.1</em></div>
 <div class="st"><small>LOW STOCK</small><b id="low">2</b><em style="color:var(--red)">needs reorder</em></div>
 </div>
 <div class="cols">
 <div class="card">
 <h3>Inventory</h3>
-<p>Use − / ＋ to adjust stock. Revenue ticks when you sell one (−).</p>
+<p>Use Ã¢Ë†â€™ / Ã¯Â¼â€¹ to adjust stock. Revenue ticks when you sell one (Ã¢Ë†â€™).</p>
 <div id="prods"></div>
 </div>
 <div>
@@ -350,135 +484,110 @@ footer{text-align:center;font-family:Arial,sans-serif;color:var(--mut);font-size
 </div>
 <div class="card" style="margin-top:14px">
 <h3>Latest orders</h3>
-<p>Newest first.</p>
+<p>Newest first, synced from POS.</p>
 <div id="orders"></div>
 </div>
 </div>
 </div>
 <div class="story">
-<div><h3>From a flea-market stall, 2016.</h3><p>Marlow started with eleven candles and a borrowed table. Nine years later we pour, throw and weave everything in-house — 40 hands, zero warehouses of plastic.</p><p>Every piece is numbered. When No. 04 sells out, the formula rests a season. Scarcity is honest here.</p></div>
-<div><h3>Numbers we like.</h3><p>★ 4.9 from 6,200 reviews · 68% repeat buyers · 0 paid ads since 2021. The shop grows the slow way: gifts, then weddings, then whole hotels.</p><p>Trade program outfits 120 cafés and inns. Ask about the autumn glaze.</p></div>
+<div><h3>From a flea-market stall, 2016.</h3><p>Everline started with eleven candles and a borrowed table. Nine years later we pour, throw and weave everything in-house Ã¢â‚¬â€ 40 hands, zero warehouses of plastic.</p><p>Every piece is numbered. When No. 04 sells out, the formula rests a season. Scarcity is honest here.</p></div>
+<div><h3>Numbers we like.</h3><p>Ã¢Ëœâ€¦ 4.9 from 6,200 reviews Ã‚Â· 68% repeat buyers Ã‚Â· 0 paid ads since 2021. The shop grows the slow way: gifts, then weddings, then whole hotels.</p><p>Trade program outfits 120 cafÃƒÂ©s and inns. Ask about the autumn glaze.</p></div>
 </div>
 <div class="values">
-<div class="val"><div class="e">🎁</div><b>Gift cards</b><p>$25–$250, emailed in minutes. Never expires, top-uppable.</p></div>
-<div class="val"><div class="e">↩️</div><b>60-day returns</b><p>Burned candle? Keep it. Anything unused comes back free.</p></div>
-<div class="val"><div class="e">🌱</div><b>Carbon-neutral</b><p>Every parcel offset 2×. 12,000 trees planted so far.</p></div>
+<div class="val"><div class="e">Ã°Å¸Å½Â</div><b>Gift cards</b><p>$25Ã¢â‚¬â€œ$250, emailed in minutes. Never expires, top-uppable.</p></div>
+<div class="val"><div class="e">Ã¢â€ Â©Ã¯Â¸Â</div><b>60-day returns</b><p>Burned candle? Keep it. Anything unused comes back free.</p></div>
+<div class="val"><div class="e">Ã°Å¸Å’Â±</div><b>Carbon-neutral</b><p>Every parcel offset 2Ãƒâ€”. 12,000 trees planted so far.</p></div>
 </div>
 <div class="values">
-<div class="val"><div class="e">🕯️</div><b>Poured, not pumped</b><p>Soy wax, cotton wicks, 55-hour burns. No parabens, ever.</p></div>
-<div class="val"><div class="e">🏺</div><b>Fired twice</b><p>Stoneware at 1,240°C. Dishwasher-brave, chip-shy.</p></div>
-<div class="val"><div class="e">🧵</div><b>Woven to last</b><p>Belgian linen, garment-dyed. Gets softer every wash.</p></div>
+<div class="val"><div class="e">Ã°Å¸â€¢Â¯Ã¯Â¸Â</div><b>Poured, not pumped</b><p>Soy wax, cotton wicks, 55-hour burns. No parabens, ever.</p></div>
+<div class="val"><div class="e">Ã°Å¸ÂÂº</div><b>Fired twice</b><p>Stoneware at 1,240Ã‚Â°C. Dishwasher-brave, chip-shy.</p></div>
+<div class="val"><div class="e">Ã°Å¸Â§Âµ</div><b>Woven to last</b><p>Belgian linen, garment-dyed. Gets softer every wash.</p></div>
 </div>
 <div class="revs">
-<h3>Kind words, framed.</h3>
+<h3>Kind words, framed Ã¢Ëœâ€¦ 4.9</h3>
 <div class="rev-grid">
-<div class="rev">★★★★★<br>"The cedar candle is autumn in a jar."<br><small>— The Slow Post</small></div>
-<div class="rev">★★★★★<br>"Mugs that survived two toddlers."<br><small>— Priya, verified buyer</small></div>
-<div class="rev">★★★★★<br>"Our hotel smells like Marlow now."<br><small>— H. Karim, Arslan Inn</small></div>
-<div class="rev">★★★★★<br>"Ordered Tuesday, lit Friday. Perfect."<br><small>— D. Osei, repeat ×6</small></div>
-<div class="rev">★★★★★<br>"The throw gets softer every wash."<br><small>— L. Fontaine, Lyon</small></div>
-<div class="rev">★★★★★<br>"Wholesale was one email. Done."<br><small>— Café Qora, stockist</small></div>
+<div class="rev">Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦<br>"The cedar candle is autumn in a jar."<br><small>Ã¢â‚¬â€ The Slow Post</small></div>
+<div class="rev">Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦<br>"Mugs that survived two toddlers."<br><small>Ã¢â‚¬â€ Priya, verified buyer</small></div>
+<div class="rev">Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦<br>"Our hotel smells like Everline now."<br><small>Ã¢â‚¬â€ H. Karim, Arslan Inn</small></div>
+<div class="rev">Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦<br>"Ordered Tuesday, lit Friday. Perfect."<br><small>Ã¢â‚¬â€ D. Osei, repeat Ãƒâ€”6</small></div>
+<div class="rev">Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦<br>"The throw gets softer every wash."<br><small>Ã¢â‚¬â€ L. Fontaine, Lyon</small></div>
+<div class="rev">Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦<br>"Wholesale was one email. Done."<br><small>Ã¢â‚¬â€ CafÃƒÂ© Qora, stockist</small></div>
 </div>
 </div>
 <div class="wholes">
-<div><h3>Wholesale &amp; trade — 30% off, always honest.</h3><p>120+ stockists. Net-30 terms, free display crate on first order over $500.</p></div>
+<div><h3>Wholesale & trade Ã¢â‚¬â€ 30% off, always honest.</h3><p>120+ stockists. Net-30 terms, free display crate on first order over $500.</p></div>
 <button class="btn" onclick="alert('Trade pack requested (demo)')">Request trade pack</button>
 </div>
 <div class="look">
 <h3>Autumn lookbook</h3>
 <p>Shot in the flagship on film. Everything below is in stock today.</p>
 <div class="look-grid">
-<div class="look-item"><div class="ph" style="background:#f7e8c9">🕯️</div><div class="tx"><b>Cedar corner</b><br><small>No. 04 + No. 07 · $66 set</small></div></div>
-<div class="look-item"><div class="ph" style="background:#e3ecf7">☕</div><div class="tx"><b>Slow mornings</b><br><small>No. 11 mug · $48</small></div></div>
-<div class="look-item"><div class="ph" style="background:#f9e8dc">🧣</div><div class="tx"><b>Reading nook</b><br><small>No. 15 throw · $120</small></div></div>
-<div class="look-item"><div class="ph" style="background:#ffe9e9">🏺</div><div class="tx"><b>Single stem</b><br><small>No. 18 vase · $42</small></div></div>
-<div class="look-item"><div class="ph" style="background:#e8f3e4">🥣</div><div class="tx"><b>Sunday table</b><br><small>No. 12 bowl · $86</small></div></div>
-<div class="look-item"><div class="ph" style="background:#fff6d6">🍯</div><div class="tx"><b>Pantry shelf</b><br><small>No. 21 set · $28</small></div></div>
-<div class="look-item"><div class="ph" style="background:#e9e4f7">🛋️</div><div class="tx"><b>Cloud sofa</b><br><small>No. 24 cushion · $74</small></div></div>
-<div class="look-item"><div class="ph" style="background:#ffe9c9">🕯️</div><div class="tx"><b>Ember trio</b><br><small>3 votives · $24</small></div></div>
-<div class="look-item"><div class="ph" style="background:#dcefe0">🍵</div><div class="tx"><b>Tea pair</b><br><small>2 cups · $58</small></div></div>
-<div class="look-item"><div class="ph" style="background:#e4e9f5">🛁</div><div class="tx"><b>Bath set</b><br><small>tray + candle · $64</small></div></div>
-<div class="look-item"><div class="ph" style="background:#f3e2d3">🧺</div><div class="tx"><b>Market basket</b><br><small>woven · $46</small></div></div>
+<div class="look-item"><div class="ph" style="background:#dcfce7">Ã°Å¸â€¢Â¯Ã¯Â¸Â</div><div class="tx"><b>Cedar corner</b><br><small>No. 04 + No. 07 Ã‚Â· $66 set</small></div></div>
+<div class="look-item"><div class="ph" style="background:#e0f2fe">Ã¢Ëœâ€¢</div><div class="tx"><b>Slow mornings</b><br><small>No. 11 mug Ã‚Â· $48</small></div></div>
+<div class="look-item"><div class="ph" style="background:#fef3c7">Ã°Å¸Â§Â£</div><div class="tx"><b>Reading nook</b><br><small>No. 15 throw Ã‚Â· $120</small></div></div>
+<div class="look-item"><div class="ph" style="background:#ffe4e6">Ã°Å¸ÂÂº</div><div class="tx"><b>Single stem</b><br><small>No. 18 vase Ã‚Â· $42</small></div></div>
+<div class="look-item"><div class="ph" style="background:#dcfce7">Ã°Å¸Â¥Â£</div><div class="tx"><b>Sunday table</b><br><small>No. 12 bowl Ã‚Â· $86</small></div></div>
+<div class="look-item"><div class="ph" style="background:#fef9c3">Ã°Å¸ÂÂ¯</div><div class="tx"><b>Pantry shelf</b><br><small>No. 21 set Ã‚Â· $28</small></div></div>
+<div class="look-item"><div class="ph" style="background:#f3e8ff">Ã°Å¸â€ºâ€¹Ã¯Â¸Â</div><div class="tx"><b>Cloud sofa</b><br><small>No. 24 cushion Ã‚Â· $74</small></div></div>
+<div class="look-item"><div class="ph" style="background:#ffedd5">Ã°Å¸â€¢Â¯Ã¯Â¸Â</div><div class="tx"><b>Ember trio</b><br><small>3 votives Ã‚Â· $24</small></div></div>
+<div class="look-item"><div class="ph" style="background:#dcfce7">Ã°Å¸ÂÂµ</div><div class="tx"><b>Tea pair</b><br><small>2 cups Ã‚Â· $58</small></div></div>
+<div class="look-item"><div class="ph" style="background:#e0e7ff">Ã°Å¸â€ºÂ</div><div class="tx"><b>Bath set</b><br><small>tray + candle Ã‚Â· $64</small></div></div>
+<div class="look-item"><div class="ph" style="background:#fef3c7">Ã°Å¸Â§Âº</div><div class="tx"><b>Market basket</b><br><small>woven Ã‚Â· $46</small></div></div>
+<div class="look-item"><div class="ph" style="background:#fee2e2">Ã°Å¸Å½â‚¬</div><div class="tx"><b>Gift bundle</b><br><small>wrap included Ã‚Â· $88</small></div></div>
 </div>
 </div>
 <div class="ship">
-<h3>
-Candle &amp; clay care
-</h3>
-<p>
-Burn the first time 2+ hours so the wax melts edge to edge — no tunnels, ever.
-Trim wicks to 5mm. Keep stoneware out of thermal shock: no boiling water into a cold mug.
-Linen loves a shake and a cool iron. Full guide ships in every box.
-</p>
+<h3>Candle & clay care</h3>
+<p>Burn the first time 2+ hours so the wax melts edge to edge Ã¢â‚¬â€ no tunnels, ever. Trim wicks to 5mm. Keep stoneware out of thermal shock.</p>
 </div>
 <div class="ship">
-<h3>Shipping &amp; returns</h3>
+<h3>Shipping & returns</h3>
 <p>Wrapped in kraft, no plastic. Ever.</p>
 <table>
 <tr><th>ZONE</th><th>TIME</th><th>COST</th><th>NOTE</th></tr>
 <tr><td>City courier</td><td>Same day</td><td>$4</td><td>Order by 14:00</td></tr>
-<tr><td>Countrywide</td><td>2–3 days</td><td>$6</td><td>Free over $80</td></tr>
-<tr><td>Neighboring</td><td>5–7 days</td><td>$14</td><td>Tracked</td></tr>
-<tr><td>Worldwide</td><td>10–14 days</td><td>$24</td><td>Duties at checkout</td></tr>
+<tr><td>Countrywide</td><td>2Ã¢â‚¬â€œ3 days</td><td>$6</td><td>Free over $80</td></tr>
+<tr><td>Neighboring</td><td>5Ã¢â‚¬â€œ7 days</td><td>$14</td><td>Tracked</td></tr>
+<tr><td>Worldwide</td><td>10Ã¢â‚¬â€œ14 days</td><td>$24</td><td>Duties at checkout</td></tr>
 <tr><td>Flagship pickup</td><td>2 hours</td><td>Free</td><td>Tea while you wait</td></tr>
 <tr><td>Gift wrap add-on</td><td>same as order</td><td>Free</td><td>Wax seal included</td></tr>
 <tr><td>Trade pallets</td><td>scheduled</td><td>Quoted</td><td>Net-30 for stockists</td></tr>
 </table>
 </div>
 <div class="wholes">
-<div><h3>Gift wrap — free, always.</h3><p>Kraft box, wax seal, handwritten card. Add the note at checkout.</p></div>
+<div><h3>Gift wrap Ã¢â‚¬â€ free, always.</h3><p>Kraft box, wax seal, handwritten card. Add the note at checkout.</p></div>
 <button class="btn" onclick="alert('Gift options shown (demo)')">Wrap my order</button>
 </div>
 <div class="story">
-<div>
-<h3>
-Visit the flagship
-</h3>
-<p>
-Taraqqiyot 45, Tashkent. Open daily 10:00–21:00.
-Candle-pouring workshops every Saturday — book at the counter.
-Dogs welcome, tea obligatory.
-</p>
+<div><h3>Visit the flagship</h3><p>Taraqqiyot 45, Tashkent. Open daily 10:00Ã¢â‚¬â€œ21:00. Candle-pouring workshops every Saturday Ã¢â‚¬â€ book at the counter. Dogs welcome, tea obligatory.</p></div>
+<div><h3>Trade hours</h3><p>Stockists: MonÃ¢â‚¬â€œFri 9:00Ã¢â‚¬â€œ18:00, trade@everline.co. First crate ships with a free display shelf and 20 samples. Net-30 as standard, always.</p></div>
 </div>
-<div>
-<h3>
-Trade hours
-</h3>
-<p>
-Stockists: Mon–Fri 9:00–18:00, trade@marlow.co.
-First crate ships with a free display shelf and 20 samples.
-Net-30 as standard, always.
-</p>
-</div>
-</div>
-<footer>Marlow &amp; Co. demo · crafted goods, honest numbers</footer>
+<footer>Everline Goods demo Ã‚Â· crafted goods, honest numbers</footer>
 </div>
 </div>
 <script>
 var prods=[
-{n:"No. 04 — Cedar candle",c:"Candles",p:34,s:14,e:"🕯️",bg:"#f7e8c9"},
-{n:"No. 07 — Fig candle",c:"Candles",p:32,s:3,e:"🕯️",bg:"#efe3ff"},
-{n:"No. 11 — Stoneware mug",c:"Ceramics",p:48,s:22,e:"☕",bg:"#e3ecf7"},
-{n:"No. 12 — Serving bowl",c:"Ceramics",p:86,s:9,e:"🥣",bg:"#e8f3e4"},
-{n:"No. 15 — Linen throw",c:"Textiles",p:120,s:6,e:"🧣",bg:"#f9e8dc"},
-{n:"No. 18 — Bud vase",c:"Ceramics",p:42,s:2,e:"🏺",bg:"#ffe9e9"},
-{n:"No. 21 — Beeswax set",c:"Candles",p:28,s:31,e:"🍯",bg:"#fff6d6"},
-{n:"No. 24 — Wool cushion",c:"Textiles",p:74,s:18,e:"🛋️",bg:"#e9e4f7"}
+{n:"No. 04 Ã¢â‚¬â€ Cedar candle",c:"Candles",p:34,s:14,e:"Ã°Å¸â€¢Â¯Ã¯Â¸Â",bg:"#dcfce7"},
+{n:"No. 07 Ã¢â‚¬â€ Fig candle",c:"Candles",p:32,s:3,e:"Ã°Å¸â€¢Â¯Ã¯Â¸Â",bg:"#f3e8ff"},
+{n:"No. 11 Ã¢â‚¬â€ Stoneware mug",c:"Ceramics",p:48,s:22,e:"Ã¢Ëœâ€¢",bg:"#e0f2fe"},
+{n:"No. 12 Ã¢â‚¬â€ Serving bowl",c:"Ceramics",p:86,s:9,e:"Ã°Å¸Â¥Â£",bg:"#dcfce7"},
+{n:"No. 15 Ã¢â‚¬â€ Linen throw",c:"Textiles",p:120,s:6,e:"Ã°Å¸Â§Â£",bg:"#fef3c7"},
+{n:"No. 18 Ã¢â‚¬â€ Bud vase",c:"Ceramics",p:42,s:2,e:"Ã°Å¸ÂÂº",bg:"#ffe4e6"},
+{n:"No. 21 Ã¢â‚¬â€ Beeswax set",c:"Candles",p:28,s:31,e:"Ã°Å¸ÂÂ¯",bg:"#fef9c3"},
+{n:"No. 24 Ã¢â‚¬â€ Wool cushion",c:"Textiles",p:74,s:18,e:"Ã°Å¸â€ºâ€¹Ã¯Â¸Â",bg:"#f3e8ff"}
 ];
 var orders=[
-["#8124","A. Smith — 2 × mug","$96","p","paid"],
-["#8123","J. Doe — linen throw","$120","s","shipping"],
-["#8122","K. Lee — bud vase","$42","p","paid"],
-["#8121","R. Diaz — beeswax set","$28","c","done"]
+["#8124","A. Smith Ã¢â‚¬â€ 2 Ãƒâ€” mug","$96","p","paid"],
+["#8123","J. Doe Ã¢â‚¬â€ linen throw","$120","s","shipping"],
+["#8122","K. Lee Ã¢â‚¬â€ bud vase","$42","p","paid"],
+["#8121","R. Diaz Ã¢â‚¬â€ beeswax set","$28","c","done"]
 ];
 var rev=24410,filter="All goods";
 function renderP(){
 var w=document.getElementById('prods');w.innerHTML='';
-var low=0;
 prods.filter(function(p){return filter==="All goods"||p.c===filter;}).forEach(function(p){
 var gi=prods.indexOf(p);
-if(p.s<=3)low++;
-w.innerHTML+='<div class="prod"><div class="pic" style="background:'+p.bg+'">'+p.e+'</div><div><b>'+p.n+'</b><br><small>'+p.c+' · $'+p.p+' · <span class="'+(p.s<=3?'low':'')+'">'+(p.s<=3?'only '+p.s+' left':p.s+' in stock')+'</span></small></div><div class="stock"><button onclick="adj('+gi+',-1)">−</button><b>'+p.s+'</b><button onclick="adj('+gi+',1)">＋</button></div></div>';
+w.innerHTML+='<div class="prod"><div class="pic" style="background:'+p.bg+'">'+p.e+'</div><div><b>'+p.n+'</b><br><small>'+p.c+' Ã‚Â· $'+p.p+' Ã‚Â· <span class="'+(p.s<=3?'low':'')+'">'+(p.s<=3?'only '+p.s+' left':p.s+' in stock')+'</span></small></div><div class="stock"><button onclick="adj('+gi+',-1)">Ã¢Ë†â€™</button><b>'+p.s+'</b><button onclick="adj('+gi+',1)">Ã¯Â¼â€¹</button></div></div>';
 });
 document.getElementById('low').textContent=prods.filter(function(p){return p.s<=3;}).length;
 }
@@ -494,7 +603,7 @@ days.forEach(function(v,i){w.innerHTML+='<div class="bar"><i style="height:'+Mat
 }
 function renderO(){
 var w=document.getElementById('orders');w.innerHTML='';
-orders.forEach(function(o){w.innerHTML+='<div class="ord"><span><b>'+o[0]+'</b> · '+o[1]+'</span><span class="pill '+o[3]+'">'+o[4]+'</span></div>';});
+orders.forEach(function(o){w.innerHTML+='<div class="ord"><span><b>'+o[0]+'</b> Ã‚Â· '+o[1]+'</span><span class="pill '+o[3]+'">'+o[4]+'</span></div>';});
 }
 document.getElementById('cats').addEventListener('click',function(e){
 var c=e.target.closest('.cat');if(!c||c.textContent.includes('$'))return;
@@ -503,63 +612,14 @@ this.querySelectorAll('.cat').forEach(function(x){x.classList.remove('on');});
 c.classList.add('on');renderP();
 });
 function addP(){
-var n=prompt('Product name:','No. 30 — New candle');if(!n)return;
-prods.unshift({n:n,c:"Candles",p:36,s:10,e:"🕯️",bg:"#f7e8c9"});renderP();
+var n=prompt('Product name:','No. 30 Ã¢â‚¬â€ New candle');if(!n)return;
+prods.unshift({n:n,c:"Candles",p:36,s:10,e:"Ã°Å¸â€¢Â¯Ã¯Â¸Â",bg:"#dcfce7"});renderP();
 }
 renderP();renderB();renderO();
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
-<style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
-
-  <script src="../api-runtime.js"></script>
+<style>.ceo-hub-floating-badge{position:fixed;bottom:22px;right:22px;z-index:99999;background:rgba(12,12,20,.88);backdrop-filter:blur(14px);border:1px solid rgba(233,196,106,.4);color:#f4f2ea!important;text-decoration:none!important;padding:8px 16px;border-radius:9999px;font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.8)}@media(max-width:640px){.ceo-hub-floating-badge{bottom:12px;right:12px;padding:6px 12px;font-size:11px}}</style>
+<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
+<a href="../index.html" class="ceo-hub-floating-badge">Ã¢â€”Ë† 66 Projects Hub</a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>

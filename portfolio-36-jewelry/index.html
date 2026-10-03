@@ -3,778 +3,831 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ATELIER LUMIÈRE — Fine Jewellery</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>MAISON AURORE — Fine Jewellery</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+
 * {
-margin:0;
-padding:0;
-box-sizing:border-box
+  margin:0;
+  padding:0;
+  box-sizing:border-box
 }
 :root {
---bg:#faf8f4;
---ink:#2b2723;
---mut:#8f867a;
---line:#e7e0d3;
---gold:#b08d4f;
---rose:#f3e7e2
+  --bg:#faf7f1;
+  --ink:#211c16;
+  --mut:#97897a;
+  --line:#e6dccb;
+  --gold:#a98548;
+  --gold2:#c9ab6e;
+  --dark:#171310
 }
 body {
-background:var(--bg);
-color:var(--ink);
-font-family:Montserrat,sans-serif;
-font-weight:300
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Jost,sans-serif;
+  font-weight:300;
+  overflow-x:hidden
 }
-h1,h2,h3,.serif { font-family:'Cormorant Garamond',serif; font-weight:500 }
+h1,h2,h3,.serif {
+  font-family:'Cormorant Garamond',serif;
+  font-weight:500
+}
 .wrap {
-max-width:1180px;
-margin:auto;
-padding:0 26px
+  max-width:1200px;
+  margin:auto;
+  padding:0 26px
 }
-/* header */
+.top {
+  background:var(--dark);
+  color:#e9ddc6;
+  text-align:center;
+  font-size:11px;
+  letter-spacing:3px;
+  padding:9px 12px
+}
 header {
-position:sticky;
-top:0;
-z-index:50;
-background:rgba(250,248,244,.92);
-backdrop-filter:blur(10px);
-border-bottom:1px solid var(--line)
+  position:sticky;
+  top:0;
+  z-index:60;
+  background:rgba(250,247,241,.94);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)
 }
 .hd {
-max-width:1240px;
-margin:auto;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:18px 26px
+  max-width:1280px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 26px
 }
 .brand {
-font-family:'Cormorant Garamond',serif;
-font-size:24px;
-letter-spacing:6px
+  font-family:'Cormorant Garamond',serif;
+  font-size:25px;
+  letter-spacing:7px
 }
 .brand small {
-display:block;
-font-family:Montserrat;
-font-size:9px;
-letter-spacing:5px;
-color:var(--mut)
+  display:block;
+  font-family:Jost;
+  font-size:9px;
+  letter-spacing:5px;
+  color:var(--gold)
 }
-nav { display:flex; gap:28px }
+nav {
+  display:flex;
+  gap:30px
+}
 nav a {
-color:var(--ink);
-text-decoration:none;
-font-size:12px;
-letter-spacing:2px;
-opacity:.65
+  color:var(--ink);
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:2px;
+  opacity:.65
 }
-nav a:hover { opacity:1; color:var(--gold) }
-.hbtn {
-border:1px solid var(--ink);
-background:none;
-padding:10px 22px;
-font-size:11px;
-letter-spacing:2px;
-cursor:pointer;
-font-family:Montserrat
+nav a:hover {
+  opacity:1;
+  color:var(--gold)
 }
-.hbtn:hover { background:var(--ink); color:#fff }
-/* hero */
+.hact {
+  display:flex;
+  gap:12px;
+  align-items:center
+}
+.ibtn {
+  background:none;
+  border:1px solid var(--line);
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:15px;
+  position:relative;
+  color:var(--ink)
+}
+.ibtn:hover{border-color:var(--gold)}
+.ibtn b {
+  position:absolute;
+  top:-4px;
+  right:-4px;
+  background:var(--gold);
+  color:#fff;
+  font-size:10px;
+  width:19px;
+  height:19px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+.burger {
+  display:none;
+  background:none;
+  border:0;
+  font-size:24px;
+  cursor:pointer;
+  color:var(--ink)
+}
 .hero {
-text-align:center;
-padding:84px 26px 60px;
-max-width:820px;
-margin:auto
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:50px;
+  align-items:center;
+  max-width:1200px;
+  margin:auto;
+  padding:70px 26px 60px
 }
-.hero p.eyebrow {
-font-size:11px;
-letter-spacing:5px;
-color:var(--gold);
-margin-bottom:18px
+.eyebrow {
+  font-size:11px;
+  letter-spacing:5px;
+  color:var(--gold);
+  margin-bottom:16px
 }
-.hero h1 { font-size:clamp(44px,6.5vw,84px); line-height:1.05 }
-.hero h1 i { color:var(--gold) }
+.hero h1 {
+  font-size:clamp(46px,6vw,84px);
+  line-height:1.02
+}
+.hero h1 i{color:var(--gold)}
 .hero p.sub {
-color:var(--mut);
-line-height:1.9;
-margin:22px auto;
-max-width:560px;
-font-size:15px
-}
-.hero .row {
-display:flex;
-gap:12px;
-justify-content:center;
-flex-wrap:wrap;
-margin-top:8px
+  color:var(--mut);
+  line-height:1.9;
+  margin:22px 0 28px;
+  max-width:460px;
+  font-size:15px
 }
 .btn {
-padding:14px 34px;
-font-size:11px;
-letter-spacing:3px;
-cursor:pointer;
-font-family:Montserrat;
-font-weight:500
+  padding:15px 36px;
+  font-size:11px;
+  letter-spacing:3px;
+  cursor:pointer;
+  font-family:Jost;
+  font-weight:500;
+  border:1px solid var(--ink)
 }
 .btn.dark {
-background:var(--ink);
-color:#fff;
-border:1px solid var(--ink)
+  background:var(--ink);
+  color:#fff
 }
-.btn.dark:hover { background:var(--gold); border-color:var(--gold) }
+.btn.dark:hover {
+  background:var(--gold);
+  border-color:var(--gold)
+}
 .btn.line {
-background:none;
-border:1px solid var(--ink);
-color:var(--ink)
+  background:none;
+  color:var(--ink)
 }
-.btn.line:hover { border-color:var(--gold); color:var(--gold) }
+.btn.line:hover {
+  border-color:var(--gold);
+  color:var(--gold)
+}
+.hrow {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap
+}
+.hmeta {
+  display:flex;
+  gap:34px;
+  margin-top:34px
+}
+.hmeta div b {
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;
+  display:block
+}
+.hmeta div span {
+  font-size:10px;
+  letter-spacing:3px;
+  color:var(--mut)
+}
+.himg{position:relative}
+.himg img {
+  width:100%;
+  height:560px;
+  object-fit:cover;
+  display:block
+}
+.himg img.s {
+  position:absolute;
+  width:44%;
+  height:230px;
+  left:-40px;
+  bottom:-30px;
+  border:8px solid var(--bg);
+  object-fit:cover
+}
+.hbadge {
+  position:absolute;
+  top:22px;
+  right:22px;
+  background:rgba(23,19,16,.85);
+  color:#f3e8d2;
+  padding:12px 20px;
+  font-size:11px;
+  letter-spacing:2px
+}
 .strip {
-display:grid;
-grid-template-columns:repeat(4,1fr);
-border-top:1px solid var(--line);
-border-bottom:1px solid var(--line);
-max-width:1180px;
-margin:0 auto
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  max-width:1200px;
+  margin:30px auto 0
 }
 .strip div {
-padding:22px;
-text-align:center;
-border-left:1px solid var(--line)
+  padding:20px;
+  text-align:center;
+  border-left:1px solid var(--line)
 }
-.strip div:first-child { border:none }
+.strip div:first-child{border:none}
 .strip b {
-font-family:'Cormorant Garamond',serif;
-font-size:26px;
-display:block
+  font-family:'Cormorant Garamond',serif;
+  font-size:25px;
+  display:block
 }
 .strip span {
-font-size:10px;
-letter-spacing:3px;
-color:var(--mut)
+  font-size:10px;
+  letter-spacing:3px;
+  color:var(--mut)
 }
-/* gallery */
-section { padding:76px 0 }
-.st { text-align:center; margin-bottom:36px }
+section{padding:78px 0}
+.st {
+  text-align:center;
+  margin-bottom:34px
+}
 .st p {
-font-size:11px;
-letter-spacing:5px;
-color:var(--gold);
-margin-bottom:12px
+  font-size:11px;
+  letter-spacing:5px;
+  color:var(--gold);
+  margin-bottom:12px
 }
-.st h2 { font-size:clamp(32px,4vw,52px) }
+.st h2{font-size:clamp(32px,4vw,52px)}
 .filters {
-display:flex;
-gap:8px;
-justify-content:center;
-flex-wrap:wrap;
-margin-bottom:34px
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:36px
 }
 .f {
-background:none;
-border:1px solid var(--line);
-padding:10px 24px;
-font-size:11px;
-letter-spacing:2px;
-cursor:pointer;
-font-family:Montserrat;
-color:var(--ink)
+  background:none;
+  border:1px solid var(--line);
+  padding:11px 26px;
+  font-size:11px;
+  letter-spacing:2px;
+  cursor:pointer;
+  font-family:Jost;
+  color:var(--ink)
 }
 .f.on,.f:hover {
-background:var(--ink);
-color:#fff;
-border-color:var(--ink)
+  background:var(--ink);
+  color:#fff;
+  border-color:var(--ink)
 }
-.masonry { columns:3; column-gap:20px }
-.pin {
-break-inside:avoid;
-margin-bottom:20px;
-background:#fff;
-border:1px solid var(--line);
-cursor:zoom-in;
-transition:.3s;
-position:relative
+.grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:22px
 }
-.pin:hover { box-shadow:0 24px 50px rgba(43,39,35,.12) }
-.pin .ph {
-font-size:90px;
-text-align:center;
-padding:44px 20px;
-background:linear-gradient(160deg,#fff,var(--rose))
+.card {
+  border:1px solid var(--line);
+  background:#fff;
+  overflow:hidden;
+  transition:.35s
 }
-.pin.tall .ph { font-size:120px; padding:70px 20px }
-.pin .cap { padding:18px 20px }
-.pin .cap h3 { font-size:22px }
-.pin .cap small {
-font-size:10px;
-letter-spacing:3px;
-color:var(--mut)
+.card:hover {
+  transform:translateY(-6px);
+  border-color:var(--gold2)
 }
-.pin .cap .pr {
-font-family:'Cormorant Garamond',serif;
-font-size:20px;
-color:var(--gold);
-margin-top:6px
+.ph {
+  position:relative;
+  overflow:hidden;
+  height:280px;
+  background:#efe7d7
 }
-/* story */
-.story {
-background:#fff;
-border-top:1px solid var(--line);
-border-bottom:1px solid var(--line)
+.ph img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:.6s
 }
-.story .cols {
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:60px;
-align-items:center
+.card:hover .ph img{transform:scale(1.07)}
+.tag {
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:var(--ink);
+  color:#fff;
+  font-size:9px;
+  letter-spacing:2px;
+  padding:6px 12px
 }
-.story .big {
-font-size:150px;
-text-align:center;
-background:var(--rose);
-padding:60px 20px
+.qv {
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  background:rgba(255,255,255,.95);
+  border:1px solid var(--ink);
+  padding:11px;
+  font-size:10px;
+  letter-spacing:3px;
+  cursor:pointer;
+  opacity:0;
+  transform:translateY(8px);
+  transition:.3s;
+  font-family:Jost
 }
-.story h2 { font-size:clamp(30px,3.6vw,46px); margin-bottom:16px }
-.story p {
-color:var(--mut);
-line-height:1.95;
-font-size:15px;
-margin-bottom:14px
+.card:hover .qv {
+  opacity:1;
+  transform:none
 }
-.sign {
-font-family:'Cormorant Garamond',serif;
-font-style:italic;
-font-size:26px;
-color:var(--gold)
+.qv:hover {
+  background:var(--ink);
+  color:#fff
 }
-/* bespoke */
-.steps {
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-gap:0;
-border:1px solid var(--line)
+.cb {
+  padding:18px;
+  text-align:center
 }
-.step {
-padding:34px 26px;
-border-left:1px solid var(--line);
-background:#fff
+.cb h3{font-size:22px}
+.cb .cat {
+  font-size:10px;
+  letter-spacing:3px;
+  color:var(--mut);
+  margin:6px 0
 }
-.step:first-child { border:none }
-.step b {
-font-family:'Cormorant Garamond',serif;
-font-size:38px;
-color:var(--gold)
+.cb .pr {
+  color:var(--gold);
+  font-size:17px;
+  letter-spacing:1px
 }
-.step h3 { font-size:22px; margin:8px 0 }
-.step p {
-font-size:13.5px;
-color:var(--mut);
-line-height:1.8
+.cb .pr s {
+  color:var(--mut);
+  font-size:13px;
+  margin-right:8px
 }
-/* testimonials */
-.quotes {
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px
+.add {
+  margin-top:12px;
+  width:100%;
+  background:none;
+  border:1px solid var(--ink);
+  padding:11px;
+  font-size:10px;
+  letter-spacing:3px;
+  cursor:pointer;
+  font-family:Jost
 }
-.q {
-background:#fff;
-border:1px solid var(--line);
-padding:30px
+.add:hover {
+  background:var(--gold);
+  border-color:var(--gold);
+  color:#fff
 }
-.q .qs { color:var(--gold); letter-spacing:3px }
-.q p {
-font-family:'Cormorant Garamond',serif;
-font-size:20px;
-font-style:italic;
-line-height:1.6;
-margin:12px 0
+.craft {
+  background:var(--dark);
+  color:#efe6d3
 }
-.q b {
-font-size:11px;
-letter-spacing:3px;
-color:var(--mut)
+.craft .wrap {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:54px;
+  align-items:center
 }
-/* appointment */
-.form {
-background:#fff;
-border:1px solid var(--line);
-padding:44px;
-max-width:720px;
-margin:0 auto
+.craft img {
+  width:100%;
+  height:480px;
+  object-fit:cover
 }
-.form h2 {
-font-size:36px;
-text-align:center;
-margin-bottom:6px
+.craft h2 {
+  font-size:clamp(32px,4vw,50px);
+  margin-bottom:18px
 }
-.form p {
-text-align:center;
-color:var(--mut);
-font-size:13px;
-margin-bottom:24px
+.craft p {
+  color:#b7a98f;
+  line-height:1.9;
+  margin-bottom:16px;
+  font-size:15px
 }
-.form .r {
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px
+.clist {
+  margin:24px 0;
+  display:grid;
+  gap:14px
 }
-.form input,.form select,.form textarea {
-border:1px solid var(--line);
-background:var(--bg);
-padding:13px 16px;
-font-family:Montserrat;
-font-size:14px;
-width:100%;
-margin-bottom:12px;
-color:var(--ink)
+.clist div {
+  display:flex;
+  gap:14px;
+  align-items:center;
+  border-bottom:1px solid #352d22;
+  padding-bottom:14px;
+  font-size:14px;
+  letter-spacing:1px
 }
-.form input:focus,.form select:focus,.form textarea:focus { outline:none; border-color:var(--gold) }
-.form button { width:100% }
-/* faq */
-.faq { max-width:720px; margin:44px auto 0 }
-.qa { border-bottom:1px solid var(--line) }
-.qa button {
-width:100%;
-background:none;
-border:none;
-padding:18px 4px;
-display:flex;
-justify-content:space-between;
-cursor:pointer;
-font-family:'Cormorant Garamond',serif;
-font-size:21px;
-color:var(--ink);
-text-align:left
+.clist span {
+  color:var(--gold2);
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px
 }
-.qa p {
-display:none;
-padding:0 4px 20px;
-color:var(--mut);
-font-size:14px;
-line-height:1.85
+.testi {
+  max-width:760px;
+  margin:auto;
+  text-align:center
 }
-.qa p.open { display:block }
-/* footer */
+.tbox{min-height:190px}
+.tbox blockquote {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(22px,3vw,30px);
+  font-style:italic;
+  line-height:1.5
+}
+.tbox cite {
+  display:block;
+  margin-top:16px;
+  font-style:normal;
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--gold)
+}
+.tdots {
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  margin-top:22px
+}
+.tdots button {
+  width:34px;
+  height:3px;
+  border:0;
+  background:var(--line);
+  cursor:pointer
+}
+.tdots button.on{background:var(--gold)}
+.appt {
+  border:1px solid var(--line);
+  background:#fff;
+  display:grid;
+  grid-template-columns:1fr 1fr
+}
+.appt img {
+  width:100%;
+  height:100%;
+  min-height:420px;
+  object-fit:cover
+}
+.aform{padding:48px 44px}
+.aform h2 {
+  font-size:38px;
+  margin-bottom:8px
+}
+.aform p {
+  color:var(--mut);
+  font-size:14px;
+  margin-bottom:22px
+}
+label {
+  display:block;
+  font-size:10px;
+  letter-spacing:3px;
+  margin:14px 0 7px;
+  color:var(--mut)
+}
+input,select,textarea {
+  width:100%;
+  border:1px solid var(--line);
+  background:var(--bg);
+  padding:13px 14px;
+  font-family:Jost;
+  font-size:14px;
+  color:var(--ink)
+}
+input:focus,select:focus,textarea:focus{outline:1px solid var(--gold)}
+.frow {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
+}
 footer {
-background:var(--ink);
-color:#cfc8ba;
-padding:56px 26px;
-text-align:center
+  background:var(--dark);
+  color:#cbbfa4;
+  padding:60px 0 26px
 }
-footer .brand { color:#fff }
-footer form {
-display:flex;
-gap:10px;
-justify-content:center;
-margin:22px 0;
-flex-wrap:wrap
+.fgrid {
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:34px;
+  max-width:1200px;
+  margin:auto;
+  padding:0 26px
 }
-footer input {
-background:none;
-border:1px solid #555;
-color:#fff;
-padding:12px 18px;
-width:min(300px,80%);
-font-family:Montserrat
+.fgrid h4 {
+  color:#fff;
+  font-size:12px;
+  letter-spacing:3px;
+  margin-bottom:16px;
+  font-family:Jost;
+  font-weight:500
 }
-footer p { font-size:12px; letter-spacing:1px }
-/* lightbox */
-#lb {
-position:fixed;
-inset:0;
-background:rgba(30,26,22,.94);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:100;
-padding:24px
+.fgrid a {
+  display:block;
+  color:#cbbfa4;
+  text-decoration:none;
+  font-size:14px;
+  margin-bottom:10px
 }
-#lb.show { display:flex }
-#lb figure {
-background:var(--bg);
-max-width:560px;
-width:100%;
-text-align:center;
-position:relative;
-animation:pop .3s
+.fgrid a:hover{color:var(--gold2)}
+.fbot {
+  max-width:1200px;
+  margin:40px auto 0;
+  padding:22px 26px 0;
+  border-top:1px solid #352d22;
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  letter-spacing:1px;
+  flex-wrap:wrap;
+  gap:10px
 }
-@keyframes pop { from { transform:scale(.94); opacity:0 } }
-#lb .ph {
-font-size:150px;
-padding:56px 20px;
-background:linear-gradient(160deg,#fff,var(--rose))
+.drawer {
+  position:fixed;
+  top:0;
+  right:-380px;
+  width:360px;
+  max-width:92vw;
+  height:100%;
+  background:#fff;
+  z-index:200;
+  transition:.35s;
+  display:flex;
+  flex-direction:column;
+  border-left:1px solid var(--line)
 }
-#lb figcaption { padding:26px }
-#lb h3 { font-size:30px }
-#lb p {
-color:var(--mut);
-font-size:14px;
-line-height:1.8;
-margin:10px 0
+.drawer.open{right:0}
+.dh {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  border-bottom:1px solid var(--line)
 }
-#lb .pr {
-font-family:'Cormorant Garamond',serif;
-font-size:24px;
-color:var(--gold)
+.dh h3{font-size:26px}
+.dx {
+  background:none;
+  border:0;
+  font-size:22px;
+  cursor:pointer
 }
-#lb .nav {
-position:absolute;
-top:50%;
-font-size:30px;
-background:none;
-border:none;
-cursor:pointer;
-color:var(--ink);
-padding:10px
+.ditems {
+  flex:1;
+  overflow:auto;
+  padding:16px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:14px
 }
-#prev { left:6px }
-#next { right:6px }
-#closeLb {
-position:absolute;
-top:-46px;
-right:0;
-background:none;
-border:none;
-color:#fff;
-font-size:26px;
-cursor:pointer
+.dit {
+  display:grid;
+  grid-template-columns:64px 1fr auto;
+  gap:12px;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+  padding-bottom:12px
 }
-#lb .hint {
-color:#fff;
-font-size:11px;
-letter-spacing:2px;
-margin-top:14px;
-opacity:.6
+.dit img {
+  width:64px;
+  height:64px;
+  object-fit:cover
 }
-#toast {
-position:fixed;
-bottom:26px;
-left:50%;
-transform:translateX(-50%) translateY(80px);
-background:var(--ink);
-color:#fff;
-padding:13px 30px;
-font-size:13px;
-letter-spacing:1px;
-transition:.3s;
-z-index:120
+.dit b {
+  font-size:14px;
+  display:block
 }
-#toast.show { transform:translateX(-50%) }
-@media(max-width:860px) { .masonry { columns:2 }
-.story .cols { grid-template-columns:1fr }
-.strip { grid-template-columns:repeat(2,1fr) }
-.form .r { grid-template-columns:1fr }
-nav { display:none }
-.pin.tall .ph { font-size:90px; padding:44px 20px }
+.dit span {
+  font-size:12px;
+  color:var(--gold)
 }
+.qty {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-top:6px
+}
+.qty button {
+  width:24px;
+  height:24px;
+  border:1px solid var(--line);
+  background:none;
+  cursor:pointer
+}
+.df {
+  padding:20px;
+  border-top:1px solid var(--line)
+}
+.df .tot {
+  display:flex;
+  justify-content:space-between;
+  font-size:16px;
+  margin-bottom:14px
+}
+.modal {
+  position:fixed;
+  inset:0;
+  background:rgba(23,19,16,.6);
+  z-index:300;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px
+}
+.modal.open{display:flex}
+.mbox {
+  background:#fff;
+  max-width:820px;
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  position:relative
+}
+.mbox img {
+  width:100%;
+  height:100%;
+  min-height:380px;
+  object-fit:cover
+}
+.mb{padding:40px 36px}
+.mb h3{font-size:36px}
+.mb .pr {
+  color:var(--gold);
+  font-size:22px;
+  margin:10px 0
+}
+.mb p {
+  color:var(--mut);
+  line-height:1.8;
+  font-size:14px;
+  margin-bottom:18px
+}
+.mx {
+  position:absolute;
+  top:12px;
+  right:16px;
+  background:none;
+  border:0;
+  font-size:26px;
+  cursor:pointer
+}
+.toast {
+  position:fixed;
+  bottom:26px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--ink);
+  color:#fff;
+  padding:14px 30px;
+  font-size:12px;
+  letter-spacing:2px;
+  z-index:400;
+  transition:.3s;
+  opacity:0
+}
+.toast.show {
+  transform:translateX(-50%);
+  opacity:1
+}
+.rv {
+  opacity:0;
+  transform:translateY(26px);
+  transition:.7s
+}
+.rv.vis {
+  opacity:1;
+  transform:none
+}
+@media(max-width:960px) {
+  .hero,.craft .wrap,.appt,.mbox{grid-template-columns:1fr}
+.grid{grid-template-columns:repeat(2,1fr)}
+.strip{grid-template-columns:repeat(2,1fr)}
+.strip div:nth-child(3){border:none}
+.fgrid{grid-template-columns:1fr 1fr}
+nav{display:none}
+.burger{display:block}
+.himg img{height:420px}
+}
+@media(max-width:560px) {
+  .grid{grid-template-columns:1fr}
+.frow{grid-template-columns:1fr}
+.aform{padding:32px 22px}
+}
+.mnav {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  background:var(--bg);
+  z-index:150;
+  border-bottom:1px solid var(--line);
+  padding:70px 30px 30px;
+  flex-direction:column;
+  gap:18px
+}
+.mnav.open{display:flex}
+.mnav a {
+  text-decoration:none;
+  color:var(--ink);
+  font-size:20px;
+  font-family:'Cormorant Garamond',serif
+}
+
 </style>
 </head>
 <body>
-<header>
-<div class="hd">
-<div class="brand">LUMIÈRE<small>PARIS · EST. 1984</small>
-</div>
-<nav>
-<a href="#gallery">Gallery</a>
-<a href="#maison">Maison</a>
-<a href="#bespoke">Bespoke</a>
-<a href="#visit">Visit</a>
-</nav>
-<button class="hbtn" onclick="scrollToId('visit')">BOOK VIEWING</button>
-</div>
-</header>
+<div class="top">COMPLIMENTARY ENGRAVING ON ALL RINGS — THIS WEEK ONLY</div>
+<header><div class="hd">
+<div class="brand">AURORE<small>FINE JEWELLERY</small></div>
+<nav><a href="#shop">Collections</a><a href="#craft">Atelier</a><a href="#voices">Clients</a><a href="#appt">Appointment</a></nav>
+<div class="hact"><button class="ibtn" id="cartBtn" aria-label="Bag">&#9673;<b id="cartN">0</b></button><button class="burger" id="burger">&#9776;</button></div>
+</div></header>
+<div class="mnav" id="mnav"><a href="#shop">Collections</a><a href="#craft">Atelier</a><a href="#voices">Clients</a><a href="#appt">Appointment</a></div>
 <div class="hero">
-<p class="eyebrow">HIGH JEWELLERY · PARIS</p>
-<h1>Quiet luxury,<br>
-<i>worn forever.</i>
-</h1>
-<p class="sub">Ethically sourced diamonds, recycled 18k gold, and designs that outlive trends. Each piece is made to order in our Paris atelier — click any piece to view it up close.</p>
-<div class="row">
-<button class="btn dark" onclick="scrollToId('gallery')">VIEW GALLERY</button>
-<button class="btn line" onclick="scrollToId('bespoke')">BESPOKE SERVICE</button>
+<div><p class="eyebrow">EST. 1987 — PARIS · GENEVA</p>
+<h1>Quiet luxury, <i>worn</i> every day.</h1>
+<p class="sub">Ethically sourced diamonds and recycled 18k gold, shaped by hand in our Geneva atelier. Pieces designed to be lived in — not locked away.</p>
+<div class="hrow"><a href="#shop"><button class="btn dark">SHOP THE COLLECTION</button></a><a href="#appt"><button class="btn line">BOOK A FITTING</button></a></div>
+<div class="hmeta"><div><b>38</b><span>YEARS OF CRAFT</span></div><div><b>12k</b><span>HAPPY CLIENTS</span></div><div><b>100%</b><span>ETHICAL GOLD</span></div></div></div>
+<div class="himg"><img src="https://picsum.photos/seed/aurore-hero/700/900" alt="Fine jewellery"><div class="hbadge">THE NOUVELLE COLLECTION</div><img class="s" src="https://picsum.photos/seed/aurore-detail/500/400" alt="Ring detail"></div>
 </div>
-</div>
-<div class="strip wrap">
-<div>
-<b>40</b>
-<span>YEARS OF CRAFT</span>
-</div>
-<div>
-<b>100%</b>
-<span>TRACEABLE GOLD</span>
-</div>
-<div>
-<b>12k</b>
-<span>PIECES CREATED</span>
-</div>
-<div>
-<b>★ 4.9</b>
-<span>CLIENT RATING</span>
-</div>
-</div>
-<section id="gallery">
-<div class="wrap">
-<div class="st">
-<p>THE GALLERY</p>
-<h2>Pieces of <i style="color:var(--gold)">light</i>
-</h2>
-</div>
-<div class="filters" id="filters">
-</div>
-<div class="masonry" id="grid">
-</div>
-<p style="text-align:center;color:var(--mut);font-size:12px;letter-spacing:2px;margin-top:26px">TIP — CLICK ANY PIECE FOR LIGHTBOX · USE ← → KEYS TO BROWSE</p>
-</div>
-</section>
-<section class="story" id="maison">
-<div class="wrap cols">
-<div class="big">💎</div>
-<div>
-<p style="font-size:11px;letter-spacing:5px;color:var(--gold)">THE MAISON</p>
-<h2>Three generations of<br>goldsmiths.</h2>
-<p>Founded by Hélène Marchand in 1984, Lumière remains family-run. We buy gold only from certified recycled refineries and diamonds only with Kimberley certificates — beauty without compromise.</p>
-<p>Every commission includes a private design sketch, a wax model fitting, and lifetime resizing and cleaning.</p>
-<div class="sign">— Famille Marchand</div>
-</div>
-</div>
-</section>
-<section id="bespoke">
-<div class="wrap">
-<div class="st">
-<p>BESPOKE</p>
-<h2>From sketch to <i style="color:var(--gold)">finger</i> in four steps</h2>
-</div>
-<div class="steps">
-<div class="step">
-<b>I.</b>
-<h3 class="serif">Consultation</h3>
-<p>A 45-minute private meeting — in salon or by video — to understand the occasion, style and budget.</p>
-</div>
-<div class="step">
-<b>II.</b>
-<h3 class="serif">Sketch</h3>
-<p>Two hand-drawn proposals within a week, with stone options and honest pricing for each.</p>
-</div>
-<div class="step">
-<b>III.</b>
-<h3 class="serif">Fitting</h3>
-<p>A wax model to try on. Adjust proportions, weight and stone size before anything is cast.</p>
-</div>
-<div class="step">
-<b>IV.</b>
-<h3 class="serif">Reveal</h3>
-<p>Finished in 4–6 weeks, presented in our signature lacquered case with certificate.</p>
-</div>
-</div>
-<div class="quotes" style="margin-top:44px">
-<div class="q">
-<div class="qs">★★★★★</div>
-<p>"My engagement ring stopped my mother-in-law mid-sentence. Worth every centime."</p>
-<b>— SOPHIE L., PARIS</b>
-</div>
-<div class="q">
-<div class="qs">★★★★★</div>
-<p>"They redesigned my grandmother's brooch into a pendant I wear daily. So delicate, so kind."</p>
-<b>— ELEANOR W., LONDON</b>
-</div>
-<div class="q">
-<div class="qs">★★★★★</div>
-<p>"Transparent pricing, Kimberley papers, and a sketch I framed. True maison experience."</p>
-<b>— YUKI T., TOKYO</b>
-</div>
-</div>
-</div>
-</section>
-<section id="visit" style="padding-top:0">
-<div class="wrap">
-<div class="form">
-<h2 class="serif">Book a private viewing</h2>
-<p>8 Place Vendôme, Paris · Tue–Sat, 10h–19h · Complimentary champagne</p>
-<div class="r">
-<input id="vn" placeholder="Full name">
-<input id="ve" type="email" placeholder="Email">
-</div>
-<div class="r">
-<select>
-<option>Engagement &amp; bridal</option>
-<option>High jewellery</option>
-<option>Bespoke commission</option>
-<option>Redesign heirloom</option>
-</select>
-<input type="date" id="vd">
-</div>
-<textarea id="vm" rows="3" placeholder="Tell us about the occasion (optional)">
-</textarea>
-<button class="btn dark" onclick="book()">REQUEST APPOINTMENT</button>
-</div>
-<div class="faq">
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Are your diamonds conflict-free? <span>+</span>
-</button>
-<p>Absolutely. Every stone above 0.3ct arrives with Kimberley certification and GIA grading. Full traceability papers accompany each piece.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">What is the bespoke price range? <span>+</span>
-</button>
-<p>Redesigns from €800, engagement rings from €2,400, high jewellery on quotation. The sketch consultation is always free.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Do you resize and service? <span>+</span>
-</button>
-<p>Lifetime complimentary resizing, annual cleaning and rhodium refresh for all Lumière pieces — by post or in salon.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Can I sell back my piece? <span>+</span>
-</button>
-<p>Yes — we repurchase Lumière pieces at 70% of current gold + stone value, or credit 85% toward a new commission.</p>
-</div>
-</div>
-</div>
-</section>
-<footer>
-<div class="brand">LUMIÈRE<small style="color:#8f867a">PARIS · EST. 1984</small>
-</div>
-<form onsubmit="event.preventDefault();toast('Welcome to the Cercle Lumière');this.reset()">
-<input required type="email" placeholder="Email for private previews">
-<button class="btn dark" style="background:var(--gold);border-color:var(--gold)" type="submit">JOIN</button>
-</form>
-<p>8 Place Vendôme, 75001 Paris · © 2026 Atelier Lumière</p>
-</footer>
-<div id="lb">
-<figure>
-<button id="closeLb" onclick="closeLb()">✕</button>
-<div class="ph" id="lbE">💍</div>
-<figcaption>
-<h3 class="serif" id="lbN">
-</h3>
-<p id="lbD">
-</p>
-<div class="pr" id="lbP">
-</div>
-<div style="margin-top:16px;display:flex;gap:10px;justify-content:center">
-<button class="btn dark" onclick="enquire()">ENQUIRE ABOUT THIS PIECE</button>
-</div>
-</figcaption>
-<button class="nav" id="prev" onclick="step(-1)">‹</button>
-<button class="nav" id="next" onclick="step(1)">›</button>
-</figure>
-</div>
-<div id="toast">
-</div>
+<div class="strip"><div><b>Free</b><span>INSURED DELIVERY</span></div><div><b>30-day</b><span>EASY RETURNS</span></div><div><b>Lifetime</b><span>WARRANTY</span></div><div><b>Certified</b><span>GIA DIAMONDS</span></div></div>
+<section id="shop"><div class="wrap">
+<div class="st rv"><p>THE COLLECTION</p><h2>Pieces that outlive trends</h2></div>
+<div class="filters" id="filters"></div>
+<div class="grid" id="grid"></div>
+</div></section>
+<section class="craft" id="craft"><div class="wrap">
+<div class="rv"><img src="https://picsum.photos/seed/aurore-atelier/700/800" alt="Atelier"></div>
+<div class="rv"><p class="eyebrow">INSIDE THE ATELIER</p><h2>One bench. One goldsmith. One ring at a time.</h2>
+<p>Every Aurore piece passes through eleven pairs of hands before it reaches yours — from stone selection to final polish. We cast in small batches and finish entirely by hand.</p>
+<div class="clist"><div><span>I.</span> Recycled 18k gold, conflict-free stones</div><div><span>II.</span> Hand-cut settings under microscope</div><div><span>III.</span> Lifetime care &amp; annual re-polish</div></div>
+<a href="#appt"><button class="btn dark" style="border-color:var(--gold2)">VISIT THE ATELIER</button></a></div>
+</div></section>
+<section id="voices"><div class="wrap testi rv">
+<div class="st"><p>CLIENT WORDS</p><h2>Worn &amp; loved</h2></div>
+<div class="tbox"><blockquote id="tq"></blockquote><cite id="ta"></cite></div>
+<div class="tdots" id="tdots"></div>
+</div></section>
+<section id="appt" style="padding-top:0"><div class="wrap">
+<div class="appt rv"><img src="https://picsum.photos/seed/aurore-fitting/600/700" alt="Private fitting">
+<form class="aform" id="bookForm" novalidate><h2>Private fitting</h2><p>30 minutes with a stylist, champagne included. Geneva · Paris · Virtual.</p>
+<div class="frow"><div><label>NAME</label><input id="bName" placeholder="Jane Cooper"></div><div><label>PHONE</label><input id="bPhone" placeholder="+41 ..."></div></div>
+<label>LOCATION</label><select id="bLoc"><option>Geneva boutique</option><option>Paris boutique</option><option>Virtual call</option></select>
+<div class="frow"><div><label>DATE</label><input type="date" id="bDate"></div><div><label>INTERESTED IN</label><select><option>Engagement rings</option><option>Wedding bands</option><option>Gifts</option><option>Bespoke</option></select></div></div>
+<button class="btn dark" style="width:100%;margin-top:20px" type="submit">REQUEST APPOINTMENT</button>
+</form></div>
+</div></section>
+<footer><div class="fgrid">
+<div><div class="brand" style="color:#fff">AURORE<small>PARIS · GENEVA</small></div><p style="margin-top:14px;font-size:14px;line-height:1.8">Fine jewellery for everyday rituals. Designed in Paris, handmade in Geneva since 1987.</p></div>
+<div><h4>SHOP</h4><a href="#shop">Necklaces</a><a href="#shop">Rings</a><a href="#shop">Earrings</a><a href="#shop">Bracelets</a></div>
+<div><h4>MAISON</h4><a href="#craft">Our atelier</a><a href="#voices">Reviews</a><a href="#appt">Fittings</a><a href="#">Care guide</a></div>
+<div><h4>CONTACT</h4><a href="#">hello@aurore.example</a><a href="#">+41 22 000 00 00</a><a href="#">Rue du Rhône 24</a></div>
+</div><div class="fbot"><span>© 2026 Maison Aurore</span><span>Privacy · Terms · Shipping</span></div></footer>
+<aside class="drawer" id="drawer"><div class="dh"><h3>Your bag</h3><button class="dx" id="dClose">&times;</button></div><div class="ditems" id="ditems"></div><div class="df"><div class="tot"><span>Subtotal</span><b id="dTot">$0</b></div><button class="btn dark" style="width:100%" onclick="toast('Checkout is a demo in this concept')">PROCEED TO CHECKOUT</button></div></aside>
+<div class="modal" id="modal"><div class="mbox"><button class="mx" id="mClose">&times;</button><img id="mImg" src="" alt="Piece"><div class="mb"><p class="eyebrow" id="mCat"></p><h3 id="mName"></h3><div class="pr" id="mPrice"></div><p id="mDesc"></p><button class="btn dark" id="mAdd" style="width:100%">ADD TO BAG</button></div></div></div>
+<div class="toast" id="toast"></div>
 <script>
-const ITEMS=[
-{
-e:'💍',n:'Aube Solitaire',c:'rings',p:'€4,200',d:'1.2ct brilliant solitaire on a hand-polished 18k gold band.',tall:1}
-, {
-e:'📿',n:'Rivière de Lune',c:'necklaces',p:'€6,800',d:'Forty-two graduated diamonds on a whisper-fine chain.'}
-, {
-e:'💎',n:'Éclat Pendant',c:'necklaces',p:'€2,900',d:'Single pear-cut diamond suspended from recycled gold.',tall:1}
-, {
-e:'✨',n:'Constellation Studs',c:'earrings',p:'€1,650',d:'Star-set diamond studs, sold as a pair with certificate.'}
-, {
-e:'🌙',n:'Lune Chandelier',c:'earrings',p:'€3,400',d:'Articulated moonstone drops that catch candlelight.',tall:1}
-, {
-e:'🤍',n:'Vœu Band',c:'rings',p:'€1,980',d:'Sculpted wedding band, brushed outside, mirror inside.'}
-, {
-e:'🌟',n:'Héritage Brooch',c:'high',p:'€9,500',d:'One-of-a-kind sapphire brooch from the 1984 archive.',tall:1}
-, {
-e:'🔷',n:'Ciel Ring',c:'high',p:'€12,000',d:'Ceylon sapphire halo ring, piece unique with papers.'}
-, {
-e:'⭕',n:'Cercle Bangle',c:'bracelets',p:'€2,200',d:'Seamless 18k bangle, engraved inside with your date.'}
-, {
-e:'🌊',n:'Onde Bracelet',c:'bracelets',p:'€3,100',d:'Articulated wave links that move like water.',tall:1}
-, {
-e:'❄️',n:'Givre Tiara',c:'high',p:'€18,000',d:'Frost-inspired tiara, convertible to a necklace.'}
-, {
-e:'🍃',n:'Feuille Studs',c:'earrings',p:'€1,200',d:'Everyday gold leaf studs, feather-light.'}
-];
-const CATS=[['all','All pieces'],['rings','Rings'],['necklaces','Necklaces'],['earrings','Earrings'],['bracelets','Bracelets'],['high','High jewellery']];
-let cur='all',vis=[],idx=0; const grid=document.getElementById('grid'),ff=document.getElementById('filters'); CATS.forEach(([v,l],i)=>{
-const b=document.createElement('button');b.className='f'+(i?'':' on');b.textContent=l;b.onclick=()=>{
-cur=v;[...ff.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');render()}
-;ff.appendChild(b)}
-); function render(){
-grid.innerHTML='';vis=ITEMS.map((x,i)=>({
-...x,i}
-)).filter(x=>cur==='all'||x.c===cur);vis.forEach((x,k)=>{
-const d=document.createElement('div');d.className='pin'+(x.tall?' tall':'');d.innerHTML=`<div class="ph">${x.e}</div><div class="cap"><small>${x.c.toUpperCase()}</small><h3 class="serif">${x.n}</h3><div class="pr">${x.p}</div></div>`;d.onclick=()=>openLb(k);grid.appendChild(d)}
-)}
-function openLb(k){
-idx=k;show();document.getElementById('lb').classList.add('show');document.body.style.overflow='hidden'}
-function show(){
-const x=vis[idx];lbE.textContent=x.e;lbN.textContent=x.n;lbD.textContent=x.d;lbP.textContent=x.p+' · incl. certificate'}
-function step(d){
-idx=(idx+d+vis.length)%vis.length;show()}
-function closeLb(){
-document.getElementById('lb').classList.remove('show');document.body.style.overflow=''}
-document.addEventListener('keydown',e=>{
-if(!document.getElementById('lb').classList.contains('show'))return;if(e.key==='Escape')closeLb();if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)}
-); document.getElementById('lb').addEventListener('click',e=>{
-if(e.target.id==='lb')closeLb()}
-); function enquire(){
-closeLb();scrollToId('visit');toast('Mention "'+vis[idx].n+'" in your appointment note')}
-function book(){
-if(!vn.value||!ve.value)return toast('Please add your name and email');toast('Viewing requested — we will confirm within 24h');vn.value=ve.value=vm.value=''}
-function toast(m){
-const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2500)}
-function scrollToId(i){
-document.getElementById(i).scrollIntoView({
-behavior:'smooth'}
-)}
-render();
+const P=[
+{id:1,n:"Rivière Pendant",c:"necklaces",p:1290,o:1490,img:"https://picsum.photos/seed/aurore-n1/500/600",t:"Bestseller",d:"Eighteen brilliant-cut diamonds on a whisper-fine 18k gold chain. Sits perfectly at the collarbone."},
+{id:2,n:"Solitaire Éclat",c:"rings",p:2450,o:0,img:"https://picsum.photos/seed/aurore-r1/500/600",t:"Iconic",d:"A 1.0ct GIA-certified centre stone in a hand-cut six-claw setting. Our most requested engagement ring."},
+{id:3,n:"Goutte Earrings",c:"earrings",p:860,o:990,img:"https://picsum.photos/seed/aurore-e1/500/600",t:"New",d:"Sculptural drops in brushed gold that catch light with every movement. Feather-light on the ear."},
+{id:4,n:"Chaîne Bracelet",c:"bracelets",p:640,o:0,img:"https://picsum.photos/seed/aurore-b1/500/600",t:"",d:"A fluid everyday chain, handmade link by link. Made to stack or wear solo."},
+{id:5,n:"Médaillon Locket",c:"necklaces",p:980,o:0,img:"https://picsum.photos/seed/aurore-n2/500/600",t:"Limited",d:"An heirloom locket with hand-engraved detailing. Holds two photographs inside."},
+{id:6,n:"Alliance Band",c:"rings",p:1120,o:1290,img:"https://picsum.photos/seed/aurore-r2/500/600",t:"Bestseller",d:"The classic wedding band, comfort-fit and polished to a mirror shine. Engraving included."},
+{id:7,n:"Perle Studs",c:"earrings",p:420,o:0,img:"https://picsum.photos/seed/aurore-e2/500/600",t:"",d:"Akoya pearls selected for lustre and matched as perfect pairs. Timeless, always."},
+{id:8,n:"Jonc Sculpté",c:"bracelets",p:790,o:0,img:"https://picsum.photos/seed/aurore-b2/500/600",t:"New",d:"A bold sculpted cuff with a soft brushed finish. Cast in one solid piece."}];
+const cats=["all","necklaces","rings","earrings","bracelets"];
+let cur="all",cart=[],curM=null;
+const grid=document.getElementById("grid"),ff=document.getElementById("filters");
+ff.innerHTML=cats.map(c=>`<button class="f${c==="all"?" on":""}" data-c="${c}">${c.toUpperCase()}</button>`).join("");
+ff.onclick=e=>{const b=e.target.closest(".f");if(!b)return;cur=b.dataset.c;[...ff.children].forEach(x=>x.classList.toggle("on",x===b));render();};
+function render(){grid.innerHTML=P.filter(p=>cur==="all"||p.c===cur).map(p=>`<div class="card rv vis"><div class="ph">${p.t?`<span class="tag">${p.t.toUpperCase()}</span>`:""}<img loading="lazy" src="${p.img}" alt="${p.n}"><button class="qv" data-q="${p.id}">QUICK VIEW</button></div><div class="cb"><h3>${p.n}</h3><div class="cat">${p.c.toUpperCase()}</div><div class="pr">${p.o?`<s>$${p.o.toLocaleString()}</s>`:""}$${p.p.toLocaleString()}</div><button class="add" data-a="${p.id}">ADD TO BAG</button></div></div>`).join("");}
+grid.onclick=e=>{const a=e.target.closest("[data-a]"),q=e.target.closest("[data-q]");if(a)addCart(+a.dataset.a);if(q)openM(+q.dataset.q);};
+function addCart(id){const f=cart.find(i=>i.id===id);f?f.q++:cart.push({id,q:1});sync();toast("Added to your bag");}
+function sync(){const n=cart.reduce((s,i)=>s+i.q,0);document.getElementById("cartN").textContent=n;const box=document.getElementById("ditems");box.innerHTML=cart.length?cart.map(i=>{const p=P.find(x=>x.id===i.id);return `<div class="dit"><img src="${p.img}" alt="${p.n}"><div><b>${p.n}</b><span>$${p.p.toLocaleString()}</span><div class="qty"><button data-d="${p.id}">−</button>${i.q}<button data-u="${p.id}">+</button></div></div><button class="dx" data-r="${p.id}">&times;</button></div>`;}).join(""):'<p style="color:var(--mut)">Your bag is empty.</p>';document.getElementById("dTot").textContent="$"+cart.reduce((s,i)=>s+i.q*P.find(x=>x.id===i.id).p,0).toLocaleString();}
+document.getElementById("ditems").onclick=e=>{const d=e.target.dataset;const it=id=>cart.find(i=>i.id===+id);if(d.u)it(d.u).q++;if(d.d){const f=it(d.d);f.q>1?f.q--:cart=cart.filter(i=>i.id!==+d.d);}if(d.r)cart=cart.filter(i=>i.id!==+d.r);sync();};
+const dr=document.getElementById("drawer");document.getElementById("cartBtn").onclick=()=>dr.classList.add("open");document.getElementById("dClose").onclick=()=>dr.classList.remove("open");
+function openM(id){const p=P.find(x=>x.id===id);curM=id;document.getElementById("mImg").src=p.img;document.getElementById("mCat").textContent=p.c.toUpperCase();document.getElementById("mName").textContent=p.n;document.getElementById("mPrice").textContent="$"+p.p.toLocaleString();document.getElementById("mDesc").textContent=p.d;document.getElementById("modal").classList.add("open");}
+document.getElementById("mClose").onclick=()=>document.getElementById("modal").classList.remove("open");
+document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")e.target.classList.remove("open");};
+document.getElementById("mAdd").onclick=()=>{addCart(curM);document.getElementById("modal").classList.remove("open");dr.classList.add("open");};
+const T=[["It is the only piece I never take off. Two years in, it looks brand new.","— Camille R., Paris"],["She said yes before I even finished the sentence. The ring did the talking.","— Daniel M., Geneva"],["Impeccable packaging, honest advice, zero pressure. Rare these days.","— Sofia L., Milan"]];
+let ti=0;const tq=document.getElementById("tq"),ta=document.getElementById("ta"),td=document.getElementById("tdots");
+td.innerHTML=T.map((_,i)=>`<button data-t="${i}" class="${i?"":"on"}"></button>`).join("");
+function showT(i){ti=i;tq.textContent="\u201C"+T[i][0]+"\u201D";ta.textContent=T[i][1];[...td.children].forEach((b,j)=>b.classList.toggle("on",j===i));}
+td.onclick=e=>{const b=e.target.closest("[data-t]");if(b)showT(+b.dataset.t);};
+showT(0);setInterval(()=>showT((ti+1)%T.length),6000);
+document.getElementById("bookForm").onsubmit=e=>{e.preventDefault();const n=document.getElementById("bName").value.trim(),ph=document.getElementById("bPhone").value.trim(),dt=document.getElementById("bDate").value;if(n.length<2)return toast("Please enter your name");if(ph.length<6)return toast("Please enter a valid phone");if(!dt)return toast("Please pick a date");toast("Request received — we will confirm shortly");e.target.reset();};
+let tt;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2600);}
+document.getElementById("burger").onclick=()=>document.getElementById("mnav").classList.toggle("open");
+document.getElementById("mnav").onclick=()=>document.getElementById("mnav").classList.remove("open");
+const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&x.target.classList.add("vis")),{threshold:.12});
+document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+render();sync();
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
-<style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
-
-  <script src="../api-runtime.js"></script>
 </body>
 </html>

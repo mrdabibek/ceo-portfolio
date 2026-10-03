@@ -3,757 +3,753 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ClearView Optics — Glasses & Eye Care</title>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<title>LUMEN — Eyewear &amp; Virtual Try-On</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
+
 * {
-margin:0;
-padding:0;
-box-sizing:border-box
+  margin:0;
+  padding:0;
+  box-sizing:border-box
 }
 :root {
---bg:#eef4fb;
---ink:#10233a;
---mut:#5b7691;
---blue:#0f6fde;
---blue2:#0a4fa3;
---light:#d8e9fb;
---line:#c6d9ec;
---cyan:#22c3d6
+  --bg:#f4f2ec;
+  --ink:#191817;
+  --mut:#8b8578;
+  --line:#ddd5c2;
+  --amber:#d98e32;
+  --teal:#14666b;
+  --card:#fffdf8
 }
 body {
-background:var(--bg);
-color:var(--ink);
-font-family:Manrope,sans-serif
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Space Grotesk',sans-serif;
+  overflow-x:hidden
 }
-h1,h2,h3,.disp { font-family:Fraunces,serif }
+h1,h2,h3,.serif {
+  font-family:'Instrument Serif',serif;
+  font-weight:400
+}
 .wrap {
-max-width:1180px;
-margin:auto;
-padding:0 22px
+  max-width:1200px;
+  margin:auto;
+  padding:0 24px
 }
-/* header */
-.topbar {
-background:var(--ink);
-color:#bcd7f2;
-text-align:center;
-font-size:12.5px;
-padding:9px;
-letter-spacing:.5px
+.top {
+  background:var(--ink);
+  color:#efe7d3;
+  font-size:11px;
+  letter-spacing:2.5px;
+  padding:9px;
+  text-align:center
 }
 header {
-position:sticky;
-top:0;
-z-index:60;
-background:rgba(255,255,255,.92);
-backdrop-filter:blur(10px);
-border-bottom:1px solid var(--line)
+  position:sticky;
+  top:0;
+  z-index:60;
+  background:rgba(244,242,236,.94);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)
 }
 .hd {
-max-width:1240px;
-margin:auto;
-display:flex;
-align-items:center;
-gap:18px;
-padding:14px 22px
+  max-width:1280px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:15px 24px
 }
 .brand {
-font-family:Fraunces,serif;
-font-size:23px;
-font-weight:700;
-white-space:nowrap
+  font-size:26px;
+  letter-spacing:8px;
+  font-weight:700
 }
-.brand em { color:var(--blue); font-style:normal }
-nav { display:flex; gap:22px }
+.brand span {
+  color:var(--amber)
+}
+nav {
+  display:flex;
+  gap:26px
+}
 nav a {
-color:var(--ink);
-text-decoration:none;
-font-size:13.5px;
-font-weight:600;
-opacity:.7
+  color:var(--ink);
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:2px;
+  opacity:.65
 }
-nav a:hover { opacity:1; color:var(--blue) }
-.hacts {
-margin-left:auto;
-display:flex;
-gap:10px
+nav a:hover {
+  opacity:1;
+  color:var(--amber)
+}
+.burger {
+  display:none;
+  background:none;
+  border:0;
+  font-size:24px;
+  cursor:pointer
 }
 .btn {
-padding:12px 24px;
-border-radius:12px;
-font-weight:700;
-cursor:pointer;
-font-size:14px;
-font-family:Manrope;
-border:none
+  padding:14px 30px;
+  font-size:11px;
+  letter-spacing:2.5px;
+  cursor:pointer;
+  font-family:'Space Grotesk';
+  font-weight:700;
+  border:1px solid var(--ink)
 }
-.btn.b { background:var(--blue); color:#fff }
-.btn.b:hover { background:var(--blue2) }
-.btn.o {
-background:#fff;
-border:2px solid var(--line);
-color:var(--ink)
+.btn.dark {
+  background:var(--ink);
+  color:#fff
 }
-.btn.o:hover { border-color:var(--blue); color:var(--blue) }
-/* hero */
+.btn.dark:hover {
+  background:var(--amber);
+  border-color:var(--amber)
+}
+.btn.line {
+  background:none;
+  color:var(--ink)
+}
 .hero {
-display:grid;
-grid-template-columns:1.05fr 1fr;
-gap:26px;
-align-items:center;
-padding:40px 0
+  max-width:1280px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:50px;
+  align-items:center;
+  padding:64px 24px 54px
 }
-.heroC h1 { font-size:clamp(34px,4.6vw,58px); line-height:1.06 }
-.heroC h1 i { color:var(--blue) }
-.heroC>p {
-color:var(--mut);
-margin:16px 0 22px;
-line-height:1.75
+.eyebrow {
+  font-size:11px;
+  letter-spacing:4px;
+  color:var(--amber);
+  font-weight:700;
+  margin-bottom:14px
+}
+.hero h1 {
+  font-size:clamp(46px,6vw,82px);
+  line-height:1
+}
+.hero h1 i {
+  color:var(--teal)
+}
+.hero p {
+  color:var(--mut);
+  line-height:1.85;
+  margin:20px 0 26px;
+  max-width:470px
 }
 .hrow {
-display:flex;
-gap:10px;
-flex-wrap:wrap
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap
 }
-.proof {
-display:flex;
-gap:26px;
-margin-top:26px
+.himg {
+  position:relative
 }
-.proof b { font-size:24px; display:block }
-.proof span {
-font-size:11.5px;
-color:var(--mut);
-letter-spacing:1px
+.himg img {
+  width:100%;
+  height:540px;
+  object-fit:cover;
+  border-radius:200px 200px 14px 14px
+}
+.hprice {
+  position:absolute;
+  bottom:24px;
+  left:24px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px 20px;
+  display:flex;
+  gap:16px;
+  align-items:center
+}
+.hprice b {
+  font-family:'Instrument Serif',serif;
+  font-size:24px
+}
+.hprice span {
+  font-size:11px;
+  color:var(--mut);
+  letter-spacing:1px
 }
 .try {
-background:#fff;
-border:1px solid var(--line);
-border-radius:24px;
-padding:34px;
-text-align:center;
-box-shadow:0 30px 60px rgba(15,111,222,.12)
+  background:var(--ink);
+  color:#f2ecdd;
+  border-radius:22px;
+  padding:56px 0
 }
-.try .face { font-size:120px; line-height:1 }
-#glasses {
-font-size:64px;
-margin-top:-58px;
-transition:.3s;
-display:block;
-filter:drop-shadow(0 6px 10px rgba(0,0,0,.2))
+.try .wrap {
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:44px;
+  align-items:start
 }
-.try h3 { font-size:22px; margin:14px 0 4px }
-.try p {
-color:var(--mut);
-font-size:13.5px;
-margin-bottom:16px
+.try h2 {
+  font-size:clamp(32px,4vw,52px);
+  margin-bottom:12px
+}
+.try h2 span {
+  color:var(--amber)
+}
+.try p.sub {
+  color:#b7ad94;
+  line-height:1.8;
+  margin-bottom:22px
+}
+.pick h4 {
+  font-size:11px;
+  letter-spacing:3px;
+  color:#b7ad94;
+  margin:20px 0 10px;
+  font-family:'Space Grotesk'
 }
 .faces {
-display:flex;
-gap:8px;
-justify-content:center;
-flex-wrap:wrap;
-margin-bottom:12px
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px
 }
-.face-b {
-border:2px solid var(--line);
-background:#fff;
-border-radius:10px;
-padding:9px 14px;
-cursor:pointer;
-font-weight:700;
-font-size:13px
+.face {
+  border:1.5px solid #3a372f;
+  border-radius:12px;
+  overflow:hidden;
+  cursor:pointer;
+  background:none;
+  padding:0;
+  font-family:'Space Grotesk';
+  color:#f2ecdd
 }
-.face-b.on {
-border-color:var(--blue);
-color:var(--blue);
-background:#eaf3fe
+.face img {
+  width:100%;
+  height:110px;
+  object-fit:cover;
+  display:block;
+  pointer-events:none
 }
-.shapes {
-display:flex;
-gap:8px;
-justify-content:center;
-flex-wrap:wrap
+.face span {
+  display:block;
+  padding:8px;
+  font-size:11px;
+  letter-spacing:1px;
+  pointer-events:none
 }
-.shape-b {
-border:2px solid var(--line);
-background:#fff;
-border-radius:99px padding:0;
-padding:9px 16px;
-border-radius:99px;
-cursor:pointer;
-font-size:22px
+.face.on {
+  border-color:var(--amber)
 }
-.shape-b.on { border-color:var(--blue); background:#eaf3fe }
-/* finder */
-.finder {
-background:#fff;
-border:1px solid var(--line);
-border-radius:22px;
-padding:40px 36px;
-margin:10px 0 34px
+.frames {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px
 }
-.finder h2 { font-size:clamp(24px,3vw,36px); text-align:center }
-.finder>p {
-text-align:center;
-color:var(--mut);
-margin:8px 0 24px
+.frame {
+  border:1.5px solid #3a372f;
+  border-radius:12px;
+  padding:14px;
+  cursor:pointer;
+  background:none;
+  color:#f2ecdd;
+  font-family:'Space Grotesk';
+  text-align:left
 }
-.fsteps {
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:16px
+.frame.on {
+  border-color:var(--amber);
+  background:#23211b
 }
-.fstep h4 {
-font-size:12px;
-letter-spacing:2px;
-color:var(--mut);
-margin-bottom:10px
+.frame b {
+  display:block;
+  font-size:14px;
+  margin-bottom:2px;
+  pointer-events:none
 }
-.pickrow {
-display:flex;
-gap:8px;
-flex-wrap:wrap
+.frame small {
+  color:#b7ad94;
+  font-size:12px;
+  pointer-events:none
 }
-.pick {
-border:2px solid var(--line);
-background:#fff;
-border-radius:10px;
-padding:10px 16px;
-cursor:pointer;
-font-weight:600;
-font-size:13.5px
+.frame .sw {
+  display:flex;
+  gap:6px;
+  margin-top:10px;
+  pointer-events:none
 }
-.pick.on {
-background:var(--ink);
-color:#fff;
-border-color:var(--ink)
+.frame .sw i {
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  border:1px solid #555;
+  pointer-events:none
 }
-#findRes {
-margin-top:22px;
-background:var(--bg);
-border-radius:14px;
-padding:20px;
-font-size:14.5px;
-line-height:1.7;
-display:none
+.stage {
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+  background:#000
 }
-/* shop */
-section { padding:20px 0 60px }
-.toolbar {
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-align-items:center;
-margin-bottom:22px
+.stage img {
+  width:100%;
+  height:560px;
+  object-fit:cover;
+  display:block
 }
-.chip {
-border:2px solid var(--line);
-background:#fff;
-padding:10px 20px;
-border-radius:99px;
-cursor:pointer;
-font-weight:700;
-font-size:13px
+.stage svg {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%
 }
-.chip.on {
-background:var(--ink);
-color:#fff;
-border-color:var(--ink)
+.stage .cap {
+  position:absolute;
+  bottom:14px;
+  left:14px;
+  right:14px;
+  background:rgba(20,19,18,.8);
+  border-radius:10px;
+  padding:12px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:13px
 }
-.toolbar select {
-margin-left:auto;
-border:2px solid var(--line);
-border-radius:10px;
-padding:10px 14px;
-font-family:Manrope;
-font-size:13px;
-background:#fff
+.stage .cap b {
+  color:var(--amber)
 }
-#res {
-width:100%;
-color:var(--mut);
-font-size:13px
+section {
+  padding:72px 0
+}
+.st {
+  text-align:center;
+  margin-bottom:30px
+}
+.st h2 {
+  font-size:clamp(32px,4vw,50px)
+}
+.st p {
+  color:var(--mut);
+  margin-top:8px
+}
+.filters {
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:30px
+}
+.f {
+  background:none;
+  border:1px solid var(--line);
+  padding:11px 24px;
+  font-size:11px;
+  letter-spacing:2px;
+  cursor:pointer;
+  font-family:'Space Grotesk';
+  border-radius:25px;
+  color:var(--ink)
+}
+.f.on,.f:hover {
+  background:var(--ink);
+  color:#fff;
+  border-color:var(--ink)
 }
 .grid {
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-gap:16px
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px
 }
 .card {
-background:#fff;
-border:1px solid var(--line);
-border-radius:18px;
-padding:24px 20px;
-text-align:center;
-transition:.28s;
-position:relative;
-display:flex;
-flex-direction:column
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  transition:.3s
 }
-.card:hover { transform:translateY(-5px); box-shadow:0 20px 44px rgba(15,111,222,.15) }
-.card .g { font-size:66px }
-.card h3 { font-size:17px; margin:10px 0 2px }
-.card small { color:var(--mut); font-size:12.5px }
-.card .tag {
-display:inline-block;
-background:var(--light);
-color:var(--blue2);
-font-size:11px;
-font-weight:800;
-padding:4px 12px;
-border-radius:99px;
-margin-top:8px
+.card:hover {
+  transform:translateY(-6px)
 }
-.card .prow {
-display:flex;
-gap:8px;
-margin:14px 0;
-justify-content:center
+.card img {
+  width:100%;
+  height:220px;
+  object-fit:cover
 }
-.card .prow button {
-flex:1;
-border:2px solid var(--line);
-background:#fff;
-border-radius:10px;
-padding:9px;
-cursor:pointer;
-font-weight:700;
-font-size:12.5px
+.cb {
+  padding:18px
 }
-.card .prow button:first-child:hover { border-color:var(--blue); color:var(--blue) }
-.card .prow button:last-child {
-background:var(--blue);
-color:#fff;
-border-color:var(--blue)
+.cb .k {
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--amber);
+  font-weight:700
 }
-.card .prow button:last-child:hover { background:var(--blue2) }
-.badge {
-position:absolute;
-top:12px;
-left:12px;
-background:var(--cyan);
-color:#06333a;
-font-size:10px;
-font-weight:800;
-padding:4px 10px;
-border-radius:99px
+.cb h3 {
+  font-size:21px;
+  margin:6px 0 4px
 }
-/* exam */
-.exam {
-background:var(--ink);
-color:#dbe9f8;
-border-radius:24px;
-padding:52px 44px;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:40px;
-align-items:center;
-margin-top:48px
+.cb p {
+  font-size:13px;
+  color:var(--mut);
+  margin-bottom:12px
 }
-.exam h2 { font-size:clamp(26px,3.4vw,40px); color:#fff }
-.exam h2 i { color:var(--cyan) }
-.exam p {
-opacity:.75;
-line-height:1.8;
-margin:14px 0 20px
+.crow {
+  display:flex;
+  justify-content:space-between;
+  align-items:center
 }
-.exam ul { list-style:none; margin-bottom:22px }
-.exam li {
-padding:9px 0;
-border-bottom:1px solid #ffffff22;
-font-size:14.5px
+.price {
+  font-weight:700;
+  font-size:17px
 }
-.exam li b { color:var(--cyan) }
-.eye {
-font-size:120px;
-text-align:center;
-background:#ffffff10;
-border-radius:20px;
-padding:40px 20px
+.trybtn {
+  background:none;
+  border:1px solid var(--ink);
+  border-radius:20px;
+  padding:9px 18px;
+  font-size:11px;
+  letter-spacing:1px;
+  cursor:pointer;
+  font-family:'Space Grotesk';
+  font-weight:700
 }
-/* booking */
+.trybtn:hover {
+  background:var(--ink);
+  color:#fff
+}
+.guide {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px
+}
+.g {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:28px 24px;
+  text-align:center
+}
+.g .n {
+  font-family:'Instrument Serif',serif;
+  font-size:40px;
+  color:var(--amber)
+}
+.g h3 {
+  font-size:19px;
+  margin:10px 0 8px;
+  font-family:'Space Grotesk';
+  font-weight:600
+}
+.g p {
+  font-size:13px;
+  color:var(--mut);
+  line-height:1.7
+}
 .book {
-background:#fff;
-border:1px solid var(--line);
-border-radius:22px;
-padding:42px;
-max-width:720px;
-margin:48px auto 0
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden
 }
-.book h2 { text-align:center; font-size:30px }
-.book p {
-text-align:center;
-color:var(--mut);
-font-size:13.5px;
-margin:8px 0 22px
+.book img {
+  width:100%;
+  height:100%;
+  min-height:420px;
+  object-fit:cover
 }
-.book .r {
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px
+.bf {
+  padding:46px 42px
 }
-.book input,.book select {
-border:2px solid var(--line);
-border-radius:10px;
-padding:13px 16px;
-font-family:Manrope;
-font-size:14px;
-width:100%;
-margin-bottom:12px
+.bf h2 {
+  font-size:38px;
+  margin-bottom:8px
 }
-.book button { width:100% }
-/* reviews */
-.revs {
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:16px;
-margin-top:26px
+.bf p {
+  color:var(--mut);
+  font-size:14px;
+  margin-bottom:16px
 }
-.rev {
-background:#fff;
-border:1px solid var(--line);
-border-radius:16px;
-padding:24px
+label {
+  display:block;
+  font-size:10px;
+  letter-spacing:2px;
+  margin:12px 0 6px;
+  color:var(--mut);
+  font-weight:700
 }
-.rev .stars { color:#f59e0b }
-.rev p {
-font-size:14px;
-line-height:1.7;
-margin:10px 0;
-color:#33475e
+input,select {
+  width:100%;
+  border:1px solid var(--line);
+  background:#fff;
+  padding:12px;
+  font-family:'Space Grotesk';
+  font-size:14px;
+  color:var(--ink);
+  border-radius:8px
 }
-.rev b { font-size:12px; color:var(--mut) }
-/* faq */
-.faq { max-width:740px; margin:44px auto 0 }
-.qa {
-background:#fff;
-border:1px solid var(--line);
-border-radius:12px;
-margin-bottom:10px
+input:focus {
+  outline:2px solid var(--amber)
 }
-.qa button {
-width:100%;
-background:none;
-border:none;
-padding:16px 20px;
-display:flex;
-justify-content:space-between;
-cursor:pointer;
-font-weight:700;
-font-size:15px;
-text-align:left
+.frow {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
 }
-.qa p {
-display:none;
-padding:0 20px 18px;
-color:var(--mut);
-font-size:14px;
-line-height:1.75
+.testi {
+  max-width:720px;
+  margin:auto;
+  text-align:center
 }
-.qa p.open { display:block }
-/* footer */
+.tbox blockquote {
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-size:clamp(22px,3vw,30px);
+  line-height:1.5
+}
+.tbox cite {
+  display:block;
+  margin-top:14px;
+  font-style:normal;
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--amber);
+  font-family:'Space Grotesk'
+}
+.tdots {
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  margin-top:20px
+}
+.tdots button {
+  width:32px;
+  height:3px;
+  border:0;
+  background:var(--line);
+  cursor:pointer
+}
+.tdots button.on {
+  background:var(--amber)
+}
 footer {
-background:var(--ink);
-color:#8fa9c4;
-padding:44px 22px;
-text-align:center;
-font-size:13px;
-margin-top:56px
+  background:var(--ink);
+  color:#b7ad94;
+  padding:56px 0 24px
 }
-/* toast */
-#toast {
-position:fixed;
-bottom:26px;
-left:50%;
-transform:translateX(-50%) translateY(80px);
-background:var(--ink);
-color:#fff;
-padding:13px 28px;
-border-radius:12px;
-transition:.3s;
-z-index:120;
-font-size:14px
+.fgrid {
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:30px;
+  max-width:1200px;
+  margin:auto;
+  padding:0 24px
 }
-#toast.show { transform:translateX(-50%) }
-@media(max-width:900px) { .hero,.exam { grid-template-columns:1fr }
-.fsteps { grid-template-columns:1fr }
-nav { display:none }
-.book .r { grid-template-columns:1fr }
+.fgrid h4 {
+  color:#fff;
+  font-size:12px;
+  letter-spacing:2px;
+  margin-bottom:14px
 }
+.fgrid a {
+  display:block;
+  color:#b7ad94;
+  text-decoration:none;
+  margin-bottom:9px;
+  font-size:14px
+}
+.fbot {
+  max-width:1200px;
+  margin:34px auto 0;
+  padding:20px 24px 0;
+  border-top:1px solid #3a372f;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+  font-size:12px
+}
+.toast {
+  position:fixed;
+  bottom:26px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--ink);
+  color:#fff;
+  padding:13px 28px;
+  font-size:13px;
+  z-index:400;
+  transition:.3s;
+  opacity:0;
+  border-radius:30px
+}
+.toast.show {
+  transform:translateX(-50%);
+  opacity:1
+}
+.rv {
+  opacity:0;
+  transform:translateY(24px);
+  transition:.7s
+}
+.rv.vis {
+  opacity:1;
+  transform:none
+}
+@media(max-width:960px) {
+  .hero,.try .wrap,.book {
+  grid-template-columns:1fr
+}
+.grid {
+  grid-template-columns:repeat(2,1fr)
+}
+.guide {
+  grid-template-columns:repeat(2,1fr)
+}
+.fgrid {
+  grid-template-columns:1fr 1fr
+}
+nav {
+  display:none
+}
+.burger {
+  display:block
+}
+.himg img {
+  height:420px
+}
+}
+@media(max-width:560px) {
+  .grid,.guide {
+  grid-template-columns:1fr
+}
+.frow,.frames {
+  grid-template-columns:1fr 1fr
+}
+.bf {
+  padding:30px 22px
+}
+}
+.mnav {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  background:var(--bg);
+  z-index:150;
+  border-bottom:1px solid var(--line);
+  padding:70px 30px 30px;
+  flex-direction:column;
+  gap:16px
+}
+.mnav.open {
+  display:flex
+}
+.mnav a {
+  text-decoration:none;
+  color:var(--ink);
+  font-size:22px
+}
+
 </style>
 </head>
 <body>
-<div class="topbar">👁️ Free eye test with every frame · 100-day free returns · 2-year warranty</div>
-<header>
-<div class="hd">
-<div class="brand">Clear<em>View</em> 👓</div>
-<nav>
-<a href="#tryon">Virtual Try-On</a>
-<a href="#shop">Frames</a>
-<a href="#exam">Eye Test</a>
-<a href="#book">Book Visit</a>
-</nav>
-<div class="hacts">
-<button class="btn o" onclick="scrollToId('book')">BOOK EYE TEST</button>
-</div>
-</div>
-</header>
-<div class="wrap">
+<div class="top">FREE ANTI-SCRATCH COATING ON EVERY PAIR — THIS MONTH ONLY</div>
+<header><div class="hd">
+<div class="brand">LUME<span>N</span></div>
+<nav><a href="#try">Try-on</a><a href="#shop">Frames</a><a href="#guide">Lens guide</a><a href="#book">Eye test</a></nav>
+<div><a href="#book"><button class="btn dark">BOOK EYE TEST</button></a><button class="burger" id="burger">&#9776;</button></div>
+</div></header>
+<div class="mnav" id="mnav"><a href="#try">Try-on</a><a href="#shop">Frames</a><a href="#guide">Lens guide</a><a href="#book">Eye test</a></div>
 <div class="hero">
-<div class="heroC">
-<h1>See the world in <i>high definition.</i>
-</h1>
-<p>Designer frames from $89 including prescription lenses. Try them on virtually, test your eyes in store, love them for 100 days — or send them back.</p>
-<div class="hrow">
-<button class="btn b" onclick="scrollToId('tryon')">👓 TRY ON NOW</button>
-<button class="btn o" onclick="scrollToId('shop')">SHOP FRAMES</button>
+<div><p class="eyebrow">OPTICIANS SINCE 2009 — AUSTIN · ONLINE</p>
+<h1>Glasses that <i>fit your face,</i> not the shelf.</h1>
+<p>Hand-finished acetate frames, prescription lenses cut in-house, and a virtual try-on that actually looks like you. Free 30-day fit guarantee.</p>
+<div class="hrow"><a href="#try"><button class="btn dark">TRY FRAMES NOW</button></a><a href="#shop"><button class="btn line">BROWSE FRAMES</button></a></div></div>
+<div class="himg"><img src="https://picsum.photos/seed/lumen-hero/700/900" alt="Model wearing glasses"><div class="hprice"><div><b>$129</b><br><span>FRAMES + LENSES</span></div><div style="font-size:13px">★ 4.9<br><span>8,200 reviews</span></div></div></div>
 </div>
-<div class="proof">
-<div>
-<b>120k+</b>
-<span>HAPPY EYES</span>
+<div class="try" id="try"><div class="wrap">
+<div><h2>Virtual <span>try-on.</span></h2><p class="sub">Pick a model close to your face shape, then switch frames and colours. No app, no upload — it all happens right here.</p>
+<div class="pick"><h4>1 · CHOOSE A FACE</h4><div class="faces" id="faces"></div></div>
+<div class="pick"><h4>2 · CHOOSE A FRAME</h4><div class="frames" id="frames"></div></div>
+<div class="pick"><h4>3 · FRAME COLOUR</h4><div class="frames" id="cols" style="grid-template-columns:repeat(3,1fr)"></div></div>
 </div>
-<div>
-<b>4.9★</b>
-<span>6,100 REVIEWS</span>
+<div class="stage"><img id="stageImg" src="https://picsum.photos/seed/lumen-face1/700/800" alt="Try on"><svg id="lensSvg" viewBox="0 0 700 800" preserveAspectRatio="xMidYMid slice"></svg><div class="cap"><span id="capName">The Roundabout · Tortoise</span><b id="capPrice">$129</b></div></div>
+</div></div>
+<section id="shop"><div class="wrap">
+<div class="st rv"><h2>The frame wall</h2><p>Every frame includes prescription lenses &amp; coatings</p></div>
+<div class="filters" id="filters"></div>
+<div class="grid" id="grid"></div>
+</div></section>
+<section id="guide" style="padding-top:0"><div class="wrap">
+<div class="st rv"><h2>Lenses, decoded</h2><p>Four options. Zero jargon.</p></div>
+<div class="guide">
+<div class="g rv"><div class="n">01</div><h3>Single vision</h3><p>One prescription across the lens. For distance or reading — your call.</p></div>
+<div class="g rv"><div class="n">02</div><h3>Progressive</h3><p>Distance, middle and reading in one seamless lens. No lines.</p></div>
+<div class="g rv"><div class="n">03</div><h3>Blue-filter</h3><p>Cuts screen glare for 8-hour days. Add to any lens for $29.</p></div>
+<div class="g rv"><div class="n">04</div><h3>Transitions</h3><p>Clear indoors, sunglasses outdoors. Automatically. Magic, basically.</p></div>
 </div>
-<div>
-<b>100-DAY</b>
-<span>FREE RETURNS</span>
-</div>
-</div>
-</div>
-<div class="try" id="tryon">
-<div class="face" id="faceBase">🙂</div>
-<span id="glasses">🕶️</span>
-<h3 class="disp" id="tryName">Aviator Classic</h3>
-<p id="tryDesc">Teardrop · suits oval &amp; square faces · $129 incl. lenses</p>
-<div class="faces" id="faces">
-</div>
-<div class="shapes" id="shapes">
-</div>
-<button class="btn b" style="width:100%;margin-top:16px" onclick="addTry()">ADD THIS FRAME — <span id="tryPrice">$129</span>
-</button>
-</div>
-</div>
-<div class="finder">
-<h2 class="disp">Frame finder — 20 seconds</h2>
-<p>Answer 3 questions, get 3 perfect frames. Optician-approved logic.</p>
-<div class="fsteps">
-<div class="fstep">
-<h4>1 · FACE SHAPE</h4>
-<div class="pickrow" id="fFace">
-</div>
-</div>
-<div class="fstep">
-<h4>2 · DAILY USE</h4>
-<div class="pickrow" id="fUse">
-</div>
-</div>
-<div class="fstep">
-<h4>3 · BUDGET</h4>
-<div class="pickrow" id="fBud">
-</div>
-</div>
-</div>
-<div style="text-align:center;margin-top:20px">
-<button class="btn b" onclick="find()">FIND MY FRAMES →</button>
-</div>
-<div id="findRes">
-</div>
-</div>
-</div>
-<section id="shop">
-<div class="wrap">
-<div class="toolbar" id="chips">
-<span id="res">
-</span>
-</div>
-<div class="grid" id="grid">
-</div>
-<div class="exam" id="exam">
-<div>
-<h2>Eye test, <i>minus</i> the waiting room.</h2>
-<p>25-minute comprehensive exam with OCT retinal scan — the same tech hospitals use. Prescription valid for all our frames.</p>
-<ul>
-<li>
-<b>$25</b> — full exam + OCT scan (free with any frame)</li>
-<li>
-<b>Kids</b> — free under-12 tests every Saturday</li>
-<li>
-<b>Contact lenses</b> — fitting + trial pair, $15</li>
-</ul>
-<button class="btn b" style="background:var(--cyan);color:#06333a" onclick="scrollToId('book')">BOOK $25 EXAM</button>
-</div>
-<div class="eye">👁️</div>
-</div>
-<div class="revs">
-<div class="rev">
-<div class="stars">★★★★★</div>
-<p>"Virtual try-on nailed my fit. Ordered Tuesday, wearing them Friday — prescription perfect."</p>
-<b>— JASUR T. · verified</b>
-</div>
-<div class="rev">
-<div class="stars">★★★★★</div>
-<p>"The OCT scan caught early pressure issues my old clinic missed for years. Genuinely grateful."</p>
-<b>— MARIA S. · verified</b>
-</div>
-<div class="rev">
-<div class="stars">★★★★☆</div>
-<p>"Great frames, honest pricing. Saturday kids' test was free and actually thorough."</p>
-<b>— DAVID O. · verified</b>
-</div>
-</div>
-<div class="book" id="book">
-<h2 class="disp">Book a visit</h2>
-<p>Downtown &amp; Riverside stores · Mon–Sat 9:00–20:00 · confirmation by SMS</p>
-<div class="r">
-<input id="bn" placeholder="Full name">
-<input id="bp" placeholder="Phone number">
-</div>
-<div class="r">
-<select>
-<option>Full eye test — $25</option>
-<option>Free kids test (Sat)</option>
-<option>Contact lens fitting — $15</option>
-<option>Frame styling — free</option>
-</select>
-<input type="date" id="bd">
-</div>
-<button class="btn b" onclick="book()">CONFIRM BOOKING</button>
-</div>
-<div class="faq">
-<h2 class="disp" style="text-align:center;margin-bottom:16px">Good to know</h2>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Are lenses really included in the price? <span>+</span>
-</button>
-<p>Yes — single-vision 1.5 index lenses with anti-scratch and UV coating are included. Premium thin-down and blue-cut upgrades from $19.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">How do 100-day returns work? <span>+</span>
-</button>
-<p>Wear them everywhere for 100 days. If you don't love them, return for full refund or remake — even with prescription lenses.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Can I use my own prescription? <span>+</span>
-</button>
-<p>Of course — upload any prescription under 12 months old at checkout, or bring it to the store.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Do you do kids' glasses? <span>+</span>
-</button>
-<p>Yes — flexible, nearly unbreakable kids' range from $59, with free replacement if they break within a year.</p>
-</div>
-</div>
-</div>
-</section>
-<footer>
-<b style="color:#fff;font-size:18px">ClearView Optics 👓</b>
-<p>Downtown &amp; Riverside · Mon–Sat 9–20 · © 2026</p>
-</footer>
-<div id="toast">
-</div>
+</div></section>
+<section style="padding-top:0"><div class="wrap testi rv">
+<div class="st"><h2>Worn daily</h2></div>
+<div class="tbox"><blockquote id="tq"></blockquote><cite id="ta"></cite></div>
+<div class="tdots" id="tdots"></div>
+</div></section>
+<section id="book" style="padding-top:0"><div class="wrap">
+<div class="book rv"><img src="https://picsum.photos/seed/lumen-exam/600/700" alt="Eye exam">
+<form class="bf" id="bookForm" novalidate><h2>Free eye test</h2><p>20 minutes with a licensed optometrist. No purchase required.</p>
+<div class="frow"><div><label>NAME</label><input id="eName" placeholder="Sam Rivera"></div><div><label>PHONE</label><input id="ePhone" placeholder="+1 ..."></div></div>
+<div class="frow"><div><label>DATE</label><input type="date" id="eDate"></div><div><label>STORE</label><select><option>Downtown Austin</option><option>North Loop</option><option>Virtual (video call)</option></select></div></div>
+<button class="btn dark" style="width:100%;margin-top:20px" type="submit">BOOK MY TEST</button></form></div>
+</div></section>
+<footer><div class="fgrid">
+<div><div class="brand" style="color:#fff">LUME<span>N</span></div><p style="margin-top:12px;font-size:14px;line-height:1.8">301 Glass Street, Austin<br>Open Mon–Sat 9am–7pm<br>hey@lumen.example</p></div>
+<div><h4>SHOP</h4><a href="#shop">Optical</a><a href="#shop">Sunglasses</a><a href="#shop">Blue-light</a><a href="#shop">Accessories</a></div>
+<div><h4>HELP</h4><a href="#guide">Lens guide</a><a href="#try">Virtual try-on</a><a href="#">Shipping</a></div>
+<div><h4>STORES</h4><a href="#book">Downtown</a><a href="#book">North Loop</a><a href="#book">Virtual visits</a></div>
+</div><div class="fbot"><span>© 2026 Lumen Eyewear</span><span>Privacy · Terms</span></div></footer>
+<div class="toast" id="toast"></div>
 <script>
-const FRAMES=[
-{
-g:'🕶️',n:'Aviator Classic',f:'oval square',u:'driving',b:'mid',p:129,t:'Teardrop · metal',d:'The timeless pilot shape. Suits oval & square faces.'}
-, {
-g:'👓',n:'Oslo Round',f:'square heart',u:'office',b:'low',p:89,t:'Round · acetate',d:'Soft round acetate that flatters angular faces.'}
-, {
-g:'🥸',n:'Bold Camden',f:'oval round',u:'style',b:'mid',p:119,t:'Chunky · acetate',d:'Statement chunky frame, feather-light despite the look.'}
-, {
-g:'🤓',n:'Study Hall',f:'heart oval',u:'office',b:'low',p:95,t:'Rectangle · mixed',d:'The workhorse: light, narrow, disappears on video calls.'}
-, {
-g:'😎',n:'Riviera Sport',f:'round oval',u:'sport',b:'high',p:159,t:'Wrap · polarised',d:'Grip temples + polarised lenses. For runs and road trips.',badge:'SPORT'}
-, {
-g:'🧐',n:'Atelier Titanium',f:'square oval',u:'office',b:'high',p:249,t:'Rimless · titanium',d:'8-gram Japanese titanium. The lightest frame we sell.',badge:'PREMIUM'}
-, {
-g:'👓',n:'Harbour Clear',f:'heart round',u:'style',b:'mid',p:109,t:'Transparent · acetate',d:'Crystal acetate that goes with every outfit.'}
-, {
-g:'🕶️',n:'Night Drive Pro',f:'oval heart',u:'driving',b:'high',p:179,t:'Yellow tint · coated',d:'Contrast-boosting night-driving lenses in a slim frame.',badge:'NEW'}
-]; const FACES=[['🙂','Round'],['😐','Oval'],['😀','Square'],['😊','Heart']];
-let ti=0,fi=0,cart=[]; const facesEl=document.getElementById('faces'),shEl=document.getElementById('shapes'); FACES.forEach(([e,l],i)=>{
-const b=document.createElement('button');b.className='face-b'+(i?'':' on');b.textContent=e+' '+l;b.onclick=()=>{
-fi=i;faceBase.textContent=e;[...facesEl.children].forEach(x=>x.classList.remove('on'));b.classList.add('on')}
-;facesEl.appendChild(b)}
-); const shapeBtns=[]; FRAMES.forEach((f,i)=>{
-const b=document.createElement('button');b.className='shape-b'+(i?'':' on');b.textContent=f.g;b.title=f.n;b.onclick=()=>setTry(i);shEl.appendChild(b);shapeBtns.push(b)}
-); function setTry(i){
-ti=i;const f=FRAMES[i];glasses.textContent=f.g;tryName.textContent=f.n;tryDesc.textContent=f.t+' · '+f.d.split('.')[0]+' · $'+f.p+' incl. lenses';tryPrice.textContent='$'+f.p;shapeBtns.forEach((x,k)=>x.classList.toggle('on',k===i))}
-function addTry(){
-cart.push(FRAMES[ti]);toast(FRAMES[ti].n+' added — '+cart.length+' in bag')}
-/* finder */
-const FF=['Oval','Square','Round','Heart'],FU=['Office','Driving','Sport','Style'],FB=['Under $100','$100–150','$150+']; let sF=null,sU=null,sB=null;
-function picks(el,arr,cb){const w=document.getElementById(el);arr.forEach(a=>{const b=document.createElement('button');b.className='pick';b.textContent=a;b.onclick=()=>{[...w.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');cb(a)};w.appendChild(b)})}
-picks('fFace',FF,v=>sF=v);picks('fUse',FU,v=>sU=v);picks('fBud',FB,v=>sB=v);
-function find(){const r=document.getElementById('findRes');if(!sF||!sU||!sB){r.style.display='block';r.textContent='Please answer all 3 questions first.';return}
-const use=sU.toLowerCase(),bud=sB.includes('100–')?'mid':(sB.includes('150')?'high':'low');
-let m=FRAMES.filter(f=>f.u===use&&f.b===bud);if(!m.length)m=FRAMES.filter(f=>f.u===use);if(!m.length)m=FRAMES.slice(0,3);
-r.style.display='block';r.innerHTML='<b>Your matches ('+sF+' face · '+sU+'):</b><br>'+m.slice(0,3).map(f=>`${f.g} <b>${f.n}</b> — $${f.p} · ${f.t} <button class="pick" onclick="addIdx(${FRAMES.indexOf(f)})">ADD</button>`).join('<br>')}
-function addIdx(i){cart.push(FRAMES[i]);toast(FRAMES[i].n+' added — '+cart.length+' in bag')}
-/* shop */
-const CATS=[['all','All frames'],['office','Office'],['driving','Driving'],['sport','Sport'],['style','Style']]; let cat='all';
-const chips=document.getElementById('chips');
-CATS.forEach(([v,l],i)=>{const b=document.createElement('button');b.className='chip'+(i?'':' on');b.textContent=l;b.onclick=()=>{cat=v;[...chips.querySelectorAll('.chip')].forEach(x=>x.classList.remove('on'));b.classList.add('on');render()};chips.insertBefore(b,res)});
-function render(){const g=document.getElementById('grid');const r=FRAMES.filter(f=>cat==='all'||f.u===cat);res.textContent=r.length+' frames · lenses included';g.innerHTML='';r.forEach(f=>{const d=document.createElement('div');d.className='card';d.innerHTML=(f.badge?`<span class="badge">${f.badge}</span>`:'')+`<div class="g">${f.g}</div><h3 class="disp">${f.n}</h3><small>${f.t} · $${f.p}</small><span class="tag">LENSES INCLUDED</span><div class="prow"><button onclick="setTry(${FRAMES.indexOf(f)});scrollToId('tryon')">TRY ON</button><button onclick="addIdx(${FRAMES.indexOf(f)})">ADD</button></div>`;g.appendChild(d)})}
-function book(){if(!bn.value||!bp.value)return toast('Please add name and phone');toast('Booked! SMS confirmation on its way');bn.value=bp.value=''}
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2600)}
-function scrollToId(i){document.getElementById(i).scrollIntoView({behavior:'smooth'})}
-setTry(0);render();
+const FACES=[{n:"Oval",img:"https://picsum.photos/seed/lumen-face1/700/800"},{n:"Round",img:"https://picsum.photos/seed/lumen-face2/700/800"},{n:"Square",img:"https://picsum.photos/seed/lumen-face3/700/800"}];
+const SHAPES={
+round:{n:"The Roundabout",d:"M250 330 m-70 0 a70 62 0 1 0 140 0 a70 62 0 1 0 -140 0 M450 330 m-70 0 a70 62 0 1 0 140 0 a70 62 0 1 0 -140 0 M320 330 L380 330"},
+square:{n:"The Architect",d:"M235 275 h150 v120 h-150 Z M465 275 h-150 v120 h150 Z M385 320 L465 320 M235 320 L315 320"},
+cat:{n:"The Muse",d:"M225 300 L300 280 L370 300 L355 360 L245 360 Z M475 300 L400 280 L330 300 L345 360 L455 360 Z M355 315 L345 315"}};
+const FC=[["tortoise","#8a5a2b"],["noir","#1c1a17"],["amber","#d98e32"]];
+const SHOP=[
+{id:"round",k:"round",p:129,img:"https://picsum.photos/seed/lumen-f1/500/400",t:"Best for oval & square faces"},
+{id:"square",k:"square",p:149,img:"https://picsum.photos/seed/lumen-f2/500/400",t:"Best for round faces"},
+{id:"cat",k:"cat",p:139,img:"https://picsum.photos/seed/lumen-f3/500/400",t:"Best for heart faces"},
+{id:"round",k:"sun",p:159,img:"https://picsum.photos/seed/lumen-f4/500/400",t:"Polarised sun lens"}];
+let fi=0,si="round",ci=0;
+const fx=document.getElementById("faces"),fr=document.getElementById("frames"),cl=document.getElementById("cols");
+fx.innerHTML=FACES.map((f,i)=>`<button class="face${i?"":" on"}" data-f="${i}"><img src="${f.img.replace("/700/800","/300/220")}" alt="${f.n}"><span>${f.n.toUpperCase()}</span></button>`).join("");
+fr.innerHTML=Object.keys(SHAPES).map(k=>`<button class="frame${k==="round"?" on":""}" data-s="${k}"><b>${SHAPES[k].n}</b><small>From $${k==="square"?149:k==="cat"?139:129}</small><span class="sw"><i style="background:#8a5a2b"></i><i style="background:#1c1a17"></i><i style="background:#d98e32"></i></span></button>`).join("");
+cl.innerHTML=FC.map(([n,c],i)=>`<button class="frame${i?"":" on"}" data-c="${i}"><b style="text-transform:capitalize">${n}</b><span class="sw"><i style="background:${c}"></i></span></button>`).join("");
+fx.onclick=e=>{const b=e.target.closest("[data-f]");if(!b)return;fi=+b.dataset.f;[...fx.children].forEach(x=>x.classList.toggle("on",x===b));stage();};
+fr.onclick=e=>{const b=e.target.closest("[data-s]");if(!b)return;si=b.dataset.s;[...fr.children].forEach(x=>x.classList.toggle("on",x===b));stage();};
+cl.onclick=e=>{const b=e.target.closest("[data-c]");if(!b)return;ci=+b.dataset.c;[...cl.children].forEach(x=>x.classList.toggle("on",x===b));stage();};
+function stage(){document.getElementById("stageImg").src=FACES[fi].img;document.getElementById("lensSvg").innerHTML=`<path d="${SHAPES[si].d}" fill="none" stroke="${FC[ci][1]}" stroke-width="14" stroke-linejoin="round"/><circle cx="250" cy="330" r="8" fill="${FC[ci][1]}"/><circle cx="450" cy="330" r="8" fill="${FC[ci][1]}"/>`;const pr=si==="square"?149:si==="cat"?139:129;document.getElementById("capName").textContent=SHAPES[si].n+" · "+FC[ci][0];document.getElementById("capPrice").textContent="$"+pr;}
+stage();
+const cats=["all","round","square","cat","sun"];
+const fl=document.getElementById("filters"),gr=document.getElementById("grid");
+fl.innerHTML=cats.map(c=>`<button class="f${c==="all"?" on":""}" data-c="${c}">${c.toUpperCase()}</button>`).join("");
+let cur="all";
+fl.onclick=e=>{const b=e.target.closest(".f");if(!b)return;cur=b.dataset.c;[...fl.children].forEach(x=>x.classList.toggle("on",x===b));draw();};
+function draw(){gr.innerHTML=SHOP.filter(s=>cur==="all"||s.k===cur).map((s,i)=>`<div class="card rv vis"><img loading="lazy" src="${s.img}" alt="${SHAPES[s.id].n}"><div class="cb"><span class="k">${s.k.toUpperCase()}</span><h3>${SHAPES[s.id].n}</h3><p>${s.t}</p><div class="crow"><span class="price">$${s.p}</span><button class="trybtn" data-t="${s.id}">TRY ON ↑</button></div></div></div>`).join("");}
+gr.onclick=e=>{const b=e.target.closest("[data-t]");if(!b)return;si=b.dataset.t;[...fr.children].forEach(x=>x.classList.toggle("on",x.dataset.s===si));stage();document.getElementById("try").scrollIntoView({behavior:"smooth"});toast("Now trying: "+SHAPES[si].n);};
+draw();
+const T=[["People ask if they're designer. They cost less than my last dinner out.","— JESS K., AUSTIN"],["The try-on nailed my face shape. Ordered Tuesday, wearing them Friday.","— MARC T., DALLAS"],["Finally, progressives without the old-person look. I get compliments weekly.","— DIANE R., AUSTIN"]];
+let ti=0;const tq=document.getElementById("tq"),ta=document.getElementById("ta"),td=document.getElementById("tdots");
+td.innerHTML=T.map((_,i)=>`<button data-t="${i}" class="${i?"":"on"}"></button>`).join("");
+function showT(i){ti=i;tq.textContent="\u201C"+T[i][0]+"\u201D";ta.textContent=T[i][1];[...td.children].forEach((b,j)=>b.classList.toggle("on",j===i));}
+td.onclick=e=>{const b=e.target.closest("[data-t]");if(b)showT(+b.dataset.t);};
+showT(0);setInterval(()=>showT((ti+1)%T.length),6000);
+document.getElementById("bookForm").onsubmit=e=>{e.preventDefault();const n=document.getElementById("eName").value.trim(),p=document.getElementById("ePhone").value.trim(),d=document.getElementById("eDate").value;if(n.length<2)return toast("Please enter your name");if(p.length<6)return toast("Please enter a valid phone");if(!d)return toast("Please pick a date");toast("Eye test booked for "+d);e.target.reset();};
+let tt;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2600);}
+document.getElementById("burger").onclick=()=>document.getElementById("mnav").classList.toggle("open");
+document.getElementById("mnav").onclick=()=>document.getElementById("mnav").classList.remove("open");
+const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&x.target.classList.add("vis")),{threshold:.1});
+document.querySelectorAll(".rv").forEach(el=>io.observe(el));
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
-<style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
-
-  <script src="../api-runtime.js"></script>
 </body>
 </html>

@@ -5,42 +5,48 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>LedgerLine — Terminal Finance Dashboard</title>
 <style>
+
 *{
 margin:0;
 padding:0;
-box-sizing:border-box;
+box-sizing:border-box
 }
+
 :root{
 --bg:#060807;
 --panel:#0b0e0c;
---panel2:#101412;
+--panel2:#0e1310;
 --line:#1c2420;
 --grn:#00ff88;
---grn-dim:#00b35e;
+--grn2:#00b35e;
 --red:#ff4d5e;
 --amber:#ffb224;
 --txt:#d7ffe8;
 --mut:#7fa892;
---mono:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+--mono:"JetBrains Mono","SFMono-Regular",Consolas,Menlo,monospace
 }
+
 body{
 font-family:var(--mono);
 background:var(--bg);
 color:var(--txt);
 font-size:13px;
-line-height:1.5;
+line-height:1.5
 }
+
 a{
 color:inherit;
-text-decoration:none;
+text-decoration:none
 }
+
 .app{
 display:flex;
-min-height:100vh;
+min-height:100vh
 }
-/* ---- left terminal sidebar ---- */
+
+/* sidebar */
 .side{
-width:236px;
+width:248px;
 flex-shrink:0;
 background:var(--panel);
 border-right:1px solid var(--line);
@@ -48,420 +54,437 @@ display:flex;
 flex-direction:column;
 position:sticky;
 top:0;
-height:100vh;
+height:100vh
 }
+
 .brand{
 padding:18px;
 border-bottom:1px solid var(--line);
 display:flex;
 align-items:center;
-gap:10px;
+gap:10px
 }
+
+.dots{
+display:flex;
+gap:6px
+}
+
 .dot{
 width:11px;
 height:11px;
-border-radius:50%;
+border-radius:50%
 }
-.dot.r{background:#ff5f57;}
-.dot.y{background:#febc2e;}
-.dot.g{background:#28c840;}
+
+.dot.r{
+background:#ff5f57
+}
+.dot.y{
+background:#febc2e
+}
+.dot.g{
+background:#28c840
+}
+
 .brand b{
 font-size:14px;
-letter-spacing:1px;
+letter-spacing:1px
 }
+
 .brand small{
 display:block;
 color:var(--mut);
 font-size:10px;
-letter-spacing:2px;
+letter-spacing:2px
 }
+
 .ticker{
 padding:14px 18px;
 border-bottom:1px solid var(--line);
+font-size:11.5px
 }
-.ticker h4{
-font-size:10px;
-letter-spacing:2px;
-color:var(--mut);
-margin-bottom:10px;
-}
-.trow{
+
+.ticker .row{
 display:flex;
 justify-content:space-between;
-padding:6px 0;
-border-bottom:1px dashed #152019;
-font-size:12px;
+padding:3px 0
 }
-.trow:last-child{
-border-bottom:0;
+
+.up{
+color:var(--grn)
 }
-.up{color:var(--grn);}
-.dn{color:var(--red);}
+.dn{
+color:var(--red)
+}
+
 .nav{
 padding:12px;
 display:flex;
 flex-direction:column;
-gap:4px;
+gap:4px
 }
-.nav button{
-background:transparent;
-border:1px solid transparent;
-color:var(--mut);
-font-family:var(--mono);
-font-size:12px;
-text-align:left;
+
+.nav a{
 padding:9px 12px;
 border-radius:8px;
-cursor:pointer;
-display:flex;
-gap:10px;
-align-items:center;
+color:var(--mut);
+font-size:12.5px
 }
-.nav button.on,
-.nav button:hover{
-background:#0f1a13;
-border-color:var(--line);
-color:var(--grn);
+
+.nav a.on,.nav a:hover{
+background:var(--panel2);
+color:var(--grn)
 }
+
 .term-mini{
 margin-top:auto;
-margin:12px;
-background:#000;
-border:1px solid var(--line);
-border-radius:10px;
-padding:12px;
+border-top:1px solid var(--line);
+padding:14px 18px;
 font-size:11px;
-min-height:150px;
+color:var(--mut);
+max-height:220px;
+overflow:hidden
 }
-.term-mini .p{color:var(--grn);}
-.term-mini .m{color:var(--mut);}
-/* ---- main ---- */
+
+.term-mini div{
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+padding:1px 0
+}
+
+.term-mini b{
+color:var(--grn)
+}
+
+/* main */
 .main{
 flex:1;
 min-width:0;
+padding:22px 26px 40px
 }
-.top{
+
+.topbar{
 display:flex;
 align-items:center;
-gap:14px;
-padding:14px 24px;
-border-bottom:1px solid var(--line);
-background:#080b09;
-position:sticky;
-top:0;
-z-index:5;
+gap:16px;
+flex-wrap:wrap
 }
+
 .search{
 flex:1;
-max-width:420px;
-display:flex;
-align-items:center;
-gap:8px;
-background:#000;
+min-width:220px;
+background:var(--panel);
 border:1px solid var(--line);
-border-radius:8px;
-padding:8px 12px;
-color:var(--mut);
+border-radius:10px;
+padding:10px 14px;
+display:flex;
+gap:10px;
+align-items:center
 }
+
 .search input{
-flex:1;
-background:transparent;
+background:none;
 border:0;
 outline:0;
 color:var(--txt);
-font-family:var(--mono);
-font-size:12px;
+font:inherit;
+flex:1
 }
-.sess{
-font-size:11px;
-color:var(--mut);
+
+.search kbd{
 border:1px solid var(--line);
-padding:7px 12px;
-border-radius:99px;
-background:#000;
+border-radius:6px;
+padding:1px 8px;
+color:var(--mut);
+font-size:11px
 }
+
+.clock{
+color:var(--mut);
+font-size:12px
+}
+
 .btn{
 background:var(--grn);
 border:0;
-color:#03130a;
+color:#04120a;
+font-weight:800;
 font-family:var(--mono);
-font-weight:700;
-font-size:12px;
-padding:9px 16px;
-border-radius:8px;
+padding:10px 18px;
+border-radius:10px;
 cursor:pointer;
+font-size:12.5px
 }
+
 .btn.ghost{
-background:transparent;
-color:var(--grn);
-border:1px solid var(--grn-dim);
+background:none;
+border:1px solid var(--line);
+color:var(--txt)
 }
-.wrap{
-padding:24px;
-display:flex;
-flex-direction:column;
-gap:18px;
-max-width:1180px;
+
+.btn:hover{
+filter:brightness(1.1)
 }
-.crumb{
-color:var(--mut);
-font-size:11px;
-}
-.crumb b{color:var(--grn);}
-h1{
-font-size:24px;
-letter-spacing:-.5px;
-}
-.sub{
-color:var(--mut);
-font-size:12px;
-}
-.kpis{
+
+.hero{
+margin-top:18px;
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:14px;
+gap:14px
 }
-.kpi{
+
+.stat{
 background:var(--panel);
 border:1px solid var(--line);
-border-radius:12px;
-padding:16px;
-position:relative;
-overflow:hidden;
+border-radius:14px;
+padding:18px
 }
-.kpi::before{
-content:"";
-position:absolute;
-left:0;
-top:0;
-bottom:0;
-width:3px;
-background:var(--grn);
-opacity:.8;
-}
-.kpi.red::before{background:var(--red);}
-.kpi.amber::before{background:var(--amber);}
-.kpi span{
-font-size:10px;
-letter-spacing:2px;
+
+.stat small{
 color:var(--mut);
+font-size:10.5px;
+letter-spacing:1.5px
 }
-.kpi strong{
+
+.stat b{
 display:block;
-font-size:22px;
+font-size:24px;
 margin:6px 0 2px;
+font-variant-numeric:tabular-nums
 }
-.kpi em{
-font-style:normal;
-font-size:11px;
+
+.stat span{
+font-size:11.5px
 }
-.grid2{
-display:grid;
-grid-template-columns:1.7fr 1fr;
-gap:14px;
-}
+
 .card{
 background:var(--panel);
 border:1px solid var(--line);
-border-radius:12px;
-padding:18px;
+border-radius:14px;
+padding:20px;
+margin-top:14px
 }
+
 .card h3{
-font-size:12px;
+font-size:11.5px;
 letter-spacing:2px;
 color:var(--mut);
-margin-bottom:4px;
+display:flex;
+align-items:center;
+gap:8px
 }
+
 .card h3 i{
 font-style:normal;
-color:var(--grn);
+color:var(--grn)
 }
+
+.card h3 .sp{
+margin-left:auto;
+display:flex;
+gap:8px
+}
+
 .tf{
 display:flex;
 gap:6px;
-margin:12px 0;
+margin:12px 0
 }
+
 .tf button{
-background:#000;
+background:var(--panel2);
 border:1px solid var(--line);
 color:var(--mut);
 font-family:var(--mono);
-font-size:11px;
-padding:6px 12px;
-border-radius:6px;
+font-size:11.5px;
+padding:7px 14px;
+border-radius:8px;
 cursor:pointer;
+font-weight:700
 }
+
 .tf button.on{
-color:#03130a;
 background:var(--grn);
-border-color:var(--grn);
-font-weight:700;
+color:#04120a;
+border-color:var(--grn)
 }
+
 canvas#chart{
 width:100%;
-height:240px;
-background:#000;
-border:1px solid var(--line);
-border-radius:8px;
 display:block;
+background:#080b09;
+border:1px solid var(--line);
+border-radius:10px
 }
+
 .legend{
 display:flex;
-gap:16px;
+gap:18px;
 margin-top:10px;
-font-size:11px;
-color:var(--mut);
+font-size:11.5px;
+color:var(--mut)
 }
-.legend b{color:var(--txt);}
-.alloc{display:flex;flex-direction:column;gap:10px;margin-top:12px;}
-.arow{display:grid;grid-template-columns:90px 1fr 46px;gap:10px;align-items:center;font-size:11px;}
-.abar{height:8px;background:#000;border:1px solid var(--line);border-radius:99px;overflow:hidden;}
-.abar i{display:block;height:100%;background:var(--grn);}
-.abar.o i{background:var(--amber);}
-.abar.r i{background:var(--red);}
-.abar.b i{background:#4da3ff;}
+
+.grid2{
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:14px
+}
+
+.log{
+font-size:11.5px;
+max-height:300px;
+overflow:auto;
+margin-top:10px
+}
+
+.log div{
+padding:6px 0;
+border-bottom:1px dashed var(--line);
+color:var(--mut)
+}
+
+.log div:first-child{
+color:var(--grn)
+}
+
 table{
 width:100%;
 border-collapse:collapse;
-font-size:12px;
 margin-top:10px;
+font-size:12px
 }
+
 th{
 text-align:left;
 color:var(--mut);
-font-weight:400;
-font-size:10px;
+font-size:10.5px;
 letter-spacing:1.5px;
 padding:8px;
-border-bottom:1px solid var(--line);
+font-weight:400;
+border-bottom:1px solid var(--line)
 }
+
 td{
 padding:9px 8px;
-border-bottom:1px solid #101715;
+border-bottom:1px solid var(--line);
+font-variant-numeric:tabular-nums
 }
-tr:hover td{background:#0d1310;}
+
+tr:hover td{
+background:var(--panel2)
+}
+
 .pill{
-font-size:10px;
-padding:3px 9px;
+padding:2px 10px;
 border-radius:99px;
-border:1px solid;
+font-size:10.5px;
+font-weight:700
 }
-.pill.g{color:var(--grn);border-color:var(--grn-dim);}
-.pill.r{color:var(--red);border-color:var(--red);}
-.pill.a{color:var(--amber);border-color:var(--amber);}
-.log{
-background:#000;
-border:1px solid var(--line);
-border-radius:8px;
-padding:12px;
-font-size:11px;
-height:170px;
-overflow:auto;
-margin-top:10px;
+
+.pill.g{
+background:rgba(0,255,136,.12);
+color:var(--grn)
 }
-.log div{padding:2px 0;border-bottom:1px dotted #0f1a13;}
+
+.pill.a{
+background:rgba(255,178,36,.14);
+color:var(--amber)
+}
+
+.pill.r{
+background:rgba(255,77,94,.14);
+color:var(--red)
+}
+
+.sub{
+color:var(--mut);
+font-size:12px;
+margin-top:4px
+}
+
 .foot{
 color:var(--mut);
 font-size:11px;
-text-align:center;
-padding:18px;
+margin-top:16px;
+text-align:center
 }
+
+.foot b{
+color:var(--grn)
+}
+
 @media(max-width:1000px){
-.kpis{grid-template-columns:1fr 1fr;}
-.grid2{grid-template-columns:1fr;}
-.side{display:none;}
+.hero{
+grid-template-columns:1fr 1fr
 }
-@media(max-width:560px){
-.kpis{grid-template-columns:1fr;}
-.wrap{padding:14px;}
+.grid2{
+grid-template-columns:1fr
 }
+.side{
+display:none
+}
+
+}
+
 </style>
 </head>
 <body>
 <div class="app">
 <aside class="side">
-<div class="brand">
-<div style="display:flex;gap:6px">
-<span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-</div>
-<div><b>LEDGERLINE</b><small>FINANCE TERMINAL</small></div>
-</div>
+<div class="brand"><div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div><div><b>LEDGERLINE</b><small>FINANCE TERMINAL</small></div></div>
 <div class="ticker">
-<h4>// LIVE MARKET</h4>
-<div class="trow"><span>AAPL</span><b class="up">232.4 ▲</b></div>
-<div class="trow"><span>BTC</span><b class="up">97.2k ▲</b></div>
-<div class="trow"><span>ETH</span><b class="dn">3.41k ▼</b></div>
-<div class="trow"><span>EUR/USD</span><b class="up">1.084 ▲</b></div>
-<div class="trow"><span>GOLD</span><b class="up">2.91k ▲</b></div>
+<div class="row"><span>AAPL 232.4</span><span class="up">▲1.2%</span></div>
+<div class="row"><span>NVDA 141.8</span><span class="up">▲3.4%</span></div>
+<div class="row"><span>BTC 97,410</span><span class="up">▲2.1%</span></div>
+<div class="row"><span>ETH 3,412</span><span class="dn">▼0.6%</span></div>
+<div class="row"><span>TSLA 248.1</span><span class="dn">▼1.1%</span></div>
 </div>
 <nav class="nav">
-<button class="on">▚ Overview</button>
-<button>◈ Portfolio</button>
-<button>⬣ Transactions</button>
-<button>◍ Budgets</button>
-<button>⬔ Reports</button>
-<button>⚙ Settings</button>
+<a href="#" class="on">◈ Overview</a><a href="#">⬣ Portfolio</a><a href="#">⇄ Transactions</a><a href="#">◉ Markets</a><a href="#">⚙ Settings</a>
 </nav>
-<div class="term-mini" id="miniLog">
-<div class="p">$ ledger sync --live</div>
-<div class="m">connected · latency 41ms</div>
-<div class="p">$ risk scan portfolio…</div>
-<div class="m">exposure OK · 0 flags</div>
-</div>
+<div class="term-mini" id="miniLog"><b>— session log —</b></div>
 </aside>
 <div class="main">
-<div class="top">
-<div class="search">⌕ <input id="q" placeholder="search symbol, txn, account…  ( / )"></div>
-<span class="sess">● session: Q3 · USD</span>
-<button class="btn ghost" onclick="exportCSV()">Export</button>
+<div class="topbar">
+<div class="search">⌕ <input id="q" placeholder="search symbol, txn, account…  ( / )"><kbd>/</kbd></div>
+<span class="clock">◷ <span id="clock">—</span></span>
+<button class="btn ghost" onclick="exportCSV()">⇩ CSV</button>
 <button class="btn" onclick="addTxn()">+ Record</button>
 </div>
-<div class="wrap">
-<div class="crumb">root / <b>overview</b> / q3-2026</div>
-<div>
-<h1>$284,390.12 <span style="font-size:12px;color:var(--grn)">▲ +12.4%</span></h1>
-<p class="sub">Total net worth · updated <span id="clock">—</span> · terminal build v2.6</p>
+<p class="sub">Total net worth · updated <span id="clock2">live</span> · terminal build v2.6 · demo data</p>
+<div class="hero">
+<div class="stat"><small>NET WORTH</small><b>$128,430</b><span class="up">▲ +18.2% YTD</span></div>
+<div class="stat"><small>CASH · APY 4.6%</small><b>$12,840</b><span style="color:var(--mut)">2.1 mo runway</span></div>
+<div class="stat"><small>INVESTED</small><b>$96,200</b><span class="up">▲ +$1,240 today</span></div>
+<div class="stat"><small>CRYPTO</small><b>$19,390</b><span class="dn">▼ −$310 today</span></div>
 </div>
-<div class="kpis">
-<div class="kpi"><span>INVESTED</span><strong>$196,200</strong><em class="up">▲ +8.1% this qtr</em></div>
-<div class="kpi"><span>CASH</span><strong>$42,810</strong><em class="up">▲ +2.0% apy 4.1%</em></div>
-<div class="kpi amber"><span>BURN / MO</span><strong>$9,340</strong><em style="color:var(--amber)">● -3% vs target</em></div>
-<div class="kpi red"><span>AT RISK</span><strong>$4,120</strong><em class="dn">▼ 2 positions</em></div>
-</div>
-<div class="grid2">
 <div class="card">
-<h3><i>▚</i> PORTFOLIO PERFORMANCE</h3>
-<p class="sub">candlestick · simulated feed</p>
-<div class="tf" id="tf">
-<button data-n="30" class="on">1M</button>
-<button data-n="60">3M</button>
-<button data-n="120">1Y</button>
-<button data-n="240">ALL</button>
-</div>
+<h3><i>⬣</i> EQUITY CURVE <span class="sp tf" id="tf" style="margin:0"><button data-n="14">2W</button><button data-n="30" class="on">1M</button><button data-n="90">3M</button><button data-n="180">6M</button></span></h3>
 <canvas id="chart" width="640" height="240"></canvas>
 <div class="legend"><span><b style="color:var(--grn)">━</b> equity</span><span><b style="color:var(--amber)">━</b> benchmark</span><span id="chg">Δ +18.2%</span></div>
 </div>
+<div class="grid2">
 <div class="card">
-<h3><i>◍</i> ALLOCATION</h3>
-<p class="sub">by asset class</p>
-<div class="alloc">
-<div class="arow"><span>Stocks 52%</span><div class="abar"><i style="width:52%"></i></div><b>$148k</b></div>
-<div class="arow"><span>Bonds 18%</span><div class="abar b"><i style="width:18%"></i></div><b>$51k</b></div>
-<div class="arow"><span>Crypto 14%</span><div class="abar o"><i style="width:14%"></i></div><b>$39k</b></div>
-<div class="arow"><span>Cash 11%</span><div class="abar"><i style="width:11%;background:#7fa892"></i></div><b>$31k</b></div>
-<div class="arow"><span>Alt 5%</span><div class="abar r"><i style="width:5%"></i></div><b>$14k</b></div>
-</div>
+<h3><i>⇄</i> LIVE TAPE</h3>
 <div class="log" id="feed"></div>
+</div>
+<div class="card">
+<h3><i>◉</i> ALLOCATION</h3>
+<table><tr><th>Asset</th><th>Share</th><th>Bar</th></tr>
+<tr><td>US stocks</td><td>52%</td><td style="color:var(--grn)">███████████░░░░░</td></tr>
+<tr><td>Bonds</td><td>18%</td><td style="color:var(--amber)">████░░░░░░░░░░░</td></tr>
+<tr><td>Crypto</td><td>15%</td><td style="color:var(--red)">███░░░░░░░░░░░░</td></tr>
+<tr><td>Cash</td><td>10%</td><td style="color:var(--mut)">██░░░░░░░░░░░░░</td></tr>
+<tr><td>Other</td><td>5%</td><td style="color:var(--mut)">█░░░░░░░░░░░░░░</td></tr>
+</table>
 </div>
 </div>
 <div class="card">
 <h3><i>⬣</i> TRANSACTIONS <span id="count" style="color:var(--grn)"></span></h3>
-<p class="sub">filterable ledger — type in search to filter</p>
-<table>
-<thead><tr><th>ID</th><th>DATE</th><th>DESC</th><th>CAT</th><th>AMOUNT</th><th>STATUS</th></tr></thead>
-<tbody id="rows"></tbody>
-</table>
-</div>
+<table><thead><tr><th>ID</th><th>Date</th><th>Description</th><th>Cat</th><th>Amount</th><th>Status</th></tr></thead>
+<tbody id="rows"></tbody></table>
 <div class="foot">ledgerline · FINRA-style demo data · no real funds move · press <b>/</b> to search</div>
 </div>
 </div>
@@ -478,7 +501,8 @@ var txns=[
 ["TX-9005","Sep 24","ETH sell 0.4","Crypto",+1360,"done"]
 ];
 var feed=document.getElementById('feed');
-function log(m){var d=document.createElement('div');d.textContent='['+new Date().toLocaleTimeString()+'] '+m;feed.prepend(d);}
+var mini=document.getElementById('miniLog');
+function log(m){var d=document.createElement('div');d.textContent='['+new Date().toLocaleTimeString()+'] '+m;feed.prepend(d);if(mini){var x=document.createElement('div');x.innerHTML='<b>›</b> '+m;mini.appendChild(x);while(mini.children.length>8)mini.removeChild(mini.children[1]);}}
 function renderRows(f){
 f=(f||'').toLowerCase();
 var tb=document.getElementById('rows');tb.innerHTML='';
@@ -490,7 +514,7 @@ var c=t[4]>0?'var(--grn)':'inherit';
 var p=t[5]==='done'?'g':(t[5]==='pending'?'a':'r');
 tb.innerHTML+='<tr><td>'+t[0]+'</td><td>'+t[1]+'</td><td>'+t[2]+'</td><td>'+t[3]+'</td><td style="color:'+c+'">'+(t[4]>0?'+':'')+t[4].toLocaleString()+'</td><td><span class="pill '+p+'">'+t[5]+'</span></td></tr>';
 });
-document.getElementById('count')='· '+n+' rows';
+document.getElementById('count').textContent='· '+n+' rows';
 }
 renderRows('');
 document.getElementById('q').addEventListener('input',function(e){renderRows(e.target.value);});
@@ -506,13 +530,8 @@ var s='id,date,desc,cat,amount,status\n'+txns.map(function(r){return r.join(',')
 var b=new Blob([s],{type:'text/csv'});var u=URL.createObjectURL(b);
 var a=document.createElement('a');a.href=u;a.download='ledger.csv';a.click();log('exported ledger.csv');
 }
-/* chart */
 var cv=document.getElementById('chart'),ctx=cv.getContext('2d'),N=30,seed=100;
-function series(n,vol,drift){
-var out=[],v=seed;
-for(var i=0;i<n;i++){v+= (Math.random()-0.48)*vol+drift;out.push(v);}
-return out;
-}
+function series(n,vol,drift){var out=[],v=seed;for(var i=0;i<n;i++){v+=(Math.random()-0.48)*vol+drift;out.push(v);}return out;}
 function draw(){
 var W=cv.width=cv.offsetWidth*2,H=cv.height=480;
 ctx.clearRect(0,0,W,H);
@@ -523,7 +542,6 @@ function X(i){return 20+i*(W-40)/(N-1);}
 function Y(v){return H-30-(v-mn)/(mx-mn)*(H-70);}
 ctx.strokeStyle='#151d19';ctx.lineWidth=1;
 for(var g=0;g<5;g++){var y=30+g*(H-70)/4;ctx.beginPath();ctx.moveTo(20,y);ctx.lineTo(W-20,y);ctx.stroke();}
-/* candles */
 var cw=Math.max(3,(W-40)/N*0.42);
 for(var i=0;i<N;i+=2){
 var o=eq[i],c=eq[Math.min(i+1,N-1)];
@@ -532,10 +550,7 @@ var y1=Y(Math.max(o,c)),y2=Y(Math.min(o,c));
 ctx.fillRect(X(i)-cw/2,y1,cw,Math.max(3,y2-y1));
 ctx.strokeStyle=ctx.fillStyle;ctx.beginPath();ctx.moveTo(X(i),Y(o)-12);ctx.lineTo(X(i),Y(o)+12);ctx.stroke();
 }
-function line(s,col){
-ctx.strokeStyle=col;ctx.lineWidth=3;ctx.beginPath();
-s.forEach(function(v,i){i?ctx.lineTo(X(i),Y(v)):ctx.moveTo(X(0),Y(v));});ctx.stroke();
-}
+function line(s,col){ctx.strokeStyle=col;ctx.lineWidth=3;ctx.beginPath();s.forEach(function(v,i){i?ctx.lineTo(X(i),Y(v)):ctx.moveTo(X(0),Y(v));});ctx.stroke();}
 line(bm,'#ffb224');line(eq,'#00ff88');
 var ch=((eq[N-1]-eq[0])/eq[0]*100).toFixed(1);
 document.getElementById('chg').textContent='Δ '+(ch>0?'+':'')+ch+'%';
@@ -547,65 +562,54 @@ e.target.classList.add('on');N=+e.target.dataset.n;seed=100;draw();log('timefram
 });
 draw();window.addEventListener('resize',draw);
 ['sync prices OK','rebalancer idle','dividend posted +$212','risk: drawdown 1.2%'].forEach(log);
-setInterval(function(){document.getElementById('clock').textContent=new Date().toLocaleTimeString();},1000);
+setInterval(function(){var t=new Date().toLocaleTimeString();document.getElementById('clock').textContent=t;var c2=document.getElementById('clock2');if(c2)c2.textContent=t;},1000);
 setInterval(function(){
 var s=['AAPL','BTC','ETH','TSLA','NVDA'][Math.floor(Math.random()*5)];
 log(s+' tick '+(Math.random()>0.5?'▲':'▼')+' '+(Math.random()*3).toFixed(2)+'%');
 if(feed.children.length>30)feed.removeChild(feed.lastChild);
 },6000);
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
 <style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
 
-  <script src="../api-runtime.js"></script>
+.ceo-hub-floating-badge{
+position:fixed;
+bottom:22px;
+right:22px;
+z-index:99999;
+background:rgba(12,12,20,.88);
+backdrop-filter:blur(14px);
+border:1px solid rgba(233,196,106,.4);
+color:#f4f2ea!important;
+text-decoration:none!important;
+padding:8px 16px;
+border-radius:9999px;
+font-family:Inter,system-ui,sans-serif;
+font-size:12px;
+font-weight:700;
+display:inline-flex;
+align-items:center;
+gap:8px
+}
+
+.ceo-hub-floating-badge:hover{
+transform:translateY(-2px);
+border-color:#e9c46a;
+color:#fff!important
+}
+
+@media(max-width:640px){
+.ceo-hub-floating-badge{
+bottom:12px;
+right:12px;
+padding:6px 12px;
+font-size:11px
+}
+
+}
+
+</style>
+<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
+<a href="../index.html" class="ceo-hub-floating-badge">◈ 66 Projects Hub <span style="font-size:10px;background:rgba(233,196,106,.18);border:1px solid rgba(233,196,106,.3);color:#e9c46a;padding:1px 6px;border-radius:99px">CEO·LAB</span></a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>

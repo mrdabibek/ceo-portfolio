@@ -1,380 +1,664 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FORGE — Gym Timer &amp; WOD</title>
+<title>APEX — Athletic Club & Interval Timer</title>
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 :root{
---bg:#0a0a0b;
---card:#131316;
---line:#232328;
---red:#ff2d2d;
---txt:#f5f5f4;
---mut:#8e8e93;
+--bg:#0b0e11;--bg2:#10141a;--card:#141a21;--card2:#0e1218;
+--line:#232c36;--line2:#2e3947;
+--volt:#d4ff3f;--volt2:#a8e10c;--ember:#ff4d2e;
+--txt:#f2f5f0;--mut:#8b96a5;--mut2:#5d6a7a;
+--r:20px;
 }
-body{
-font-family:"Arial Black",Inter,"Segoe UI",sans-serif;
-background:var(--bg);
-color:var(--txt);
+html { scroll-behavior:smooth; }
+body {
+  font-family:Inter,"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--txt);
+  -webkit-font-smoothing:antialiased;
 }
-.nav{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:18px 28px;
-border-bottom:1px solid var(--line);
-position:sticky;
-top:0;
-background:rgba(10,10,11,.92);
-z-index:5;
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+background:radial-gradient(700px 380px at 15% -5%,rgba(212,255,63,.09),transparent 60%),radial-gradient(600px 400px at 95% 10%,rgba(255,77,46,.08),transparent 60%)}
+h1,h2,h3,.disp { font-family:"Arial Black","Archivo Black",Inter,sans-serif; letter-spacing:-.5px; }
+::selection { background:var(--volt); color:#0b0e11; }
+/* top bar */
+.topbar {
+  background:var(--volt);
+  color:#0b0e11;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  text-align:center;
+  padding:9px 14px;
 }
-.logo{font-weight:900;font-size:19px;letter-spacing:1px;}
-.logo span{color:var(--red);}
-.links{display:flex;gap:26px;font-size:13px;color:var(--mut);font-family:Inter,Arial,sans-serif;font-weight:700;letter-spacing:1px;}
-.links a{color:inherit;text-decoration:none;}
-.links a:hover{color:#fff;}
-.btn{
-background:var(--red);
-border:0;color:#fff;font-weight:900;
-padding:12px 26px;border-radius:10px;cursor:pointer;
-font-size:14px;letter-spacing:.5px;
+.topbar b { border-bottom:2px solid #0b0e11; }
+.nav {
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(11,14,17,.88);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
 }
-.wrap{max-width:1120px;margin:0 auto;padding:28px 22px 50px;}
-.hero{
-display:grid;
-grid-template-columns:1.1fr .9fr;
-gap:20px;
-align-items:stretch;
+.nav-in {
+  max-width:1180px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:26px;
+  padding:15px 24px;
 }
-.timer-card{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:22px;
-padding:30px;
-text-align:center;
-position:relative;
-overflow:hidden;
+.logo {
+  font-family:"Arial Black",sans-serif;
+  font-size:19px;
+  letter-spacing:1px;
 }
-.timer-card::before{
-content:"FORGE";
-position:absolute;top:10px;left:0;right:0;
-font-size:64px;font-weight:900;color:rgba(255,255,255,.03);
-letter-spacing:6px;
+.logo i {
+  font-style:normal;
+  background:var(--volt);
+  color:#0b0e11;
+  padding:2px 9px;
+  border-radius:8px;
+  margin-right:8px;
 }
-.modes{display:flex;gap:8px;justify-content:center;margin:14px 0 6px;position:relative;}
-.modes button{
-background:#1c1c21;border:1px solid var(--line);color:var(--mut);
-font-family:Inter,Arial,sans-serif;font-weight:700;font-size:12px;
-padding:9px 18px;border-radius:99px;cursor:pointer;
+.links {
+  display:flex;
+  gap:22px;
+  font-size:12.5px;
+  font-weight:700;
+  letter-spacing:1.4px;
+  color:var(--mut);
 }
-.modes button.on{background:var(--red);border-color:var(--red);color:#fff;}
-.ring{position:relative;width:250px;height:250px;margin:14px auto;}
-.ring svg{transform:rotate(-90deg);}
-#time{
-position:absolute;inset:0;display:flex;flex-direction:column;
-align-items:center;justify-content:center;
+.links a { color:inherit; text-decoration:none; }
+.links a:hover { color:var(--volt); }
+.nav-cta {
+  margin-left:auto;
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
-#time b{font-size:54px;letter-spacing:-2px;font-variant-numeric:tabular-nums;}
-#time span{font-family:Inter,Arial,sans-serif;font-size:12px;color:var(--mut);letter-spacing:3px;}
-.ctrl{display:flex;gap:10px;justify-content:center;margin-top:8px;position:relative;}
-.ctrl button{
-border:1px solid var(--line);background:#1c1c21;color:#fff;
-font-weight:900;padding:13px 26px;border-radius:12px;cursor:pointer;font-size:14px;
+.live {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  font-weight:800;
+  color:var(--volt);
+  letter-spacing:1px;
 }
-.ctrl .go{background:var(--red);border-color:var(--red);min-width:150px;}
-.rounds{display:flex;gap:8px;justify-content:center;margin-top:14px;}
-.rounds button{
-width:40px;height:40px;border-radius:50%;border:1px solid var(--line);
-background:transparent;color:var(--mut);font-weight:900;cursor:pointer;
+.live i {
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--volt);
+  box-shadow:0 0 0 5px rgba(212,255,63,.15);
+  animation:bl 1.6s infinite;
 }
-.rounds button.on{background:#fff;color:#000;border-color:#fff;}
-.side{display:flex;flex-direction:column;gap:16px;}
-.wod{
-background:linear-gradient(135deg,#1a0505,#2b0a0a);
-border:1px solid #4a1515;
-border-radius:22px;
-padding:24px;
+@keyframes bl { 50%{box-shadow:0 0 0 9px rgba(212,255,63,.05)}; }
+.btn {
+  background:var(--volt);
+  color:#0b0e11;
+  border:0;
+  font-weight:900;
+  padding:12px 26px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:13.5px;
+  letter-spacing:.4px;
 }
-.wod small{color:var(--red);font-family:Inter,Arial,sans-serif;font-weight:800;letter-spacing:2px;font-size:11px;}
-.wod h2{font-size:26px;margin:6px 0 12px;}
-.wod ul{list-style:none;font-family:Inter,Arial,sans-serif;font-size:14px;display:flex;flex-direction:column;gap:9px;}
-.wod li{
-background:rgba(0,0,0,.4);border:1px solid #3a1414;border-radius:10px;
-padding:10px 14px;display:flex;justify-content:space-between;
+.btn:hover { background:#fff; }
+.btn.ghost {
+  background:transparent;
+  color:var(--txt);
+  border:1.5px solid var(--line2);
 }
-.wod li.done{opacity:.4;text-decoration:line-through;}
-.wod li button{background:transparent;border:1px solid var(--red);color:var(--red);border-radius:8px;padding:3px 12px;cursor:pointer;font-weight:800;}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.st{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center;}
-.st b{font-size:22px;display:block;}
-.st small{font-family:Inter,Arial,sans-serif;color:var(--mut);font-size:11px;letter-spacing:1px;}
-/* plan */
-.plan{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;}
-.plan h3{font-size:18px;}
-.plan>p{font-family:Inter,Arial,sans-serif;color:var(--mut);font-size:13px;margin:4px 0 14px;}
-.ex{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.e{background:#0d0d10;border:1px solid var(--line);border-radius:14px;padding:16px;font-family:Inter,Arial,sans-serif;}
-.e .pic{font-size:34px;}
-.e b{display:block;margin:8px 0 2px;}
-.e small{color:var(--mut);font-size:12px;}
-.e .sets{display:flex;gap:6px;margin-top:10px;}
-.e .sets button{flex:1;background:#1c1c21;border:1px solid var(--line);color:#fff;border-radius:8px;padding:7px;cursor:pointer;font-weight:800;}
-.e .sets button.hit{background:var(--red);border-color:var(--red);}
-.coaches{
-margin-top:20px;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
+.btn.ghost:hover { border-color:var(--volt); color:var(--volt); }
+/* layout */
+.wrap {
+  max-width:1180px;
+  margin:auto;
+  padding:30px 24px 60px;
+  position:relative;
+  z-index:1;
 }
-.coach{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:18px;
-padding:22px;
-text-align:center;
+.hero {
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:18px;
+  align-items:stretch;
 }
-.coach .face{
-width:64px;
-height:64px;
-border-radius:50%;
-margin:0 auto 10px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:900;
-font-size:20px;
-color:#fff;
+.panel {
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:28px;
+  position:relative;
+  overflow:hidden;
 }
-.coach b{font-size:15px;}
-.coach small{
-font-family:Inter,Arial,sans-serif;
-color:var(--mut);
-font-size:12px;
+.panel::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:repeating-linear-gradient(-45deg,transparent 0 14px,rgba(255,255,255,.014) 14px 15px);
 }
-.coach p{
-font-family:Inter,Arial,sans-serif;
-font-size:12.5px;
-color:var(--mut);
-margin:10px 0 14px;
+.kicker {
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:3px;
+  color:var(--volt);
 }
-.coach button{
-background:transparent;
-border:1.5px solid var(--red);
-color:var(--red);
-border-radius:99px;
-padding:8px 22px;
-font-weight:800;
-cursor:pointer;
-font-size:12px;
+.hero h1 {
+  font-size:clamp(30px,3.6vw,44px);
+  line-height:1.02;
+  margin:10px 0 8px;
 }
-.pricing{
-margin-top:20px;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
+.hero h1 em { font-style:normal; color:var(--volt); }
+.hero>p {
+  color:var(--mut);
+  font-size:14.5px;
+  line-height:1.65;
+  max-width:480px;
 }
-.pr{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:18px;
-padding:24px;
-font-family:Inter,Arial,sans-serif;
+/* timer */
+.timer-card { text-align:center; }
+.timer-card::before {
+  content:"APEX";
+  position:absolute;
+  top:6px;
+  left:0;
+  right:0;
+  font-size:70px;
+  font-weight:900;
+  color:rgba(255,255,255,.028);
+  letter-spacing:8px;
+  font-family:"Arial Black",sans-serif;
 }
-.pr.hot{
-border-color:var(--red);
-box-shadow:0 0 0 1px var(--red);
+.modes {
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  margin:16px 0 4px;
+  position:relative;
+  z-index:1;
+  flex-wrap:wrap;
 }
-.pr .val{font-size:30px;font-weight:900;margin:6px 0;font-family:"Arial Black",Arial,sans-serif;}
-.pr ul{
-list-style:none;
-font-size:13px;
-color:var(--mut);
-display:flex;
-flex-direction:column;
-gap:7px;
-margin:12px 0 18px;
+.modes button {
+  background:#1a222c;
+  border:1px solid var(--line2);
+  color:var(--mut);
+  font-weight:800;
+  font-size:11.5px;
+  letter-spacing:1px;
+  padding:10px 16px;
+  border-radius:99px;
+  cursor:pointer;
+  font-family:inherit;
 }
-.pr button{
-width:100%;
-background:var(--red);
-border:0;
-color:#fff;
-font-weight:800;
-border-radius:10px;
-padding:12px;
-cursor:pointer;
+.modes button.on {
+  background:var(--volt);
+  border-color:var(--volt);
+  color:#0b0e11;
 }
-.faq3{
-margin-top:20px;
-background:var(--card);
-border:1px solid var(--line);
-border-radius:18px;
-padding:24px;
-font-family:Inter,Arial,sans-serif;
+.ring {
+  position:relative;
+  width:252px;
+  height:252px;
+  margin:14px auto 6px;
 }
-.faq3 h3{
-font-family:"Arial Black",Arial,sans-serif;
-margin-bottom:12px;
+.ring svg { transform:rotate(-90deg); }
+.ring .ticks {
+  position:absolute;
+  inset:-8px;
+  pointer-events:none;
+  opacity:.25;
 }
-.faq3 details{
-border-top:1px solid var(--line);
-padding:13px 4px;
-font-size:14px;
+#time {
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
-.faq3 summary{
-font-weight:700;
-cursor:pointer;
+#time b {
+  font-size:56px;
+  letter-spacing:-2px;
+  font-variant-numeric:tabular-nums;
+  font-family:"Arial Black",sans-serif;
 }
-.faq3 p{
-color:var(--mut);
-margin-top:6px;
-font-size:13px;
+#time span {
+  font-size:11px;
+  color:var(--volt);
+  letter-spacing:3px;
+  font-weight:800;
 }
-.shelf{
-margin-top:20px;
-background:var(--card);
-border:1px solid var(--line);
-border-radius:22px;
-padding:24px;
+.ctrl {
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin-top:10px;
+  position:relative;
+  z-index:1;
 }
-.shelf h3{
-font-size:18px;
+.ctrl button {
+  border:1px solid var(--line2);
+  background:#1a222c;
+  color:#fff;
+  font-weight:900;
+  padding:14px 24px;
+  border-radius:13px;
+  cursor:pointer;
+  font-size:14px;
 }
-.shelf>p{
-font-family:Inter,Arial,sans-serif;
-color:var(--mut);
-font-size:13px;
-margin:4px 0 14px;
+.ctrl .go {
+  background:var(--volt);
+  border-color:var(--volt);
+  color:#0b0e11;
+  min-width:160px;
 }
-.shelf-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
+.ctrl .go:hover { background:#fff; }
+.rounds {
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  margin-top:14px;
+  position:relative;
+  z-index:1;
 }
-.item{
-background:#0d0d10;
-border:1px solid var(--line);
-border-radius:14px;
-padding:18px;
-text-align:center;
-font-family:Inter,Arial,sans-serif;
+.rounds button {
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:1px solid var(--line2);
+  background:transparent;
+  color:var(--mut);
+  font-weight:900;
+  cursor:pointer;
 }
-.item .pic{
-font-size:32px;
+.rounds button.on {
+  background:#fff;
+  color:#000;
+  border-color:#fff;
 }
-.item b{
-display:block;
-margin:8px 0 2px;
-font-size:13.5px;
+/* side */
+.side {
+  display:flex;
+  flex-direction:column;
+  gap:16px;
 }
-.item small{
-color:var(--mut);
-font-size:12px;
+.wod {
+  background:linear-gradient(135deg,#191007,#2b1206);
+  border:1px solid #5a2c10;
+  border-radius:26px;
+  padding:24px;
 }
-.item .pr2{
-color:var(--red);
-font-weight:900;
-font-size:15px;
-margin-top:8px;
-display:block;
+.wod small {
+  color:var(--volt);
+  font-weight:800;
+  letter-spacing:2px;
+  font-size:11px;
 }
-.item button{
-margin-top:10px;
-width:100%;
-background:transparent;
-border:1.5px solid var(--red);
-color:var(--red);
-border-radius:8px;
-padding:8px;
-font-weight:800;
-cursor:pointer;
-font-size:12px;
+.wod h2 { font-size:26px; margin:6px 0 4px; }
+.wod>p {
+  color:var(--mut);
+  font-size:13px;
+  margin-bottom:12px;
 }
-.table2{
-margin-top:20px;
-background:var(--card);
-border:1px solid var(--line);
-border-radius:22px;
-padding:24px;
-overflow-x:auto;
+.wod ul {
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
 }
-.table2 h3{
-font-size:18px;
+.wod li {
+  background:rgba(0,0,0,.45);
+  border:1px solid #4a2a12;
+  border-radius:12px;
+  padding:11px 14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:14px;
 }
-.table2>p{
-font-family:Inter,Arial,sans-serif;
-color:var(--mut);
-font-size:13px;
-margin:4px 0 14px;
+.wod li.done { opacity:.4; text-decoration:line-through; }
+.wod li button {
+  background:transparent;
+  border:1.5px solid var(--volt);
+  color:var(--volt);
+  border-radius:8px;
+  padding:4px 13px;
+  cursor:pointer;
+  font-weight:800;
+  font-size:12px;
 }
-.table2 table{
-width:100%;
-border-collapse:collapse;
-font-family:Inter,Arial,sans-serif;
-font-size:13px;
-min-width:640px;
+.stats {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
 }
-.table2 th{
-text-align:left;
-font-size:11px;
-letter-spacing:2px;
-color:var(--red);
-padding:10px 12px;
-border-bottom:1px solid var(--line);
+.st {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  text-align:center;
 }
-.table2 td{
-padding:11px 12px;
-border-bottom:1px solid #1a1a20;
+.st b {
+  font-size:22px;
+  display:block;
+  font-family:"Arial Black",sans-serif;
 }
-.table2 tr:hover td{
-background:#16161b;
+.st small {
+  color:var(--mut);
+  font-size:10.5px;
+  letter-spacing:1.5px;
+  font-weight:800;
 }
-.table2 .hot{
-color:var(--red);
-font-weight:800;
+.st em {
+  font-style:normal;
+  color:var(--volt);
+  font-size:11px;
+  font-weight:800;
 }
-.rules{
-margin-top:20px;
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
+/* strip */
+.strip {
+  margin:20px 0 0;
+  background:var(--volt);
+  color:#0b0e11;
+  border-radius:16px;
+  padding:13px 20px;
+  font-weight:900;
+  font-size:12.5px;
+  letter-spacing:1.5px;
+  white-space:nowrap;
+  overflow:hidden;
 }
-.rule{
-background:#14060a;
-border:1px solid #3a1414;
-border-radius:16px;
-padding:18px;
-text-align:center;
-font-family:Inter,Arial,sans-serif;
+.strip span { margin:0 18px; }
+/* sections */
+.sect {
+  margin-top:20px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:26px;
 }
-.rule .e{font-size:26px;}
-.rule b{display:block;font-size:13px;margin:8px 0 3px;}
-.rule small{color:var(--mut);font-size:11.5px;}
-.log{margin-top:18px;background:#000;border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-family:Consolas,monospace;font-size:12px;max-height:150px;overflow:auto;}
-.log div{padding:3px 0;border-bottom:1px dotted #222;}
-footer{text-align:center;color:var(--mut);font-family:Inter,Arial,sans-serif;font-size:12px;}
-@media(max-width:900px){
-.hero{grid-template-columns:1fr;}
-.ex{grid-template-columns:1fr;}
-.links{display:none;}
+.sect h3 { font-size:20px; }
+.sect>p {
+  color:var(--mut);
+  font-size:13.5px;
+  margin:5px 0 16px;
 }
+.ex {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.e {
+  background:#0c1015;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:18px;
+}
+.e .pic { font-size:34px; }
+.e b {
+  display:block;
+  margin:9px 0 2px;
+  font-size:15px;
+}
+.e small { color:var(--mut); font-size:12px; }
+.e .bar {
+  height:6px;
+  background:#1c2530;
+  border-radius:99px;
+  margin-top:10px;
+  overflow:hidden;
+}
+.e .bar i {
+  display:block;
+  height:100%;
+  background:var(--volt);
+  width:60%;
+}
+.e .sets {
+  display:flex;
+  gap:6px;
+  margin-top:12px;
+}
+.e .sets button {
+  flex:1;
+  background:#1a222c;
+  border:1px solid var(--line2);
+  color:#fff;
+  border-radius:9px;
+  padding:8px;
+  cursor:pointer;
+  font-weight:800;
+}
+.e .sets button.hit {
+  background:var(--volt);
+  border-color:var(--volt);
+  color:#0b0e11;
+}
+.log {
+  margin-top:16px;
+  background:#000;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px 16px;
+  font-family:Consolas,monospace;
+  font-size:12px;
+  max-height:150px;
+  overflow:auto;
+  color:#c8d2de;
+}
+.log div { padding:3px 0; border-bottom:1px dotted #222; }
+/* shelf + table */
+.shelf-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.item {
+  background:#0c1015;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:18px;
+  text-align:center;
+}
+.item .pic { font-size:32px; }
+.item b {
+  display:block;
+  margin:9px 0 2px;
+  font-size:13.5px;
+}
+.item small { color:var(--mut); font-size:12px; }
+.item .pr2 {
+  color:var(--volt);
+  font-weight:900;
+  font-size:16px;
+  margin-top:8px;
+  display:block;
+}
+.item button {
+  margin-top:10px;
+  width:100%;
+  background:transparent;
+  border:1.5px solid var(--volt);
+  color:var(--volt);
+  border-radius:9px;
+  padding:9px;
+  font-weight:800;
+  cursor:pointer;
+  font-size:12px;
+}
+.item button:hover { background:var(--volt); color:#0b0e11; }
+.table2 { overflow-x:auto; }
+.table2 table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+  min-width:640px;
+}
+.table2 th {
+  text-align:left;
+  font-size:11px;
+  letter-spacing:2px;
+  color:var(--volt);
+  padding:10px 12px;
+  border-bottom:1px solid var(--line);
+}
+.table2 td { padding:11px 12px; border-bottom:1px solid #1a222c; }
+.table2 tr:hover td { background:#161d26; }
+.table2 .hot { color:var(--ember); font-weight:800; }
+.rules {
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.rule {
+  background:#11161d;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:20px;
+  text-align:center;
+}
+.rule .e2 { font-size:26px; }
+.rule b {
+  display:block;
+  font-size:13px;
+  margin:9px 0 3px;
+}
+.rule small { color:var(--mut); font-size:11.5px; }
+.coaches {
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.coach {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:24px;
+  text-align:center;
+}
+.coach .face {
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  margin:0 auto 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  font-size:20px;
+  color:#0b0e11;
+}
+.coach b { font-size:15px; }
+.coach small { color:var(--mut); font-size:12px; }
+.coach p {
+  font-size:12.5px;
+  color:var(--mut);
+  margin:10px 0 14px;
+  line-height:1.6;
+}
+.coach button {
+  background:transparent;
+  border:1.5px solid var(--volt);
+  color:var(--volt);
+  border-radius:99px;
+  padding:9px 22px;
+  font-weight:800;
+  cursor:pointer;
+  font-size:12px;
+}
+.pricing {
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.pr {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:26px;
+}
+.pr.hot { border-color:var(--volt); box-shadow:0 0 0 1px var(--volt); }
+.pr .val {
+  font-size:32px;
+  font-weight:900;
+  margin:6px 0;
+  font-family:"Arial Black",sans-serif;
+}
+.pr ul {
+  list-style:none;
+  font-size:13px;
+  color:var(--mut);
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  margin:12px 0 18px;
+}
+.pr button {
+  width:100%;
+  background:var(--volt);
+  border:0;
+  color:#0b0e11;
+  font-weight:900;
+  border-radius:11px;
+  padding:13px;
+  cursor:pointer;
+}
+.faq3 {
+  margin-top:20px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:26px;
+}
+.faq3 details {
+  border-top:1px solid var(--line);
+  padding:14px 4px;
+  font-size:14px;
+}
+.faq3 summary { font-weight:700; cursor:pointer; }
+.faq3 p {
+  color:var(--mut);
+  margin-top:6px;
+  font-size:13px;
+}
+footer {
+  text-align:center;
+  color:var(--mut);
+  font-size:12px;
+  padding:22px;
+}
+@media(max-width:940px) { .hero{grid-template-columns:1fr}.ex{grid-template-columns:1fr}.links{display:none}.shelf-grid{grid-template-columns:1fr 1fr}.rules{grid-template-columns:1fr 1fr}.coaches,.pricing{grid-template-columns:1fr}; }
 </style>
 </head>
 <body>
-<nav class="nav">
-<div class="logo">FORGE<span>◆</span></div>
-<div class="links"><a href="#">PROGRAMS</a><a href="#">COACHES</a><a href="#">PRICING</a><a href="#">COMMUNITY</a></div>
-<button class="btn">START TRIAL</button>
-</nav>
+<div class="topbar">FOUNDERS WEEK — <b>2 WEEKS FREE</b> + NO JOINING FEE · ENDS SUNDAY</div>
+<nav class="nav"><div class="nav-in">
+<div class="logo"><i>A</i>APEX CLUB</div>
+<div class="links"><a href="#">PROGRAMS</a><a href="#">TIMETABLE</a><a href="#">COACHES</a><a href="#">PRICING</a></div>
+<div class="nav-cta"><span class="live"><i></i>12 IN CLASS NOW</span><button class="btn">START FREE</button></div>
+</div></nav>
 <div class="wrap">
 <div class="hero">
-<div class="timer-card">
+<div class="panel timer-card">
+<div class="kicker">◆ INTERVAL ENGINE · WEB AUDIO BEEPS</div>
+<h1>Train to the <em>clock.</em></h1>
+<p>Competition-grade timer with Work / Rest / Tabata / WOD presets. Rounds, sound cues and a session log — runs fully offline.</p>
 <div class="modes" id="modes">
 <button class="on" data-s="1500">WORK 25:00</button>
 <button data-s="300">REST 5:00</button>
@@ -382,10 +666,7 @@ footer{text-align:center;color:var(--mut);font-family:Inter,Arial,sans-serif;fon
 <button data-s="1800">WOD 30:00</button>
 </div>
 <div class="ring">
-<svg width="250" height="250">
-<circle cx="125" cy="125" r="110" fill="none" stroke="#232328" stroke-width="14"/>
-<circle id="arc" cx="125" cy="125" r="110" fill="none" stroke="#ff2d2d" stroke-width="14" stroke-linecap="round" stroke-dasharray="691" stroke-dashoffset="0"/>
-</svg>
+<svg width="252" height="252"><circle cx="126" cy="126" r="110" fill="none" stroke="#232c36" stroke-width="14"/><circle id="arc" cx="126" cy="126" r="110" fill="none" stroke="#d4ff3f" stroke-width="14" stroke-linecap="round" stroke-dasharray="691" stroke-dashoffset="0"/></svg>
 <div id="time"><b id="clock">25:00</b><span id="state">READY</span></div>
 </div>
 <div class="ctrl">
@@ -400,7 +681,8 @@ footer{text-align:center;color:var(--mut);font-family:Inter,Arial,sans-serif;fon
 <div class="side">
 <div class="wod">
 <small>◆ TODAY'S WOD — MURPH PREP</small>
-<h2>“Iron Monday”</h2>
+<h2>"Iron Monday"</h2>
+<p>For time · 30:00 cap · scale to RX / scaled / beginner</p>
 <ul id="wod">
 <li><span>400m run</span><button>done</button></li>
 <li><span>50 air squats</span><button>done</button></li>
@@ -412,34 +694,40 @@ footer{text-align:center;color:var(--mut);font-family:Inter,Arial,sans-serif;fon
 <div class="stats">
 <div class="st"><b id="s1">12:40</b><small>BEST WOD</small></div>
 <div class="st"><b id="s2">86</b><small>WORKOUTS</small></div>
-<div class="st"><b id="s3">1,940</b><small>KCAL WK</small></div>
+<div class="st"><b id="s3">1,940</b><small>KCAL / WK</small></div>
+</div>
+<div class="stats">
+<div class="st"><b>182kg</b><small>DEADLIFT REC</small><em>▲ club best</em></div>
+<div class="st"><b>3:58</b><small>FASTEST MURPH</small><em>▲ −12s</em></div>
+<div class="st"><b>412</b><small>MEMBERS</small><em>▲ +18</em></div>
 </div>
 </div>
 </div>
-<div class="plan">
+<div class="strip"><span>🔥 NO EGO LIFTING</span>·<span>⏱ RESPECT THE CLOCK</span>·<span>🧹 WIPE DOWN</span>·<span>🤝 CHEER LAST PLACE</span>·<span>🔥 NO EGO LIFTING</span>·<span>⏱ RESPECT THE CLOCK</span></div>
+<div class="sect">
 <h3>Session builder — tap sets as you finish</h3>
-<p>Tap a set chip to mark it. Progress saves below in the log.</p>
+<p>Tap a set chip to mark it. Every tap lands in the log below.</p>
 <div class="ex">
-<div class="e"><div class="pic">🏋️</div><b>Back squat</b><small>5 × 5 · 100kg</small><div class="sets"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button></div></div>
-<div class="e"><div class="pic">💪</div><b>Bench press</b><small>4 × 8 · 80kg</small><div class="sets"><button>1</button><button>2</button><button>3</button><button>4</button></div></div>
-<div class="e"><div class="pic">🤸</div><b>Plank</b><small>3 × 60s</small><div class="sets"><button>1</button><button>2</button><button>3</button></div></div>
+<div class="e"><div class="pic">🏋️</div><b>Back squat</b><small>5 × 5 · 100kg · rack 3</small><div class="bar"><i style="width:80%"></i></div><div class="sets"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button></div></div>
+<div class="e"><div class="pic">💪</div><b>Bench press</b><small>4 × 8 · 80kg · spotter on</small><div class="bar"><i style="width:55%"></i></div><div class="sets"><button>1</button><button>2</button><button>3</button><button>4</button></div></div>
+<div class="e"><div class="pic">🤸</div><b>Plank ladder</b><small>3 × 60s · core finisher</small><div class="bar"><i style="width:35%"></i></div><div class="sets"><button>1</button><button>2</button><button>3</button></div></div>
 </div>
 <div class="log" id="log"><div>[ready] timer loaded · press START</div></div>
 </div>
-<div class="shelf">
+<div class="sect">
 <h3>Fuel shelf — members −15%</h3>
 <p>Protein, creatine, wraps. Grab after class, billed to your account.</p>
-<div class="shelf-grid">
+<div class="shelf-grid" style="margin-top:14px">
 <div class="item"><div class="pic">🥤</div><b>Whey 1kg</b><small>choco / vanilla</small><span class="pr2">$38</span><button>Add</button></div>
 <div class="item"><div class="pic">⚡</div><b>Creatine 500g</b><small>micronized</small><span class="pr2">$24</span><button>Add</button></div>
 <div class="item"><div class="pic">🤲</div><b>Chalk ball</b><small>60g refillable</small><span class="pr2">$6</span><button>Add</button></div>
 <div class="item"><div class="pic">🧵</div><b>Wrist wraps</b><small>stiff / flex</small><span class="pr2">$18</span><button>Add</button></div>
 </div>
 </div>
-<div class="table2">
+<div class="sect table2">
 <h3>Weekly timetable</h3>
 <p>Prime-time classes fill fast — book from the timer screen.</p>
-<table>
+<table style="margin-top:12px">
 <tr><th>TIME</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th></tr>
 <tr><td><b>07:00</b></td><td>Iron WOD</td><td>Spin 45</td><td>Iron WOD</td><td>Yoga</td><td class="hot">Murph prep ★</td></tr>
 <tr><td><b>09:00</b></td><td>Mobility</td><td>Kettlebell</td><td>Mobility</td><td>Kettlebell</td><td>Open gym</td></tr>
@@ -450,23 +738,18 @@ footer{text-align:center;color:var(--mut);font-family:Inter,Arial,sans-serif;fon
 </table>
 </div>
 <div class="rules">
-<div class="rule"><div class="e">🔥</div><b>No ego lifting</b><small>form first, always</small></div>
-<div class="rule"><div class="e">⏱️</div><b>Respect the clock</b><small>rounds start together</small></div>
-<div class="rule"><div class="e">🧹</div><b>Wipe down</b><small>leave it cleaner</small></div>
-<div class="rule"><div class="e">🤝</div><b>Cheer last place</b><small>loudest for final finisher</small></div>
-</div>
-<div class="stats" style="margin-top:16px">
-<div class="st"><b>182kg</b><small>GYM DEADLIFT RECORD</small></div>
-<div class="st"><b>3:58</b><small>FASTEST MURPH</small></div>
-<div class="st"><b>412</b><small>ACTIVE MEMBERS</small></div>
+<div class="rule"><div class="e2">🔥</div><b>No ego lifting</b><small>form first, always</small></div>
+<div class="rule"><div class="e2">⏱️</div><b>Respect the clock</b><small>rounds start together</small></div>
+<div class="rule"><div class="e2">🧹</div><b>Wipe down</b><small>leave it cleaner</small></div>
+<div class="rule"><div class="e2">🤝</div><b>Cheer last place</b><small>loudest for final finisher</small></div>
 </div>
 <div class="coaches">
-<div class="coach"><div class="face" style="background:#ff2d2d">DK</div><b>D. Karimov</b><br><small>Strength · 12 yrs</small><p>500+ athletes to first pull-up. Believes in chalk.</p><button>Book intro</button></div>
-<div class="coach"><div class="face" style="background:#7c3aed">AN</div><b>A. Nazarova</b><br><small>HIIT · 8 yrs</small><p>Tabata terrorist. Playlists so loud they count as cardio.</p><button>Book intro</button></div>
-<div class="coach"><div class="face" style="background:#0891b2">JO</div><b>J. Okafor</b><br><small>Mobility · 10 yrs</small><p>Fixes desks one spine at a time. Stretch or else.</p><button>Book intro</button></div>
+<div class="coach"><div class="face" style="background:#d4ff3f">DK</div><b>D. Karimov</b><br><small>Strength · 12 yrs</small><p>500+ athletes to first pull-up. Believes in chalk and patience.</p><button>Book intro</button></div>
+<div class="coach"><div class="face" style="background:#ff4d2e">AN</div><b>A. Nazarova</b><br><small>HIIT · 8 yrs</small><p>Tabata specialist. Playlists so loud they count as cardio.</p><button>Book intro</button></div>
+<div class="coach"><div class="face" style="background:#7dd3fc">JO</div><b>J. Okafor</b><br><small>Mobility · 10 yrs</small><p>Fixes desks one spine at a time. Stretch or else.</p><button>Book intro</button></div>
 </div>
 <div class="pricing">
-<div class="pr"><h4>Off-peak</h4><div class="val">$29</div><ul><li>✓ 06:00–16:00 access</li><li>✓ 1 group class / week</li><li>✓ Locker room</li></ul><button>Choose</button></div>
+<div class="pr"><h4>Off-peak</h4><div class="val">$29</div><ul><li>✓ 06:00–16:00 access</li><li>✓ 1 group class / week</li><li>✓ Locker room + app</li></ul><button>Choose</button></div>
 <div class="pr hot"><h4>All-in ★</h4><div class="val">$59</div><ul><li>✓ 24/7 access</li><li>✓ Unlimited classes</li><li>✓ Sauna + timer app</li></ul><button>Choose</button></div>
 <div class="pr"><h4>Pro coaching</h4><div class="val">$149</div><ul><li>✓ Everything in All-in</li><li>✓ 4× PT sessions</li><li>✓ Nutrition plan</li></ul><button>Choose</button></div>
 </div>
@@ -477,7 +760,7 @@ footer{text-align:center;color:var(--mut);font-family:Inter,Arial,sans-serif;fon
 <details><summary>What to bring?</summary><p>Just shoes and water. Chalk, belts and bands live at the rig.</p></details>
 <details><summary>Can I freeze membership?</summary><p>Up to 2 months a year, free, from the app in one tap.</p></details>
 </div>
-<footer style="margin-top:18px">FORGE demo · beep uses WebAudio · no account needed</footer>
+<footer>APEX CLUB demo · beep uses WebAudio · no account needed</footer>
 </div>
 <script>
 var total=1500,left=1500,tick=null,on=false,beep=true;
@@ -527,58 +810,9 @@ say('set '+e.target.textContent+' '+(e.target.classList.contains('hit')?'✔':'�
 });
 draw();
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
-<style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
-
-  <script src="../api-runtime.js"></script>
+<style>.ceo-hub-floating-badge{position:fixed;bottom:22px;right:22px;z-index:99999;background:rgba(12,12,20,.88);backdrop-filter:blur(14px);border:1px solid rgba(233,196,106,.4);color:#f4f2ea!important;text-decoration:none!important;padding:8px 16px;border-radius:9999px;font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.8);transition:.25s}@media(max-width:640px){.ceo-hub-floating-badge{bottom:12px;right:12px;padding:6px 12px;font-size:11px}}</style>
+<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects">◈ 66 Projects Hub</a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>

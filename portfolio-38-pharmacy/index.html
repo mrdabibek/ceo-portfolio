@@ -3,848 +3,824 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VitaPlus — Online Pharmacy</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>VitaCare — Modern Pharmacy &amp; Clinic</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+
 * {
-margin:0;
-padding:0;
-box-sizing:border-box
+  margin:0;
+  padding:0;
+  box-sizing:border-box
 }
 :root {
---bg:#f2f7f4;
---ink:#14261d;
---mut:#5f7a6b;
---green:#0d8a4e;
---green2:#0a6b3d;
---light:#dcf2e4;
---line:#cfdccf;
---amber:#e8930c
+  --teal:#0d7c7b;
+  --teal2:#0a5f5e;
+  --mint:#e3f2ef;
+  --ink:#14292b;
+  --mut:#6b8284;
+  --line:#d7e5e3;
+  --bg:#f7fbfa;
+  --amber:#e8a13d;
+  --rose:#e2606e
 }
 body {
-background:var(--bg);
-color:var(--ink);
-font-family:Inter,sans-serif
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,sans-serif;
+  overflow-x:hidden
+}
+h1,h2,h3 {
+  font-family:Fraunces,serif;
+  font-weight:600
 }
 .wrap {
-max-width:1180px;
-margin:auto;
-padding:0 22px
+  max-width:1200px;
+  margin:auto;
+  padding:0 24px
 }
-/* emergency bar */
-.urg {
-background:#14261d;
-color:#fff;
-text-align:center;
-font-size:13px;
-padding:10px
+.top {
+  background:var(--ink);
+  color:#cfe3e1;
+  font-size:12px;
+  letter-spacing:1px;
+  padding:9px 12px;
+  text-align:center
 }
-.urg b { color:#7dffb0 }
-/* header */
+.top b {
+  color:#fff
+}
 header {
-position:sticky;
-top:0;
-z-index:60;
-background:#fff;
-border-bottom:1px solid var(--line)
+  position:sticky;
+  top:0;
+  z-index:60;
+  background:rgba(247,251,250,.95);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)
 }
 .hd {
-max-width:1240px;
-margin:auto;
-display:flex;
-align-items:center;
-gap:16px;
-padding:14px 22px
+  max-width:1280px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 24px;
+  gap:14px
 }
 .brand {
-font-weight:800;
-font-size:21px;
-white-space:nowrap
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:Fraunces,serif;
+  font-size:24px
 }
-.brand em { color:var(--green); font-style:normal }
-.search {
-flex:1;
-display:flex;
-background:var(--bg);
-border:2px solid var(--line);
-border-radius:12px;
-overflow:hidden;
-max-width:480px
+.cross {
+  width:36px;
+  height:36px;
+  background:var(--teal);
+  border-radius:10px;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  font-weight:300
 }
-.search input {
-flex:1;
-border:none;
-background:none;
-padding:11px 16px;
-font-family:Inter;
-font-size:14px;
-outline:none
+nav {
+  display:flex;
+  gap:26px
 }
-.search button {
-background:var(--green);
-color:#fff;
-border:none;
-padding:0 22px;
-cursor:pointer;
-font-size:16px
+nav a {
+  color:var(--ink);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:500;
+  opacity:.7
 }
-.hacts {
-display:flex;
-gap:10px;
-margin-left:auto;
-align-items:center
+nav a:hover {
+  opacity:1;
+  color:var(--teal)
 }
-.rx {
-border:2px solid var(--green);
-color:var(--green);
-background:#fff;
-padding:10px 18px;
-border-radius:12px;
-font-weight:700;
-cursor:pointer;
-font-size:13px
+.hact {
+  display:flex;
+  gap:10px;
+  align-items:center
 }
-.cartb {
-background:var(--green);
-color:#fff;
-border:none;
-padding:11px 20px;
-border-radius:12px;
-font-weight:700;
-cursor:pointer;
-font-size:13px
+.btn {
+  padding:13px 28px;
+  font-size:12px;
+  letter-spacing:1.5px;
+  cursor:pointer;
+  font-family:Inter;
+  font-weight:700;
+  border:1px solid var(--teal);
+  border-radius:30px
 }
-/* trust */
-.trust {
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
-padding:22px 0 0
+.btn.fill {
+  background:var(--teal);
+  color:#fff
 }
-.trust div {
-background:#fff;
-border:1px solid var(--line);
-border-radius:14px;
-padding:16px;
-display:flex;
-gap:12px;
-align-items:center;
-font-size:13px;
-font-weight:600
+.btn.fill:hover {
+  background:var(--teal2)
 }
-.trust span { font-size:24px }
-/* hero */
+.btn.line {
+  background:none;
+  color:var(--teal)
+}
+.ibtn {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:50%;
+  width:44px;
+  height:44px;
+  cursor:pointer;
+  font-size:16px;
+  position:relative
+}
+.ibtn b {
+  position:absolute;
+  top:-4px;
+  right:-4px;
+  background:var(--rose);
+  color:#fff;
+  font-size:10px;
+  width:19px;
+  height:19px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+.burger {
+  display:none;
+  background:none;
+  border:0;
+  font-size:24px;
+  cursor:pointer
+}
 .hero {
-display:grid;
-grid-template-columns:1.1fr 1fr;
-gap:26px;
-align-items:center;
-padding:34px 0
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:46px;
+  align-items:center;
+  padding:60px 24px 50px
 }
-.heroC {
-background:linear-gradient(130deg,#0d8a4e,#063d24);
-color:#fff;
-border-radius:22px;
-padding:52px 44px;
-position:relative;
-overflow:hidden
+.pill {
+  display:inline-block;
+  background:var(--mint);
+  color:var(--teal2);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:2px;
+  padding:8px 18px;
+  border-radius:20px;
+  margin-bottom:16px
 }
-.heroC h1 {
-font-size:clamp(32px,4.4vw,54px);
-line-height:1.08;
-font-weight:800
+.hero h1 {
+  font-size:clamp(40px,5.4vw,68px);
+  line-height:1.04
 }
-.heroC p {
-opacity:.85;
-margin:16px 0 24px;
-line-height:1.7
+.hero h1 span {
+  color:var(--teal)
 }
-.heroC .row {
-display:flex;
-gap:10px;
-flex-wrap:wrap
+.hero p {
+  color:var(--mut);
+  line-height:1.8;
+  margin:18px 0 26px;
+  max-width:480px
 }
-.wbtn {
-background:#fff;
-color:var(--green2);
-border:none;
-padding:14px 28px;
-border-radius:12px;
-font-weight:800;
-cursor:pointer;
-font-size:14px
+.hrow {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap
 }
-.gbtn {
-background:none;
-border:2px solid #ffffff66;
-color:#fff;
-padding:12px 26px;
-border-radius:12px;
-font-weight:700;
-cursor:pointer;
-font-size:14px
+.hstats {
+  display:flex;
+  gap:30px;
+  margin-top:30px
+}
+.hstats b {
+  font-family:Fraunces,serif;
+  font-size:28px;
+  display:block;
+  color:var(--teal2)
+}
+.hstats span {
+  font-size:11px;
+  letter-spacing:1.5px;
+  color:var(--mut)
+}
+.hcard {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 30px 60px -30px rgba(13,124,123,.3)
+}
+.hcard img {
+  width:100%;
+  height:300px;
+  object-fit:cover
+}
+.hcard .hb {
+  padding:22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+.hb .dot {
+  width:12px;
+  height:12px;
+  background:#2fbf71;
+  border-radius:50%;
+  display:inline-block;
+  margin-right:8px;
+  animation:bl 1.6s infinite
+}
+@keyframes bl {
+  50% {
+  opacity:.3
+}
+}
+.hb small {
+  font-size:13px;
+  color:var(--teal2);
+  font-weight:600
 }
 .quiz {
-background:#fff;
-border-radius:22px;
-border:1px solid var(--line);
-padding:34px
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:40px;
+  max-width:860px;
+  margin:auto;
+  box-shadow:0 24px 50px -30px rgba(13,124,123,.25)
 }
-.quiz h2 { font-size:22px; margin-bottom:4px }
-.quiz>p {
-color:var(--mut);
-font-size:13.5px;
-margin-bottom:18px
+.qstep {
+  display:none
 }
-.symptoms {
-display:flex;
-gap:8px;
-flex-wrap:wrap;
-margin-bottom:16px
+.qstep.on {
+  display:block;
+  animation:fade .4s
 }
-.sym {
-border:2px solid var(--line);
-background:#fff;
-padding:10px 18px;
-border-radius:99px;
-cursor:pointer;
-font-weight:600;
-font-size:13px
+@keyframes fade {
+  from {
+  opacity:0;
+  transform:translateY(8px)
 }
-.sym.on {
-background:var(--green);
-color:#fff;
-border-color:var(--green)
 }
-#quizRes {
-background:var(--bg);
-border-radius:12px;
-padding:16px;
-font-size:14px;
-line-height:1.65;
-display:none
+.qstep h3 {
+  font-size:28px;
+  margin-bottom:6px
 }
-/* cats */
-.cats {
-display:grid;
-grid-template-columns:repeat(6,1fr);
-gap:12px;
-margin:8px 0 30px
+.qstep>p {
+  color:var(--mut);
+  margin-bottom:20px;
+  font-size:14px
 }
-.cat {
-background:#fff;
-border:2px solid transparent;
-border-radius:16px;
-padding:22px 10px;
-text-align:center;
-cursor:pointer;
-transition:.25s
+.opts {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
 }
-.cat:hover { transform:translateY(-4px) }
-.cat.on { border-color:var(--green); background:#eafaf0 }
-.cat span { font-size:34px }
-.cat b {
-display:block;
-font-size:13px;
-margin-top:8px
+.opt {
+  border:1.5px solid var(--line);
+  border-radius:12px;
+  padding:16px;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:500;
+  background:#fff;
+  text-align:left;
+  font-family:Inter
 }
-.cat small { color:var(--mut); font-size:11px }
-/* products */
-section { padding:20px 0 60px }
+.opt:hover {
+  border-color:var(--teal);
+  background:var(--mint)
+}
+.qbar {
+  height:6px;
+  background:var(--mint);
+  border-radius:4px;
+  margin-bottom:24px;
+  overflow:hidden
+}
+.qbar i {
+  display:block;
+  height:100%;
+  background:var(--teal);
+  border-radius:4px;
+  transition:.4s
+}
+.qres {
+  background:var(--mint);
+  border-radius:12px;
+  padding:22px;
+  margin-top:6px;
+  font-size:14px;
+  line-height:1.75
+}
+section {
+  padding:70px 0
+}
 .st {
-display:flex;
-align-items:end;
-justify-content:space-between;
-margin-bottom:20px;
-flex-wrap:wrap;
-gap:10px
+  text-align:center;
+  margin-bottom:30px
 }
-.st h2 { font-size:clamp(24px,3vw,36px); font-weight:800 }
-.st p { color:var(--mut); font-size:14px }
-.st select {
-border:2px solid var(--line);
-border-radius:10px;
-padding:10px 14px;
-font-family:Inter;
-font-size:13px;
-background:#fff
+.st h2 {
+  font-size:clamp(30px,3.8vw,46px)
+}
+.st p {
+  color:var(--mut);
+  margin-top:8px
+}
+.chips {
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:28px
+}
+.chip {
+  border:1px solid var(--line);
+  background:#fff;
+  padding:10px 22px;
+  border-radius:25px;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  font-family:Inter;
+  color:var(--ink)
+}
+.chip.on,.chip:hover {
+  background:var(--teal);
+  color:#fff;
+  border-color:var(--teal)
 }
 .grid {
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(225px,1fr));
-gap:16px
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px
 }
-.card {
-background:#fff;
-border:1px solid var(--line);
-border-radius:16px;
-padding:22px 18px;
-position:relative;
-transition:.25s;
-display:flex;
-flex-direction:column
+.prod {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  transition:.3s
 }
-.card:hover { box-shadow:0 16px 34px rgba(13,138,78,.14); transform:translateY(-4px) }
-.card .im {
-font-size:58px;
-text-align:center;
-background:var(--bg);
-border-radius:12px;
-padding:18px 8px
+.prod:hover {
+  transform:translateY(-5px);
+  box-shadow:0 20px 36px -22px rgba(13,124,123,.4)
 }
-.card h3 { font-size:15.5px; margin:12px 0 2px }
-.card small { color:var(--mut); font-size:12px }
-.card .dose {
-background:var(--light);
-color:var(--green2);
-font-size:11px;
-font-weight:700;
-padding:4px 10px;
-border-radius:6px;
-display:inline-block;
-margin-top:8px
+.prod img {
+  width:100%;
+  height:180px;
+  object-fit:cover
 }
-.card .prow {
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin:12px 0
+.pb {
+  padding:16px
 }
-.card .pr { font-weight:800; font-size:19px }
-.card .pr s {
-color:var(--mut);
-font-weight:400;
-font-size:13px
+.pb .kind {
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  color:var(--teal)
 }
-.card button {
-margin-top:auto;
-background:var(--green);
-color:#fff;
-border:none;
-padding:12px;
-border-radius:10px;
-font-weight:700;
-cursor:pointer
+.pb h3 {
+  font-size:18px;
+  margin:6px 0 4px
 }
-.card button:hover { background:var(--green2) }
-.card button.added { background:#14261d }
-.otc {
-position:absolute;
-top:12px;
-right:12px;
-background:var(--light);
-color:var(--green2);
-font-size:10px;
-font-weight:800;
-padding:4px 10px;
-border-radius:99px
+.pb p {
+  font-size:13px;
+  color:var(--mut);
+  margin-bottom:10px
 }
-.rxonly {
-position:absolute;
-top:12px;
-right:12px;
-background:#14261d;
-color:#7dffb0;
-font-size:10px;
-font-weight:800;
-padding:4px 10px;
-border-radius:99px
+.prow {
+  display:flex;
+  justify-content:space-between;
+  align-items:center
 }
-/* services */
-.servs {
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:16px;
-margin-top:44px
+.price {
+  font-weight:700;
+  font-size:17px
 }
-.serv {
-background:#14261d;
-color:#fff;
-border-radius:18px;
-padding:30px 26px
+.add {
+  background:var(--ink);
+  color:#fff;
+  border:0;
+  border-radius:20px;
+  padding:9px 18px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:700;
+  font-family:Inter
 }
-.serv span { font-size:34px }
-.serv h3 { font-size:19px; margin:12px 0 8px }
-.serv p {
-opacity:.7;
-font-size:14px;
-line-height:1.7;
-margin-bottom:16px
+.add:hover {
+  background:var(--teal)
 }
-.serv button {
-background:#7dffb0;
-border:none;
-color:#063d24;
-font-weight:800;
-padding:11px 22px;
-border-radius:10px;
-cursor:pointer
+.svc {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px
 }
-/* how */
-.how {
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:0;
-background:#fff;
-border:1px solid var(--line);
-border-radius:18px;
-margin-top:44px;
-overflow:hidden
+.sv {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:30px 26px;
+  text-align:center
 }
-.how div { padding:30px 26px; border-left:1px solid var(--line) }
-.how div:first-child { border:none }
-.how b {
-background:var(--green);
-color:#fff;
-width:36px;
-height:36px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-margin-bottom:12px
+.sv .ic {
+  width:58px;
+  height:58px;
+  background:var(--mint);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  margin:0 auto 16px
 }
-.how h3 { font-size:16px; margin-bottom:8px }
-.how p {
-color:var(--mut);
-font-size:13.5px;
-line-height:1.7
+.sv h3 {
+  font-size:21px;
+  margin-bottom:8px
 }
-/* reviews */
-.revs {
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:16px;
-margin-top:26px
+.sv p {
+  color:var(--mut);
+  font-size:14px;
+  line-height:1.7;
+  margin-bottom:14px
 }
-.rev {
-background:#fff;
-border:1px solid var(--line);
-border-radius:16px;
-padding:24px
+.sv a {
+  color:var(--teal);
+  font-weight:700;
+  font-size:13px;
+  text-decoration:none
 }
-.rev .stars { color:var(--amber) }
-.rev p {
-font-size:14px;
-line-height:1.7;
-margin:10px 0;
-color:#33473c
+.book {
+  background:var(--ink);
+  color:#eef5f4;
+  border-radius:20px;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr 1fr
 }
-.rev b { font-size:12px; color:var(--mut) }
-/* faq */
-.faq { max-width:740px; margin:44px auto 0 }
-.faq h2 { text-align:center; margin-bottom:16px }
-.qa {
-background:#fff;
-border:1px solid var(--line);
-border-radius:12px;
-margin-bottom:10px
+.book img {
+  width:100%;
+  height:100%;
+  min-height:440px;
+  object-fit:cover
 }
-.qa button {
-width:100%;
-background:none;
-border:none;
-padding:16px 20px;
-display:flex;
-justify-content:space-between;
-cursor:pointer;
-font-weight:700;
-font-size:15px;
-text-align:left
+.bf {
+  padding:48px 44px
 }
-.qa p {
-display:none;
-padding:0 20px 18px;
-color:var(--mut);
-font-size:14px;
-line-height:1.75
+.bf h2 {
+  font-size:36px;
+  margin-bottom:8px;
+  color:#fff
 }
-.qa p.open { display:block }
-/* footer */
+.bf>p {
+  color:#9dbfbd;
+  margin-bottom:18px;
+  font-size:14px
+}
+label {
+  display:block;
+  font-size:10px;
+  letter-spacing:2px;
+  margin:12px 0 6px;
+  color:#9dbfbd;
+  font-weight:700
+}
+input,select {
+  background:#1e3638;
+  border:1px solid #355456;
+  color:#fff;
+  padding:12px;
+  font-family:Inter;
+  font-size:14px;
+  width:100%;
+  border-radius:8px
+}
+input:focus,select:focus {
+  outline:2px solid var(--teal)
+}
+.frow {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
+}
+.faq {
+  max-width:760px;
+  margin:auto;
+  display:grid;
+  gap:12px
+}
+.fq {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden
+}
+.fq button {
+  width:100%;
+  background:none;
+  border:0;
+  padding:18px 22px;
+  text-align:left;
+  font-family:Inter;
+  font-weight:600;
+  font-size:15px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  color:var(--ink)
+}
+.fq .fa {
+  display:none;
+  padding:0 22px 20px;
+  color:var(--mut);
+  font-size:14px;
+  line-height:1.75
+}
+.fq.open .fa {
+  display:block
+}
 footer {
-background:#14261d;
-color:#9db8a9;
-padding:44px 22px;
-text-align:center;
-font-size:13px;
-margin-top:50px
+  background:var(--ink);
+  color:#9dbfbd;
+  padding:54px 0 24px
 }
-/* drawer + toast */
-#drawer {
-position:fixed;
-top:0;
-right:-400px;
-width:min(380px,94vw);
-height:100%;
-background:#fff;
-z-index:100;
-transition:.35s;
-padding:26px;
-display:flex;
-flex-direction:column;
-box-shadow:-20px 0 60px rgba(0,0,0,.2)
+.fgrid {
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:30px;
+  max-width:1200px;
+  margin:auto;
+  padding:0 24px
 }
-#drawer.open { right:0 }
-.citem {
-display:flex;
-gap:12px;
-align-items:center;
-border-bottom:1px solid var(--line);
-padding:12px 0;
-font-size:14px
+.fgrid h4 {
+  color:#fff;
+  font-size:12px;
+  letter-spacing:2px;
+  margin-bottom:14px
 }
-.citem .im { font-size:34px }
-.citem small { color:var(--mut) }
-.citem button {
-margin-left:auto;
-background:none;
-border:none;
-cursor:pointer;
-font-size:16px
+.fgrid a {
+  display:block;
+  color:#9dbfbd;
+  text-decoration:none;
+  margin-bottom:9px;
+  font-size:14px
 }
-#overlay {
-position:fixed;
-inset:0;
-background:rgba(20,38,29,.5);
-display:none;
-z-index:90
+.fbot {
+  max-width:1200px;
+  margin:34px auto 0;
+  padding:20px 24px 0;
+  border-top:1px solid #2b484a;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+  font-size:12px
 }
-#overlay.show { display:block }
-#toast {
-position:fixed;
-bottom:26px;
-left:50%;
-transform:translateX(-50%) translateY(80px);
-background:#14261d;
-color:#fff;
-padding:13px 28px;
-border-radius:12px;
-transition:.3s;
-z-index:120;
-font-size:14px
+.drawer {
+  position:fixed;
+  top:0;
+  right:-380px;
+  width:360px;
+  max-width:92vw;
+  height:100%;
+  background:#fff;
+  z-index:200;
+  transition:.35s;
+  display:flex;
+  flex-direction:column
 }
-#toast.show { transform:translateX(-50%) }
-@media(max-width:900px) { .hero { grid-template-columns:1fr }
-.cats { grid-template-columns:repeat(3,1fr) }
-.trust { grid-template-columns:repeat(2,1fr) }
+.drawer.open {
+  right:0
 }
+.dh {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  border-bottom:1px solid var(--line)
+}
+.dx {
+  background:none;
+  border:0;
+  font-size:22px;
+  cursor:pointer
+}
+.ditems {
+  flex:1;
+  overflow:auto;
+  padding:16px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px
+}
+.dit {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+  padding-bottom:12px
+}
+.dit img {
+  width:56px;
+  height:56px;
+  object-fit:cover;
+  border-radius:8px
+}
+.df {
+  padding:20px;
+  border-top:1px solid var(--line)
+}
+.toast {
+  position:fixed;
+  bottom:26px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--ink);
+  color:#fff;
+  padding:13px 28px;
+  font-size:13px;
+  z-index:400;
+  transition:.3s;
+  opacity:0;
+  border-radius:30px
+}
+.toast.show {
+  transform:translateX(-50%);
+  opacity:1
+}
+.rv {
+  opacity:0;
+  transform:translateY(24px);
+  transition:.7s
+}
+.rv.vis {
+  opacity:1;
+  transform:none
+}
+@media(max-width:960px) {
+  .hero,.book {
+  grid-template-columns:1fr
+}
+.grid {
+  grid-template-columns:repeat(2,1fr)
+}
+.svc {
+  grid-template-columns:1fr
+}
+.fgrid {
+  grid-template-columns:1fr 1fr
+}
+nav {
+  display:none
+}
+.burger {
+  display:block
+}
+.opts {
+  grid-template-columns:1fr
+}
+}
+@media(max-width:560px) {
+  .grid {
+  grid-template-columns:1fr
+}
+.frow {
+  grid-template-columns:1fr
+}
+.bf {
+  padding:32px 22px
+}
+}
+.mnav {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  background:#fff;
+  z-index:150;
+  border-bottom:1px solid var(--line);
+  padding:70px 30px 30px;
+  flex-direction:column;
+  gap:16px
+}
+.mnav.open {
+  display:flex
+}
+.mnav a {
+  text-decoration:none;
+  color:var(--ink);
+  font-size:20px;
+  font-weight:600
+}
+
 </style>
 </head>
 <body>
-<div class="urg">⚕️ Licensed pharmacists online 8:00–24:00 · <b>Free consultation</b> · Emergency? Call 103</div>
-<header>
-<div class="hd">
-<div class="brand">Vita<em>Plus</em> ⚕️</div>
-<div class="search">
-<input id="q" placeholder="Search medicine, vitamin, brand…" oninput="render()">
-<button onclick="render()">🔍</button>
-</div>
-<div class="hacts">
-<button class="rx" onclick="toast('Upload widget: photo your prescription, pharmacist confirms in 15 min')">📤 Upload Rx</button>
-<button class="cartb" onclick="toggleCart(true)">Cart (<b id="count" style="display:inline">0</b>)</button>
-</div>
-</div>
-</header>
-<div class="wrap">
-<div class="trust">
-<div>
-<span>🛡️</span> Licensed pharmacy<br>
-<small style="color:var(--mut)">Cert. № PH-2021-8841</small>
-</div>
-<div>
-<span>🚚</span> 2-hour delivery<br>
-<small style="color:var(--mut)">Cold-chain available</small>
-</div>
-<div>
-<span>👩‍⚕️</span> Pharmacist chat<br>
-<small style="color:var(--mut)">8:00 – 24:00 daily</small>
-</div>
-<div>
-<span>💊</span> 4,200+ products<br>
-<small style="color:var(--mut)">GMP certified stock</small>
-</div>
-</div>
+<div class="top">OPEN DAILY 8AM – 10PM · <b>FREE DELIVERY</b> ON ORDERS OVER $25 · PHARMACIST ON CALL 24/7</div>
+<header><div class="hd">
+<div class="brand"><span class="cross">+</span>VitaCare</div>
+<nav><a href="#quiz">Symptom checker</a><a href="#shop">Shop</a><a href="#svc">Services</a><a href="#book">Book a visit</a><a href="#faq">FAQ</a></nav>
+<div class="hact"><button class="ibtn" id="cartBtn">&#128722;<b id="cartN">0</b></button><button class="burger" id="burger">&#9776;</button></div>
+</div></header>
+<div class="mnav" id="mnav"><a href="#quiz">Symptom checker</a><a href="#shop">Shop</a><a href="#svc">Services</a><a href="#book">Book a visit</a><a href="#faq">FAQ</a></div>
 <div class="hero">
-<div class="heroC">
-<h1>Medicines delivered in 2 hours.</h1>
-<p>Upload a prescription or shop OTC. A licensed pharmacist verifies every order — free consultation included with each delivery.</p>
-<div class="row">
-<button class="wbtn" onclick="scrollToId('shop')">SHOP MEDICINES</button>
-<button class="gbtn" onclick="toast('Pharmacist chat opening… average reply 2 min')">💬 ASK PHARMACIST</button>
+<div><span class="pill">LICENSED PHARMACY · EST. 2011</span>
+<h1>Care that comes <span>to your door.</span></h1>
+<p>Prescriptions filled in 15 minutes, vitamins picked by real pharmacists, and vaccinations without the waiting room. In store, online, or same-day delivery.</p>
+<div class="hrow"><a href="#quiz"><button class="btn fill">CHECK SYMPTOMS</button></a><a href="#shop"><button class="btn line">SHOP VITAMINS</button></a></div>
+<div class="hstats"><div><b>15 min</b><span>AVG. FILL TIME</span></div><div><b>4.9/5</b><span>12K REVIEWS</span></div><div><b>24/7</b><span>PHARMACIST CHAT</span></div></div></div>
+<div class="hcard"><img src="https://picsum.photos/seed/vita-hero/700/500" alt="Pharmacy"><div class="hb"><span><span class="dot"></span><small>Pharmacist online now — avg. reply 2 min</small></span><button class="btn fill" onclick="toast('Pharmacist chat opens in the full demo')">CHAT</button></div></div>
 </div>
+<section id="quiz" style="padding-top:10px"><div class="wrap">
+<div class="st rv"><h2>Not sure what you need?</h2><p>Answer 3 quick questions — get a pharmacist-approved suggestion</p></div>
+<div class="quiz rv"><div class="qbar"><i id="qbar" style="width:33%"></i></div>
+<div class="qstep on" data-s="1"><h3>What's bothering you most?</h3><p>Step 1 of 3</p><div class="opts"><button class="opt" data-v="cold">Cold, cough or sore throat</button><button class="opt" data-v="pain">Headache or body pain</button><button class="opt" data-v="stomach">Stomach or digestion issues</button><button class="opt" data-v="energy">Low energy or poor sleep</button></div></div>
+<div class="qstep" data-s="2"><h3>How long has it lasted?</h3><p>Step 2 of 3</p><div class="opts"><button class="opt" data-v="new">Just started (1–2 days)</button><button class="opt" data-v="week">About a week</button><button class="opt" data-v="long">More than two weeks</button><button class="opt" data-v="rec">It keeps coming back</button></div></div>
+<div class="qstep" data-s="3"><h3>Anything we should know?</h3><p>Step 3 of 3</p><div class="opts"><button class="opt" data-v="preg">Pregnant or nursing</button><button class="opt" data-v="meds">Taking other medication</button><button class="opt" data-v="allergy">Known allergies</button><button class="opt" data-v="none">None of these</button></div></div>
+<div class="qstep" data-s="4"><h3>Your recommendation</h3><p>Reviewed logic · always confirm with a pharmacist</p><div class="qres" id="qres"></div><div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap"><button class="btn fill" onclick="restart()">START OVER</button><a href="#book"><button class="btn line">TALK TO A PHARMACIST</button></a></div></div>
 </div>
-<div class="quiz">
-<h2>🤒 Symptom checker</h2>
-<p>Tap your symptoms — we'll suggest the right shelf. Not a diagnosis; pharmacist confirms.</p>
-<div class="symptoms" id="syms">
+</div></section>
+<section id="shop" style="padding-top:20px"><div class="wrap">
+<div class="st rv"><h2>Pharmacist picks</h2><p>Every product below is stocked in-store today</p></div>
+<div class="chips" id="chips"></div>
+<div class="grid" id="grid"></div>
+</div></section>
+<section id="svc" style="padding-top:0"><div class="wrap">
+<div class="st rv"><h2>Clinical services</h2><p>Walk in or book ahead — most visits take under 20 minutes</p></div>
+<div class="svc">
+<div class="sv rv"><div class="ic">◉</div><h3>Vaccinations</h3><p>Flu, COVID boosters, travel vaccines. No appointment needed on weekdays.</p><a href="#book">Book a slot →</a></div>
+<div class="sv rv"><div class="ic">◎</div><h3>Health screenings</h3><p>Blood pressure, cholesterol, diabetes risk checks with instant results.</p><a href="#book">Book a slot →</a></div>
+<div class="sv rv"><div class="ic">⬢</div><h3>Prescription refills</h3><p>Transfer in one tap. We call your doctor and handle the paperwork.</p><a href="#book">Book a slot →</a></div>
 </div>
-<button class="cartb" style="width:100%" onclick="diagnose()">GET SUGGESTION</button>
-<div id="quizRes">
-</div>
-</div>
-</div>
-</div>
-<section id="shop">
-<div class="wrap">
-<div class="cats" id="cats">
-</div>
-<div class="st">
-<div>
-<h2 id="catTitle">All products</h2>
-<p id="res">
-</p>
-</div>
-<select id="sort" onchange="render()">
-<option value="pop">Most popular</option>
-<option value="lo">Price low → high</option>
-<option value="hi">Price high → low</option>
-</select>
-</div>
-<div class="grid" id="grid">
-</div>
-<div class="servs">
-<div class="serv">
-<span>📋</span>
-<h3>Repeat prescriptions</h3>
-<p>Chronic medication on autopilot — refills shipped before you run out. Pause anytime.</p>
-<button onclick="toast('Repeat plan: pharmacist will call to set up your schedule')">SET UP PLAN</button>
-</div>
-<div class="serv">
-<span>💉</span>
-<h3>Vaccination point</h3>
-<p>Flu, travel &amp; booster shots at our counter, no appointment needed on weekends.</p>
-<button onclick="toast('Vaccination slots: Sat–Sun 10:00–16:00, walk in')">SEE SLOTS</button>
-</div>
-<div class="serv">
-<span>🧴</span>
-<h3>Dermocosmetics</h3>
-<p>Pharmacist-curated skincare for sensitive skin, with free 10-min skin consult.</p>
-<button onclick="catGo('derma')">SHOP DERMOCOSMETICS</button>
-</div>
-</div>
-<div class="how">
-<div>
-<b>1</b>
-<h3>Search or upload Rx</h3>
-<p>Find OTC products or photograph your prescription — confirmation in 15 minutes.</p>
-</div>
-<div>
-<b>2</b>
-<h3>Pharmacist verifies</h3>
-<p>Every order is checked for dosage, interactions and authenticity by a licensed pharmacist.</p>
-</div>
-<div>
-<b>3</b>
-<h3>2-hour delivery</h3>
-<p>Courier with cold-chain bags. Free over $25, contactless by default.</p>
-</div>
-<div>
-<b>4</b>
-<h3>Free follow-up</h3>
-<p>We message after 7 days to check how the treatment is working.</p>
-</div>
-</div>
-<div class="revs">
-<div class="rev">
-<div class="stars">★★★★★</div>
-<p>"Uploaded my prescription at 9pm, pills at the door by 11. The pharmacist even called about a dosage clash."</p>
-<b>— NODIRA K. · verified buyer</b>
-</div>
-<div class="rev">
-<div class="stars">★★★★★</div>
-<p>"Repeat plan for my father's pressure meds is a lifesaver. Never missed a refill in 8 months."</p>
-<b>— TIMUR A. · verified buyer</b>
-</div>
-<div class="rev">
-<div class="stars">★★★★☆</div>
-<p>"Cold-chain insulin arrived perfectly chilled. Delivery took 3 hours once — still the best option."</p>
-<b>— ELENA V. · verified buyer</b>
-</div>
-</div>
+</div></section>
+<section id="book" style="padding-top:0"><div class="wrap">
+<div class="book rv"><img src="https://picsum.photos/seed/vita-clinic/600/700" alt="Clinic">
+<form class="bf" id="bookForm" novalidate><h2>Book a visit</h2><p>Vaccination, screening or consultation — pick a time that suits you.</p>
+<div class="frow"><div><label>FULL NAME</label><input id="fName" placeholder="Alex Morgan"></div><div><label>PHONE</label><input id="fPhone" placeholder="+1 ..."></div></div>
+<label>SERVICE</label><select id="fSvc"><option>Vaccination</option><option>Health screening</option><option>Prescription consultation</option><option>Travel health advice</option></select>
+<div class="frow"><div><label>DATE</label><input type="date" id="fDate"></div><div><label>TIME</label><select><option>Morning (8–12)</option><option>Afternoon (12–5)</option><option>Evening (5–9)</option></select></div></div>
+<button class="btn fill" style="width:100%;margin-top:20px" type="submit">CONFIRM BOOKING</button></form></div>
+</div></section>
+<section id="faq" style="padding-top:0"><div class="wrap">
+<div class="st rv"><h2>Good to know</h2></div>
 <div class="faq">
-<h2>Common questions</h2>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Do I need a prescription for antibiotics? <span>+</span>
-</button>
-<p>Yes — antibiotics are Rx-only. Upload your prescription or book our free online doctor consult (15 min, 7 days a week).</p>
+<div class="fq rv"><button>Do I need a prescription for these products? <span>+</span></button><div class="fa">Everything in our shop section is available over the counter. Prescription medicines require a valid script, which you can upload or have your doctor send directly.</div></div>
+<div class="fq rv"><button>How fast is delivery? <span>+</span></button><div class="fa">Same-day within the city for orders before 6pm. Prescriptions marked urgent are prioritised and usually arrive within 2 hours.</div></div>
+<div class="fq rv"><button>Can I transfer my prescription from another pharmacy? <span>+</span></button><div class="fa">Yes — give us the name of your current pharmacy and we'll handle the transfer, usually within one business day.</div></div>
+<div class="fq rv"><button>Do you offer vaccinations without booking? <span>+</span></button><div class="fa">Weekday walk-ins are welcome for flu and COVID vaccines. Travel vaccines need a short consultation first, so booking ahead is best.</div></div>
 </div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">How fast is delivery really? <span>+</span>
-</button>
-<p>City centre: ~2 hours. Suburbs: same-day. Cold-chain products ship in insulated bags with temperature logging.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Are your medicines genuine? <span>+</span>
-</button>
-<p>100% — sourced from GMP-certified distributors only. Batch numbers are printed on every receipt for verification.</p>
-</div>
-<div class="qa">
-<button onclick="this.nextElementSibling.classList.toggle('open')">Can I return a product? <span>+</span>
-</button>
-<p>Unopened OTC products within 14 days. Rx medicines can't be returned by law — but dosage errors are always replaced free.</p>
-</div>
-</div>
-</div>
-</section>
-<footer>
-<b style="color:#fff;font-size:18px">VitaPlus ⚕️</b>
-<p>Licensed online pharmacy · Cert. № PH-2021-8841<br>Self-medication can be harmful — consult a pharmacist. © 2026</p>
-</footer>
-<div id="overlay" onclick="toggleCart(false)">
-</div>
-<aside id="drawer">
-<h3 style="font-size:22px">Your Cart</h3>
-<p style="color:var(--mut);font-size:13px">Free delivery over $25.</p>
-<div id="citems" style="flex:1;overflow:auto;margin-top:10px">
-</div>
-<div id="ctotal" style="font-weight:800;font-size:22px;margin:14px 0">
-</div>
-<button class="cartb" style="width:100%" onclick="checkout()">CHECKOUT →</button>
-<button class="rx" style="width:100%;margin-top:8px" onclick="toggleCart(false)">CONTINUE</button>
-</aside>
-<div id="toast">
-</div>
+</div></section>
+<footer><div class="fgrid">
+<div><div class="brand" style="color:#fff"><span class="cross">+</span>VitaCare</div><p style="margin-top:12px;font-size:14px;line-height:1.8">48 Wellness Ave, Austin TX<br>Open daily 8am – 10pm<br>care@vitacare.example</p></div>
+<div><h4>SHOP</h4><a href="#shop">Vitamins</a><a href="#shop">Cold &amp; flu</a><a href="#shop">Personal care</a><a href="#shop">Baby &amp; kids</a></div>
+<div><h4>SERVICES</h4><a href="#svc">Vaccinations</a><a href="#svc">Screenings</a><a href="#book">Book a visit</a></div>
+<div><h4>SUPPORT</h4><a href="#faq">FAQ</a><a href="#">Delivery info</a><a href="#">Contact</a></div>
+</div><div class="fbot"><span>© 2026 VitaCare Pharmacy</span><span>Licensed · Privacy · Terms</span></div></footer>
+<aside class="drawer" id="drawer"><div class="dh"><h3 style="font-family:Fraunces,serif">Your basket</h3><button class="dx" id="dClose">&times;</button></div><div class="ditems" id="ditems"></div><div class="df"><div style="display:flex;justify-content:space-between;margin-bottom:12px"><span>Subtotal</span><b id="dTot">$0.00</b></div><button class="btn fill" style="width:100%" onclick="toast('Demo checkout — stay healthy')">CHECKOUT</button></div></aside>
+<div class="toast" id="toast"></div>
 <script>
-const PRODS=[
-{
-c:'pain',n:'Ibuprofen 400mg ×20',b:'VitaGenerics',p:4.5,old:6,e:'💊',rx:0,dose:'400mg · tablets'}
-, {
-c:'pain',n:'Paracetamol 500mg ×24',b:'VitaGenerics',p:3.2,old:4,e:'💊',rx:0,dose:'500mg · tablets'}
-, {
-c:'pain',n:'Nimesulide Gel 1% 50g',b:'DermaHelp',p:7.8,old:9.5,e:'🧴',rx:0,dose:'1% · topical gel'}
-, {
-c:'cold',n:'ColdRelief Day/Night ×16',b:'Respira',p:8.9,old:11,e:'🤧',rx:0,dose:'combo · capsules'}
-, {
-c:'cold',n:'Throat Lozenges Honey ×24',b:'Respira',p:5.4,old:0,e:'🍯',rx:0,dose:'lozenges'}
-, {
-c:'cold',n:'Vitamin C 1000mg ×20 eff.',b:'Immuno',p:6.2,old:7.8,e:'🍊',rx:0,dose:'1000mg · effervescent'}
-, {
-c:'vit',n:'Vitamin D3 2000 IU ×60',b:'Immuno',p:9.5,old:12,e:'☀️',r:1,dose:'2000 IU · softgels'}
-, {
-c:'vit',n:'Magnesium B6 ×50',b:'Immuno',p:11.2,old:0,e:'⚡',rx:0,dose:'473mg · tablets'}
-, {
-c:'vit',n:'Omega-3 Fish Oil ×90',b:'NordicPure',p:16.8,old:21,e:'🐟',rx:0,dose:'1000mg · capsules'}
-, {
-c:'derma',n:'SPF50 Mineral Sunscreen',b:'DermaHelp',p:13.4,old:16,e:'🧴',rx:0,dose:'SPF50 · 50ml'}
-, {
-c:'derma',n:'Cera Repair Cream 100ml',b:'DermaHelp',p:12.9,old:0,e:'🧪',rx:0,dose:'ceramides · 100ml'}
-, {
-c:'derma',n:'Anti-Acne Serum 30ml',b:'DermaHelp',p:14.6,old:18,e:'✨',rx:0,dose:'niacinamide · 30ml'}
-, {
-c:'rx',n:'Amoxicillin 500mg ×21',b:'VitaGenerics',p:8.2,old:0,e:'💉',rx:1,dose:'500mg · Rx required'}
-, {
-c:'rx',n:'Omeprazole 20mg ×30',b:'VitaGenerics',p:6.9,old:0,e:'💊',rx:1,dose:'20mg · Rx required'}
-, {
-c:'baby',n:'Baby Probiotic Drops 10ml',b:'LittleCare',p:15.5,old:19,e:'👶',rx:0,dose:'5 drops/day'}
-, {
-c:'baby',n:'Diaper Rash Cream 75g',b:'LittleCare',p:7.4,old:0,e:'🧸',rx:0,dose:'zinc · 75g'}
-];
-const CATS=[['all','💊','All','16 products'],['pain','🤕','Pain','3 products'],['cold','🤧','Cold & Flu','3 products'],['vit','☀️','Vitamins','3 products'],['derma','🧴','Derma','3 products'],['baby','👶','Baby','2 products'],['rx','📋','Rx only','2 products']];
-const SYMS=['Headache','Fever','Cough','Sore throat','Allergy','Insomnia','Back pain','Low energy']; let cat='all',cart=[],selS=new Set();
-const grid=document.getElementById('grid'),cw=document.getElementById('cats'),sw=document.getElementById('syms'); function drawCats(){
-cw.innerHTML='';CATS.forEach(([v,e,l,s])=>{
-const d=document.createElement('div');d.className='cat'+(v===cat?' on':'');d.innerHTML=`<span>${e}</span><b>${l}</b><small>${s}</small>`;d.onclick=()=>{
-cat=v;drawCats();render()}
-;cw.appendChild(d)}
-)}
-SYMS.forEach(s=>{
-const b=document.createElement('button');b.className='sym';b.textContent=s;b.onclick=()=>{
-selS.has(s)?selS.delete(s):selS.add(s);b.classList.toggle('on')}
-;sw.appendChild(b)}
-); function catGo(v){
-cat=v;drawCats();render();scrollToId('shop')}
-function diagnose(){
-const r=document.getElementById('quizRes');if(!selS.size){
-r.style.display='block';r.textContent='Tap at least one symptom above.';return}
-const map={
-Headache:'Pain shelf → Ibuprofen or Paracetamol. ',Fever:'Cold & Flu → Paracetamol + Vitamin C. ',Cough:'Cold & Flu → ColdRelief + warm fluids. ',Allergy:'Ask pharmacist — antihistamines need screening. ','Low energy':'Vitamins → D3 + Magnesium + sleep hygiene. ','Insomnia':'Vitamins → Magnesium B6, 1h before bed. '}
-;let out=[...selS].map(s=>map[s]||(s+': see the pharmacist chat. ')).join('');r.style.display='block';r.innerHTML='<b>Suggested shelf:</b> '+out+'<br><small style="color:var(--mut)">A pharmacist will confirm before checkout.</small>'}
-function render(){
-const q=(document.getElementById('q').value||'').toLowerCase(),s=document.getElementById('sort').value;let r=PRODS.filter(p=>(cat==='all'||p.c===cat)&&(p.n.toLowerCase().includes(q)||p.b.toLowerCase().includes(q)));if(s==='lo')r.sort((a,b)=>a.p-b.p);if(s==='hi')r.sort((a,b)=>b.p-a.p);
-document.getElementById('catTitle').textContent=(CATS.find(c=>c[0]===cat)||[])[2]||'All';document.getElementById('res').textContent=r.length+' products · pharmacist-verified';
-grid.innerHTML=r.length?'':'<p style="color:var(--mut)">Nothing found — try a generic name or ask the pharmacist.</p>';r.forEach(p=>{
-const d=document.createElement('div');d.className='card';const inC=cart.some(x=>x.n===p.n);d.innerHTML=`<span class="${p.rx?'rxonly':'otc'}">${p.rx?'Rx ONLY':'OTC'}</span><div class="im">${p.e}</div><h3>${p.n}</h3><small>${p.b}</small><br><span class="dose">${p.dose}</span><div class="prow"><span class="pr">$${p.p}${p.old?` <s>$${
-p.old}
-</s>`:''}</span></div><button class="${inC?'added':''}">${inC?'✓ IN CART':'ADD TO CART'}</button>`;d.querySelector('button').onclick=()=>toggle(p);grid.appendChild(d)}
-)}
-function toggle(p){
-if(p.rx){
-toast('Rx required — upload prescription first');return}
-const i=cart.findIndex(x=>x.n===p.n);if(i>=0){
-cart.splice(i,1)}
-else{
-cart.push(p);toast(p.n+' added')}
-upd();render()}
-function upd(){
-count.textContent=cart.length;const w=document.getElementById('citems');w.innerHTML=cart.length?'':'<p style="color:var(--mut)">Cart is empty.</p>';cart.forEach((p,i)=>{
-const d=document.createElement('div');d.className='citem';d.innerHTML=`<span class="im">${p.e}</span><span><b>${p.n}</b><br><small>$${p.p}</small></span><button onclick="rm(${i})">✕</button>`;w.appendChild(d)}
-);const t=cart.reduce((s,p)=>s+p.p,0);document.getElementById('ctotal').textContent=cart.length?('Total: $'+t.toFixed(2)+(t>=25?' · FREE delivery':' · +$2.9 delivery')):''}
-function rm(i){
-cart.splice(i,1);upd();render()}
-function toggleCart(o){
-drawer.classList.toggle('open',o);overlay.classList.toggle('show',o)}
-function checkout(){
-if(!cart.length)return toast('Cart is empty');toast('Order sent — pharmacist verifying now');cart=[];upd();render();toggleCart(false)}
-function toast(m){
-const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2600)}
-function scrollToId(i){
-document.getElementById(i).scrollIntoView({
-behavior:'smooth'}
-)}
-drawCats();render();upd();
+const P=[
+{id:1,n:"Vitamin D3 2000 IU",c:"vitamins",p:14.5,img:"https://picsum.photos/seed/vita-p1/400/300",d:"Daily immunity & bone support, 120 softgels."},
+{id:2,n:"Honey Cough Relief",c:"cold",p:11.9,img:"https://picsum.photos/seed/vita-p2/400/300",d:"Soothing syrup for dry & chesty coughs."},
+{id:3,n:"Ibuprofen 200mg",c:"pain",p:8.4,img:"https://picsum.photos/seed/vita-p3/400/300",d:"Fast pain & fever relief, 50 tablets."},
+{id:4,n:"Probiotic Balance",c:"vitamins",p:22.0,img:"https://picsum.photos/seed/vita-p4/400/300",d:"Gut health, 10 strains, 30 capsules."},
+{id:5,n:"Nasal Decongestant",c:"cold",p:9.9,img:"https://picsum.photos/seed/vita-p5/400/300",d:"12-hour blocked nose relief spray."},
+{id:6,n:"Magnesium Night",c:"vitamins",p:18.7,img:"https://picsum.photos/seed/vita-p6/400/300",d:"Calm & sleep support, 60 tablets."},
+{id:7,n:"Healing Skin Balm",c:"care",p:12.3,img:"https://picsum.photos/seed/vita-p7/400/300",d:"Dry & sensitive skin repair cream."},
+{id:8,n:"Kids Multivitamin",c:"vitamins",p:15.9,img:"https://picsum.photos/seed/vita-p8/400/300",d:"Berry gummies, 60 count, ages 4+."}];
+const CC=[["all","All"],["vitamins","Vitamins"],["cold","Cold & Flu"],["pain","Pain Relief"],["care","Personal Care"]];
+let cur="all",cart=[],ans={};
+const grid=document.getElementById("grid"),ch=document.getElementById("chips");
+ch.innerHTML=CC.map(([v,l])=>`<button class="chip${v==="all"?" on":""}" data-c="${v}">${l}</button>`).join("");
+ch.onclick=e=>{const b=e.target.closest(".chip");if(!b)return;cur=b.dataset.c;[...ch.children].forEach(x=>x.classList.toggle("on",x===b));render();};
+function render(){grid.innerHTML=P.filter(p=>cur==="all"||p.c===cur).map(p=>`<div class="prod rv vis"><img loading="lazy" src="${p.img}" alt="${p.n}"><div class="pb"><span class="kind">${p.c.toUpperCase().replace("COLD","COLD & FLU")}</span><h3>${p.n}</h3><p>${p.d}</p><div class="prow"><span class="price">$${p.p}</span><button class="add" data-a="${p.id}">Add</button></div></div></div>`).join("");}
+grid.onclick=e=>{const b=e.target.closest("[data-a]");if(!b)return;const f=cart.find(i=>i.id===+b.dataset.a);f?f.q++:cart.push({id:+b.dataset.a,q:1});sync();toast("Added to basket");};
+function sync(){document.getElementById("cartN").textContent=cart.reduce((s,i)=>s+i.q,0);document.getElementById("ditems").innerHTML=cart.length?cart.map(i=>{const p=P.find(x=>x.id===i.id);return `<div class="dit"><img src="${p.img}" alt=""><div style="flex:1"><b style="font-size:14px">${p.n}</b><div style="font-size:13px;color:var(--mut)">$${p.p} × ${i.q}</div></div><button class="dx" data-r="${p.id}">&times;</button></div>`;}).join(""):'<p style="color:var(--mut)">Your basket is empty.</p>';document.getElementById("dTot").textContent="$"+cart.reduce((s,i)=>s+i.q*P.find(x=>x.id===i.id).p,0).toFixed(2);}
+document.getElementById("ditems").onclick=e=>{const r=e.target.dataset.r;if(r){cart=cart.filter(i=>i.id!==+r);sync();}};
+const dr=document.getElementById("drawer");document.getElementById("cartBtn").onclick=()=>dr.classList.add("open");document.getElementById("dClose").onclick=()=>dr.classList.remove("open");
+let step=1;
+document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{ans["s"+step]=b.dataset.v;step++;show();});
+function show(){document.querySelectorAll(".qstep").forEach(s=>s.classList.toggle("on",+s.dataset.s===step));document.getElementById("qbar").style.width=(step*25)+"%";if(step===4)result();}
+function restart(){step=1;ans={};show();document.getElementById("qbar").style.width="33%";}
+function result(){const a=ans.s1,flag=(ans.s3!=="none");const map={cold:"a honey-based cough syrup + saline spray, rest and fluids",pain:"an anti-inflammatory (ibuprofen) taken with food, plus rest",stomach:"a probiotic + oral rehydration salts, bland foods for 48h",energy:"magnesium + vitamin D3, and a sleep routine review"};document.getElementById("qres").innerHTML=`<b>Suggested:</b> ${map[a]||"a pharmacist consultation"}.<br><b>Note:</b> ${flag?"Because of your answer in step 3, please speak to our pharmacist before taking anything — tap below to book.":"For symptoms lasting over a week, book a quick screening with us."}`;}
+document.getElementById("bookForm").onsubmit=e=>{e.preventDefault();const n=document.getElementById("fName").value.trim(),p=document.getElementById("fPhone").value.trim(),d=document.getElementById("fDate").value;if(n.length<2)return toast("Please enter your name");if(p.length<6)return toast("Please enter a valid phone");if(!d)return toast("Please pick a date");toast("Booked — see you on "+d);e.target.reset();};
+document.querySelectorAll(".fq button").forEach(b=>b.onclick=()=>{const f=b.parentElement,o=f.classList.contains("open");document.querySelectorAll(".fq").forEach(x=>x.classList.remove("open"));if(!o)f.classList.add("open");});
+let tt;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2600);}
+document.getElementById("burger").onclick=()=>document.getElementById("mnav").classList.toggle("open");
+document.getElementById("mnav").onclick=()=>document.getElementById("mnav").classList.remove("open");
+const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&x.target.classList.add("vis")),{threshold:.1});
+document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+render();sync();
 </script>
-<!-- Global Portfolio Hub Floating Navigation Badge -->
-<style>
-.ceo-hub-floating-badge {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
-  color: #f4f2ea !important;
-  text-decoration: none !important;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-.ceo-hub-floating-badge:hover {
-  transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
-  border-color: #e9c46a;
-  color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
-}
-@media (max-width: 640px) {
-  .ceo-hub-floating-badge {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-</style>
-<script>
-if (window.self !== window.top) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const b = document.querySelector('.ceo-hub-floating-badge');
-    if (b) b.style.display = 'none';
-  });
-}
-</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
-  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
-</a>
-
-  <script src="../api-runtime.js"></script>
 </body>
 </html>

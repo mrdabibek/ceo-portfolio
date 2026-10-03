@@ -1554,12 +1554,9 @@ def run_generic_task(task: str, provider: Optional[str] = None,
         if not callable(plan_task):
             raise RuntimeError("brain.plan_task(task) not found — cannot plan generic task")
         try:
-            steps_data = plan_task(task, provider) if provider else plan_task(task)
+            steps_data = plan_task(task, provider=provider)
         except TypeError:
-            try:
-                steps_data = plan_task(task, provider=provider)
-            except TypeError:
-                steps_data = plan_task({"task": task, "provider": provider})
+            steps_data = plan_task(task)
         if isinstance(steps_data, dict) and "steps" in steps_data:
             steps_data = steps_data["steps"]
         orch.state.set_phase(AgentPhase.PLAN)

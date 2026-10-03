@@ -8,12 +8,12 @@ Ushbu fayldagi matnlarni to'g'ridan-to'g'ri Upwork profilingizga ko'chirib (Ctrl
 Profilingizning eng yuqori qismiga (birinchi 3-4 qatoriga) qo'ying:
 
 ```text
-🚀 Fullstack Software Architect & Lead Product Engineer | 77+ Production Builds Shipped
+🚀 Fullstack Software Architect & Lead Product Engineer | 80+ Production Builds Shipped
 
 Looking for an enterprise-level engineer who writes scalable, zero-technical-debt code?
-I have architected and deployed 77+ full-scale web platforms, SaaS ecosystems, high-frequency fintech engines, and Telegram Mini Apps.
+I have architected and deployed 80+ full-scale web platforms, SaaS ecosystems, high-frequency fintech engines, and Telegram Mini Apps.
 
-🌐 Live Interactive 3D Portfolio Hub (77+ Builds & Device Simulator):
+🌐 Live Interactive 3D Portfolio Hub (80+ Builds & Device Simulator):
 https://mrdabibek.github.io/ceo-portfolio/
 
 💎 Flagship Agency Studio ($10K Tier):
@@ -139,6 +139,42 @@ Engineered an enterprise Windows performance optimizer with kernel-level thread 
 
 ---
 
+### 🔹 10-LOYIHA: Zeto Music Bot (Telegram Audio Streamer & Downloader)
+* **Project Title:** `Zeto Music — Telegram Audio Streamer, yt-dlp & Sub-100ms Caching Engine`
+* **Role:** Lead Telegram Bot Architect & Python Engineer
+* **Skills:** `Python`, `aiogram 3.x`, `yt-dlp`, `FFmpeg`, `SQLite`, `AsyncIO`, `Telegram API`
+* **Project URL:** `https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-78-zeto-music/index.html`
+* **Overview / Description:**
+```text
+Engineered an ultra-fast Telegram audio streaming bot capable of extracting and transcoding 320 kbps MP3s from YouTube and Instagram Reels. Implements a sub-100ms SQLite query caching layer, inline query sharing (@zeto_music_bot), and automated temporary file lifecycle management.
+```
+
+---
+
+### 🔹 11-LOYIHA: Subway Stars Runner (Telegram WebApp & Stars Gaming Tournament)
+* **Project Title:** `Subway Stars Runner — Telegram WebApp, Stars Payments & Anticheat Engine`
+* **Role:** Fullstack Game & Telegram Mini App Architect
+* **Skills:** `Three.js`, `Telegram WebApp SDK`, `FastAPI`, `Telegram Stars`, `SQLAlchemy`, `WebGL`
+* **Project URL:** `https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-79-stars-runner/index.html`
+* **Overview / Description:**
+```text
+Developed a 3D endless runner game integrated directly into Telegram WebApps. Features a 100–700 Telegram Stars tournament system, referral economics (+1 life per invite), 24-hour life balance regeneration, and a FastAPI backend with HMAC-SHA256 signature verification and anticheat telemetry.
+```
+
+---
+
+### 🔹 12-LOYIHA: NewsAuto AI (Autonomous Multi-Lingual Telegram Channel Publisher)
+* **Project Title:** `NewsAuto AI — Autonomous Multi-Lingual Telegram Channel Publisher & RSS Crawler`
+* **Role:** AI Automation & Telegram Systems Engineer
+* **Skills:** `Python`, `Web Scraping`, `NLP Translation`, `Cron Scheduler`, `Telegram Channel Bot API`
+* **Project URL:** `https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-80-newsauto-bot/index.html`
+* **Overview / Description:**
+```text
+Architected an automated multi-channel news publishing engine. Continuously ingests feeds from global and local news providers (BBC, Reuters, Kun.uz), runs AI translation into Uzbek, Russian, and English, filters duplicates with 100% accuracy, and schedules formatted broadcasts with inline reactions.
+```
+
+---
+
 ## 3. PROPOSALS (COVER LETTER) SHABLONI (Upworkda ish yutish uchun)
 
 Mijoz ish e'lon qilganda ushbu qisqa va kuchli matndan foydalaning:
@@ -146,13 +182,14 @@ Mijoz ish e'lon qilganda ushbu qisqa va kuchli matndan foydalaning:
 ```text
 Hi! I reviewed your project requirements and can deliver this cleanly and on schedule.
 
-I have already architected and shipped over 77+ production-grade digital products with this exact architecture. You can test my live interactive builds directly in the browser:
+I have already architected and shipped over 80+ production-grade digital products with this exact architecture, including fullstack SaaS platforms, Telegram Mini Apps, and automated bots. You can test my live interactive builds directly in the browser:
 
 🌐 Live Interactive 3D Portfolio Hub: https://mrdabibek.github.io/ceo-portfolio/
 💎 Flagship Studio: https://mrdabibek.github.io/ceo-portfolio/flagship/index.html
 🏎️ Cluix Car Racer 3D ($10K Tier): https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-74-cluix-racer/index.html
-🏃 Metro Rush 3D (Telegram): https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-75-metro-rush/index.html
-💻 NoutBooster MAX 3D: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-77-noutbooster/index.html
+🎵 Zeto Music Bot: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-78-zeto-music/index.html
+⭐ Subway Stars Runner: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-79-stars-runner/index.html
+📢 NewsAuto AI Publisher: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-80-newsauto-bot/index.html
 
 I guarantee zero technical debt, modular components, and 30-day post-launch support. Let's connect and discuss your roadmap!
 ```

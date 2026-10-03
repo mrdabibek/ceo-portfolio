@@ -231,9 +231,20 @@ def _chat_single(provider: str, key: str, prompt: str, system: str | None, timeo
     return _chat_openai_compatible(provider, key, _URLS[provider], prompt, system, timeout)
 
 
-def chat(prompt: str, system: str | None = None, timeout: int = 60) -> str:
-    """Send prompt via first working provider (WINA_DEFAULT_PROVIDER preferred). Failover on error."""
-    providers = _available_providers()
+def chat(prompt: str, system: str | None = None, timeout: int = 60,
+         provider: str | None = None) -> str:
+    """Send prompt via first working provider (provider arg or
+    WINA_DEFAULT_PROVIDER preferred). Failover on error."""
+    previous = os.environ.get("WINA_DEFAULT_PROVIDER")
+    if (provider or "").strip().lower():
+        os.environ["WINA_DEFAULT_PROVIDER"] = provider.strip().lower()
+    try:
+        providers = _available_providers()
+    finally:
+        if previous is None:
+            os.environ.pop("WINA_DEFAULT_PROVIDER", None)
+        else:
+            os.environ["WINA_DEFAULT_PROVIDER"] = previous
     if not providers:
         raise RuntimeError(
             "wina.brain: no provider API key found (need GROQ_API_KEY, DEEPSEEK_API_KEY, "

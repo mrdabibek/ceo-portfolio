@@ -41,6 +41,9 @@ class FullstackRequestHandler(SimpleHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
 
+    def do_HEAD(self):
+        self.do_GET()
+
     def do_GET(self):
         # 1. API Health Endpoint
         if self.path == '/api/v1/health' or self.path == '/api/health':

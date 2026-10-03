@@ -134,7 +134,7 @@ Architected an advanced AI camera engine and Android application. Features real-
 * **Project URL:** `https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-77-noutbooster/index.html`
 * **Overview / Description:**
 ```text
-Engineered an enterprise Windows performance optimizer with kernel-level thread scheduling (.NET 10 & Win32 API), hardware ACPI thermal protection, non-blocking RAM WorkingSet management, and an interactive Three.js 3D vehicle simulation.
+Engineered an enterprise Windows performance optimizer with kernel-level thread scheduling (.NET 10 & Win32 API), hardware ACPI thermal protection, non-blocking RAM WorkingSet management, and an interactive Three.js 3D laptop hardware & dual cooling turbine simulation.
 ```
 
 ---

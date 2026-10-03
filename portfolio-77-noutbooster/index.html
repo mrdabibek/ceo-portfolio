@@ -218,7 +218,7 @@
       overflow: hidden;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
     }
-    #car-canvas {
+    #laptop-canvas {
       width: 100%;
       height: 100%;
       display: block;
@@ -232,9 +232,10 @@
       justify-content: space-between;
       align-items: center;
       pointer-events: none;
+      z-index: 10;
     }
     .canvas-badge {
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.65);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 6px 12px;
@@ -251,7 +252,7 @@
       transform: translateX(-50%);
       display: flex;
       gap: 8px;
-      background: rgba(7, 10, 18, 0.8);
+      background: rgba(7, 10, 18, 0.85);
       backdrop-filter: blur(12px);
       padding: 6px 10px;
       border-radius: 999px;
@@ -437,7 +438,7 @@
 
   <div class="container">
     <header>
-      <a href="3d-viewer.html" class="nav-btn nav-btn-glass">🏎 Fullscreen 3D Lab</a>
+      <a href="#telemetry" class="nav-btn nav-btn-glass">📊 Hardware Telemetry</a>
       <a href="NoutBooster-Setup-4.0-Premium.exe" download class="nav-btn nav-btn-primary">⬇ Windows Setup (.exe)</a>
     </header>
 
@@ -447,7 +448,7 @@
         <div class="hero-badge">⚡ .NET 10 & Win32 Native Kernel Architecture</div>
         <h1 class="hero-title">NoutBooster MAX <span>4.0 Premium</span></h1>
         <p class="hero-desc">
-          Enterprise Windows performance suite with ACPI hardware thermal safeguarding, kernel-level game priority scheduling, and real-time 3D Chevrolet Cobalt simulation.
+          Enterprise Windows laptop performance suite with ACPI hardware thermal safeguarding, kernel-level game priority scheduling, and real-time dual-turbine cooling simulation.
         </p>
 
         <div class="hero-actions">
@@ -455,40 +456,40 @@
             <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
             <span>Download Installer (.EXE)</span>
           </a>
-          <a href="cobalt.glb" download class="btn-secondary">
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/></svg>
-            <span>Cobalt 3D (.GLB)</span>
-          </a>
+          <button id="hero-boost-btn" class="btn-secondary" onclick="document.getElementById('btn-toggle-turbo').click()">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span>Simulate Turbo Boost</span>
+          </button>
         </div>
 
-        <div style="display:flex; gap:20px; font-size:13px; color:var(--text-muted);">
+        <div style="display:flex; gap:20px; font-size:13px; color:var(--text-muted); flex-wrap:wrap;">
           <div>✓ Windows 10/11 x64</div>
           <div>✓ Zero Lag / Anti-Cheat Safe</div>
           <div>✓ Self-Contained .NET Runtime</div>
         </div>
       </div>
 
-      <!-- 3D CAR VIEWPORT -->
+      <!-- 3D LAPTOP & DUAL TURBINE VIEWPORT -->
       <div class="viewport-card">
         <div class="canvas-hud">
-          <div class="canvas-badge">3D COBALT TELEMETRY VIEW</div>
-          <div style="font-size:11px; color:#94a3b8;">Rotate: Drag • Zoom: Wheel</div>
+          <div class="canvas-badge">3D LAPTOP & TURBINE HARDWARE</div>
+          <div style="font-size:11px; color:#94a3b8;" id="fan-rpm-badge">Fan: 2,400 RPM • 42°C</div>
         </div>
-        <canvas id="car-canvas"></canvas>
+        <canvas id="laptop-canvas"></canvas>
         <div class="canvas-controls">
           <button class="cam-btn active" data-view="orbit">360° Orbit</button>
-          <button class="cam-btn" data-view="front">Front</button>
-          <button class="cam-btn" data-view="side">Side</button>
-          <button class="cam-btn" data-view="top">Top</button>
+          <button class="cam-btn" data-view="screen">Display</button>
+          <button class="cam-btn" data-view="turbines">Turbines</button>
+          <button class="cam-btn" data-view="keyboard">Deck</button>
         </div>
       </div>
     </section>
 
     <!-- LIVE TELEMETRY SIMULATOR -->
-    <div class="turbo-panel">
+    <div class="turbo-panel" id="telemetry">
       <div class="turbo-meta">
-        <h3>Game Engine Acceleration</h3>
-        <p>Dynamic thread priority elevation (Above Normal) with automatic power scheme restoration.</p>
+        <h3>Laptop Kernel Acceleration</h3>
+        <p>Dynamic thread priority elevation (Above Normal) with automatic ACPI thermal throttler & power scheme restoration.</p>
       </div>
       <div class="switch-group">
         <span id="turbo-status-text" style="font-weight:700; font-size:14px; color:#94a3b8;">MODE: STANDBY</span>
@@ -535,40 +536,39 @@
     <!-- DOWNLOAD VAULT -->
     <section class="vault-section">
       <h2 class="vault-title">Official Artifacts & Builds</h2>
-      <p class="vault-desc">Production binaries and 3D assets ready for deployment, local testing, and fullstack client demonstration.</p>
+      <p class="vault-desc">Production binaries and architecture documentation ready for deployment, local testing, and fullstack client demonstration.</p>
 
       <div class="vault-grid">
         <div class="vault-card">
           <div style="font-size:32px;">💻</div>
-          <b style="font-size:16px;">Windows Setup</b>
+          <b style="font-size:16px;">Windows Setup 4.0</b>
           <p style="font-size:12px; color:var(--text-muted);">Inno Setup x64 Installer • 67.1 MB</p>
           <a href="NoutBooster-Setup-4.0-Premium.exe" download class="btn-download" style="padding:10px 20px; font-size:13px; width:100%; justify-content:center;">Download .EXE</a>
         </div>
 
         <div class="vault-card">
-          <div style="font-size:32px;">🏎</div>
-          <b style="font-size:16px;">Cobalt 3D Asset</b>
-          <p style="font-size:12px; color:var(--text-muted);">GLTF/GLB Binary Mesh • 88 KB</p>
-          <a href="cobalt.glb" download class="btn-secondary" style="padding:10px 20px; font-size:13px; width:100%; justify-content:center;">Download .GLB</a>
+          <div style="font-size:32px;">⚡</div>
+          <b style="font-size:16px;">Direct Turbo Mode</b>
+          <p style="font-size:12px; color:var(--text-muted);">Self-Contained .NET 10 Runtime</p>
+          <button onclick="document.getElementById('btn-toggle-turbo').click()" class="btn-secondary" style="padding:10px 20px; font-size:13px; width:100%; justify-content:center; cursor:pointer;">Test Turbo</button>
         </div>
 
         <div class="vault-card">
-          <div style="font-size:32px;">🌐</div>
-          <b style="font-size:16px;">Fullscreen 3D Viewer</b>
-          <p style="font-size:12px; color:var(--text-muted);">Interactive WebGL orbit canvas</p>
-          <a href="3d-viewer.html" class="btn-secondary" style="padding:10px 20px; font-size:13px; width:100%; justify-content:center;">Launch Viewer</a>
+          <div style="font-size:32px;">🛡️</div>
+          <b style="font-size:16px;">ACPI Thermal Guard</b>
+          <p style="font-size:12px; color:var(--text-muted);">Zero Risk Overheat Rollback</p>
+          <a href="#telemetry" class="btn-secondary" style="padding:10px 20px; font-size:13px; width:100%; justify-content:center;">View Telemetry</a>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- THREE.JS 3D SCENE SCRIPT -->
+  <!-- THREE.JS 3D CYBER LAPTOP & COOLING TURBINE SCRIPT -->
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-    const canvas = document.getElementById('car-canvas');
+    const canvas = document.getElementById('laptop-canvas');
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(canvas.clientWidth, canvas.clientHeight);
@@ -577,49 +577,162 @@
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(40, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-    camera.position.set(0, 1.8, 7.5);
+    camera.position.set(0, 3.2, 5.8);
 
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 0.7, 0);
+    controls.target.set(0, 0.5, 0);
     controls.enableDamping = true;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 2.0;
+    controls.autoRotateSpeed = 1.2;
 
     // Lighting
     const ambient = new THREE.AmbientLight(0xffffff, 1.2);
     scene.add(ambient);
 
-    const dirLight = new THREE.DirectionalLight(0x00f0ff, 2.0);
-    dirLight.position.set(5, 12, 7);
-    dirLight.castShadow = true;
-    scene.add(dirLight);
+    const cyanLight = new THREE.DirectionalLight(0x00f0ff, 2.5);
+    cyanLight.position.set(5, 8, 5);
+    scene.add(cyanLight);
 
-    const rimLight = new THREE.DirectionalLight(0x3b82f6, 1.5);
-    rimLight.position.set(-6, 6, -6);
-    scene.add(rimLight);
+    const blueLight = new THREE.DirectionalLight(0x3b82f6, 1.8);
+    blueLight.position.set(-6, 4, -4);
+    scene.add(blueLight);
 
-    // Floor grid
-    const grid = new THREE.GridHelper(20, 20, 0x00f0ff, 0x1e293b);
-    grid.position.y = 0;
+    // Floor Grid
+    const grid = new THREE.GridHelper(16, 16, 0x00f0ff, 0x1e293b);
+    grid.position.y = -0.3;
     scene.add(grid);
 
-    // Load Cobalt 3D model
-    const loader = new GLTFLoader();
-    let carModel = null;
+    // BUILD PROCEDURAL 3D CYBER LAPTOP
+    const laptopGroup = new THREE.Group();
+    scene.add(laptopGroup);
 
-    loader.load('cobalt.glb', (gltf) => {
-      carModel = gltf.scene;
-      carModel.position.set(0, 0, 0);
-      scene.add(carModel);
-    }, undefined, (err) => {
-      console.warn('3D model fallback:', err);
-      // Fallback procedural car geometry if glb takes time
-      const geo = new THREE.BoxGeometry(3.6, 1.2, 1.8);
-      const mat = new THREE.MeshStandardMaterial({ color: 0x00f0ff, metalness: 0.8, roughness: 0.2 });
-      carModel = new THREE.Mesh(geo, mat);
-      carModel.position.y = 0.6;
-      scene.add(carModel);
+    // Materials
+    const chassisMat = new THREE.MeshStandardMaterial({
+      color: 0x111827,
+      metalness: 0.85,
+      roughness: 0.25
     });
+    const accentMat = new THREE.MeshStandardMaterial({
+      color: 0x00f0ff,
+      emissive: 0x00f0ff,
+      emissiveIntensity: 0.4,
+      metalness: 0.9,
+      roughness: 0.1
+    });
+    const copperMat = new THREE.MeshStandardMaterial({
+      color: 0xb45309,
+      metalness: 0.95,
+      roughness: 0.2
+    });
+    const fanMat = new THREE.MeshStandardMaterial({
+      color: 0x1f2937,
+      metalness: 0.5,
+      roughness: 0.4
+    });
+
+    // 1. Laptop Base / Chassis
+    const baseGeo = new THREE.BoxGeometry(3.8, 0.18, 2.6);
+    const baseMesh = new THREE.Mesh(baseGeo, chassisMat);
+    baseMesh.position.y = 0.1;
+    laptopGroup.add(baseMesh);
+
+    // Keyboard Deck Inset
+    const kbGeo = new THREE.BoxGeometry(3.2, 0.02, 1.4);
+    const kbMat = new THREE.MeshStandardMaterial({ color: 0x090d16, roughness: 0.7 });
+    const kbMesh = new THREE.Mesh(kbGeo, kbMat);
+    kbMesh.position.set(0, 0.2, -0.2);
+    laptopGroup.add(kbMesh);
+
+    // Touchpad
+    const padGeo = new THREE.BoxGeometry(1.2, 0.02, 0.75);
+    const padMesh = new THREE.Mesh(padGeo, chassisMat);
+    padMesh.position.set(0, 0.2, 0.85);
+    laptopGroup.add(padMesh);
+
+    // Power Button LED
+    const pwrGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.03, 16);
+    const pwrMesh = new THREE.Mesh(pwrGeo, accentMat);
+    pwrMesh.position.set(1.4, 0.21, -1.05);
+    laptopGroup.add(pwrMesh);
+
+    // 2. Open Display Screen Lid
+    const lidGroup = new THREE.Group();
+    lidGroup.position.set(0, 0.18, -1.25);
+    lidGroup.rotation.x = -0.4; // 115 degrees open
+
+    const lidGeo = new THREE.BoxGeometry(3.8, 2.4, 0.1);
+    const lidMesh = new THREE.Mesh(lidGeo, chassisMat);
+    lidMesh.position.set(0, 1.2, 0);
+    lidGroup.add(lidMesh);
+
+    // Screen Panel (Emissive Display)
+    const screenGeo = new THREE.BoxGeometry(3.5, 2.15, 0.02);
+    const screenMat = new THREE.MeshStandardMaterial({
+      color: 0x030712,
+      emissive: 0x00f0ff,
+      emissiveIntensity: 0.15,
+      roughness: 0.3
+    });
+    const screenMesh = new THREE.Mesh(screenGeo, screenMat);
+    screenMesh.position.set(0, 1.2, 0.05);
+    lidGroup.add(screenMesh);
+
+    laptopGroup.add(lidGroup);
+
+    // 3. Dual Turbine Cooling Fans (Underneath Chassis)
+    const fanLeftGroup = new THREE.Group();
+    const fanRightGroup = new THREE.Group();
+    fanLeftGroup.position.set(-1.1, -0.02, 0);
+    fanRightGroup.position.set(1.1, -0.02, 0);
+
+    function createTurbineFan() {
+      const g = new THREE.Group();
+      // Outer ring
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(0.55, 0.04, 16, 32),
+        accentMat
+      );
+      ring.rotation.x = Math.PI / 2;
+      g.add(ring);
+
+      // Center Hub
+      const hub = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.18, 0.18, 0.1, 16),
+        fanMat
+      );
+      g.add(hub);
+
+      // 9 Turbine Blades
+      for (let i = 0; i < 9; i++) {
+        const angle = (i / 9) * Math.PI * 2;
+        const blade = new THREE.Mesh(
+          new THREE.BoxGeometry(0.08, 0.03, 0.38),
+          fanMat
+        );
+        blade.position.set(Math.cos(angle) * 0.32, 0, Math.sin(angle) * 0.32);
+        blade.rotation.y = -angle + 0.5;
+        g.add(blade);
+      }
+      return g;
+    }
+
+    const leftTurbine = createTurbineFan();
+    const rightTurbine = createTurbineFan();
+    fanLeftGroup.add(leftTurbine);
+    fanRightGroup.add(rightTurbine);
+    laptopGroup.add(fanLeftGroup);
+    laptopGroup.add(fanRightGroup);
+
+    // Copper Heat Pipes
+    const pipe1 = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 2.2, 12), copperMat);
+    pipe1.rotation.z = Math.PI / 2;
+    pipe1.position.set(0, 0.02, -0.4);
+    laptopGroup.add(pipe1);
+
+    const pipe2 = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 2.2, 12), copperMat);
+    pipe2.rotation.z = Math.PI / 2;
+    pipe2.position.set(0, 0.02, 0.3);
+    laptopGroup.add(pipe2);
 
     // Camera preset views
     document.querySelectorAll('.cam-btn').forEach(btn => {
@@ -631,14 +744,15 @@
         controls.autoRotate = false;
         if (view === 'orbit') {
           controls.autoRotate = true;
-        } else if (view === 'front') {
-          camera.position.set(0, 1.2, 6.5);
-        } else if (view === 'side') {
-          camera.position.set(6.5, 1.2, 0);
-        } else if (view === 'top') {
-          camera.position.set(0, 7.5, 0.1);
+          camera.position.set(0, 3.2, 5.8);
+        } else if (view === 'screen') {
+          camera.position.set(0, 1.8, 3.5);
+        } else if (view === 'turbines') {
+          camera.position.set(0, -2.8, 3.6);
+        } else if (view === 'keyboard') {
+          camera.position.set(0, 4.2, 1.8);
         }
-        controls.target.set(0, 0.7, 0);
+        controls.target.set(0, 0.5, 0);
       });
     });
 
@@ -649,17 +763,12 @@
       renderer.setSize(canvas.clientWidth, canvas.clientHeight);
     });
 
-    function animate() {
-      requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    }
-    animate();
-
     // Telemetry & Game Turbo Simulator
     let isTurbo = false;
+    let fanSpeed = 3.0; // rad/sec
     const btnToggle = document.getElementById('btn-toggle-turbo');
     const turboText = document.getElementById('turbo-status-text');
+    const fanBadge = document.getElementById('fan-rpm-badge');
     const valCpu = document.getElementById('val-cpu');
     const barCpu = document.getElementById('bar-cpu');
     const valTemp = document.getElementById('val-temp');
@@ -674,6 +783,10 @@
       btnToggle.textContent = isTurbo ? 'BOOST ACTIVE (Above Normal)' : 'ACTIVATE GAME BOOST';
       turboText.textContent = isTurbo ? 'STATUS: TURBO BOOSTED' : 'MODE: STANDBY';
       turboText.style.color = isTurbo ? '#10b981' : '#94a3b8';
+
+      accentMat.color.setHex(isTurbo ? 0x10b981 : 0x00f0ff);
+      accentMat.emissive.setHex(isTurbo ? 0x10b981 : 0x00f0ff);
+      screenMat.emissive.setHex(isTurbo ? 0x10b981 : 0x00f0ff);
 
       // Send telemetry to API runtime
       fetch('/api/v1/telemetry', {
@@ -690,12 +803,17 @@
 
     setInterval(() => {
       if (isTurbo) {
-        const cpu = Math.floor(70 + Math.random() * 20);
+        fanSpeed = 24.0;
+        const rpm = Math.floor(5800 + Math.random() * 400);
+        fanBadge.textContent = `Turbo: ${rpm} RPM • 58°C`;
+        fanBadge.style.color = '#10b981';
+
+        const cpu = Math.floor(74 + Math.random() * 18);
         valCpu.textContent = cpu + '%';
         barCpu.style.width = cpu + '%';
         barCpu.style.background = '#10b981';
 
-        const temp = Math.floor(58 + Math.random() * 8);
+        const temp = Math.floor(58 + Math.random() * 5);
         valTemp.textContent = temp + '°C';
         barTemp.style.width = temp + '%';
         tagTemp.textContent = 'High Load ' + temp + '°C';
@@ -703,6 +821,11 @@
         valRam.textContent = '2.1 GB';
         barRam.style.width = '14%';
       } else {
+        fanSpeed = 3.5;
+        const rpm = Math.floor(2200 + Math.random() * 200);
+        fanBadge.textContent = `Fan: ${rpm} RPM • 42°C`;
+        fanBadge.style.color = '#00f0ff';
+
         const cpu = Math.floor(14 + Math.random() * 8);
         valCpu.textContent = cpu + '%';
         barCpu.style.width = cpu + '%';
@@ -716,7 +839,23 @@
         valRam.textContent = '4.2 GB';
         barRam.style.width = '26%';
       }
-    }, 2000);
+    }, 1800);
+
+    let lastTime = performance.now();
+    function animate() {
+      requestAnimationFrame(animate);
+      const now = performance.now();
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      // Spin the dual turbine cooling fans
+      leftTurbine.rotation.y += fanSpeed * dt;
+      rightTurbine.rotation.y += fanSpeed * dt;
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
   </script>
 </body>
 </html>

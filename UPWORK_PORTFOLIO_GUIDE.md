@@ -14,10 +14,13 @@ Looking for an enterprise-level engineer who writes scalable, zero-technical-deb
 I have architected and deployed 74+ full-scale web platforms, SaaS ecosystems, high-frequency fintech engines, and Telegram Mini Apps.
 
 🌐 Live Interactive 3D Portfolio Hub (74+ Builds & Device Simulator):
-https://potentially-sunday-pmid-yet.trycloudflare.com
+https://mrdabibek.github.io/ceo-portfolio/
 
 💎 Flagship Agency Studio ($10K Tier):
-https://potentially-sunday-pmid-yet.trycloudflare.com/flagship/index.html
+https://mrdabibek.github.io/ceo-portfolio/flagship/index.html
+
+🐙 Open-Source GitHub Repository (Architecture & Codebase):
+https://github.com/mrdabibek/ceo-portfolio
 ```
 
 ---

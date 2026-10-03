@@ -106,6 +106,7 @@ HARD RULES (violating any of these invalidates the whole plan):
 - To create/edit/read a file use ONLY write_file/read_file. NEVER launch Notepad or any editor to handle file content.
 - To read a web page use ONLY fetch_url. NEVER open a browser for reading.
 - GUI primitives (click/type_text/hotkey/press_key/launch_app) are ONLY for tasks that explicitly name a desktop application (e.g. Telegram, Discord, Spotify).
+- Paths: "joriy papka", "current directory", "shu yerda" mean the working directory itself — use the bare file name (e.g. "WINA_DEMO.txt"), NEVER create a subfolder literally named "Joriy" or "current".
 """
 
 

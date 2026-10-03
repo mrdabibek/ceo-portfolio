@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PulseFit — Mobile Fitness App</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+:root{
+--bg1:#0f2027;
+--bg2:#2c5364;
+--acc:#4ade80;
+--ink:#101418;
+--mut:#7b8494;
+}
+body{
+font-family:"Segoe UI",Inter,Arial,sans-serif;
+background:linear-gradient(135deg,var(--bg1),var(--bg2));
+min-height:100vh;
+color:#fff;
+}
+.nav{
+display:flex;
+align-items:center;
+justify-content:space-between;
+max-width:1120px;
+margin:0 auto;
+padding:20px 26px;
+}
+.logo{font-weight:900;font-size:18px;}
+.logo span{color:var(--acc);}
+.links{display:flex;gap:24px;font-size:14px;color:#b9c6d2;}
+.links a{color:inherit;text-decoration:none;}
+.btn{
+background:var(--acc);
+border:0;
+font-weight:800;
+padding:11px 24px;
+border-radius:99px;
+cursor:pointer;
+color:#06280f;
+}
+.hero{
+max-width:1120px;
+margin:0 auto;
+padding:26px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:34px;
+align-items:center;
+}
+.copy h1{
+font-size:clamp(32px,4.5vw,52px);
+letter-spacing:-2px;
+line-height:1.03;
+}
+.copy h1 em{font-style:normal;color:var(--acc);}
+.copy p{color:#b9c6d2;margin:14px 0 22px;max-width:440px;}
+.feats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
+.feats span{
+background:rgba(255,255,255,.1);
+border:1px solid rgba(255,255,255,.16);
+border-radius:99px;
+padding:7px 15px;
+font-size:13px;
+}
+.store{display:flex;gap:10px;}
+.store button{
+background:#000;
+color:#fff;
+border:1px solid rgba(255,255,255,.25);
+border-radius:12px;
+padding:11px 20px;
+font-size:13px;
+font-weight:700;
+cursor:pointer;
+}
+/* phone frame */
+.stage{display:flex;justify-content:center;gap:18px;align-items:flex-start;}
+.phone{
+width:300px;
+height:620px;
+background:#000;
+border-radius:46px;
+padding:12px;
+box-shadow:0 30px 80px rgba(0,0,0,.5),inset 0 0 0 2px #333;
+flex-shrink:0;
+}
+.screen{
+background:#f6f8f7;
+border-radius:36px;
+height:100%;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+color:var(--ink);
+position:relative;
+}
+.notch{
+position:absolute;
+top:12px;left:50%;
+transform:translateX(-50%);
+width:110px;height:26px;
+background:#000;
+border-radius:99px;
+z-index:3;
+}
+.app-top{padding:44px 18px 8px;background:#fff;}
+.app-top small{color:var(--mut);font-size:11px;letter-spacing:1px;}
+.app-top h2{font-size:20px;letter-spacing:-.5px;}
+.ring-row{
+display:flex;
+gap:12px;
+align-items:center;
+background:#101418;
+color:#fff;
+border-radius:18px;
+padding:14px 16px;
+margin:12px;
+}
+.ring-row .rr{flex:1;}
+.ring-row small{color:#9aa3b2;font-size:11px;}
+.bar{height:8px;background:#2a2f36;border-radius:99px;overflow:hidden;margin-top:7px;}
+.bar i{display:block;height:100%;background:var(--acc);border-radius:99px;transition:width .5s;}
+.tabs{display:flex;gap:8px;padding:0 12px;}
+.tabs button{
+flex:1;border:0;background:#e9edec;border-radius:99px;
+padding:8px;font-size:12px;font-weight:700;cursor:pointer;color:var(--mut);
+}
+.tabs button.on{background:#101418;color:#fff;}
+.wlist{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px;}
+.w{
+background:#fff;
+border-radius:16px;
+padding:13px 14px;
+display:flex;
+gap:12px;
+align-items:center;
+box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.w .e{font-size:24px;}
+.w small{color:var(--mut);font-size:11.5px;}
+.w b{font-size:14px;}
+.w .go{
+margin-left:auto;
+width:36px;height:36px;border-radius:50%;
+border:0;background:#101418;color:var(--acc);
+font-size:15px;cursor:pointer;flex-shrink:0;
+}
+.w .go.done{background:var(--acc);color:#06280f;}
+.mini-t{
+margin:0 12px 10px;
+background:#101418;color:#fff;border-radius:16px;padding:13px 16px;
+display:flex;justify-content:space-between;align-items:center;
+}
+.mini-t b{font-size:22px;font-variant-numeric:tabular-nums;}
+.mini-t button{border:0;background:var(--acc);border-radius:99px;padding:8px 16px;font-weight:800;cursor:pointer;}
+.tabbar{
+display:flex;
+background:#fff;
+border-top:1px solid #e5e9e8;
+padding:10px 6px 20px;
+}
+.tabbar button{
+flex:1;border:0;background:transparent;font-size:10px;color:var(--mut);cursor:pointer;font-weight:700;
+}
+.tabbar button.on{color:#101418;}
+.tabbar span{font-size:19px;display:block;}
+.side-cards{display:flex;flex-direction:column;gap:12px;}
+.sc{
+background:rgba(255,255,255,.07);
+border:1px solid rgba(255,255,255,.14);
+border-radius:18px;
+padding:18px;
+}
+.sc b{font-size:26px;}
+.sc small{color:#b9c6d2;}
+.meal{
+max-width:1120px;
+margin:0 auto;
+padding:6px 26px 10px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+.meal .mc{
+background:rgba(255,255,255,.07);
+border:1px solid rgba(255,255,255,.14);
+border-radius:16px;
+padding:18px;
+}
+.meal .mc .e{font-size:26px;}
+.meal .mc b{display:block;margin:8px 0 3px;}
+.meal .mc small{color:#b9c6d2;font-size:12px;}
+.plan2{
+max-width:1120px;
+margin:0 auto;
+padding:10px 26px 10px;
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:12px;
+}
+.pp{
+border-radius:18px;
+padding:24px;
+background:#fff;
+color:var(--ink);
+}
+.pp.hot{
+background:var(--acc);
+color:#06280f;
+}
+.pp .val{font-size:30px;font-weight:900;margin:6px 0;}
+.pp ul{list-style:none;font-size:13px;display:flex;flex-direction:column;gap:7px;margin:12px 0 18px;color:#3c4450;}
+.pp.hot ul{color:#06280f;}
+.pp button{
+width:100%;
+border:0;
+border-radius:99px;
+padding:12px;
+font-weight:800;
+cursor:pointer;
+background:#101418;
+color:#fff;
+}
+.pp.hot button{background:#06280f;color:var(--acc);}
+.faqm{
+max-width:760px;
+margin:0 auto;
+padding:14px 26px 20px;
+}
+.faqm details{
+background:rgba(255,255,255,.07);
+border:1px solid rgba(255,255,255,.14);
+border-radius:12px;
+padding:14px 18px;
+margin-bottom:10px;
+font-size:14px;
+}
+.faqm summary{font-weight:700;cursor:pointer;}
+.faqm p{color:#b9c6d2;margin-top:6px;font-size:13px;}
+.reviews{
+max-width:1120px;
+margin:0 auto;
+padding:10px 26px 44px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+}
+.rv{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:18px;font-size:13.5px;}
+.rv small{color:var(--acc);}
+.trans{
+max-width:1120px;
+margin:0 auto;
+padding:6px 26px 10px;
+}
+.trans h2{
+letter-spacing:-1px;
+margin-bottom:4px;
+}
+.trans>p{
+color:#b9c6d2;
+font-size:14px;
+margin-bottom:14px;
+}
+.tgrid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+.tcard{
+background:#fff;
+color:var(--ink);
+border-radius:16px;
+overflow:hidden;
+}
+.tcard .ph{
+height:96px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+}
+.tcard .tx{
+padding:13px 15px;
+font-size:13px;
+}
+.tcard .tx b{
+font-size:14px;
+}
+.tcard .tx small{
+color:var(--mut);
+}
+.coachline{
+max-width:1120px;
+margin:0 auto;
+padding:10px 26px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+.chatmock{
+background:#fff;
+color:var(--ink);
+border-radius:18px;
+padding:20px;
+}
+.chatmock h4{
+margin-bottom:12px;
+}
+.bub{
+max-width:85%;
+border-radius:14px;
+padding:10px 14px;
+font-size:13px;
+margin-bottom:8px;
+}
+.bub.them{
+background:#eef1f0;
+}
+.bub.me{
+background:#101418;
+color:#fff;
+margin-left:auto;
+}
+@media(max-width:960px){
+.hero{grid-template-columns:1fr;}
+.reviews{grid-template-columns:1fr;}
+.links{display:none;}
+.stage{flex-direction:column;align-items:center;}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+<div class="logo">◉ Pulse<span>Fit</span></div>
+<div class="links"><a href="#">Features</a><a href="#">Plans</a><a href="#">Coaches</a><a href="#">Reviews</a></div>
+<button class="btn">Get the app</button>
+</nav>
+<div class="hero">
+<div class="copy">
+<h1>Your coach lives <em>in your pocket.</em></h1>
+<p>Try the live demo on the right — switch tabs, start the timer, tick off workouts. Everything works, no install needed.</p>
+<div class="feats"><span>⚡ 6-week plans</span><span>♥ HR zones</span><span>⌚ Watch sync</span><span>🔥 2.1M athletes</span></div>
+<div class="store">
+<button>⬢ App Store · 4.9★</button>
+<button>▶ Google Play · 4.8★</button>
+</div>
+</div>
+<div class="stage">
+<div class="phone">
+<div class="screen">
+<div class="notch"></div>
+<div class="app-top"><small id="clock">TUE · OCT 2</small><h2>Hey, Daler 💪</h2></div>
+<div class="ring-row">
+<svg width="54" height="54" viewBox="0 0 54 54"><circle cx="27" cy="27" r="22" fill="none" stroke="#2a2f36" stroke-width="7"/><circle id="arc" cx="27" cy="27" r="22" fill="none" stroke="#4ade80" stroke-width="7" stroke-linecap="round" stroke-dasharray="138" stroke-dashoffset="40"/></svg>
+<div class="rr"><b>Daily goal <span id="pct">71%</span></b><br><small id="kcal">1,240 / 1,750 kcal</small><div class="bar"><i id="kbar" style="width:71%"></i></div></div>
+</div>
+<div class="tabs" id="tabs">
+<button class="on" data-f="all">All</button>
+<button data-f="hiit">HIIT</button>
+<button data-f="run">Run</button>
+<button data-f="gym">Gym</button>
+</div>
+<div class="wlist" id="wlist"></div>
+<div class="mini-t">
+<div><small style="color:#9aa3b2;font-size:11px">REST TIMER</small><br><b id="mt">01:00</b></div>
+<button id="mgo" onclick="mtoggle()">Start</button>
+</div>
+<div class="tabbar" id="tbar">
+<button class="on"><span>◉</span>Home</button>
+<button><span>▤</span>Plans</button>
+<button><span>▶</span>Train</button>
+<button><span>♥</span>You</button>
+</div>
+</div>
+</div>
+<div class="side-cards">
+<div class="sc"><small>WEEK STREAK</small><br><b>🔥 12 days</b><br><small>personal best!</small></div>
+<div class="sc"><small>AVG. HEART RATE</small><br><b>128 bpm</b><br><small>zone 3 · fat burn</small></div>
+<div class="sc"><small>RANK · TASHKENT</small><br><b>#214 ▲18</b><br><small>top 5% this month</small></div>
+</div>
+</div>
+</div>
+<div class="meal">
+<div class="mc"><div class="e">🥗</div><b>1,850 kcal plan</b><small>cut · high protein</small></div>
+<div class="mc"><div class="e">🍳</div><b>120g protein</b><small>4 meals + shake</small></div>
+<div class="mc"><div class="e">💧</div><b>3.2L water</b><small>2.1L logged today</small></div>
+<div class="mc"><div class="e">😴</div><b>7h 42m sleep</b><small>recovery 91%</small></div>
+</div>
+<div class="plan2">
+<div class="pp"><h4>Monthly</h4><div class="val">$12</div><ul><li>✓ All workout plans</li><li>✓ Meal generator</li><li>✓ Watch app</li></ul><button>Start free week</button></div>
+<div class="pp hot"><h4>Yearly ★ −40%</h4><div class="val">$86</div><ul><li>✓ Everything monthly</li><li>✓ 1:1 coach chat</li><li>✓ Race programs</li></ul><button>Start free week</button></div>
+<div class="pp"><h4>Family ×4</h4><div class="val">$149</div><ul><li>✓ 4 seats, 1 bill</li><li>✓ Kids programs</li><li>✓ Shared leaderboard</li></ul><button>Invite family</button></div>
+</div>
+<div class="faqm">
+<details open><summary>Do I need a gym?</summary><p>No — every plan has home (dumbbells) and gym versions that swap in one tap.</p></details>
+<details><summary>Apple Health / Google Fit?</summary><p>Both sync both ways: workouts out, heart-rate and sleep in.</p></details>
+<details><summary>Cancel anytime?</summary><p>Yes, two taps, no chat with retention specialists. Progress stays.</p></details>
+</div>
+<div class="trans">
+<h2>Real people, real deltas.</h2>
+<p>12-week transformations from the community wall. Verified weigh-ins.</p>
+<div class="tgrid">
+<div class="tcard">
+<div class="ph" style="background:#dcfce7">🏃</div>
+<div class="tx"><b>−9.2 kg</b><br><small>Nigora · HIIT 12 wks</small></div>
+</div>
+<div class="tcard">
+<div class="ph" style="background:#e0e7ff">🏋️</div>
+<div class="tx"><b>+40 kg DL</b><br><small>Otabek · Strength 16 wks</small></div>
+</div>
+<div class="tcard">
+<div class="ph" style="background:#fef3c7">🚴</div>
+<div class="tx"><b>First 10K</b><br><small>Jason · Run 8 wks</small></div>
+</div>
+<div class="tcard">
+<div class="ph" style="background:#fee2e2">🧘</div>
+<div class="tx"><b>Back pain: gone</b><br><small>Malika · Mobility 6 wks</small></div>
+</div>
+</div>
+</div>
+<div class="coachline">
+<div class="chatmock">
+<h4>💬 Coach chat (Yearly plan)</h4>
+<div class="bub them">Morning! How did legs feel yesterday? 🦵</div>
+<div class="bub me">Destroyed 😅 but good. RPE 9 on set 4.</div>
+<div class="bub them">Perfect — that's the top set. Friday we deload 10%. Sleep ok?</div>
+<div class="bub me">7h42. Ready.</div>
+</div>
+<div class="chatmock">
+<h4>⌚ Watch + HR zones</h4>
+<div class="bub them">Zone 3 · 24 min today — biggest fat-burn block this month 🔥</div>
+<div class="bub them">Recovery 91%. Green light for tempo run tomorrow.</div>
+<div class="bub me">Scheduled ✓ See you at 7:00.</div>
+</div>
+</div>
+<div class="reviews">
+<div class="rv">★★★★★<br>“Lost 9kg with the HIIT plan. The rest timer alone is worth it.”<br><small>— Nigora, user since 2024</small></div>
+<div class="rv">★★★★★<br>“Feels like a real coach. Watch sync is flawless.”<br><small>— Jason, marathoner</small></div>
+<div class="rv">★★★★★<br>“Finally an app my dad uses too. Simple and loud.”<br><small>— Otabek, powerlifter</small></div>
+</div>
+<script>
+var ws=[
+{t:"Morning HIIT ×20",k:"hiit",d:"20 min · 240 kcal",e:"⚡"},
+{t:"Tempo run 5K",k:"run",d:"28 min · 320 kcal",e:"🏃"},
+{t:"Upper body pump",k:"gym",d:"45 min · 280 kcal",e:"🏋️"},
+{t:"Tabata core",k:"hiit",d:"12 min · 150 kcal",e:"🔥"},
+{t:"Easy recovery jog",k:"run",d:"25 min · 200 kcal",e:"🌿"},
+{t:"Leg day A",k:"gym",d:"50 min · 350 kcal",e:"🦵"}
+];
+var f="all",done={},kcal=1240;
+function renderW(){
+var w=document.getElementById('wlist');w.innerHTML='';
+ws.filter(function(x){return f==="all"||x.k===f;}).forEach(function(x){
+var d=done[x.t];
+w.innerHTML+='<div class="w"><div class="e">'+x.e+'</div><div><b>'+x.t+'</b><br><small>'+x.d+'</small></div><button class="go'+(d?' done':'')+'" data-t="'+x.t+'">'+(d?'✓':'▶')+'</button></div>';
+});
+}
+renderW();
+document.getElementById('tabs').addEventListener('click',function(e){
+if(e.target.tagName!=='BUTTON')return;
+f=e.target.dataset.f;
+var b=this.querySelectorAll('button');b.forEach(function(x){x.classList.remove('on');});
+e.target.classList.add('on');renderW();
+});
+document.getElementById('wlist').addEventListener('click',function(e){
+var b=e.target.closest('.go');if(!b)return;
+var t=b.dataset.t;
+if(done[t]){delete done[t];kcal-=200;}else{done[t]=1;kcal+=200;}
+var p=Math.min(100,Math.round(kcal/1750*100));
+document.getElementById('pct').textContent=p+'%';
+document.getElementById('kcal').textContent=kcal.toLocaleString()+' / 1,750 kcal';
+document.getElementById('kbar').style.width=p+'%';
+document.getElementById('arc').style.strokeDashoffset=138*(1-p/100);
+renderW();
+});
+document.getElementById('tbar').addEventListener('click',function(e){
+var b=e.target.closest('button');if(!b)return;
+var bs=this.querySelectorAll('button');bs.forEach(function(x){x.classList.remove('on');});
+b.classList.add('on');
+});
+var ml=60,mtick=null,mon=false;
+function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function mtoggle(){
+var b=document.getElementById('mgo');
+if(mon){mon=false;clearInterval(mtick);b.textContent='Start';return;}
+mon=true;b.textContent='Pause';
+mtick=setInterval(function(){
+ml--;if(ml<0)ml=60;
+document.getElementById('mt').textContent=fmt(ml);
+if(ml===0){b.textContent='Start';mon=false;clearInterval(mtick);alert('Rest over — go! 🔥');ml=60;}
+},1000);
+}
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

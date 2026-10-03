@@ -1,0 +1,621 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phosphor — File Desk + Terminal</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+:root{
+  --amber:#ffb000;
+  --dim:#8a5f00;
+  --bg:#0a0700;
+  --panel:#120d02
+}
+body{
+  font-family:ui-monospace,'JetBrains Mono',Menlo,Consolas,monospace;
+  background:var(--bg);
+  color:var(--amber);
+  min-height:100vh;
+  overflow-x:hidden
+}
+/* CRT overlay */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:90;
+  background:repeating-linear-gradient(0deg,#0006 0 1px,transparent 1px 3px);
+  opacity:.5
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:91;
+  background:radial-gradient(ellipse at center,transparent 55%,#000a 100%)
+}
+/* niche loader: BIOS */
+#loader{
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:200;
+  padding:40px;
+  font-size:13px;
+  line-height:1.9;
+  transition:opacity .4s
+}
+#loader.off{
+  opacity:0;
+  visibility:hidden
+}
+#loader .ok{
+  color:#33ff66
+}
+#loader .warn{
+  color:var(--amber)
+}
+::selection{
+  background:var(--amber);
+  color:#000
+}
+nav{
+  border-bottom:1px solid #ffb00044;
+  background:#000000aa;
+  position:sticky;
+  top:0;
+  z-index:60
+}
+.nin{
+  max-width:1120px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:13px 20px;
+  font-size:13px
+}
+.nin .cur{
+  animation:blink 1s infinite
+}
+@keyframes blink{
+  50%{
+  opacity:0
+}
+}
+.nin a{
+  color:var(--amber);
+  text-decoration:none;
+  opacity:.75
+}
+.nin a:hover{
+  opacity:1
+}
+.nin .sp{
+  flex:1
+}
+.sbtn{
+  background:var(--amber);
+  color:#000;
+  border:0;
+  padding:8px 18px;
+  font-weight:800;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:13px
+}
+.sbtn:hover{
+  background:#ffd166
+}
+.hero{
+  max-width:1120px;
+  margin:auto;
+  padding:52px 20px 10px
+}
+.eyebrow{
+  color:#33ff66;
+  font-size:12px;
+  letter-spacing:2px
+}
+h1{
+  font-size:clamp(30px,5vw,54px);
+  margin:10px 0;
+  line-height:1.05;
+  text-shadow:0 0 18px #ffb00088
+}
+.hero p{
+  opacity:.8;
+  font-size:14px;
+  line-height:1.7;
+  max-width:640px
+}
+.hero p .b{
+  color:#fff
+}
+#desk{
+  max-width:1120px;
+  margin:auto;
+  padding:20px;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:18px
+}
+.panel{
+  background:var(--panel);
+  border:1px solid #ffb00055;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 0 40px #ffb00018
+}
+.phead{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:11px 14px;
+  border-bottom:1px solid #ffb00033;
+  font-size:12.5px;
+  background:#00000066
+}
+.phead .dots{
+  display:flex;
+  gap:6px
+}
+.phead .dots i{
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:#ffb00044
+}
+.phead .dots i:first-child{
+  background:#ff5f56
+}
+.tools{
+  display:flex;
+  gap:8px;
+  padding:12px 14px;
+  flex-wrap:wrap;
+  border-bottom:1px dashed #ffb00033
+}
+.tool{
+  background:transparent;
+  border:1px solid #ffb00066;
+  color:var(--amber);
+  padding:7px 14px;
+  font-family:inherit;
+  font-size:12px;
+  cursor:pointer;
+  border-radius:6px
+}
+.tool:hover{
+  background:var(--amber);
+  color:#000
+}
+#crumb{
+  padding:12px 14px;
+  font-size:12.5px;
+  color:#33ff66
+}
+#crumb b{
+  cursor:pointer
+}
+#crumb b:hover{
+  color:#fff
+}
+#fgrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  padding:0 14px 14px
+}
+.f{
+  border:1px solid #ffb00044;
+  border-radius:8px;
+  padding:16px 10px;
+  text-align:center;
+  font-size:12px;
+  cursor:pointer;
+  background:#00000055;
+  transition:.2s;
+  word-break:break-all
+}
+.f:hover{
+  border-color:var(--amber);
+  box-shadow:0 0 14px #ffb00044
+}
+.f.sel{
+  background:#ffb00022;
+  border-color:var(--amber)
+}
+.f i{
+  font-size:28px;
+  display:block;
+  margin-bottom:8px
+}
+.f small{
+  display:block;
+  opacity:.55;
+  margin-top:6px;
+  font-size:11px
+}
+#preview{
+  margin:0 14px 14px;
+  border:1px dashed #ffb00055;
+  border-radius:8px;
+  padding:14px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  font-size:12.5px;
+  min-height:88px
+}
+#preview img{
+  width:56px;
+  height:56px;
+  object-fit:cover;
+  border-radius:8px;
+  filter:sepia(1) saturate(3) hue-rotate(-15deg)
+}
+.search{
+  flex:1;
+  background:#000;
+  border:1px solid #ffb00055;
+  color:var(--amber);
+  padding:8px 12px;
+  border-radius:6px;
+  font-family:inherit;
+  font-size:12px;
+  outline:0;
+  min-width:140px
+}
+/* terminal */
+#tout{
+  background:#000;
+  border-top:1px solid #ffb00033;
+  height:300px;
+  overflow:auto;
+  padding:14px;
+  font-size:12.5px;
+  line-height:1.8;
+  white-space:pre-wrap
+}
+#tout .p{
+  color:#33ff66
+}
+#tout .b{
+  color:#fff
+}
+#tout .w{
+  color:#ff5f56
+}
+.tinrow{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 14px;
+  border-top:1px solid #ffb00033;
+  background:#000
+}
+.tinrow input{
+  flex:1;
+  background:transparent;
+  border:0;
+  outline:0;
+  color:#fff;
+  font-family:inherit;
+  font-size:13px
+}
+.prompt{
+  color:#33ff66;
+  font-size:13px;
+  white-space:nowrap
+}
+section{
+  max-width:1120px;
+  margin:auto;
+  padding:30px 20px
+}
+h2{
+  font-size:clamp(22px,3vw,30px);
+  text-shadow:0 0 14px #ffb00066
+}
+.sub{
+  opacity:.65;
+  font-size:13px;
+  margin:8px 0 18px
+}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:14px
+}
+.cards div{
+  background:var(--panel);
+  border:1px solid #ffb00044;
+  border-radius:10px;
+  padding:20px;
+  font-size:13px
+}
+.cards b{
+  color:#fff
+}
+.cmdgrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+  margin-top:14px
+}
+.cmdgrid button{
+  background:#000;
+  border:1px solid #33ff6655;
+  color:#33ff66;
+  padding:12px;
+  font-family:inherit;
+  font-size:12px;
+  border-radius:8px;
+  cursor:pointer;
+  text-align:left
+}
+.cmdgrid button:hover{
+  background:#33ff66;
+  color:#000
+}
+.cmdgrid small{
+  display:block;
+  opacity:.7
+}
+.prices{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px
+}
+.prices div{
+  background:var(--panel);
+  border:1px solid #ffb00044;
+  border-radius:10px;
+  padding:26px 22px
+}
+.amount{
+  font-size:32px;
+  color:#fff;
+  margin:10px 0
+}
+#authModal{
+  position:fixed;
+  inset:0;
+  background:#000c;
+  z-index:150;
+  display:none;
+  align-items:center;
+  justify-content:center
+}
+#authModal.open{
+  display:flex
+}
+.abox{
+  width:min(390px,92vw);
+  background:var(--panel);
+  border:1px solid var(--amber);
+  border-radius:12px;
+  padding:30px 26px
+}
+.abox input{
+  width:100%;
+  background:#000;
+  border:1px solid #ffb00055;
+  color:var(--amber);
+  padding:11px;
+  border-radius:7px;
+  margin-top:10px;
+  font-family:inherit;
+  outline:0
+}
+.tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:6px
+}
+.tabs button{
+  flex:1;
+  background:transparent;
+  border:1px solid #ffb00055;
+  color:var(--amber);
+  padding:9px;
+  font-family:inherit;
+  cursor:pointer;
+  border-radius:7px
+}
+.tabs button.on{
+  background:var(--amber);
+  color:#000;
+  font-weight:800
+}
+#toast{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--amber);
+  color:#000;
+  padding:11px 24px;
+  font-size:13px;
+  z-index:180;
+  transition:.3s;
+  font-weight:700
+}
+footer{
+  text-align:center;
+  opacity:.55;
+  font-size:12px;
+  padding:28px
+}
+.rv{
+  opacity:0;
+  transform:translateY(20px);
+  transition:.6s
+}
+.rv.vis{
+  opacity:1;
+  transform:none
+}
+@media(max-width:900px){
+  #desk{
+  grid-template-columns:1fr
+}
+}
+</style>
+</head>
+<body>
+<div id="loader">PHOSPHOR BIOS v2.4 ... <span class="ok">OK</span><br>MEM 640K ... <span class="ok">OK</span><br>DISK /dev/portfolio ... <span class="ok">MOUNTED</span><br>TTY READY<span class="warn">_</span></div>
+<nav><div class="nin"><b>◮ phosphor<span class="cur">_</span></b><a href="#desk">files</a><a href="#cmds">commands</a><a href="#work">work</a><a href="#hire">hire</a><span class="sp"></span><span style="opacity:.6">guest@portfolio:~$</span><button class="sbtn" onclick="openAuth()">login</button></div></nav>
+<header class="hero">
+<div class="eyebrow">[ BOOT COMPLETE · BUILD 2026.10 ]</div>
+<h1>Files you can touch.<br>Terminal you can type in.</h1>
+<p>I'm <span class="b">Alex Morgan</span> — file systems, CLIs & dev tools. Click files on the left, or type <span class="b">help</span> on the right. Everything below is live: <span class="b">ls · open · cat · touch</span>.</p>
+</header>
+<div id="desk">
+<div class="panel">
+<div class="phead"><span class="dots"><i></i><i></i><i></i></span> /home/guest/portfolio — file manager <span style="margin-left:auto;opacity:.6">ext4 · 82%</span></div>
+<div class="tools"><button class="tool" onclick="goUp()">↑ up</button><button class="tool" onclick="addFile()">+ touch</button><button class="tool" onclick="toggleView()">⧉ view</button><input class="search" placeholder="filter files…" oninput="searchFiles(this.value)"><button class="tool" onclick="focusTerm()">⌨ terminal</button></div>
+<div id="crumb"></div>
+<div id="fgrid"></div>
+<div id="preview"></div>
+</div>
+<div class="panel">
+<div class="phead"><span class="dots"><i></i><i></i><i></i></span> guest@phosphor: ~ — zsh <span style="margin-left:auto;opacity:.6">utf-8</span></div>
+<div id="tout"></div>
+<div class="tinrow"><span class="prompt">visitor@flux:~$</span><input id="tin" placeholder="type 'help' + Enter" onkeydown="if(event.key==='Enter')runCmd()"></div>
+</div>
+</div>
+<section id="cmds">
+<h2 class="rv">$ try these commands</h2>
+<p class="sub rv">One click = typed for you.</p>
+<div class="cmdgrid rv">
+<button onclick="term('help')">help<small>list all commands</small></button>
+<button onclick="term('ls')">ls<small>list portfolio files</small></button>
+<button onclick="term('whoami')">whoami<small>who built this?</small></button>
+<button onclick="term('date')">date<small>server time</small></button>
+<button onclick="term('cat resume.pdf')">cat resume.pdf<small>read my resume</small></button>
+<button onclick="term('hire')">hire<small>how to hire me</small></button>
+<button onclick="term('touch idea.txt')">touch idea.txt<small>create a file</small></button>
+<button onclick="term('clear')">clear<small>wipe screen</small></button>
+</div>
+</section>
+<section id="work">
+<h2 class="rv">~/shipped — selected work</h2>
+<p class="sub rv">CLIs, dashboards & internal tools.</p>
+<div class="cards">
+<div class="rv"><b>📦 shipctl</b><br><br>Deploy CLI in Go. 4k stars on GitHub. <br><br><span style="opacity:.6">$ shipctl deploy --prod ✓ in 11s</span></div>
+<div class="rv"><b>📊 loglens</b><br><br>Log explorer for SRE teams. <br><br><span style="opacity:.6">$ loglens tail --err | spark ✓</span></div>
+<div class="rv"><b>🗂️ vaultfs</b><br><br>Encrypted file sync client.<br><br><span style="opacity:.6">$ vaultfs sync ~/vault ✓ 2.1GB</span></div>
+</div>
+</section>
+<section id="hire">
+<h2 class="rv">$ hire --now</h2>
+<p class="sub rv">Flat rates, no agencies, async-friendly.</p>
+<div class="prices">
+<div class="rv"><small>SCRIPT</small><div class="amount">$290</div><p style="font-size:13px;opacity:.75">One automation script + docs. 3-day delivery.</p><br><button class="sbtn" style="width:100%" onclick="openAuth()">hire --script</button></div>
+<div class="rv" style="border-color:#33ff66"><small>CLI TOOL ★ POPULAR</small><div class="amount">$890</div><p style="font-size:13px;opacity:.75">Full CLI + tests + Homebrew release.</p><br><button class="sbtn" style="width:100%;background:#33ff66" onclick="openAuth()">hire --cli</button></div>
+<div class="rv"><small>PLATFORM</small><div class="amount">$2,400+</div><p style="font-size:13px;opacity:.75">File platform / dashboard, monthly support.</p><br><button class="sbtn" style="width:100%" onclick="openAuth()">hire --platform</button></div>
+</div>
+</section>
+<footer>phosphor desk · typed with care · 5.0★ on Upwork · <a href="#" onclick="openAuth();return false" style="color:var(--amber)">login</a></footer>
+<div id="authModal"><div class="abox">
+<div class="tabs"><button id="tIn" class="on" onclick="tab('in')">sign in</button><button id="tUp" onclick="tab('up')">sign up</button></div>
+<h3 id="authTitle">Welcome back</h3>
+<p style="opacity:.6;font-size:12.5px">SSH into hiring.</p>
+<input id="aEmail" placeholder="you@company.com">
+<button class="sbtn" style="width:100%;margin-top:12px" onclick="doAuth()">send magic link →</button>
+<p id="authMsg" style="font-size:12.5px;margin-top:10px;color:#33ff66"></p>
+<p style="font-size:12px;opacity:.6;margin-top:8px;cursor:pointer" onclick="closeAuth()">[ esc ] cancel</p>
+</div></div>
+<div id="toast"></div>
+<script>
+setTimeout(()=>loader.classList.add('off'),1200);
+let path=['home','guest'],selFile=null,filter='',listView=false;
+let FS=[{n:'resume.pdf',t:'pdf',s:'88 KB · hire me',seed:'ph1'},{n:'projects/',t:'dir',s:'18 items',seed:'ph2'},{n:'shipctl.go',t:'code',s:'12 KB · main tool',seed:'ph3'},{n:'notes.md',t:'txt',s:'3 KB · ideas',seed:'ph4'},{n:'invoice-q3.csv',t:'csv',s:'5 KB · finance',seed:'ph5'},{n:'demo.mp4',t:'vid',s:'24 MB · walkthrough',seed:'ph6'}];
+const ICONS={pdf:'📕',dir:'📁',code:'💾',txt:'📝',csv:'📊',vid:'🎬'};
+const tout=document.getElementById('tout');
+print('<span class="p">phosphor v2.4</span> — type <span class="b">help</span> to begin.');
+function renderFiles(){const c=document.getElementById('crumb');c.innerHTML=path.map((p,i)=>`<b onclick="goPath(${i})">${p}</b>`).join(' <span>/</span> ');const g=document.getElementById('fgrid');g.style.gridTemplateColumns=listView?'1fr':'repeat(3,1fr)';const list=FS.filter(f=>f.n.toLowerCase().includes(filter.toLowerCase()));g.innerHTML=list.length?list.map(f=>`<div class="f ${selFile===f.n?'sel':''}" onclick="selectFile('${f.n}')"><i>${ICONS[f.t]||'📦'}</i>${f.n}<small>${f.s}</small></div>`).join(''):'<p style="opacity:.6">No files match.</p>';const p=document.getElementById('preview');if(selFile){const f=FS.find(x=>x.n===selFile);p.innerHTML=`<img src="https://picsum.photos/seed/${f.seed||f.n}/120/120"><div><b>${f.n}</b><br><small style="opacity:.6">${f.s} · /${path.join('/')}</small><br><button class="tool" style="margin-top:6px" onclick="term('open ${f.n}')">Open in terminal →</button></div>`;}else{p.innerHTML='<small style="opacity:.6">Select a file to preview 👆</small>';}}
+function selectFile(n){selFile=n;renderFiles();print(`<span class="b">selected</span> ${n}`);}
+function goUp(){if(path.length>1)path.pop();renderFiles();}
+function goPath(i){path=path.slice(0,i+1);renderFiles();}
+function addFile(){const n='untitled-'+(FS.length+1)+'.txt';FS.push({n,t:'txt',s:'0 KB · new'});renderFiles();print(`<span class="p">created</span> ${n}`);toast(n+' created ✓');}
+function toggleView(){listView=!listView;renderFiles();}
+function searchFiles(v){filter=v;renderFiles();}
+function print(h){tout.innerHTML+=h+'\n';tout.scrollTop=tout.scrollHeight;}
+function focusTerm(){document.getElementById('desk').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('tin').focus(),400);}
+function term(cmd){document.getElementById('tin').value=cmd;runCmd();}
+function runCmd(){const inp=document.getElementById('tin');const raw=inp.value.trim();print(`<span class="p">visitor@flux</span>:~$ ${raw||''}`);inp.value='';if(!raw)return;const [c,...a]=raw.split(' ');const arg=a.join(' ');const cmds={help:()=>print('commands: <span class="b">help · ls · cd · open &lt;file&gt; · cat &lt;file&gt; · touch &lt;name&gt; · whoami · date · hire · clear</span>'),ls:()=>print(FS.map(f=>`<span class="b">${f.n}</span>`).join('   ')),whoami:()=>print('visitor — guest of Alex Morgan\'s portfolio'),date:()=>print(new Date().toString()),hire:()=>print('<span class="w">✉ hire@phosphor.dev — available now, 5.0★ on Upwork</span>'),clear:()=>{tout.innerHTML='';}};if(cmds[c]){cmds[c]();return;}if(c==='cd'){if(arg==='..')goUp();else if(arg){path.push(arg);renderFiles();print(`moved to /${path.join('/')}`);}else print('/'+path.join('/'));return;}if(c==='open'){const f=FS.find(x=>x.n.toLowerCase().startsWith((arg||'').toLowerCase()));if(!f){print(`<span class="w">open: '${arg}' not found. Try ls.</span>`);return;}selFile=f.n;renderFiles();print(`<span class="p">opening</span> ${f.n} … ✓`);toast('Opened '+f.n);return;}if(c==='cat'){const f=FS.find(x=>x.n.toLowerCase()===arg.toLowerCase());print(f?`—— ${f.n} ——\n${f.s}\n<span class="b">Lorem ipsum demo content for ${f.n}.</span>`:`<span class="w">cat: no such file.</span>`);return;}if(c==='touch'&&arg){FS.push({n:arg,t:'txt',s:'0 KB · new'});renderFiles();print(`<span class="p">created</span> ${arg}`);return;}print(`<span class="w">'${c}' not found. Type help.</span>`);}
+function openAuth(){document.getElementById('authModal').classList.add('open');}
+function closeAuth(){document.getElementById('authModal').classList.remove('open');}
+function tab(m){document.getElementById('tIn').classList.toggle('on',m==='in');document.getElementById('tUp').classList.toggle('on',m==='up');document.getElementById('authTitle').textContent=m==='in'?'Welcome back':'Create account';}
+function doAuth(){const e=document.getElementById('aEmail').value;document.getElementById('authMsg').textContent=e.includes('@')?'✓ Magic link sent!':'Enter a valid email.';}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.transform='translateX(-50%) translateY(0)';clearTimeout(t._x);t._x=setTimeout(()=>t.style.transform='translateX(-50%) translateY(80px)',2000);}
+renderFiles();
+document.getElementById('authModal').addEventListener('click',e=>{if(e.target.id==='authModal')closeAuth();});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeAuth();if(e.key==='/'){focusTerm();}});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

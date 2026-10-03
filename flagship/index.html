@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>NOVA Studio — $10K Digital Products | CEO & Lead Architect</title>
+<meta name="description" content="Flagship digital product engineering: SaaS platforms, Flutter mobile apps, Godot 3D games, autonomous AI pipelines. Architecture to App Store.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="loader">
+  <div class="l-inner">
+    <b>NOVA<span>®</span></b>
+    <div class="l-num" id="lnum">0%</div>
+    <div class="l-bar"><i id="lbar"></i></div>
+    <small>architecting high-ticket experience…</small>
+  </div>
+</div>
+
+<div id="cursor"></div>
+<div id="cdot"></div>
+<div id="progress"></div>
+
+<!-- Top Sticky Navbar -->
+<nav>
+  <a class="logo" href="#top">◈ NOVA<span>STUDIO</span></a>
+  <div class="nlinks">
+    <a href="../index.html" class="nav-hub-pill">← 66 Projects Hub</a>
+    <a href="#work">Work</a>
+    <a href="#services">Services</a>
+    <a href="#play">Playground</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nright">
+    <button id="sndToggle" class="ghost snd-btn" onclick="toggleSnd()">🔊 Sound: ON</button>
+    <span class="avail"><i></i>available Q4</span>
+    <button class="btn" onclick="goContact()">Start $10K project →</button>
+  </div>
+  <button id="burger" aria-label="Menu">☰</button>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mmenu">
+  <a href="../index.html" style="color:#e9c46a;font-weight:700">← 66 Projects Hub</a>
+  <a href="#work" onclick="closeM()">Work</a>
+  <a href="#services" onclick="closeM()">Services</a>
+  <a href="#play" onclick="closeM()">Playground</a>
+  <a href="#pricing" onclick="closeM()">Pricing</a>
+  <a href="#contact" onclick="closeM()">Contact</a>
+  <button class="btn" onclick="closeM();goContact()" style="margin-top:10px">Start $10K project →</button>
+</div>
+
+<!-- Header / Hero -->
+<header id="top">
+  <canvas id="net"></canvas>
+  <div class="mesh m1"></div>
+  <div class="mesh m2"></div>
+
+  <div class="hgrid">
+    <div class="hleft">
+      <div class="pill rv">● CEO & Lead Software Architect — 8+ yrs</div>
+      <h1 class="rv">We build <em>$10,000</em> digital products that <span id="typed"></span><span class="caret">▌</span></h1>
+      <p class="sub rv">
+        SaaS platforms, mobile apps, games & AI automation — from architecture to App Store. One lead, full stack, zero agency bloat, 100% on-time delivery.
+      </p>
+      
+      <div class="hcta rv">
+        <button class="btn big" onclick="goContact()">Invite to Job — $35/hr →</button>
+        <button class="ghost" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">▶ Explore Case Studies</button>
+        <a class="ghost hub-link" href="../index.html">★ 66 Builds Hub</a>
+      </div>
+
+      <div class="hstrip rv">
+        <img loading="lazy" src="https://picsum.photos/seed/nova1/300/180" alt="SaaS UI" title="NovaFlow SaaS Analytics">
+        <img loading="lazy" src="https://picsum.photos/seed/nova2/300/180" alt="Mobile App" title="PulseFit iOS/Android">
+        <img loading="lazy" src="https://picsum.photos/seed/nova3/300/180" alt="Game Dev" title="Moss Temple 2D">
+        <img loading="lazy" src="https://picsum.photos/seed/nova4/300/180" alt="AI Agent" title="Ember AI Concierge">
+      </div>
+
+      <div class="hstats rv">
+        <div><b><span class="cnt" data-n="66">0</span>+</b><small>projects shipped</small></div>
+        <div><b><span class="cnt" data-n="12">0</span></b><small>industries</small></div>
+        <div><b><span class="cnt" data-n="100">0</span>%</b><small>on-time delivery</small></div>
+        <div><b>&lt;24h</b><small>response time</small></div>
+      </div>
+    </div>
+
+    <div class="hright rv">
+      <div class="pcard tilt">
+        <div class="phead">
+          <i></i><i></i><i></i>
+          <span>revenue.live — enterprise telemetry</span>
+          <b style="margin-left:auto;color:#4ade80;font-size:11px;font-family:'JetBrains Mono'">● LIVE 60 FPS</b>
+        </div>
+        <canvas id="chart" width="400" height="170"></canvas>
+        <div class="prow">
+          <div><small>MRR</small><b>$48.2K <span style="color:#4ade80">▲ 24%</span></b></div>
+          <div><small>MAU</small><b>12,400</b></div>
+          <div><small>SLA UPTIME</small><b>99.99%</b></div>
+        </div>
+      </div>
+      <div class="fcard f1 tilt">🚀 <div><b>App Store #3</b><small>Food delivery · 50K downloads</small></div></div>
+      <div class="fcard f2 tilt">🤖 <div><b>AI autopilot live</b><small>−31h manual work / week</small></div></div>
+    </div>
+  </div>
+
+  <div class="marq">
+    <div class="mtrack" id="mtrack">
+      <span>SaaS ✦ Fintech ✦ Health ✦ E-commerce ✦ Games ✦ AI ✦ Logistics ✦ EdTech ✦ Real Estate ✦ Crypto ✦ iOS 18 ✦ Flutter ✦ Godot ✦&nbsp;</span>
+      <span>SaaS ✦ Fintech ✦ Health ✦ E-commerce ✦ Games ✦ AI ✦ Logistics ✦ EdTech ✦ Real Estate ✦ Crypto ✦ iOS 18 ✦ Flutter ✦ Godot ✦&nbsp;</span>
+    </div>
+  </div>
+</header>
+
+<!-- Services / Capabilities -->
+<section id="services">
+  <div class="shead rv">
+    <small>01 — CAPABILITIES</small>
+    <h2>One lead. Full stack.<br>Zero handoffs.</h2>
+  </div>
+  <div class="sgrid">
+    <div class="scard rv tilt">
+      <i>◈</i>
+      <h3>Architecture & Backend</h3>
+      <p>Go · Python · REST · SQLite/Postgres. Microservices, auth, billing, and low-latency APIs designed for massive horizontal scale.</p>
+      <div class="tags"><span>Go</span><span>Python</span><span>REST</span><span>Docker</span></div>
+      <a href="../portfolio-51-fullstack-saas/index.html" target="_blank">▶ Explore Fullstack SaaS demo</a>
+    </div>
+
+    <div class="scard rv tilt">
+      <i>🎮</i>
+      <h3>Game & 3D Interactive</h3>
+      <p>Godot Engine · Three.js · HTML5 Canvas. Playable physics, procedural terrain, high-FPS particle shaders, and spatial audio.</p>
+      <div class="tags"><span>Godot</span><span>Three.js</span><span>Canvas</span><span>Shaders</span></div>
+      <a href="../portfolio-61-platformer-game/index.html" target="_blank">▶ Play platformer demo</a>
+    </div>
+
+    <div class="scard rv tilt">
+      <i>📱</i>
+      <h3>Mobile & Web Apps</h3>
+      <p>Flutter · Swift · Kotlin. iOS-grade UI, fluid 120Hz micro-interactions, offline-first SQLite sync, and App Store deploy ready.</p>
+      <div class="tags"><span>Flutter</span><span>Swift</span><span>iOS 18</span><span>Dart</span></div>
+      <a href="../portfolio-55-iphone-banking/index.html" target="_blank">▶ Launch iPhone banking UI</a>
+    </div>
+
+    <div class="scard rv tilt">
+      <i>🤖</i>
+      <h3>AI & Automation</h3>
+      <p>Chatbots, neural pipelines, speech synthesis. Local and cloud LLMs with autonomous business automation that saves 30+ hours/week.</p>
+      <div class="tags"><span>LLM</span><span>Voice</span><span>Pipelines</span><span>Agents</span></div>
+      <a href="../portfolio-65-ai-chatbot/index.html" target="_blank">▶ Test AI concierge</a>
+    </div>
+  </div>
+</section>
+
+<!-- Selected Work Showcase -->
+<section id="work">
+  <div class="shead rv">
+    <small>02 — SELECTED WORK</small>
+    <h2>66 builds. 6 signatures.</h2>
+    <div class="filters">
+      <button class="on" data-f="all">All Signatures</button>
+      <button data-f="saas">SaaS</button>
+      <button data-f="mobile">Mobile</button>
+      <button data-f="game">Games</button>
+      <button data-f="ai">AI</button>
+      <button data-f="os">Web OS</button>
+    </div>
+  </div>
+  <div class="wgrid" id="wgrid"></div>
+</section>
+
+<!-- Interactive Live Simulator Modal -->
+<div id="wmodal">
+  <div class="wbox">
+    <div class="whead">
+      <div class="wtop-meta">
+        <span class="wtop-dot red" onclick="closeW()"></span>
+        <span class="wtop-dot yellow" onclick="reloadW()"></span>
+        <span class="wtop-dot green" onclick="expandW()"></span>
+        <b id="wt" style="color:#fff;font-family:Sora;margin-left:8px"></b>
+        <small id="wcat" style="color:#e9c46a;font-family:'JetBrains Mono'"></small>
+      </div>
+      <div class="wtop-controls">
+        <button class="wdev-btn active" id="wdevDesktop" onclick="setWDevice('desktop')">🖥️ Desktop</button>
+        <button class="wdev-btn" id="wdevMobile" onclick="setWDevice('mobile')">📱 Mobile</button>
+        <button class="x" onclick="closeW()">✕</button>
+      </div>
+    </div>
+    
+    <div class="wframe-wrap desktop" id="wframeWrap">
+      <iframe id="wframe" class="wframe" src="about:blank"></iframe>
+    </div>
+
+    <div class="wpad">
+      <p id="wd"></p>
+      <div class="wrow">
+        <a class="btn" id="wopen" href="#" target="_blank">Open Fullscreen in New Tab →</a>
+        <button class="ghost" id="wcopyPitch" onclick="copyModalPitch()">📋 Copy Pitch for Upwork</button>
+        <span id="wprice" style="font-family:'JetBrains Mono';font-size:16px;color:#e9c46a;font-weight:700"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Playground Section -->
+<section id="play">
+  <div class="shead rv">
+    <small>03 — PLAYGROUND</small>
+    <h2>Don't trust words.<br>Touch it.</h2>
+  </div>
+
+  <div class="ptabs rv">
+    <button class="on" onclick="ptab(0)">🤖 Project Estimator</button>
+    <button onclick="ptab(1)">🎯 Reflex Benchmark</button>
+    <button onclick="ptab(2)">💬 Ask NOVA AI</button>
+  </div>
+
+  <!-- Panel 0: Estimator -->
+  <div class="ppanel rv" id="pp0">
+    <h3>Dynamic Project Scope & Quote Calculator</h3>
+    <p>Adjust the architectural parameters to generate a fixed-scope $10K-style quote instantly.</p>
+    
+    <div class="sliders-grid">
+      <label>
+        Frontend & UI Complexity: <span id="r1Val" class="val-pill">Level 5</span>
+        <input type="range" id="r1" min="1" max="10" value="5" oninput="est()">
+      </label>
+      <label>
+        Backend & Database Architecture: <span id="r2Val" class="val-pill">Level 7</span>
+        <input type="range" id="r2" min="1" max="10" value="7" oninput="est()">
+      </label>
+      <label>
+        Third-Party Integrations & APIs: <span id="r3Val" class="val-pill">3 Services</span>
+        <input type="range" id="r3" min="0" max="8" value="3" oninput="est()">
+      </label>
+      <label>
+        AI Automation & Neural Pipelines: <span id="r4Val" class="val-pill">Level 2</span>
+        <input type="range" id="r4" min="0" max="5" value="2" oninput="est()">
+      </label>
+    </div>
+
+    <div class="est">
+      <div><small>Estimated Timeline</small><b id="eweek">5 weeks</b></div>
+      <div><small>Fixed Quote</small><b id="eprice">$9,800</b></div>
+      <div><small>Architecture Quality</small><b style="color:#4ade80">Production 100%</b></div>
+      <button class="btn" onclick="copyScopeSummary()">📋 Copy Scope Summary</button>
+      <button class="ghost" onclick="goContact()">Lock this scope →</button>
+    </div>
+  </div>
+
+  <!-- Panel 1: Reflex Game -->
+  <div class="ppanel rv" id="pp1" style="display:none">
+    <h3>Speed Benchmark — Lead Architects Ship Fast</h3>
+    <p>Click the luminous target 10 times as fast as possible. Tests UI responsiveness and tactile input.</p>
+    <div id="arena">
+      <b id="tgt">◎</b>
+    </div>
+    <div class="est">
+      <div><small>Score</small><b id="hits">0/10</b></div>
+      <div><small>Current Streak</small><b id="streak" style="color:#4ade80">0x</b></div>
+      <div><small>Best Time</small><b id="best">—</b></div>
+      <button class="ghost" onclick="startGame()">Restart Test</button>
+    </div>
+  </div>
+
+  <!-- Panel 2: NOVA AI Concierge -->
+  <div class="ppanel rv" id="pp2" style="display:none">
+    <h3>NOVA AI Concierge</h3>
+    <p>Ask about architecture, rates, tech stack, and delivery guarantees.</p>
+    <div class="ai-chips">
+      <span class="chip" onclick="quickAsk('price')">💰 Pricing & Tiers</span>
+      <span class="chip" onclick="quickAsk('stack')">🛠️ Full Tech Stack</span>
+      <span class="chip" onclick="quickAsk('timeline')">⏱️ Project Timelines</span>
+      <span class="chip" onclick="quickAsk('mobile')">📱 iOS & Android Apps</span>
+      <span class="chip" onclick="quickAsk('games')">🎮 Godot & 3D Games</span>
+    </div>
+    <div id="chat">
+      <div class="msg bot">Hello! I am NOVA AI. Inquire about pricing, technical stack, or project timelines. Click any prompt above or type below. 👇</div>
+    </div>
+    <div class="crow">
+      <input id="cin" placeholder="Type: price / stack / timeline / mobile…" onkeydown="if(event.key==='Enter')send()">
+      <button class="btn" onclick="send()">Send</button>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing">
+  <div class="shead rv">
+    <small>04 — PRICING</small>
+    <h2>Fixed scope. Fixed price. Zero surprises.</h2>
+  </div>
+  <div class="pgrid">
+    <div class="pc rv">
+      <h3>Sprint</h3>
+      <b>$1.5K</b>
+      <small>1 landing / MVP slice · 7 business days</small>
+      <ul>
+        <li>✓ Premium responsive landing + CMS ready</li>
+        <li>✓ Conversion-focused UI + 60 FPS motion</li>
+        <li>✓ SEO metadata + analytics setup</li>
+        <li>✓ 2 iterations + 14-day warranty</li>
+      </ul>
+      <button class="ghost" onclick="choosePackage('Sprint — $1.5K')">Choose Sprint</button>
+    </div>
+
+    <div class="pc hot rv">
+      <div class="flag">MOST HIRED · $10K TIER</div>
+      <h3>Product $10K</h3>
+      <b>$9.8K</b>
+      <small>Full SaaS / Mobile App / Game · 4–6 weeks</small>
+      <ul>
+        <li>✓ Complete architecture + backend + UI/UX</li>
+        <li>✓ Auth, billing, database schema & admin portal</li>
+        <li>✓ Native iOS/Android or Web deployment</li>
+        <li>✓ Full source code ownership + 30-day support</li>
+      </ul>
+      <button class="btn" onclick="choosePackage('Product — $9.8K')">Start $10K build →</button>
+    </div>
+
+    <div class="pc rv">
+      <h3>Partner</h3>
+      <b>$3K/mo</b>
+      <small>CTO-as-a-service · Ongoing engineering</small>
+      <ul>
+        <li>✓ Technical roadmap + architecture governance</li>
+        <li>✓ Weekly development sprints & code reviews</li>
+        <li>✓ Scalability, security & cloud optimizations</li>
+        <li>✓ Priority 24/7 Slack/Telegram communication</li>
+      </ul>
+      <button class="ghost" onclick="choosePackage('Partner — $3K/mo')">Talk First</button>
+    </div>
+  </div>
+</section>
+
+<!-- Proof / Testimonials -->
+<section id="testi">
+  <div class="shead rv">
+    <small>05 — PROOF</small>
+    <h2>What founders & clients say.</h2>
+  </div>
+  <div class="tview rv">
+    <div id="tslide">
+      <h3 id="tq">“Shipped our entire SaaS platform in 5 weeks. Architecture is brilliantly clean and scalable.”</h3>
+      <p id="ta">— Daniel K., SaaS Founder · $9.8K Project</p>
+    </div>
+    <div class="tdots">
+      <button class="on" onclick="tgo(0)" aria-label="Testimonial 1"></button>
+      <button onclick="tgo(1)" aria-label="Testimonial 2"></button>
+      <button onclick="tgo(2)" aria-label="Testimonial 3"></button>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Form -->
+<section id="contact">
+  <div class="cgrid">
+    <div class="rv">
+      <small>06 — CONTACT</small>
+      <h2>Concept → launch.<br>One message away.</h2>
+      <p class="sub">
+        Receive a comprehensive scope breakdown and guaranteed fixed-price quote within 24 hours. NDA friendly.
+      </p>
+      <div class="cmrow">
+        <span>✉️ hello@nova-studio.dev</span>
+        <span>✈️ t.me/novabuilds</span>
+        <span>💼 Upwork Top Rated Plus</span>
+      </div>
+      <div style="margin-top:24px">
+        <a href="../index.html" class="ghost" style="display:inline-block">← Explore All 66 Production Builds</a>
+      </div>
+    </div>
+
+    <form class="rv" id="cform" onsubmit="return submitF(event)">
+      <div class="frow">
+        <input id="n" placeholder="Your Name *" required>
+        <input id="e" type="email" placeholder="Work Email *" required>
+      </div>
+      <select id="b">
+        <option value="Product — $9.8K">Product $10K Build (SaaS / Mobile / Game) — ~$9.8K</option>
+        <option value="Sprint — $1.5K">Sprint MVP Slice — ~$1.5K</option>
+        <option value="Mobile App — $8K">Mobile App (Flutter / Swift) — ~$8K</option>
+        <option value="Game Dev — $6K">Game / 3D WebGL (Godot / Three.js) — ~$6K</option>
+        <option value="AI Automation — $5K">AI & Neural Automation — ~$5K</option>
+        <option value="Partner — $3K/mo">CTO Partner / Fractional Lead — $3K/mo</option>
+      </select>
+      <textarea id="m" placeholder="What should we build? What is your timeline and core feature set?" required></textarea>
+      <button class="btn big" style="width:100%">Send Request → Get Quote in 24h</button>
+      <p id="cok">✓ Message received! We will reply with an architectural proposal within 24h.</p>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  ◈ NOVA Studio — CEO & Lead Software Architect · Python · Go · C++ · Flutter · Godot · Three.js · Swift · <a href="../index.html" style="color:#e9c46a">All 66 Projects Hub</a> · © 2026
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

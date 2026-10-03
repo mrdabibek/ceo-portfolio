@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ember Roast — Specialty Coffee</title>
+<meta name="description" content="Ember Roast — coffee worth slowing down for. Single-origin, roasted weekly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* {
+margin:0;
+padding:0;
+box-sizing:border-box
+}
+:root {
+--bg:#f7f1e8;
+--card:#fffdf8;
+--ink:#2e1f16;
+--mut:#8a7364;
+--line:#e5d7c5;
+--brand:#9c4a12;
+--dark:#241610;
+--r:18px
+}
+html {
+scroll-behavior:smooth
+}
+body {
+font-family:'Inter',sans-serif;
+background:var(--bg);
+color:var(--ink);
+line-height:1.65
+}
+h1,h2,h3,.serif {
+font-family:'Fraunces',serif
+}
+/* warm editorial nav */
+nav {
+position:sticky;
+top:0;
+z-index:50;
+background:#f7f1eef2;
+backdrop-filter:blur(12px);
+border-bottom:1px solid var(--line)
+}
+.nav-in {
+max-width:1180px;
+margin:0 auto;
+padding:16px 28px;
+display:flex;
+align-items:center;
+gap:30px
+}
+.logo {
+font-family:'Fraunces';
+font-size:24px;
+font-weight:700;
+text-decoration:none;
+color:var(--ink)
+}
+.logo i {
+font-style:italic;
+color:var(--brand)
+}
+.links {
+display:flex;
+gap:24px
+}
+.links a {
+color:var(--mut);
+text-decoration:none;
+font-size:14px;
+font-weight:600
+}
+.links a:hover {
+color:var(--ink)
+}
+.nav-r {
+margin-left:auto;
+display:flex;
+gap:10px;
+align-items:center
+}
+.btn {
+display:inline-block;
+padding:13px 30px;
+border-radius:99px;
+border:0;
+cursor:pointer;
+font-weight:700;
+font-size:14.5px;
+text-decoration:none;
+font-family:inherit;
+transition:.25s
+}
+.btn-p {
+background:var(--dark);
+color:#f7f1e8
+}
+.btn-p:hover {
+background:var(--brand)
+}
+.btn-o {
+background:transparent;
+border:1.5px solid var(--line);
+color:var(--ink)
+}
+.btn-sm {
+padding:10px 20px;
+font-size:13.5px
+}
+/* hero — magazine spread */
+.hero {
+max-width:1180px;
+margin:0 auto;
+padding:60px 28px 30px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:56px;
+align-items:center
+}
+.kicker {
+font-size:12px;
+letter-spacing:4px;
+text-transform:uppercase;
+color:var(--brand);
+font-weight:700;
+margin-bottom:16px
+}
+.hero h1 {
+font-size:clamp(46px,6vw,84px);
+line-height:1.02;
+letter-spacing:-1.5px;
+font-weight:700
+}
+.hero h1 em {
+font-style:italic;
+color:var(--brand)
+}
+.hero p {
+color:var(--mut);
+font-size:17px;
+margin:18px 0 26px;
+max-width:460px
+}
+.hero-row {
+display:flex;
+gap:12px;
+flex-wrap:wrap
+}
+.hero-proof {
+display:flex;
+gap:26px;
+margin-top:26px
+}
+.hero-proof b {
+font-family:'Fraunces';
+font-size:26px;
+display:block
+}
+.hero-proof small {
+color:var(--mut);
+font-size:12.5px
+}
+.hero-imgs {
+display:grid;
+grid-template-columns:1.3fr .7fr;
+gap:14px
+}
+.hero-imgs img {
+width:100%;
+object-fit:cover;
+border-radius:var(--r);
+display:block
+}
+.hero-imgs .a {
+height:520px
+}
+.hero-imgs .b {
+height:250px
+}
+.hero-imgs .c {
+height:256px;
+margin-top:14px
+}
+/* marquee */
+.mq {
+border-top:1px solid var(--line);
+border-bottom:1px solid var(--line);
+overflow:hidden;
+white-space:nowrap;
+padding:13px 0;
+margin-top:44px;
+background:var(--card)
+}
+.mq-in {
+display:inline-block;
+animation:mq 24s linear infinite;
+font-family:'Fraunces';
+font-style:italic;
+font-size:18px;
+color:var(--brand)
+}
+@keyframes mq {
+to {
+transform:translateX(-50%)
+}
+
+}
+/* menu section */
+section {
+padding:78px 0
+}
+.wrap {
+max-width:1180px;
+margin:0 auto;
+padding:0 28px
+}
+.sec-tag {
+font-size:12px;
+letter-spacing:4px;
+text-transform:uppercase;
+color:var(--brand);
+font-weight:700
+}
+.sec-title {
+font-size:clamp(32px,4vw,50px);
+letter-spacing:-1px;
+margin:10px 0 10px
+}
+.sec-sub {
+color:var(--mut);
+max-width:620px
+}
+.tabs {
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin:26px 0
+}
+.tabs button {
+border:1.5px solid var(--line);
+background:var(--card);
+padding:11px 24px;
+border-radius:99px;
+font-family:inherit;
+font-size:13.5px;
+font-weight:700;
+cursor:pointer
+}
+.tabs button.on,.tabs button:hover {
+background:var(--dark);
+color:#f7f1e8;
+border-color:var(--dark)
+}
+.menu-grid {
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:0 48px
+}
+.dish {
+display:grid;
+grid-template-columns:1fr auto;
+gap:2px 16px;
+padding:20px 0;
+border-bottom:1px dashed var(--line)
+}
+.dish h3 {
+font-size:22px
+}
+.dish p {
+color:var(--mut);
+font-size:14px;
+grid-column:1
+}
+.dish b {
+font-family:'Fraunces';
+font-size:20px;
+color:var(--brand)
+}
+/* brew guide */
+.brew {
+background:var(--dark);
+color:#f2e7d8;
+border-radius:26px;
+padding:60px 6%;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:48px;
+align-items:center;
+margin-top:60px
+}
+.brew img {
+width:100%;
+height:420px;
+object-fit:cover;
+border-radius:var(--r)
+}
+.bsteps {
+display:grid;
+gap:0;
+margin-top:22px
+}
+.bstep {
+display:grid;
+grid-template-columns:44px 1fr;
+gap:16px;
+padding:16px 0;
+border-bottom:1px solid #ffffff22
+}
+.bstep b.n {
+width:44px;
+height:44px;
+border-radius:50%;
+border:1.5px solid #ffffff44;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:'Fraunces'
+}
+.bstep p {
+color:#c9b6a4;
+font-size:14.5px
+}
+/* beans shop */
+.beans {
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+margin-top:30px
+}
+.bean {
+background:var(--card);
+border:1px solid var(--line);
+border-radius:var(--r);
+overflow:hidden;
+transition:.25s
+}
+.bean:hover {
+transform:translateY(-4px);
+box-shadow:0 24px 55px -22px rgba(60,35,15,.35)
+}
+.bean img {
+width:100%;
+height:230px;
+object-fit:cover;
+display:block
+}
+.bean div {
+padding:20px 22px
+}
+.bean small {
+color:var(--brand);
+font-weight:700;
+font-size:12px;
+letter-spacing:2px;
+text-transform:uppercase
+}
+/* subscription */
+.sub {
+background:var(--card);
+border:1px solid var(--line);
+border-radius:26px;
+padding:56px 6%;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:44px;
+align-items:center;
+margin-top:56px
+}
+.sub img {
+width:100%;
+height:360px;
+object-fit:cover;
+border-radius:var(--r)
+}
+.toggle {
+display:flex;
+background:var(--bg);
+border-radius:99px;
+padding:5px;
+margin:20px 0;
+max-width:380px
+}
+.toggle button {
+flex:1;
+border:0;
+background:none;
+padding:12px;
+border-radius:99px;
+font-family:inherit;
+font-weight:700;
+font-size:14px;
+cursor:pointer;
+color:var(--mut)
+}
+.toggle button.on {
+background:var(--dark);
+color:#f7f1e8
+}
+#subPrice {
+font-family:'Fraunces';
+font-size:44px
+}
+/* reviews */
+.revs {
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+margin-top:30px
+}
+.rev {
+background:var(--card);
+border:1px solid var(--line);
+border-radius:var(--r);
+padding:26px
+}
+.stars {
+color:var(--brand);
+letter-spacing:2px
+}
+.cta {
+text-align:center;
+margin-top:64px
+}
+footer {
+border-top:1px solid var(--line);
+padding:32px 0;
+color:var(--mut);
+font-size:14px;
+margin-top:70px
+}
+.foot {
+display:flex;
+justify-content:space-between;
+gap:14px;
+flex-wrap:wrap
+}
+.rv {
+opacity:0;
+transform:translateY(26px);
+transition:.7s
+}
+.rv.in {
+opacity:1;
+transform:none
+}
+#toTop {
+position:fixed;
+right:20px;
+bottom:20px;
+width:44px;
+height:44px;
+border-radius:50%;
+background:var(--dark);
+color:#f7f1e8;
+border:0;
+cursor:pointer;
+display:none
+}
+@media(max-width:950px) {
+.links {
+display:none
+}
+.hero {
+grid-template-columns:1fr
+}
+.brew,.sub {
+grid-template-columns:1fr
+}
+.beans,.revs {
+grid-template-columns:1fr 1fr
+}
+.menu-grid {
+grid-template-columns:1fr
+}
+
+}
+@media(max-width:620px) {
+.beans,.revs {
+grid-template-columns:1fr
+}
+
+}
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+<a class="logo" href="#">Ember<i>Roast</i></a>
+<div class="links"><a href="#menu">Menu</a><a href="#brew">Brew guides</a><a href="#beans">Beans</a><a href="#club">Roast Club</a><a href="#reviews">Reviews</a></div>
+<div class="nav-r"><span style="color:var(--mut);font-size:13.5px">● Open daily 7–19</span><button class="btn btn-p btn-sm" onclick="document.getElementById('club').scrollIntoView({behavior:'smooth'})">Join Roast Club</button></div>
+</div></nav>
+<div class="hero">
+<div>
+<div class="kicker">Single-origin · roasted every Thursday</div>
+<h1>Coffee worth <em>slowing down</em> for.</h1>
+<p>Twelve farm relationships, one vintage Probat roaster, zero syrups hiding bad beans. Poured slowly in a room that smells like toast.</p>
+<div class="hero-row"><a href="#menu" class="btn btn-p">See the menu →</a><a href="#brew" class="btn btn-o">Learn to brew</a></div>
+<div class="hero-proof"><div><b>12</b><small>Farm partners</small></div><div><b>4.9</b><small>2,100 reviews</small></div><div><b>48h</b><small>Roast to cup</small></div></div>
+</div>
+<div class="hero-imgs">
+<div><img class="a" src="https://picsum.photos/seed/coffeehero/700/900" alt="Cafe"></div>
+<div><img class="b" src="https://picsum.photos/seed/coffeelatte/400/400" alt="Latte"><img class="c" src="https://picsum.photos/seed/coffeebeans/400/400" alt="Beans"></div>
+</div>
+</div>
+<div class="mq"><div class="mq-in" id="mq">Oat-milk flat white · Cardamom cold brew · Honey cortado · Espresso tonic · Oat-milk flat white · Cardamom cold brew · Honey cortado · Espresso tonic ·&nbsp;</div></div>
+<div class="wrap">
+<section id="menu" style="padding-bottom:10px">
+<div class="sec-tag rv">The menu</div>
+<h2 class="sec-title rv">Poured, not rushed</h2>
+<p class="sec-sub rv">Beans change monthly — methods stay classic. Oat, whole or black; always double ristretto.</p>
+<div class="tabs rv" id="menuTabs"><button class="on" data-f="all">Everything</button><button data-f="esp">Espresso</button><button data-f="slow">Slow bar</button><button data-f="sweet">Bakery</button></div>
+<div class="menu-grid rv" id="dishes"></div>
+</section>
+<section id="brew" style="padding-bottom:10px">
+<div class="brew rv">
+<div><div class="sec-tag" style="color:#e8b07e">Brew guides</div>
+<h2 class="sec-title" style="color:#f7f1e8">V60 that tastes like apricots, not paper.</h2>
+<p style="color:#c9b6a4">Our head barista's exact recipe — the same one we teach every Saturday at 10:00, free with any bag.</p>
+<div class="bsteps">
+<div class="bstep"><b class="n">1</b><div><b>Rinse + 15g fine</b><p>Boil, rinse filter, 15g coffee at table-salt grind.</p></div></div>
+<div class="bstep"><b class="n">2</b><div><b>Bloom 45 seconds</b><p>50g water at 92°C. Swirl. Wait for the bubbles.</p></div></div>
+<div class="bstep"><b class="n">3</b><div><b>Pour to 250g slow</b><p>Spiral pours to 250g by 1:30. Drawdown by 2:45.</p></div></div>
+</div></div>
+<img loading="lazy" src="https://picsum.photos/seed/coffeebrew/800/700" alt="Brewing">
+</div>
+</section>
+<section id="beans" style="padding-bottom:10px">
+<div class="sec-tag rv">Fresh roasts</div>
+<h2 class="sec-title rv">Take the café home</h2>
+<div class="beans">
+<div class="bean rv"><img loading="lazy" src="https://picsum.photos/seed/coffeebeans/600/450" alt=""><div><small>Ethiopia · washed</small><h3>Yirgacheffe Apricot</h3><p style="color:var(--mut);font-size:14px">Jasmine, bergamot, stone fruit. For V60 lovers.</p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><b class="serif" style="font-size:22px">$18</b><button class="btn btn-p btn-sm" onclick="beanBuy(this)">Add bag +</button></div></div></div>
+<div class="bean rv"><img loading="lazy" src="https://picsum.photos/seed/coffeebarista/600/450" alt=""><div><small>Colombia · honey</small><h3>Huila Caramel</h3><p style="color:var(--mut);font-size:14px">Brown sugar, cocoa, orange. Espresso sweetheart.</p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><b class="serif" style="font-size:22px">$17</b><button class="btn btn-p btn-sm" onclick="beanBuy(this)">Add bag +</button></div></div></div>
+<div class="bean rv"><img loading="lazy" src="https://picsum.photos/seed/coffeecafe/600/450" alt=""><div><small>House blend</small><h3>Ember Daily No. 4</h3><p style="color:var(--mut);font-size:14px">Chocolate, hazelnut, forgiving. French-press hero.</p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><b class="serif" style="font-size:22px">$16</b><button class="btn btn-p btn-sm" onclick="beanBuy(this)">Add bag +</button></div></div></div>
+</div>
+<p id="beanOk" style="display:none;margin-top:16px;background:#e8fbef;border:1.5px solid #2ecc71;border-radius:12px;padding:12px 18px;font-weight:700;font-size:14px"></p>
+</section>
+<section id="club" style="padding-bottom:10px">
+<div class="sub rv">
+<div><div class="sec-tag">Roast Club</div>
+<h2 class="sec-title">Never run dry again.</h2>
+<p style="color:var(--mut)">A rotating single-origin at your door, roasted the same week. Pause or cancel in one tap.</p>
+<div class="toggle" id="subToggle"><button class="on" data-p="$16/mo" data-t="1 bag / month · free shipping">Monthly</button><button data-p="$29/mo" data-t="2 bags / month · free shipping + tastings">Double</button></div>
+<div><span id="subPrice">$16/mo</span><p style="color:var(--mut);font-size:14px" id="subDesc">1 bag / month · free shipping</p></div>
+<br><button class="btn btn-p" onclick="subJoin(event)">Start subscription →</button>
+<p id="subOk" style="display:none;margin-top:14px;color:#166534;font-weight:700;font-size:14px"></p></div>
+<img loading="lazy" src="https://picsum.photos/seed/coffeecroissant/800/700" alt="Subscription">
+</div>
+</section>
+<section id="reviews" style="padding-bottom:0">
+<div class="sec-tag rv">Regulars say</div>
+<h2 class="sec-title rv">The corner table crowd</h2>
+<div class="revs">
+<div class="rev rv"><div class="stars">★★★★★</div><p>"The flat white here ruined every other café for me. I mean that lovingly."</p><br><b>Sarah M.</b></div>
+<div class="rev rv"><div class="stars">★★★★★</div><p>"Roast Club bag arrived still warm-ish. Brew guide card is now fridge art."</p><br><b>James K.</b></div>
+<div class="rev rv"><div class="stars">★★★★★</div><p>"Brought my laptop for an hour, stayed for four. Staff never rushed me."</p><br><b>Amelia R.</b></div>
+</div>
+<div class="cta rv"><h2 class="sec-title">Saturday cupping, 10:00 — free.</h2><p class="sec-sub" style="margin:0 auto 22px;text-align:center">Taste three origins side by side. 14 Maple St — just show up.</p>
+<img loading="lazy" src="https://picsum.photos/seed/coffeeabout/1000/380" alt="Roastery" style="width:100%;height:260px;object-fit:cover;border-radius:var(--r);margin-bottom:24px">
+<br><button class="btn btn-p" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Plan your visit →</button></div>
+</section>
+<footer><div class="wrap foot"><div>© 2026 Ember Roast · 14 Maple St · Daily 7–19</div><div>Menu · Roast Club · Wholesale</div></div></footer>
+</div>
+<button id="toTop" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+// cafe menu filter
+const DISHES=[
+{t:'Oat-Milk Flat White',d:'Double ristretto, silk-steamed oat milk.',p:'$4.8',c:'esp'},
+{t:'Honey Cortado',d:'Local buckwheat honey, 4oz glass.',p:'$5.2',c:'esp'},
+{t:'Espresso Tonic',d:'Kenya AA over artisan tonic, orange.',p:'$5.5',c:'esp'},
+{t:'V60 Single-Origin',d:'Rotating Ethiopia / Colombia, 250g.',p:'$5.0',c:'slow'},
+{t:'Cardamom Cold Brew',d:'18-hour steep, green cardamom.',p:'$5.8',c:'slow'},
+{t:'Butter Croissant',d:'Laminated daily, French butter.',p:'$3.6',c:'sweet'},
+{t:'Cardamom Bun',d:'Swedish recipe, pearl sugar.',p:'$4.2',c:'sweet'},
+{t:'Banana Espresso Bread',d:'Toasted, salted butter.',p:'$4.0',c:'sweet'}];
+function renderMenu(f){const w=document.getElementById('dishes');w.innerHTML='';DISHES.filter(d=>f==='all'||d.c===f).forEach(d=>{const e=document.createElement('div');e.className='dish';e.innerHTML='<h3>'+d.t+'</h3><b>'+d.p+'</b><p>'+d.d+'</p>';w.appendChild(e)})}
+document.getElementById('menuTabs').addEventListener('click',e=>{if(e.target.tagName!=='BUTTON')return;document.querySelectorAll('#menuTabs button').forEach(b=>b.classList.remove('on'));e.target.classList.add('on');renderMenu(e.target.dataset.f)});
+renderMenu('all');
+const mq=document.getElementById('mq');mq.innerHTML+=mq.innerHTML;
+function beanBuy(b){b.textContent='Added ✓';const m=document.getElementById('beanOk');m.style.display='block';m.textContent='Added to your pickup order — ready tomorrow after 9:00 at 14 Maple St.';setTimeout(()=>b.textContent='Add bag +',1600)}
+document.getElementById('subToggle').addEventListener('click',e=>{if(e.target.tagName!=='BUTTON')return;document.querySelectorAll('#subToggle button').forEach(b=>b.classList.remove('on'));e.target.classList.add('on');document.getElementById('subPrice').textContent=e.target.dataset.p;document.getElementById('subDesc').textContent=e.target.dataset.t});
+function subJoin(e){const b=e.target;b.textContent='Welcome to the club…';setTimeout(()=>{b.textContent='You\u2019re in ✓';document.getElementById('subOk').style.display='block';document.getElementById('subOk').textContent='First roast ships Thursday. Brewing card + stickers included.'},900)}
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+addEventListener('scroll',()=>document.getElementById('toTop').style.display=scrollY>600?'block':'none');
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

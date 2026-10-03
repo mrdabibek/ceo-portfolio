@@ -1,0 +1,42 @@
+Title: CEO & Lead Software Architect | Full-Stack & Game Development
+
+Overview (Profil matni)
+I lead end-to-end digital product development, bridging high-level product vision with hands-on technical execution. As a CEO and Lead Developer, I help businesses, startups, and creators build production-ready software, high-performance applications, and interactive experiences from the ground up.
+
+Whether architecting distributed backend systems, developing interactive 3D web engines, or delivering mobile platforms, my focus is always on clean architecture, performance, and timely delivery.
+
+Core Capabilities & Services
+Architecture & Backend Engineering: Scalable microservices, REST APIs, and database design optimized for low latency and high reliability.
+
+Game & Interactive Development: High-performance 2D/3D games, browser-based graphics, and interactive simulations.
+
+Cross-Platform Mobile & Web: Native and cross-platform apps with clean UI/UX, responsive layouts, and robust state management.
+
+AI & Workflow Automation: Custom tool integrations, local model pipelines, and automated business workflows.
+
+Technical Stack
+Languages & Core: Python, Go (Golang), C++, GDScript, HTML5/CSS3, JavaScript
+
+Engines & Web Graphics: Godot Engine, Three.js, HTML5 Canvas, WebAssembly
+
+Mobile & Cross-Platform: Flutter, Kotlin
+
+Databases & Tools: SQLite, Git, Linux/Ubuntu environments, Hardware/IoT prototyping
+
+Selected Project Track Record
+Peer-to-Peer Platforms: Architected modular, lightweight collaboration systems using Go and SQLite.
+
+Interactive 3D Web Engines: Developed browser-based 3D runner and physics-driven mechanics with Three.js and Canvas.
+
+Mobile Applications: Built commercial platforms for agricultural export tracking and multi-game mobile launchers.
+
+Game Development: Designed mechanics, procedural layouts, and vehicle physics in Godot Engine.
+
+How We Work
+Discovery & Architecture: We analyze requirements, choose the right tech stack, and set clear milestones.
+
+Iterative Development: Fast development cycles with regular updates, clean code standards, and transparent progress.
+
+Deployment & Delivery: Rigorous testing, build preparation, and post-launch technical support.
+
+Looking to take your project from concept to launch with an experienced engineering lead? Click "Invite to Job" to discuss your roadmap.

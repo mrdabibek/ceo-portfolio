@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GoRide — Taxi Fare Calculator</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+:root{
+--yel:#ffd500;
+--ink:#111111;
+--mut:#6b6b60;
+--card:#ffffff;
+--bg:#f4f2ea;
+}
+body{
+font-family:"Segoe UI",Inter,Arial,sans-serif;
+background:var(--bg);
+color:var(--ink);
+}
+.topbar{
+background:var(--ink);
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:14px 28px;
+}
+.logo{font-weight:900;font-size:18px;}
+.logo span{
+background:var(--yel);
+color:#111;
+border-radius:7px;
+padding:1px 9px;
+margin-right:8px;
+}
+.links{display:flex;gap:24px;font-size:14px;}
+.links a{color:#bbb;text-decoration:none;}
+.links a:hover{color:var(--yel);}
+.btn{
+background:var(--yel);
+border:0;
+font-weight:800;
+padding:11px 24px;
+border-radius:12px;
+cursor:pointer;
+font-size:14px;
+color:#111;
+}
+.hero{
+background:var(--yel);
+padding:40px 28px 90px;
+position:relative;
+overflow:hidden;
+}
+.hero::after{
+content:"";
+position:absolute;
+left:0;right:0;bottom:26px;height:14px;
+background:repeating-linear-gradient(90deg,#111 0 26px,transparent 26px 52px);
+opacity:.9;
+}
+.hero-in{max-width:1120px;margin:0 auto;}
+.hero h1{
+font-size:clamp(32px,5vw,54px);
+letter-spacing:-2px;
+line-height:1;
+}
+.hero p{margin-top:8px;font-weight:600;color:#333;}
+.wrap{
+max-width:1120px;
+margin:-56px auto 0;
+padding:0 20px 40px;
+position:relative;
+z-index:2;
+}
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+.card{
+background:var(--card);
+border-radius:20px;
+padding:26px;
+box-shadow:0 14px 40px rgba(0,0,0,.1);
+border:2px solid #111;
+}
+.card h3{font-size:16px;letter-spacing:-.3px;}
+.card>p{color:var(--mut);font-size:13px;margin:4px 0 16px;}
+label{
+font-size:12px;
+font-weight:800;
+letter-spacing:1px;
+text-transform:uppercase;
+display:block;
+margin:14px 0 6px;
+}
+select,input[type=range],input[type=text]{
+width:100%;
+}
+select,.txt{
+border:2px solid #111;
+border-radius:12px;
+padding:12px 14px;
+font-size:14px;
+font-weight:600;
+background:#fff;
+}
+input[type=range]{accent-color:#111;height:32px;}
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+.tariffs{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-top:8px;
+}
+.tar{
+border:2px solid #111;
+border-radius:14px;
+padding:13px 10px;
+text-align:center;
+cursor:pointer;
+background:#fff;
+}
+.tar b{display:block;font-size:14px;}
+.tar small{color:var(--mut);font-size:11px;}
+.tar.on{background:#111;color:var(--yel);}
+.tar.on small{color:var(--yel);}
+.fare{
+background:#111;
+color:#fff;
+border-radius:16px;
+padding:20px;
+margin-top:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+.fare b{font-size:34px;color:var(--yel);}
+.fare small{display:block;color:#999;font-size:11px;letter-spacing:1px;}
+.book{width:100%;margin-top:12px;font-size:16px;padding:15px;}
+/* map */
+.map{
+background:#111;
+border-radius:16px;
+height:280px;
+position:relative;
+overflow:hidden;
+border:2px solid #111;
+margin-top:6px;
+}
+.road{
+position:absolute;
+background:#2b2b2b;
+}
+.car{
+position:absolute;
+font-size:26px;
+transition:left 1s linear,top 1s linear;
+z-index:3;
+}
+.pin{position:absolute;font-size:22px;}
+.eta{
+position:absolute;
+left:12px;bottom:12px;
+background:var(--yel);
+border-radius:10px;
+padding:8px 14px;
+font-weight:800;
+font-size:13px;
+}
+/* drivers */
+.drivers{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.d{
+display:flex;
+gap:12px;
+align-items:center;
+border:2px solid #eee;
+border-radius:14px;
+padding:11px 13px;
+}
+.d .face{
+width:42px;height:42px;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-weight:800;color:#fff;flex-shrink:0;
+}
+.d small{color:var(--mut);}
+.d .r{margin-left:auto;font-weight:800;}
+.hist{
+margin-top:14px;
+font-size:13px;
+}
+.hist div{
+display:flex;justify-content:space-between;
+padding:8px 2px;border-bottom:1px dashed #ddd;
+}
+.how{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px;
+margin-top:18px;
+}
+.step{
+background:#fff;
+border:2px solid #111;
+border-radius:18px;
+padding:22px;
+}
+.step .n{
+width:36px;
+height:36px;
+background:var(--yel);
+border:2px solid #111;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+margin-bottom:12px;
+}
+.step h4{font-size:15px;margin-bottom:6px;}
+.step p{color:var(--mut);font-size:13px;}
+.zones{
+margin-top:18px;
+background:#111;
+color:#fff;
+border-radius:20px;
+padding:26px;
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:16px;
+}
+.zone small{color:var(--yel);font-size:11px;font-weight:800;letter-spacing:2px;}
+.zone b{font-size:20px;display:block;margin:4px 0;}
+.zone p{color:#999;font-size:12.5px;}
+.faq2{
+margin-top:18px;
+background:#fff;
+border:2px solid #111;
+border-radius:20px;
+padding:24px;
+}
+.faq2 h3{font-size:17px;margin-bottom:12px;}
+.faq2 details{
+border-top:2px solid #eee;
+padding:13px 4px;
+font-size:14px;
+}
+.faq2 summary{font-weight:800;cursor:pointer;}
+.faq2 p{color:var(--mut);margin-top:6px;font-size:13px;}
+.safety{
+margin-top:18px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+.board2{
+margin-top:18px;
+background:#fff;
+border:2px solid #111;
+border-radius:20px;
+padding:24px;
+}
+.board2 h3{
+font-size:17px;
+}
+.board2>p{
+color:var(--mut);
+font-size:13px;
+margin:4px 0 14px;
+}
+.rank{
+display:flex;
+gap:12px;
+align-items:center;
+padding:11px 4px;
+border-bottom:2px solid #f0ede2;
+}
+.rank:last-child{
+border-bottom:0;
+}
+.rank .medal{
+width:38px;
+height:38px;
+border-radius:50%;
+background:#111;
+color:var(--yel);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+flex-shrink:0;
+}
+.rank small{
+color:var(--mut);
+font-size:12px;
+}
+.rank .pts{
+margin-left:auto;
+font-weight:900;
+font-size:15px;
+}
+.safe{
+background:#fff;
+border:2px solid #111;
+border-radius:16px;
+padding:18px;
+text-align:center;
+}
+.safe .e{font-size:26px;}
+.safe b{display:block;font-size:13px;margin:8px 0 3px;}
+.safe small{color:var(--mut);font-size:11.5px;}
+footer{text-align:center;color:var(--mut);font-size:12px;padding:0 0 30px;}
+@media(max-width:900px){
+.grid{grid-template-columns:1fr;}
+.links{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+<div class="logo"><span>GO</span>RIDE</div>
+<div class="links"><a href="#">Ride</a><a href="#">Business</a><a href="#">Drive</a><a href="#">Support</a></div>
+<button class="btn">Download app</button>
+</div>
+<div class="hero">
+<div class="hero-in">
+<h1>Fair fare.<br>Fast pickup.</h1>
+<p>★ 4.9 · 120k rides/mo · avg pickup 3 min · no surge after midnight</p>
+</div>
+</div>
+<div class="wrap">
+<div class="grid">
+<div class="card">
+<h3>▦ Fare calculator</h3>
+<p>Move sliders — price updates live. Book in one tap.</p>
+<label>Pickup → Dropoff</label>
+<div class="row">
+<input class="txt" id="from" value="Amir Timur Sq">
+<input class="txt" id="to" value="Airport T2">
+</div>
+<label>Distance — <span id="kmv">8.5</span> km</label>
+<input type="range" id="km" min="1" max="60" step="0.5" value="8.5">
+<label>Duration — <span id="minv">18</span> min (traffic)</label>
+<input type="range" id="mins" min="3" max="120" value="18">
+<label>Tariff</label>
+<div class="tariffs" id="tars">
+<div class="tar on" data-base="1.2" data-km="0.45" data-min="0.08"><b>🚗 Econ</b><small>from $1.2</small></div>
+<div class="tar" data-base="2" data-km="0.7" data-min="0.12"><b>🚕 Comfort</b><small>from $2.0</small></div>
+<div class="tar" data-base="3.5" data-km="1.1" data-min="0.2"><b>✦ Business</b><small>from $3.5</small></div>
+</div>
+<div class="fare">
+<div><small>ESTIMATED FARE</small><b>$<span id="fare">7.49</span></b></div>
+<div style="text-align:right"><small>ETA</small><b style="font-size:22px" id="eta">4 min</b></div>
+</div>
+<button class="btn book" onclick="book()">Book this ride →</button>
+<div class="hist" id="hist"></div>
+</div>
+<div class="card">
+<h3>◉ Live map</h3>
+<p>Watch your driver roll in. Demo animation.</p>
+<div class="map" id="map">
+<div class="road" style="left:0;right:0;top:44%;height:26px"></div>
+<div class="road" style="top:0;bottom:0;left:30%;width:24px"></div>
+<div class="road" style="top:0;bottom:0;left:68%;width:24px"></div>
+<div class="pin" style="left:12%;top:18%">📍</div>
+<div class="pin" style="right:12%;bottom:22%">🏁</div>
+<div class="car" id="car" style="left:12%;top:42%">🚕</div>
+<div class="eta" id="etabox">🚕 driver 4 min away</div>
+</div>
+<h3 style="margin-top:18px">Nearby drivers</h3>
+<p>Tap to pick your driver.</p>
+<div class="drivers" id="drivers"></div>
+</div>
+</div>
+<div class="how">
+<div class="step"><div class="n">1</div><h4>Enter route</h4><p>Type pickup and dropoff — or drag the sliders to estimate any trip.</p></div>
+<div class="step"><div class="n">2</div><h4>Pick tariff &amp; driver</h4><p>Econ for daily, Comfort for clients, Business for nights out.</p></div>
+<div class="step"><div class="n">3</div><h4>Track &amp; ride</h4><p>Watch the car roll in on the live map. Pay cash or card.</p></div>
+</div>
+<div class="zones">
+<div class="zone"><small>ZONE A · CENTER</small><b>$1.2 base</b><p>Mirzo-Ulugbek, Yunusabad, Chilanzar core.</p></div>
+<div class="zone"><small>ZONE B · AIRPORT</small><b>+$3 flat</b><p>Fixed airport fee, no meter games at 2 AM.</p></div>
+<div class="zone"><small>ZONE C · NIGHT 00–06</small><b>×1.2</b><p>Transparent multiplier shown before you book.</p></div>
+</div>
+<div class="safety">
+<div class="safe"><div class="e">🛡️</div><b>Verified drivers</b><small>passport + car check</small></div>
+<div class="safe"><div class="e">📍</div><b>Live GPS</b><small>share trip link</small></div>
+<div class="safe"><div class="e">💳</div><b>Cash or card</b><small>receipt always</small></div>
+<div class="safe"><div class="e">◍</div><b>24/7 support</b><small>40-sec reply</small><div class="board2">
+<h3>🎁 Promo — first week</h3>
+<p style="margin-top:6px">Code <b>WELCOME20</b> takes 20% off 3 rides. Refer a friend, you both get $3 credit. Students ride −20% every Sunday. Airport flat fares never surge — screenshot this.</p>
+</div>
+<div class="faq2">
+<h3>Popular routes — fixed fares</h3>
+<div class="hist">
+<div><span>🚕 Center → Airport T2 <small style="color:var(--mut)">· 12 km · 25 min</small></span><b>$8.90</b></div>
+<div><span>🚕 Railway Station → Magic City <small style="color:var(--mut)">· 6 km · 14 min</small></span><b>$4.20</b></div>
+<div><span>🚕 IT Park → Tashkent City <small style="color:var(--mut)">· 9 km · 18 min</small></span><b>$6.10</b></div>
+<div><span>🚕 Chorsu → Minor Mosque <small style="color:var(--mut)">· 4 km · 10 min</small></span><b>$3.00</b></div>
+<div><span>🚕 Airport → Hilton <small style="color:var(--mut)">· 11 km · 22 min</small></span><b>$8.20</b></div>
+<div><span>🚕 Univ. → Botanical Garden <small style="color:var(--mut)">· 7 km · 15 min</small></span><b>$4.90</b></div>
+<div><span>🚕 Sergeli → Center <small style="color:var(--mut)">· 14 km · 30 min</small></span><b>$9.80</b></div>
+<div><span>🚕 Yunusabad → Humo Arena <small style="color:var(--mut)">· 8 km · 17 min</small></span><b>$5.60</b></div>
+<div><span>🚕 Mirabad → Tashkent Tower <small style="color:var(--mut)">· 5 km · 12 min</small></span><b>$3.80</b></div>
+<div><span>🚕 Chilanzar → Mega Planet <small style="color:var(--mut)">· 10 km · 21 min</small></span><b>$7.10</b></div>
+<div><span>🚕 Night: Center → Airport <small style="color:var(--mut)">· 00–06 · ×1.2</small></span><b>$10.70</b></div>
+<div><span>🚕 Business: Center loop <small style="color:var(--mut)">· hourly hire</small></span><b>$14/hr</b></div>
+<div><span>🎓 Student: Univ. → Center <small style="color:var(--mut)">· −20% with ID</small></span><b>$3.04</b></div>
+<div><span>📦 Parcel: door → door <small style="color:var(--mut)">· up to 5 kg</small></span><b>$2.50</b></div>
+<div><span>🐾 Pet ride: with carrier <small style="color:var(--mut)">· Comfort only</small></span><b>$6.40</b></div>
+<div><span>👔 Hourly hire: Business <small style="color:var(--mut)">· min 2 hrs</small></span><b>$28</b></div>
+</div>
+</div>
+<div class="board2">
+<h3>🏆 Driver leaderboard — October</h3>
+<p>Top-rated drivers get priority dispatch. Ratings from real riders.</p>
+<div class="rank"><div class="medal">1</div><div><b>Sardor K.</b><br><small>2,140 trips · Cobalt · ★ 4.97</small></div><div class="pts">9,840</div></div>
+<div class="rank"><div class="medal">2</div><div><b>Elena V.</b><br><small>1,870 trips · Nexia · ★ 4.95</small></div><div class="pts">9,120</div></div>
+<div class="rank"><div class="medal">3</div><div><b>Timur A.</b><br><small>1,540 trips · Camry · ★ 4.93</small></div><div class="pts">8,405</div></div>
+<div class="rank"><div class="medal">4</div><div><b>O. Yusupov</b><br><small>1,320 trips · Gentra · ★ 4.91</small></div><div class="pts">7,900</div></div>
+<div class="rank"><div class="medal">5</div><div><b>N. Rahimova</b><br><small>1,105 trips · Spark · ★ 4.90</small></div><div class="pts">7,310</div></div>
+</div>
+<div class="faq2">
+<h3>Questions</h3>
+<details open><summary>Is the price final?</summary><p>Yes — the estimate you book is the price you pay, traffic included.</p></details>
+<details><summary>Can I book for later?</summary><p>Scheduled rides open 7 days ahead, free cancellation to 10 min before.</p></details>
+<details><summary>Child seats?</summary><p>Free on Comfort and Business — add a note when booking.</p></details>
+</div>
+<footer style="margin-top:22px">GoRide demo · fares simulated · drivers are actors, prices are not.</footer>
+</div>
+<script>
+var drivers=[
+{n:"Sardor K.",c:"#111",r:"4.9 · 2.1k",car:"Cobalt · white",eta:3},
+{n:"Elena V.",c:"#d97706",r:"4.8 · 1.4k",car:"Nexia · yellow",eta:5},
+{n:"Timur A.",c:"#2563eb",r:"5.0 · 900",car:"Camry · black",eta:7}
+];
+var sel=0,cur={base:1.2,km:0.45,min:0.08};
+function renderD(){
+var w=document.getElementById('drivers');w.innerHTML='';
+drivers.forEach(function(d,i){
+w.innerHTML+='<div class="d" data-i="'+i+'" style="'+(i===sel?'border-color:#111;background:#fffbe6':'')+'"><div class="face" style="background:'+d.c+'">'+d.n[0]+'</div><div><b>'+d.n+'</b><br><small>'+d.car+' · ★ '+d.r+'</small></div><div class="r">'+d.eta+' min</div></div>';
+});
+}
+renderD();
+document.getElementById('drivers').addEventListener('click',function(e){
+var d=e.target.closest('.d');if(!d)return;
+sel=+d.dataset.i;renderD();calc();
+});
+document.getElementById('tars').addEventListener('click',function(e){
+var t=e.target.closest('.tar');if(!t)return;
+this.querySelectorAll('.tar').forEach(function(x){x.classList.remove('on');});
+t.classList.add('on');
+cur={base:+t.dataset.base,km:+t.dataset.km,min:+t.dataset.min};
+calc();
+});
+function calc(){
+var km=+document.getElementById('km').value,
+mn=+document.getElementById('mins').value;
+document.getElementById('kmv').textContent=km;
+document.getElementById('minv').textContent=mn;
+var f=cur.base+km*cur.km+mn*cur.min;
+document.getElementById('fare').textContent=f.toFixed(2);
+var eta=Math.max(2,Math.round(drivers[sel].eta+mn*0.05));
+document.getElementById('eta').textContent=eta+' min';
+document.getElementById('etabox').textContent='🚕 '+drivers[sel].n+' · '+eta+' min away';
+moveCar(eta);
+}
+document.getElementById('km').addEventListener('input',calc);
+document.getElementById('mins').addEventListener('input',calc);
+function moveCar(eta){
+var car=document.getElementById('car');
+var p=10+Math.random()*60;
+car.style.left=p+'%';
+car.style.top=(38+Math.random()*10)+'%';
+}
+function book(){
+var f=document.getElementById('fare').textContent;
+var h=document.getElementById('hist');
+var d=new Date().toLocaleTimeString();
+h.insertAdjacentHTML('afterbegin','<div><span>🚕 '+document.getElementById('from').value+' → '+document.getElementById('to').value+'</span><b>$'+f+' · '+d+'</b></div>');
+alert('Ride booked! '+drivers[sel].n+' arrives in '+document.getElementById('eta').textContent+'. Fare $'+f);
+}
+calc();
+setInterval(function(){
+var c=document.getElementById('car');
+var l=parseFloat(c.style.left)||12;
+l+=3;if(l>80)l=12;c.style.left=l+'%';
+},2500);
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

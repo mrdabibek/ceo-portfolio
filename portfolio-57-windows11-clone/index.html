@@ -1,0 +1,603 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Boreal 11 — Windows Web Clone</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+:root{
+  --ac:#0aa5a5;
+  --ink:#0f172a
+}
+body{
+  font-family:'Segoe UI',system-ui,sans-serif;
+  background:#060d18;
+  color:#fff;
+  overflow:hidden;
+  height:100vh
+}
+/* niche loader: boot dots */
+#boot{
+  position:fixed;
+  inset:0;
+  background:#04070f;
+  z-index:500;
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+  align-items:center;
+  justify-content:center;
+  transition:opacity .5s
+}
+#boot.off{
+  opacity:0;
+  visibility:hidden
+}
+#boot .logo{
+  width:120px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px
+}
+#boot .logo i{
+  height:52px;
+  background:var(--ac);
+  border-radius:3px;
+  animation:glow 1.2s infinite alternate
+}
+#boot .logo i:nth-child(2){
+  animation-delay:.15s
+}
+#boot .logo i:nth-child(3){
+  animation-delay:.3s
+}
+#boot .logo i:nth-child(4){
+  animation-delay:.45s
+}
+@keyframes glow{
+  from{
+  opacity:.45
+}
+to{
+  opacity:1
+}
+}
+#boot .dots{
+  display:flex;
+  gap:7px
+}
+#boot .dots i{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#fff;
+  animation:bnc 1s infinite
+}
+#boot .dots i:nth-child(2){
+  animation-delay:.15s
+}
+#boot .dots i:nth-child(3){
+  animation-delay:.3s
+}
+#boot .dots i:nth-child(4){
+  animation-delay:.45s
+}
+#boot .dots i:nth-child(5){
+  animation-delay:.6s
+}
+@keyframes bnc{
+  40%{
+  transform:translateY(-9px);
+  opacity:1
+}
+0%,80%,100%{
+  opacity:.4
+}
+}
+#boot small{
+  letter-spacing:3px;
+  color:#7d8aa0;
+  font-size:11px
+}
+#wall{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(900px 500px at 70% 20%,#0ea5a544,transparent),radial-gradient(800px 600px at 20% 80%,#1d4ed844,transparent),linear-gradient(160deg,#0b1526,#060d18 60%,#03161a);
+  z-index:0
+}
+#wall::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/seed/borealwall/1400/900') center/cover;
+  opacity:.28;
+  filter:saturate(1.2)
+}
+.blob{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(90px);
+  opacity:.5;
+  z-index:1
+}
+.b1{
+  width:480px;
+  height:480px;
+  background:#0ea5a555;
+  top:-120px;
+  right:-80px
+}
+.b2{
+  width:420px;
+  height:420px;
+  background:#6366f155;
+  bottom:-120px;
+  left:-80px
+}
+/* lock */
+#lock{
+  position:fixed;
+  inset:0;
+  z-index:300;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:url('https://picsum.photos/seed/winlock2/1400/900') center/cover;
+  transition:.6s
+}
+#lock::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:#04121acc;
+  backdrop-filter:blur(10px)
+}
+#lock.off{
+  opacity:0;
+  visibility:hidden;
+  transform:scale(1.06)
+}
+.lockcard{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  background:#ffffff10;
+  border:1px solid #ffffff2a;
+  border-radius:26px;
+  padding:46px 54px;
+  backdrop-filter:blur(20px)
+}
+.lock-av{
+  width:96px;
+  height:96px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #ffffff55
+}
+.lockcard h2{
+  margin:14px 0 4px;
+  font-weight:600
+}
+.lock-box{
+  display:flex;
+  gap:8px;
+  margin-top:18px;
+  background:#ffffff14;
+  border:1px solid #ffffff2c;
+  border-radius:12px;
+  padding:6px 6px 6px 14px;
+  align-items:center
+}
+.lock-box input{
+  background:none;
+  border:0;
+  outline:0;
+  color:#fff;
+  font-size:14px;
+  width:190px
+}
+.lock-btn{
+  background:var(--ac);
+  border:0;
+  color:#fff;
+  width:36px;
+  height:36px;
+  border-radius:9px;
+  cursor:pointer;
+  font-size:17px
+}
+/* desktop */
+#desk{
+  position:relative;
+  z-index:5;
+  height:calc(100vh - 52px);
+  padding:22px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,96px);
+  gap:10px;
+  align-content:start
+}
+.dicon{
+  width:96px;
+  text-align:center;
+  font-size:12px;
+  padding:12px 6px;
+  border-radius:12px;
+  cursor:pointer;
+  border:1px solid transparent
+}
+.dicon:hover{
+  background:#ffffff14;
+  border-color:#ffffff22
+}
+.dicon i{
+  font-size:32px;
+  display:block;
+  margin-bottom:6px
+}
+/* windows */
+.win{
+  position:fixed;
+  z-index:40;
+  background:#0e1626f2;
+  border:1px solid #ffffff24;
+  border-radius:14px;
+  box-shadow:0 30px 80px #000c;
+  overflow:hidden;
+  backdrop-filter:blur(20px);
+  min-width:340px
+}
+.win.hide{
+  display:none
+}
+.win.min{
+  transform:scale(.9);
+  opacity:0;
+  pointer-events:none
+}
+.wbar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 12px;
+  background:#ffffff0d;
+  border-bottom:1px solid #ffffff14;
+  cursor:grab;
+  font-size:13px;
+  font-weight:600
+}
+.wbar .sp{
+  flex:1
+}
+.wbtn{
+  width:32px;
+  height:26px;
+  border:0;
+  border-radius:7px;
+  background:transparent;
+  color:#fff;
+  cursor:pointer
+}
+.wbtn:hover{
+  background:#ffffff22
+}
+.wbtn.x:hover{
+  background:#e81123
+}
+.wbody{
+  padding:18px;
+  font-size:13.5px;
+  max-height:380px;
+  overflow:auto
+}
+.wbody img{
+  width:100%;
+  border-radius:10px
+}
+.store{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px
+}
+.store div{
+  background:#ffffff0d;
+  border:1px solid #ffffff18;
+  border-radius:10px;
+  padding:12px
+}
+/* start */
+#startMenu{
+  position:fixed;
+  left:50%;
+  bottom:62px;
+  transform:translateX(-50%) translateY(24px) scale(.97);
+  width:min(620px,94vw);
+  background:#101b30f5;
+  border:1px solid #ffffff22;
+  border-radius:20px;
+  z-index:100;
+  padding:22px;
+  opacity:0;
+  pointer-events:none;
+  transition:.28s;
+  backdrop-filter:blur(24px)
+}
+#startMenu.open{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateX(-50%) translateY(0) scale(1)
+}
+.start-search{
+  background:#ffffff10;
+  border:1px solid #ffffff22;
+  border-radius:99px;
+  padding:11px 18px;
+  font-size:13.5px;
+  color:#9fb0c9;
+  margin-bottom:16px
+}
+.start-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:8px
+}
+.start-grid div{
+  text-align:center;
+  font-size:11.5px;
+  padding:12px 4px;
+  border-radius:12px;
+  cursor:pointer
+}
+.start-grid div:hover{
+  background:#ffffff14
+}
+.start-grid i{
+  font-size:26px;
+  display:block;
+  margin-bottom:6px
+}
+.rec{
+  display:flex;
+  gap:10px;
+  margin-top:16px
+}
+.rec div{
+  flex:1;
+  background:#ffffff0a;
+  border:1px solid #ffffff14;
+  border-radius:12px;
+  padding:12px;
+  font-size:12px
+}
+/* taskbar */
+#task{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:52px;
+  background:#0a1322ee;
+  border-top:1px solid #ffffff1a;
+  z-index:120;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  backdrop-filter:blur(20px)
+}
+.ticon{
+  width:44px;
+  height:40px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  font-size:20px;
+  cursor:pointer;
+  border:1px solid transparent
+}
+.ticon:hover{
+  background:#ffffff14
+}
+.ticon.on{
+  border-color:#ffffff2a;
+  background:#ffffff0d
+}
+#task .startb{
+  background:var(--ac);
+  border-radius:10px
+}
+#clock{
+  position:absolute;
+  right:16px;
+  font-size:12px;
+  text-align:right;
+  line-height:1.4;
+  cursor:pointer;
+  padding:6px 10px;
+  border-radius:8px
+}
+#clock:hover{
+  background:#ffffff12
+}
+#toast{
+  position:fixed;
+  bottom:66px;
+  right:18px;
+  background:#0f1c33;
+  border:1px solid #ffffff26;
+  color:#fff;
+  padding:13px 20px;
+  border-radius:12px;
+  z-index:400;
+  transform:translateY(20px);
+  opacity:0;
+  transition:.3s;
+  font-size:13.5px
+}
+#toast.show{
+  transform:none;
+  opacity:1
+}
+.ctx{
+  font-size:12px;
+  color:#9fb0c9;
+  margin-top:10px;
+  line-height:1.7
+}
+.kbd{
+  background:#ffffff14;
+  border:1px solid #ffffff22;
+  border-radius:6px;
+  padding:1px 7px;
+  font-size:11.5px
+}
+@media(max-width:640px){
+  .start-grid{
+  grid-template-columns:repeat(3,1fr)
+}
+#desk{
+  grid-template-columns:repeat(auto-fill,80px)
+}
+}
+</style>
+</head>
+<body>
+<div id="boot"><div class="logo"><i></i><i></i><i></i><i></i></div><div class="dots"><i></i><i></i><i></i><i></i><i></i></div><small>BOREAL OS · STARTING</small></div>
+<div id="wall"></div><div class="blob b1"></div><div class="blob b2"></div>
+<div id="lock"><div class="lockcard">
+<img class="lock-av" src="https://picsum.photos/seed/winuser2/200/200" alt="">
+<h2>Alex Carter</h2><p style="opacity:.65;font-size:13px">Welcome back · 9:41 Monday</p>
+<div class="lock-box"><input id="lockPass" type="password" placeholder="PIN or password (any)"><button class="lock-btn" onclick="unlock()">→</button></div>
+<small style="opacity:.6" id="lockClock"></small>
+<p class="ctx">Press <span class="kbd">Enter</span> to unlock · demo accepts anything</p>
+</div></div>
+<div id="desk">
+<div class="dicon" ondblclick="openWin('files')"><i>📁</i>Files</div>
+<div class="dicon" ondblclick="openWin('store')"><i>🛍️</i>Store</div>
+<div class="dicon" ondblclick="openWin('edge')"><i>🌊</i>Edge</div>
+<div class="dicon" ondblclick="openWin('set')"><i>⚙️</i>Settings</div>
+<div class="dicon" ondblclick="openWin('about')"><i>👨‍💻</i>About me</div>
+<div class="dicon" ondblclick="toast('Portfolio PDF downloading…')"> <i>📄</i>CV.pdf</div>
+</div>
+<div class="win" id="w-files" style="top:90px;left:8%;width:480px">
+<div class="wbar" data-drag="w-files"><span>📁 File Explorer</span><span class="sp"></span><button class="wbtn" onclick="minWin('files')">—</button><button class="wbtn x" onclick="closeWin('files')">✕</button></div>
+<div class="wbody"><div class="store"><div>📂 Projects<br><small style="opacity:.6">18 items</small></div><div>🖼️ Design<br><small style="opacity:.6">240 items</small></div><div>🎵 Audio<br><small style="opacity:.6">60 items</small></div><div>📄 Clients<br><small style="opacity:.6">32 items</small></div></div><p class="ctx">Drag this window by its title bar. Double-click desktop icons to open apps. I build Windows-style web apps, dashboards & Electron shells.</p></div>
+</div>
+<div class="win hide" id="w-store" style="top:120px;left:30%;width:420px">
+<div class="wbar" data-drag="w-store"><span>🛍️ Microsoft Store</span><span class="sp"></span><button class="wbtn" onclick="minWin('store')">—</button><button class="wbtn x" onclick="closeWin('store')">✕</button></div>
+<div class="wbody"><img src="https://picsum.photos/seed/dashapp/600/240" alt=""><h3 style="margin:12px 0 6px">Dash Pro — analytics suite</h3><p style="opacity:.65">My flagship desktop app · 40k users</p><button class="lock-btn" style="width:auto;padding:0 20px;height:38px;margin-top:12px" onclick="toast('Installing Dash Pro…')">Get · Free</button><p class="ctx">★ 4.8 · Utilities · 120 MB</p></div>
+</div>
+<div class="win hide" id="w-edge" style="top:140px;left:20%;width:460px">
+<div class="wbar" data-drag="w-edge"><span>🌊 Edge — portfolio tab</span><span class="sp"></span><button class="wbtn" onclick="minWin('edge')">—</button><button class="wbtn x" onclick="closeWin('edge')">✕</button></div>
+<div class="wbody"><input value="https://alexcarter.dev/work" style="width:100%;background:#ffffff10;border:1px solid #ffffff22;color:#fff;border-radius:8px;padding:9px 12px;font-size:12.5px"><div style="display:flex;gap:10px;margin-top:12px"><img src="https://picsum.photos/seed/edge1/200/120" style="width:32%"><img src="https://picsum.photos/seed/edge2/200/120" style="width:32%"><img src="https://picsum.photos/seed/edge3/200/120" style="width:32%"></div><p class="ctx">Recent case studies: fintech dashboard, clinic scheduler, logistics tracker. $50/hr · available now.</p><button class="lock-btn" style="width:auto;padding:0 20px;height:38px" onclick="nav()">Hire me →</button></div>
+</div>
+<div class="win hide" id="w-set" style="top:110px;left:40%;width:380px">
+<div class="wbar" data-drag="w-set"><span>⚙️ Settings</span><span class="sp"></span><button class="wbtn" onclick="minWin('set')">—</button><button class="wbtn x" onclick="closeWin('set')">✕</button></div>
+<div class="wbody"><p>🎨 Accent <b style="color:var(--ac)">Boreal Teal</b></p><p class="ctx">🌙 Theme: Dark · 🔔 Notifications on · 🔋 94%</p><p class="ctx">Try: drag me around — every window here is draggable.</p></div>
+</div>
+<div class="win hide" id="w-about" style="top:150px;left:12%;width:400px">
+<div class="wbar" data-drag="w-about"><span>👨‍💻 About — Alex Carter</span><span class="sp"></span><button class="wbtn" onclick="minWin('about')">—</button><button class="wbtn x" onclick="closeWin('about')">✕</button></div>
+<div class="wbody"><div style="display:flex;gap:12px;align-items:center"><img src="https://picsum.photos/seed/alexface/120/120" style="width:64px;height:64px;border-radius:50%;object-fit:cover"><div><b>Alex Carter</b><br><small style="opacity:.6">Frontend · Windows apps · 6 yrs</small></div></div><p class="ctx">Top Rated on Upwork · 90+ projects · I turn desktop UX into web experiences. Press Start to see the menu.</p></div>
+</div>
+<div id="startMenu">
+<div class="start-search">🔍 Type here to search</div>
+<div class="start-grid">
+<div onclick="openWin('files')"> <i>📁</i>Files</div><div onclick="openWin('store')"><i>🛍️</i>Store</div><div onclick="openWin('edge')"><i>🌊</i>Edge</div><div onclick="openWin('set')"><i>⚙️</i>Settings</div><div onclick="openWin('about')"><i>👨‍💻</i>About</div><div onclick="toast('Opening Terminal…')"><i>⌨️</i>Terminal</div>
+<div onclick="toast('Opening Photos…')"><i>🖼️</i>Photos</div><div onclick="toast('Opening Music…')"><i>🎵</i>Music</div><div onclick="toast('Opening Mail…')"><i>✉️</i>Mail</div><div onclick="toast('Opening Calc…')"><i>🧮</i>Calc</div><div onclick="toast('Opening Xbox…')"><i>🎮</i>Xbox</div><div onclick="toast('Opening VS Code…')"><i>💻</i>Code</div>
+</div>
+<div class="rec"><div>📄 <b>Recommended</b><br>Q3 invoice.xlsx · 2h ago</div><div>🎨 <b>Design_final.fig</b><br>Yesterday</div></div>
+</div>
+<div id="task">
+<div class="ticon startb" onclick="toggleStart(event)">▦</div>
+<div class="ticon" onclick="openWin('files')">📁</div>
+<div class="ticon" onclick="openWin('edge')">🌊</div>
+<div class="ticon" onclick="openWin('store')">🛍️</div>
+<div class="ticon" onclick="openWin('set')">⚙️</div>
+<div id="clock"></div>
+</div>
+<div id="toast"></div>
+<script>
+let z=50;
+setTimeout(()=>boot.classList.add('off'),1600);
+function tick(){const d=new Date(),p=n=>String(n).padStart(2,'0');const s=`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;clock.innerHTML=s+'<br>'+d.toLocaleDateString('en',{month:'short',day:'numeric'});lockClock.textContent=d.toLocaleString('en',{weekday:'long',hour:'numeric',minute:'2-digit'});}
+setInterval(tick,1000);tick();
+function unlock(){lock.classList.add('off');toast('Welcome, Alex 👋');}
+lockPass.addEventListener('keydown',e=>{if(e.key==='Enter')unlock();});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!lock.classList.contains('off'))unlock();if(e.key==='Escape'){startMenu.classList.remove('open');}});
+lock.addEventListener('click',e=>{if(e.target.id==='lock')unlock();});
+function toggleStart(e){e.stopPropagation();startMenu.classList.toggle('open');}
+document.addEventListener('click',e=>{if(!startMenu.contains(e.target))startMenu.classList.remove('open');});
+function openWin(id){const w=document.getElementById('w-'+id);w.classList.remove('hide','min');w.style.zIndex=++z;startMenu.classList.remove('open');}
+function closeWin(id){document.getElementById('w-'+id).classList.add('hide');}
+function minWin(id){const w=document.getElementById('w-'+id);w.classList.add('min');setTimeout(()=>w.classList.add('hide'),350);}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2200);}
+function nav(){toast('Hire form: hire@boreal.dev ✉️');openWin('about');}
+/* draggable */
+document.querySelectorAll('[data-drag]').forEach(bar=>{
+const win=document.getElementById(bar.dataset.drag);let sx,sy,ox,oy,drag=false;
+bar.addEventListener('pointerdown',e=>{drag=true;sx=e.clientX;sy=e.clientY;const r=win.getBoundingClientRect();ox=r.left;oy=r.top;win.style.left=ox+'px';win.style.top=oy+'px';win.style.right='auto';bar.setPointerCapture(e.pointerId);win.style.zIndex=++z;});
+bar.addEventListener('pointermove',e=>{if(!drag)return;win.style.left=(ox+e.clientX-sx)+'px';win.style.top=Math.max(0,oy+e.clientY-sy)+'px';});
+bar.addEventListener('pointerup',()=>drag=false);
+});
+/* taskbar active state */
+document.querySelectorAll('.ticon').forEach(t=>t.addEventListener('click',()=>{t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1200);}));
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hyperion Vision — Spatial Computing OS & Interactive 3D Ecosystem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #030508;
+      --glass: rgba(255, 255, 255, 0.07);
+      --glass-hover: rgba(255, 255, 255, 0.12);
+      --glass-border: rgba(255, 255, 255, 0.18);
+      --glass-specular: rgba(255, 255, 255, 0.4);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.35);
+      --violet: #818cf8;
+      --text: #ffffff;
+      --text-dim: #94a3b8;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+      perspective: 1200px;
+      user-select: none;
+    }
+
+    /* Ambient Spatial Universe */
+    #spatialCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 30px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* VisionOS Floating Navigation Bar */
+    .spatial-nav {
+      background: rgba(20, 24, 36, 0.55);
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      padding: 10px 24px;
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 1px var(--glass-specular);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-iris {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent), #1e1b4b);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+    .nav-link {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 99px;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .spatial-pill {
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent);
+      padding: 6px 14px;
+      border-radius: 99px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .iris-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: irisBlink 2s infinite ease-in-out;
+    }
+    @keyframes irisBlink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.7); }
+    }
+
+    /* Spatial Hero & 3D Interactive Glass Card */
+    .spatial-stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+    @media (max-width: 960px) {
+      .spatial-stage { grid-template-columns: 1fr; }
+    }
+
+    .hero-content h1 {
+      font-family: var(--font-display);
+      font-size: 46px;
+      line-height: 1.15;
+      font-weight: 700;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, #ffffff 40%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-content p {
+      font-size: 16px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      max-width: 500px;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+    .btn-spatial-primary {
+      padding: 12px 28px;
+      background: #ffffff;
+      color: #030508;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.25);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-spatial-primary:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 16px 40px rgba(255, 255, 255, 0.4);
+    }
+    .btn-spatial-glass {
+      padding: 12px 24px;
+      background: var(--glass);
+      color: #ffffff;
+      border: 1px solid var(--glass-border);
+      border-radius: 99px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      backdrop-filter: blur(20px);
+      transition: all 0.2s;
+    }
+    .btn-spatial-glass:hover {
+      background: var(--glass-hover);
+      border-color: #fff;
+    }
+
+    /* Floating 3D Holographic Window */
+    .hologram-card {
+      background: rgba(18, 22, 34, 0.45);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      padding: 30px;
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 2px var(--glass-specular);
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out;
+      position: relative;
+    }
+    .card-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .window-dots {
+      display: flex;
+      gap: 7px;
+    }
+    .w-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .w-dot.red { background: #ef4444; }
+    .w-dot.yellow { background: #f59e0b; }
+    .w-dot.green { background: #10b981; }
+    .holo-tag {
+      font-size: 11px;
+      font-family: var(--font-display);
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* 3D Wireframe Canvas View */
+    #holoCanvas {
+      width: 100%;
+      height: 300px;
+      display: block;
+      border-radius: 18px;
+      background: radial-gradient(circle at center, rgba(56, 189, 248, 0.08) 0%, transparent 70%);
+      cursor: grab;
+    }
+    #holoCanvas:active {
+      cursor: grabbing;
+    }
+
+    .holo-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .holo-spec {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+    .holo-spec b { color: #fff; }
+
+    /* Spatial Mode Switcher Strip */
+    .environment-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 768px) {
+      .environment-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+    .env-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      padding: 20px;
+      backdrop-filter: blur(20px);
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .env-card:hover, .env-card.active {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(56, 189, 248, 0.2);
+    }
+    .env-icon { font-size: 22px; margin-bottom: 10px; display: inline-block; }
+    .env-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .env-desc { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+
+    /* Unified Floating Hub Badge */
+    .ceo-hub-floating-badge {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      background: rgba(18, 22, 34, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #fff;
+      padding: 9px 18px;
+      border-radius: 9999px;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(56, 189, 248, 0.25);
+      text-decoration: none;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(14px);
+    }
+    .ceo-hub-floating-badge:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      box-shadow: 0 14px 40px rgba(56, 189, 248, 0.4);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="spatialCanvas"></canvas>
+
+  <div class="container">
+    <!-- VisionOS Nav -->
+    <nav class="spatial-nav">
+      <div class="brand">
+        <div class="brand-iris"></div>
+        <div class="brand-title">Hyperion Vision</div>
+      </div>
+      <div class="nav-links">
+        <span class="nav-link active" onclick="switchMode('spatial')">Spatial Core</span>
+        <span class="nav-link" onclick="switchMode('optics')">Micro-OLED Optics</span>
+        <span class="nav-link" onclick="switchMode('haptics')">Spatial Audio</span>
+      </div>
+      <div class="nav-actions">
+        <div class="spatial-pill">
+          <span class="iris-dot"></span>
+          <span>90 FPS TRACKING</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Stage -->
+    <div class="spatial-stage">
+      <div class="hero-content">
+        <h1>Infinite Spatial Canvas for Next-Gen Computing.</h1>
+        <p>Architected for frictionless reality computing. Fluid glassmorphic refractive physics, sub-millisecond eye gaze simulation, and volumetric spatial web shaders.</p>
+        <div class="hero-buttons">
+          <button class="btn-spatial-primary" onclick="triggerSpatialInspection()">Immerse in 3D Mode</button>
+          <button class="btn-spatial-glass" onclick="toggleWireframe()">Toggle Wireframe</button>
+        </div>
+      </div>
+
+      <!-- 3D Holographic Card with Mouse Parallax -->
+      <div class="hologram-card" id="holoCard">
+        <div class="card-topbar">
+          <div class="window-dots">
+            <span class="w-dot red"></span>
+            <span class="w-dot yellow"></span>
+            <span class="w-dot green"></span>
+          </div>
+          <span class="holo-tag" id="holoModelLabel">◈ TENSOR CORE · SPATIAL HUD</span>
+        </div>
+
+        <canvas id="holoCanvas"></canvas>
+
+        <div class="holo-controls">
+          <div class="holo-spec">Focal Length: <b>12.4mm</b> · Latency: <b>4.8ms</b></div>
+          <button class="btn-spatial-glass" style="padding: 6px 14px; font-size: 11px;" onclick="resetOrientation()">Recenter Axis</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spatial Environments -->
+    <div class="environment-strip">
+      <div class="env-card active" onclick="setEnvironment(this, 'nebula')">
+        <span class="env-icon">🌌</span>
+        <div class="env-title">Dark Nebula</div>
+        <div class="env-desc">Volumetric cosmic starlight & interstellar dust refraction.</div>
+      </div>
+      <div class="env-card" onclick="setEnvironment(this, 'zenith')">
+        <span class="env-icon">🏔️</span>
+        <div class="env-title">Zenith Minimal</div>
+        <div class="env-desc">Glacial crystalline geometry with pure luminance focus.</div>
+      </div>
+      <div class="env-card" onclick="setEnvironment(this, 'orbit')">
+        <span class="env-icon">🛰️</span>
+        <div class="env-title">Deep Orbit</div>
+        <div class="env-desc">Atmospheric blue curvature and sun ray scattering.</div>
+      </div>
+      <div class="env-card" onclick="setEnvironment(this, 'cyber')">
+        <span class="env-icon">⚡</span>
+        <div class="env-title">Quantum Grid</div>
+        <div class="env-desc">High-frequency photon lattice with edge distortion.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unified Hub Floating Badge -->
+  <a href="../index.html" class="ceo-hub-floating-badge" title="Return to CEO Master Portfolio Hub">
+    <span style="color:#38bdf8;font-size:14px">◈</span> Portfolio Hub
+    <span style="font-size:10px;background:rgba(56,189,248,0.18);border:1px solid rgba(56,189,248,0.3);color:#38bdf8;padding:1px 6px;border-radius:99px;">SPATIAL·OS</span>
+  </a>
+
+  <script>
+    // Web Audio Synthesizer
+    let aCtx = null;
+    function playSpatialTick(freq = 600, dur = 0.04) {
+      try {
+        if (!aCtx) aCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (aCtx.state === 'suspended') aCtx.resume();
+        const o = aCtx.createOscillator();
+        const g = aCtx.createGain();
+        o.type = 'sine';
+        o.frequency.setValueAtTime(freq, aCtx.currentTime);
+        o.frequency.exponentialRampToValueAtTime(freq * 0.4, aCtx.currentTime + dur);
+        g.gain.setValueAtTime(0.04, aCtx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, aCtx.currentTime + dur);
+        o.connect(g);
+        g.connect(aCtx.destination);
+        o.start();
+        o.stop(aCtx.currentTime + dur);
+      } catch(e) {}
+    }
+
+    // Interactive 3D Card Tilt via Gyro / Mouse
+    const card = document.getElementById('holoCard');
+    window.addEventListener('mousemove', (e) => {
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 2;
+      const dx = (e.clientX - cx) / cx;
+      const dy = (e.clientY - cy) / cy;
+      card.style.transform = `perspective(1000px) rotateY(${dx * 12}deg) rotateX(${-dy * 12}deg)`;
+    });
+
+    // 3D Canvas Wireframe Polyhedron
+    const hCanvas = document.getElementById('holoCanvas');
+    const hCtx = hCanvas.getContext('2d');
+    let hw, hh;
+    let rotX = 0.4, rotY = 0.6;
+    let isDragging = false, lastMouseX = 0, lastMouseY = 0;
+    let wireframeOnly = false;
+
+    function resizeHolo() {
+      const rect = hCanvas.getBoundingClientRect();
+      hw = hCanvas.width = rect.width;
+      hh = hCanvas.height = rect.height;
+    }
+    window.addEventListener('resize', resizeHolo);
+    setTimeout(resizeHolo, 50);
+
+    hCanvas.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+      playSpatialTick(720, 0.03);
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - lastMouseX;
+      const dy = e.clientY - lastMouseY;
+      rotY += dx * 0.01;
+      rotX += dy * 0.01;
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+    });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    // Polyhedron Vertices (Icosahedron / Quantum Crystal)
+    const phi = (1 + Math.sqrt(5)) / 2;
+    const baseVertices = [
+      [-1,  phi, 0], [ 1,  phi, 0], [-1, -phi, 0], [ 1, -phi, 0],
+      [ 0, -1,  phi], [ 0,  1,  phi], [ 0, -1, -phi], [ 0,  1, -phi],
+      [ phi, 0, -1], [ phi, 0,  1], [-phi, 0, -1], [-phi, 0,  1]
+    ];
+    // Scale vertices
+    const vertices = baseVertices.map(v => [v[0] * 65, v[1] * 65, v[2] * 65]);
+
+    // Edges
+    const edges = [];
+    for (let i = 0; i < vertices.length; i++) {
+      for (let j = i + 1; j < vertices.length; j++) {
+        const d = Math.hypot(vertices[i][0] - vertices[j][0], vertices[i][1] - vertices[j][1], vertices[i][2] - vertices[j][2]);
+        if (Math.abs(d - 130) < 5) edges.push([i, j]);
+      }
+    }
+
+    function renderHolo() {
+      hCtx.clearRect(0, 0, hw, hh);
+
+      if (!isDragging) {
+        rotY += 0.008;
+        rotX += 0.003;
+      }
+
+      const projected = vertices.map(v => {
+        // Rotate around Y
+        let x1 = v[0] * Math.cos(rotY) + v[2] * Math.sin(rotY);
+        let z1 = -v[0] * Math.sin(rotY) + v[2] * Math.cos(rotY);
+        // Rotate around X
+        let y2 = v[1] * Math.cos(rotX) - z1 * Math.sin(rotX);
+        let z2 = v[1] * Math.sin(rotX) + z1 * Math.cos(rotX);
+
+        // Perspective projection
+        const fov = 350;
+        const scale = fov / (fov + z2 + 100);
+        return {
+          x: hw / 2 + x1 * scale,
+          y: hh / 2 + y2 * scale,
+          z: z2,
+          scale: scale
+        };
+      });
+
+      // Draw Edges
+      edges.forEach(e => {
+        const p1 = projected[e[0]];
+        const p2 = projected[e[1]];
+
+        const alpha = Math.max(0.15, Math.min(0.9, (p1.z + p2.z + 180) / 360));
+        hCtx.beginPath();
+        hCtx.moveTo(p1.x, p1.y);
+        hCtx.lineTo(p2.x, p2.y);
+        hCtx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
+        hCtx.lineWidth = wireframeOnly ? 1.5 : 2;
+        hCtx.stroke();
+      });
+
+      // Draw Nodes
+      projected.forEach(p => {
+        hCtx.beginPath();
+        hCtx.arc(p.x, p.y, Math.max(2, 4 * p.scale), 0, Math.PI * 2);
+        hCtx.fillStyle = '#ffffff';
+        hCtx.shadowColor = '#38bdf8';
+        hCtx.shadowBlur = 10;
+        hCtx.fill();
+        hCtx.shadowBlur = 0;
+      });
+
+      requestAnimationFrame(renderHolo);
+    }
+    requestAnimationFrame(renderHolo);
+
+    function toggleWireframe() {
+      wireframeOnly = !wireframeOnly;
+      playSpatialTick(800, 0.04);
+    }
+
+    function resetOrientation() {
+      rotX = 0.4;
+      rotY = 0.6;
+      playSpatialTick(500, 0.08);
+    }
+
+    function triggerSpatialInspection() {
+      playSpatialTick(900, 0.1);
+      alert("🥽 Hyperion Spatial Engine: 3D interactive viewport calibrated. Depth disparity: 0.02 arcmin.");
+    }
+
+    function switchMode(m) {
+      playSpatialTick(650, 0.04);
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function setEnvironment(el, env) {
+      document.querySelectorAll('.env-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      playSpatialTick(520, 0.05);
+      
+      const sCanvas = document.getElementById('spatialCanvas');
+      if (env === 'nebula') sCanvas.style.background = '#030508';
+      else if (env === 'zenith') sCanvas.style.background = '#080d14';
+      else if (env === 'orbit') sCanvas.style.background = '#020617';
+      else if (env === 'cyber') sCanvas.style.background = '#05020c';
+    }
+
+    // Ambient Starlight Background
+    const bgCanvas = document.getElementById('spatialCanvas');
+    const bCtx = bgCanvas.getContext('2d');
+    let bw, bh, stars = [];
+
+    function resizeBg() {
+      bw = bgCanvas.width = window.innerWidth;
+      bh = bgCanvas.height = window.innerHeight;
+      stars = [];
+      for (let i = 0; i < 90; i++) {
+        stars.push({
+          x: Math.random() * bw,
+          y: Math.random() * bh,
+          r: Math.random() * 1.5 + 0.5,
+          alpha: Math.random(),
+          speed: Math.random() * 0.01 + 0.003
+        });
+      }
+    }
+    window.addEventListener('resize', resizeBg);
+    resizeBg();
+
+    function renderBg() {
+      bCtx.clearRect(0, 0, bw, bh);
+      stars.forEach(s => {
+        s.alpha += s.speed;
+        const a = (Math.sin(s.alpha) + 1) / 2 * 0.7 + 0.1;
+        bCtx.fillStyle = `rgba(255, 255, 255, ${a})`;
+        bCtx.beginPath();
+        bCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        bCtx.fill();
+      });
+      requestAnimationFrame(renderBg);
+    }
+    renderBg();
+
+    if (window.self !== window.top) {
+      const b = document.querySelector('.ceo-hub-floating-badge');
+      if (b) b.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

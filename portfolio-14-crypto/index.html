@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PulseChain — Crypto Terminal</title>
+<meta name="description" content="PulseChain — pro crypto terminal with live ticker, charts and low-fee trading.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#05070d;
+  --panel:#0b0f1a;
+  --panel2:#101623;
+  --line:#1c2438;
+  --grn:#00e59b;
+  --red:#ff4d67;
+  --yel:#ffd84d;
+  --txt:#e8eefc;
+  --mut:#7d8aa8;
+}
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+html {
+  scroll-behavior:smooth
+}
+body {
+  background:var(--bg);
+  color:var(--txt);
+  font-family:'Space Grotesk',sans-serif;
+  overflow-x:hidden;
+  line-height:1.6
+}
+.mono {
+  font-family:'JetBrains Mono',monospace
+}
+::selection {
+  background:var(--grn);
+  color:#000
+}
+img {
+  display:block;
+  max-width:100%
+}
+.ticker-top {
+  background:#070b14;
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+  white-space:nowrap;
+  padding:9px 0;
+  font-family:'JetBrains Mono';
+  font-size:12px
+}
+.ticker-top span {
+  margin:0 20px;
+  color:var(--mut)
+}
+.ticker-top b {
+  color:var(--txt)
+}
+.up {
+  color:var(--grn)
+}
+.dn {
+  color:var(--red)
+}
+nav {
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(5,7,13,.9);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line)
+}
+.nav-in {
+  max-width:1280px;
+  margin:0 auto;
+  padding:14px 24px;
+  display:flex;
+  align-items:center;
+  gap:26px
+}
+.logo {
+  font-weight:700;
+  font-size:19px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  text-decoration:none;
+  color:#fff
+}
+.logo i {
+  width:30px;
+  height:30px;
+  border-radius:8px;
+  background:linear-gradient(135deg,var(--grn),#00b3ff);
+  display:grid;
+  place-items:center;
+  color:#000;
+  font-style:normal
+}
+.nlinks {
+  display:flex;
+  gap:20px
+}
+.nlinks a {
+  color:var(--mut);
+  text-decoration:none;
+  font-size:13.5px;
+  font-family:'JetBrains Mono'
+}
+.nlinks a:hover {
+  color:var(--grn)
+}
+.nav-r {
+  margin-left:auto;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  font-family:'JetBrains Mono';
+  font-size:12px
+}
+.dotlive {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  color:var(--grn);
+  border:1px solid var(--line);
+  padding:8px 14px;
+  border-radius:99px;
+  background:var(--panel)
+}
+.dotlive i {
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--grn);
+  animation:bl 1.2s infinite
+}
+@keyframes bl {
+50% {
+  opacity:.3
+}
+}
+.btn {
+  border:0;
+  cursor:pointer;
+  font-family:'JetBrains Mono';
+  font-weight:700;
+  font-size:13px;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--grn);
+  color:#00150d;
+  transition:.2s;
+  text-decoration:none;
+  display:inline-block
+}
+.btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px -8px var(--grn)
+}
+.btn.ghost {
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--txt)
+}
+.hero {
+  max-width:1280px;
+  margin:0 auto;
+  padding:44px 24px;
+  display:grid;
+  grid-template-columns:1fr 1.1fr;
+  gap:28px;
+  align-items:start
+}
+.hero h1 {
+  font-size:clamp(38px,5vw,64px);
+  line-height:1.02;
+  font-weight:700
+}
+.hero h1 span {
+  color:var(--grn)
+}
+.hero p.lead {
+  color:var(--mut);
+  margin:16px 0 22px;
+  max-width:460px;
+  font-size:15.5px
+}
+.cmd {
+  background:#000;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:12px 16px;
+  font-family:'JetBrains Mono';
+  font-size:13px;
+  color:var(--mut);
+  display:flex;
+  gap:10px;
+  align-items:center;
+  max-width:440px
+}
+.cmd b {
+  color:var(--grn)
+}
+.stat-row {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:20px;
+  max-width:520px
+}
+.stat-row div {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px
+}
+.stat-row b {
+  font-family:'JetBrains Mono';
+  font-size:19px;
+  display:block
+}
+.stat-row small {
+  color:var(--mut);
+  font-size:12px;
+  font-family:'JetBrains Mono'
+}
+.term {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden
+}
+.term-bar {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 16px;
+  border-bottom:1px solid var(--line);
+  font-family:'JetBrains Mono';
+  font-size:12px;
+  color:var(--mut)
+}
+.term-bar i {
+  width:11px;
+  height:11px;
+  border-radius:50%
+}
+.term-tabs {
+  display:flex;
+  gap:6px;
+  padding:12px 14px 0;
+  flex-wrap:wrap
+}
+.term-tabs button {
+  background:var(--panel2);
+  border:1px solid var(--line);
+  color:var(--mut);
+  font-family:'JetBrains Mono';
+  font-size:12px;
+  padding:8px 14px;
+  border-radius:8px 8px 0 0;
+  cursor:pointer
+}
+.term-tabs button.on {
+  color:var(--grn);
+  border-bottom-color:var(--grn)
+}
+#chart {
+  width:100%;
+  height:260px;
+  display:block;
+  background:#070b14
+}
+.term-foot {
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  padding:14px
+}
+.term-foot div {
+  background:#070b14;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:12px;
+  font-family:'JetBrains Mono';
+  font-size:12px
+}
+.term-foot b {
+  font-size:16px;
+  display:block
+}
+.orderbox {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  padding:0 14px 16px
+}
+.orderbox button {
+  padding:13px;
+  border-radius:10px;
+  border:0;
+  font-family:'JetBrains Mono';
+  font-weight:700;
+  cursor:pointer;
+  font-size:13px
+}
+.buy {
+  background:var(--grn);
+  color:#00150d
+}
+.sell {
+  background:var(--red);
+  color:#fff
+}
+section {
+  max-width:1280px;
+  margin:0 auto;
+  padding:64px 24px
+}
+.k {
+  font-family:'JetBrains Mono';
+  font-size:11px;
+  letter-spacing:.24em;
+  color:var(--grn)
+}
+.sec-h {
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:16px;
+  margin:10px 0 26px;
+  flex-wrap:wrap
+}
+.sec-h h2 {
+  font-size:clamp(26px,3.4vw,42px)
+}
+.sec-h p {
+  color:var(--mut);
+  font-size:14.5px;
+  max-width:440px
+}
+.coins {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden
+}
+.coin-row {
+  display:grid;
+  grid-template-columns:40px 1.4fr 1fr 1fr 1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:14px 18px;
+  border-bottom:1px solid var(--line);
+  font-family:'JetBrains Mono';
+  font-size:13.5px
+}
+.coin-row.head {
+  color:var(--mut);
+  font-size:11px;
+  letter-spacing:.14em;
+  background:#070b14
+}
+.coin-row:not(.head):hover {
+  background:var(--panel2)
+}
+.coin-row img {
+  width:32px;
+  height:32px;
+  border-radius:50%
+}
+.spark {
+  width:110px;
+  height:34px
+}
+.fees {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px
+}
+.fee {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:26px
+}
+.fee.hot {
+  border-color:var(--grn)
+}
+.fee h3 {
+  font-family:'JetBrains Mono';
+  font-size:13px;
+  letter-spacing:.16em;
+  color:var(--mut)
+}
+.fee .p {
+  font-size:40px;
+  font-weight:700;
+  margin:10px 0
+}
+.fee ul {
+  list-style:none;
+  color:var(--mut);
+  font-size:13.5px;
+  font-family:'JetBrains Mono';
+  line-height:2
+}
+.grid3 {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px
+}
+.feat {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px
+}
+.feat b.ic {
+  width:44px;
+  height:44px;
+  border-radius:11px;
+  background:#00e59b18;
+  border:1px solid #00e59b44;
+  display:grid;
+  place-items:center;
+  font-size:20px;
+  margin-bottom:14px
+}
+.feat h3 {
+  margin-bottom:8px
+}
+.feat p {
+  color:var(--mut);
+  font-size:14px
+}
+.gal {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px
+}
+.gal img {
+  width:100%;
+  height:190px;
+  object-fit:cover;
+  border-radius:12px;
+  border:1px solid var(--line);
+  filter:saturate(.7)
+}
+.split {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:26px;
+  align-items:center
+}
+.split img {
+  width:100%;
+  height:380px;
+  object-fit:cover;
+  border-radius:14px;
+  border:1px solid var(--line)
+}
+.term-mini {
+  background:#000;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:18px;
+  font-family:'JetBrains Mono';
+  font-size:13px;
+  line-height:2;
+  color:var(--mut)
+}
+.term-mini b {
+  color:var(--grn)
+}
+.faq {
+  max-width:760px;
+  display:grid;
+  gap:10px
+}
+.faq details {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:15px 18px
+}
+.faq summary {
+  cursor:pointer;
+  font-family:'JetBrains Mono';
+  font-size:13.5px
+}
+.faq p {
+  color:var(--mut);
+  font-size:13.5px;
+  margin-top:8px
+}
+.cta {
+  background:linear-gradient(135deg,#06281e,#071224);
+  border:1px solid #00e59b44;
+  border-radius:20px;
+  padding:52px;
+  text-align:center
+}
+.cta h2 {
+  font-size:clamp(28px,3.6vw,46px)
+}
+.cta p {
+  color:var(--mut);
+  margin:12px 0 22px;
+  font-family:'JetBrains Mono';
+  font-size:13px
+}
+footer {
+  border-top:1px solid var(--line)
+}
+.f-in {
+  max-width:1280px;
+  margin:0 auto;
+  padding:36px 24px;
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1fr;
+  gap:24px
+}
+.f-in h4 {
+  font-family:'JetBrains Mono';
+  font-size:11px;
+  letter-spacing:.2em;
+  color:var(--mut);
+  margin-bottom:12px
+}
+.f-in a {
+  display:block;
+  color:var(--mut);
+  text-decoration:none;
+  font-size:13.5px;
+  margin:6px 0;
+  font-family:'JetBrains Mono'
+}
+.f-base {
+  max-width:1280px;
+  margin:0 auto;
+  padding:16px 24px;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  color:var(--mut);
+  font-size:12px;
+  font-family:'JetBrains Mono';
+  flex-wrap:wrap;
+  gap:8px
+}
+.rv {
+  opacity:0;
+  transform:translateY(24px);
+  transition:.6s
+}
+.rv.on {
+  opacity:1;
+  transform:none
+}
+#toast {
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--grn);
+  color:#00150d;
+  padding:13px 26px;
+  border-radius:99px;
+  font-family:'JetBrains Mono';
+  font-weight:700;
+  font-size:13px;
+  transition:.35s;
+  opacity:0;
+  z-index:300
+}
+#toast.show {
+  transform:translateX(-50%);
+  opacity:1
+}
+@media(max-width:940px) {
+.hero,.split {
+  grid-template-columns:1fr
+}
+.fees,.grid3 {
+  grid-template-columns:1fr
+}
+.gal {
+  grid-template-columns:repeat(2,1fr)
+}
+.nlinks {
+  display:none
+}
+.coin-row {
+  grid-template-columns:32px 1fr 1fr auto
+}
+.coin-row .hide-m {
+  display:none
+}
+.f-in {
+  grid-template-columns:1fr 1fr
+}
+}
+</style>
+</head>
+<body>
+<div class="ticker-top mono" id="topTicker"><span>loading feed…</span></div>
+<nav><div class="nav-in">
+<a class="logo" href="#"><i>◭</i>PULSECHAIN</a>
+<div class="nlinks"><a href="#markets">/markets</a><a href="#fees">/fees</a><a href="#api">/api</a><a href="#faq">/faq</a></div>
+<div class="nav-r"><span class="dotlive"><i></i>mainnet · 12ms</span><a class="btn" href="#markets">Connect wallet</a></div>
+</div></nav>
+<header class="hero">
+<div>
+<div class="k">// PRO TERMINAL — V4.2</div>
+<h1>Trade at <span>machine speed.</span></h1>
+<p class="lead">0.05% maker fees, 400ms execution, cold-storage custody. Loved by 90k desk traders and bots.</p>
+<div class="cmd"><b>❯</b><span id="typed">connect --network mainnet --latency 12ms</span><span style="animation:bl 1s infinite">▊</span></div>
+<div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"><a href="#markets" class="btn">Launch terminal →</a><a href="#fees" class="btn ghost">View fees</a></div>
+<div class="stat-row"><div><b>$4.2B</b><small>24h volume</small></div><div><b>190+</b><small>pairs listed</small></div><div><b>0.05%</b><small>maker fee</small></div></div>
+</div>
+<div class="term">
+<div class="term-bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>&nbsp; pulsechain — BTC/USDT · 1m · mainnet</div>
+<div class="term-tabs"><button class="on" onclick="setCoin(0,this)">BTC</button><button onclick="setCoin(1,this)">ETH</button><button onclick="setCoin(2,this)">SOL</button><button onclick="setCoin(3,this)">PULSE</button><span style="margin-left:auto" class="mono" id="livePx" style="font-size:12px"></span></div>
+<canvas id="chart"></canvas>
+<div class="term-foot"><div><small style="color:var(--mut)">24h HIGH</small><b class="up" id="fH">$—</b></div><div><small style="color:var(--mut)">24h LOW</small><b class="dn" id="fL">$—</b></div><div><small style="color:var(--mut)">24h CHANGE</small><b class="up" id="fC">+—%</b></div></div>
+<div class="orderbox"><button class="buy" onclick="order('LONG')">BUY / LONG</button><button class="sell" onclick="order('SHORT')">SELL / SHORT</button></div>
+</div>
+</header>
+<section id="markets">
+<div class="k">// LIVE MARKETS</div>
+<div class="sec-h"><h2>All pairs, zero noise.</h2><p>Click a row to load it into the terminal chart above.</p></div>
+<div class="coins rv" id="coinTable">
+<div class="coin-row head"><span></span><span>PAIR</span><span>PRICE</span><span class="hide-m">24H</span><span class="hide-m">TREND</span><span></span></div>
+</div>
+</section>
+<section id="fees" style="padding-top:0">
+<div class="k">// PRICING</div>
+<div class="sec-h"><h2>Fees that shrink as you grow.</h2><p>No subscription needed — pay per fill, withdraw free over $500.</p></div>
+<div class="fees">
+<div class="fee rv"><h3>/ STARTER</h3><div class="p">0.10%</div><ul><li>✓ Spot + margin</li><li>✓ App + web terminal</li><li>✓ Email support</li></ul><br><a class="btn ghost" href="#">Start trading</a></div>
+<div class="fee hot rv"><h3>/ PRO — POPULAR</h3><div class="p">0.05%</div><ul><li>✓ Everything in Starter</li><li>✓ API + websockets</li><li>✓ Priority matching</li></ul><br><a class="btn" href="#">Go Pro →</a></div>
+<div class="fee rv"><h3>/ DESK</h3><div class="p">0.01%</div><ul><li>✓ OTC + custody</li><li>✓ Dedicated engineer</li><li>✓ Custom limits</li></ul><br><a class="btn ghost" href="#">Talk to us</a></div>
+</div>
+</section>
+<section id="api" style="padding-top:0">
+<div class="k">// WHY PULSECHAIN</div>
+<div class="sec-h"><h2>Built for bots & humans.</h2></div>
+<div class="grid3">
+<div class="feat rv"><b class="ic">⚡</b><h3>400ms matching</h3><p>Co-located engine in 3 regions. 99.99% uptime last 12 months.</p></div>
+<div class="feat rv"><b class="ic">◈</b><h3>Cold custody</h3><p>95% funds offline, MPC wallets, $100M insurance fund.</p></div>
+<div class="feat rv"><b class="ic">⛭</b><h3>Real API</h3><p>REST + WS + FIX. 120 req/s, sandbox included, no gatekeeping.</p></div>
+</div>
+<div class="split rv" style="margin-top:26px">
+<img src="https://picsum.photos/seed/pulse-desk/800/600" alt="Desk" loading="lazy">
+<div class="term-mini">$ pulse connect --mainnet<br><b>✓ connected · latency 12ms</b><br>$ pulse balance<br>BTC 1.2041 · USDT 84,102.55<br>$ pulse buy BTC 0.05 --limit 67200<br><b>✓ filled in 380ms · fee $1.68</b><br><span style="color:#3a4763"># no newsletter. docs → /api</span></div>
+</div>
+</section>
+<section style="padding-top:0">
+<div class="k">// FROM THE FLOOR</div>
+<div class="sec-h"><h2>Desk notes & snapshots.</h2></div>
+<div class="gal rv">
+<img src="https://picsum.photos/seed/pulse-g1/600/450" alt="g1" loading="lazy">
+<img src="https://picsum.photos/seed/pulse-g2/600/450" alt="g2" loading="lazy">
+<img src="https://picsum.photos/seed/pulse-g3/600/450" alt="g3" loading="lazy">
+<img src="https://picsum.photos/seed/pulse-g4/600/450" alt="g4" loading="lazy">
+</div>
+</section>
+<section id="faq" style="padding-top:0">
+<div class="k">// FAQ</div>
+<div class="sec-h"><h2>man pulsechain</h2></div>
+<div class="faq rv">
+<details open><summary>$ is there a demo? --yes</summary><p>Paper trading with $100k fake balance. Toggle in terminal header, no signup.</p></details>
+<details><summary>$ custody --how?</summary><p>MPC + cold storage, withdrawals whitelisted, 2FA enforced over $1k.</p></details>
+<details><summary>$ auth --needed?</summary><p>No account wall for browsing. Email login only to trade or save layouts.</p></details>
+</div>
+</section>
+<section style="padding-top:0"><div class="cta rv">
+<h2>Deploy your first bot tonight.</h2>
+<p>$ npm i pulsechain-sdk // 5-min quickstart, paper funds included</p>
+<a class="btn" href="#markets">Open live terminal →</a>
+</div></section>
+<footer><div class="f-in">
+<div><a class="logo" href="#"><i>◭</i>PULSECHAIN</a><p class="mono" style="color:var(--mut);font-size:12.5px;margin-top:10px;max-width:280px">$ uptime 99.99% · status: all systems normal</p></div>
+<div><h4>TERMINAL</h4><a href="#markets">Markets</a><a href="#fees">Fees</a><a href="#api">API docs</a></div>
+<div><h4>COMPANY</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Press kit</a></div>
+<div><h4>LEGAL</h4><a href="#">Terms</a><a href="#">Risk note</a><a href="#">Proof of reserves</a></div>
+</div><div class="f-base"><span>© 2026 PulseChain · Picsum photos · Not financial advice</span><span>mainnet · block 841,203</span></div></footer>
+<div id="toast"></div>
+<script>
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}})},{threshold:.12});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+var coins=[{s:'BTC/USDT',p:67240,c:2.4,img:'https://picsum.photos/seed/coin-btc/100/100'},{s:'ETH/USDT',p:3520,c:3.1,img:'https://picsum.photos/seed/coin-eth/100/100'},{s:'SOL/USDT',p:172.4,c:-1.2,img:'https://picsum.photos/seed/coin-sol/100/100'},{s:'PULSE/USDT',p:4.82,c:8.7,img:'https://picsum.photos/seed/coin-pls/100/100'},{s:'AVAX/USDT',p:38.2,c:1.1,img:'https://picsum.photos/seed/coin-avax/100/100'},{s:'LINK/USDT',p:18.4,c:-0.6,img:'https://picsum.photos/seed/coin-link/100/100'}];
+var tbl=document.getElementById('coinTable');
+coins.forEach(function(c,i){var r=document.createElement('div');r.className='coin-row';var cls=c.c>=0?'up':'dn';r.innerHTML='<img src="'+c.img+'" alt="c" loading="lazy"><b>'+c.s+'</b><span>$'+c.p.toLocaleString()+'</span><span class="'+cls+' hide-m">'+(c.c>=0?'+':'')+c.c+'%</span><canvas class="spark hide-m" width="110" height="34"></canvas><button class="btn ghost" style="padding:8px 16px">Trade</button>';r.style.cursor='pointer';r.onclick=function(){setCoin(i,document.querySelectorAll('.term-tabs button')[Math.min(i,3)]);window.scrollTo({top:0,behavior:'smooth'})};tbl.appendChild(r);spark(r.querySelector('.spark'),c.c>=0)});
+function spark(cv,up){if(!cv)return;var x=cv.getContext('2d');x.strokeStyle=up?'#00e59b':'#ff4d67';x.lineWidth=2;x.beginPath();var v=17;for(var i=0;i<=20;i++){v+=(Math.random()-.5)*8;v=Math.max(4,Math.min(30,v));if(!i)x.moveTo(i*5.5,v);else x.lineTo(i*5.5,v)}x.stroke()}
+var data=Array.from({length:60},function(_,i){return 50+Math.sin(i/5)*10+Math.random()*8});
+var cur=0,base=[67240,3520,172.4,4.82];
+var cv=document.getElementById('chart'),ctx=cv.getContext('2d');
+function draw(){var w=cv.width=cv.offsetWidth;cv.height=260;ctx.clearRect(0,0,w,260);ctx.strokeStyle='#1c2438';for(var g=1;g<5;g++){ctx.beginPath();ctx.moveTo(0,g*52);ctx.lineTo(w,g*52);ctx.stroke()}var gr=ctx.createLinearGradient(0,0,w,0);gr.addColorStop(0,'#00e59b');gr.addColorStop(1,'#00b3ff');ctx.strokeStyle=gr;ctx.lineWidth=2.5;ctx.beginPath();data.forEach(function(p,i){var x=i/(data.length-1)*w,y=230-(p/80)*200;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y)});ctx.stroke();ctx.lineTo(w,260);ctx.lineTo(0,260);ctx.closePath();ctx.fillStyle='rgba(0,229,155,.08)';ctx.fill();var last=data[data.length-1];var px=base[cur]*(1+(last-50)/500);document.getElementById('livePx').textContent='$'+px.toLocaleString(undefined,{maximumFractionDigits:2});document.getElementById('fH').textContent='$'+(px*1.012).toLocaleString(undefined,{maximumFractionDigits:2});document.getElementById('fL').textContent='$'+(px*0.988).toLocaleString(undefined,{maximumFractionDigits:2});var ch=(coins[cur].c).toFixed(1);var fc=document.getElementById('fC');fc.textContent=(ch>=0?'+':'')+ch+'%';fc.className=ch>=0?'up':'dn'}
+setInterval(function(){data.push(data.shift()+(Math.random()-.5)*4);data=data.map(function(v){return Math.max(10,Math.min(75,v))});draw()},900);draw();
+function setCoin(i,btn){cur=i%base.length;data=Array.from({length:60},function(_,j){return 50+Math.sin(j/5+i)*10+Math.random()*8});document.querySelectorAll('.term-tabs button').forEach(function(b){b.classList.remove('on')});if(btn)btn.classList.add('on');draw()}
+var tt=document.getElementById('topTicker');function tick(){tt.innerHTML=coins.map(function(c){var cls=c.c>=0?'up':'dn';return '<span><b>'+c.s+'</b> $'+c.p.toLocaleString()+' <span class="'+cls+'">'+(c.c>=0?'▲ +':'▼ ')+c.c+'%</span></span>'}).join(' ◆ ')+' ◆ <span><b>GAS</b> 12 gwei</span>';coins.forEach(function(c){c.p*=1+(Math.random()-.5)*.004;c.c+=(Math.random()-.5)*.2})}tick();setInterval(tick,2500);
+var lines=['connect --network mainnet --latency 12ms','watch BTC/USDT --interval 1m','buy BTC 0.05 --limit 67200 ✓ filled'];var li=0;setInterval(function(){li=(li+1)%lines.length;document.getElementById('typed').textContent=lines[li]},3200);
+function order(s){var t=document.getElementById('toast');t.textContent=(s==='LONG'?'▲ Long':'▼ Short')+' paper order placed (demo) — connect wallet to go live';t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2600)}
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

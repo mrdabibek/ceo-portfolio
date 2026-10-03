@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Longform — Essays on Work & Craft</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* {
+margin:0;
+padding:0;
+box-sizing:border-box
+}
+:root {
+--bg:#fdfcf9;
+--ink:#1c1a16;
+--mut:#7a7365;
+--line:#e8e2d4;
+--acc:#b3541e;
+--sage:#5a6e58
+}
+body {
+background:var(--bg);
+color:var(--ink);
+font-family:'Source Sans 3',sans-serif
+}
+h1,h2,h3,.serif { font-family:Lora,serif }
+.wrap {
+max-width:1120px;
+margin:auto;
+padding:0 24px
+}
+/* header */
+.topbar {
+border-bottom:1px solid var(--line);
+text-align:center;
+font-size:12px;
+letter-spacing:2px;
+color:var(--mut);
+padding:8px
+}
+header {
+position:sticky;
+top:0;
+z-index:50;
+background:rgba(253,252,249,.94);
+backdrop-filter:blur(10px);
+border-bottom:1px solid var(--line)
+}
+.hd {
+max-width:1160px;
+margin:auto;
+display:flex;
+align-items:center;
+gap:20px;
+padding:16px 24px
+}
+.brand {
+font-family:Lora,serif;
+font-size:26px;
+font-weight:700
+}
+.brand em { color:var(--acc); font-style:italic }
+nav { display:flex; gap:22px }
+nav a {
+color:var(--ink);
+text-decoration:none;
+font-size:13.5px;
+font-weight:600;
+opacity:.6
+}
+nav a:hover { opacity:1; color:var(--acc) }
+.search {
+margin-left:auto;
+display:flex;
+border:1px solid var(--line);
+border-radius:99px;
+overflow:hidden;
+background:#fff
+}
+.search input {
+border:none;
+padding:9px 16px;
+font-family:inherit;
+font-size:13.5px;
+outline:none;
+width:170px;
+background:none
+}
+.search button {
+background:none;
+border:none;
+padding:0 14px;
+cursor:pointer
+}
+/* hero */
+.hero {
+display:grid;
+grid-template-columns:1.2fr 1fr;
+gap:36px;
+padding:48px 0;
+align-items:center;
+border-bottom:2px solid var(--ink)
+}
+.kicker {
+font-size:11px;
+letter-spacing:3px;
+color:var(--acc);
+font-weight:700
+}
+.hero h1 {
+font-size:clamp(36px,4.8vw,60px);
+line-height:1.1;
+margin:14px 0;
+font-weight:600
+}
+.hero h1 i { color:var(--acc) }
+.dek {
+font-family:Lora,serif;
+font-style:italic;
+font-size:19px;
+color:var(--mut);
+line-height:1.6;
+margin-bottom:16px
+}
+.byline {
+display:flex;
+gap:12px;
+align-items:center;
+font-size:13px;
+color:var(--mut)
+}
+.byline .av {
+width:40px;
+height:40px;
+border-radius:50%;
+background:var(--ink);
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700
+}
+.heroImg {
+background:linear-gradient(150deg,#e8e2d4,#cfc4a8);
+border-radius:4px;
+min-height:340px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:110px;
+position:relative
+}
+.heroImg figcaption {
+position:absolute;
+bottom:12px;
+font-size:11px;
+color:#5a5344;
+letter-spacing:1px
+}
+/* topics */
+.topics {
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+padding:26px 0;
+border-bottom:1px solid var(--line)
+}
+.topic {
+border:1px solid var(--line);
+background:#fff;
+padding:9px 20px;
+border-radius:99px;
+cursor:pointer;
+font-size:13px;
+font-weight:600
+}
+.topic.on {
+background:var(--ink);
+color:#fff;
+border-color:var(--ink)
+}
+#res {
+margin-left:auto;
+font-size:12.5px;
+color:var(--mut);
+align-self:center
+}
+/* layout */
+.cols {
+display:grid;
+grid-template-columns:1fr 320px;
+gap:44px;
+padding:40px 0 60px
+}
+.feed article {
+display:grid;
+grid-template-columns:150px 1fr;
+gap:20px;
+padding:26px 0;
+border-bottom:1px solid var(--line);
+cursor:pointer
+}
+.feed article:hover h3 { color:var(--acc) }
+.feed .thumb {
+font-size:64px;
+background:#f3eee1;
+border-radius:4px;
+display:flex;
+align-items:center;
+justify-content:center;
+min-height:130px
+}
+.feed .cat {
+font-size:11px;
+letter-spacing:2px;
+color:var(--acc);
+font-weight:700
+}
+.feed h3 {
+font-size:24px;
+line-height:1.3;
+margin:6px 0;
+font-weight:600
+}
+.feed .ex {
+font-family:Lora,serif;
+font-style:italic;
+color:var(--mut);
+font-size:15.5px;
+line-height:1.6;
+margin-bottom:10px
+}
+.feed .meta { font-size:12.5px; color:var(--mut) }
+.feed .meta b { color:var(--ink) }
+/* sidebar */
+.side .box {
+border:1px solid var(--line);
+border-radius:4px;
+padding:26px;
+margin-bottom:22px;
+background:#fff
+}
+.side .box.dark {
+background:var(--ink);
+color:#f3eee1;
+border:none
+}
+.side h4 {
+font-family:Lora,serif;
+font-size:20px;
+margin-bottom:10px
+}
+.side p {
+font-size:13.5px;
+color:var(--mut);
+line-height:1.7;
+margin-bottom:14px
+}
+.side .box.dark p { color:#b7ad99 }
+.side input {
+width:100%;
+border:1px solid var(--line);
+padding:11px 14px;
+font-family:inherit;
+font-size:13.5px;
+margin-bottom:10px;
+border-radius:4px
+}
+.side button {
+width:100%;
+background:var(--acc);
+color:#fff;
+border:none;
+padding:12px;
+font-weight:700;
+cursor:pointer;
+border-radius:4px;
+font-size:13.5px
+}
+.side button:hover { filter:brightness(1.1) }
+.pop { list-style:none }
+.pop li {
+padding:12px 0;
+border-bottom:1px dashed var(--line);
+cursor:pointer;
+font-size:14px
+}
+.pop li:hover { color:var(--acc) }
+.pop li b {
+font-family:Lora,serif;
+font-size:16px;
+display:block
+}
+.pop li small { color:var(--mut); font-size:12px }
+.tagcloud {
+display:flex;
+gap:8px;
+flex-wrap:wrap
+}
+.tagcloud span {
+border:1px solid var(--line);
+padding:5px 14px;
+border-radius:99px;
+font-size:12px;
+cursor:pointer
+}
+.tagcloud span:hover { background:var(--ink); color:#fff }
+/* quote */
+.pull {
+border-top:2px solid var(--ink);
+border-bottom:2px solid var(--ink);
+padding:44px 0;
+text-align:center;
+margin:10px 0 0
+}
+.pull blockquote {
+font-family:Lora,serif;
+font-style:italic;
+font-size:clamp(22px,3vw,32px);
+line-height:1.5;
+max-width:720px;
+margin:auto
+}
+.pull cite {
+font-size:12px;
+letter-spacing:3px;
+color:var(--mut);
+font-style:normal;
+display:block;
+margin-top:14px
+}
+/* about + faq */
+.about {
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:36px;
+align-items:center;
+padding:50px 0
+}
+.about .big {
+font-size:120px;
+text-align:center;
+background:#f3eee1;
+border-radius:4px;
+padding:40px
+}
+.about h2 { font-size:32px; margin-bottom:12px }
+.about p {
+color:var(--mut);
+line-height:1.8;
+margin-bottom:12px;
+font-size:15px
+}
+.faq h2 {
+text-align:center;
+font-size:30px;
+margin-bottom:18px
+}
+.qa {
+border-bottom:1px solid var(--line);
+max-width:720px;
+margin:auto
+}
+.qa button {
+width:100%;
+background:none;
+border:none;
+padding:18px 4px;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
+font-family:Lora,serif;
+font-size:19px;
+text-align:left
+}
+.qa p {
+display:none;
+padding:0 4px 20px;
+color:var(--mut);
+font-size:14.5px;
+line-height:1.8
+}
+.qa p.open { display:block }
+/* footer */
+footer {
+background:var(--ink);
+color:#a89f8c;
+padding:48px 24px;
+text-align:center;
+margin-top:56px
+}
+footer .brand { color:#fff }
+footer p { font-size:13px; margin-top:10px }
+/* reader */
+#reader {
+position:fixed;
+inset:0;
+background:rgba(28,26,22,.6);
+display:none;
+align-items:flex-start;
+justify-content:center;
+z-index:100;
+padding:40px 20px;
+overflow:auto
+}
+#reader.show { display:flex }
+.sheet {
+background:var(--bg);
+max-width:680px;
+width:100%;
+padding:56px 52px;
+position:relative;
+border-radius:4px
+}
+.sheet .thumb { font-size:80px; text-align:center }
+.sheet h2 {
+font-size:34px;
+line-height:1.25;
+margin:14px 0
+}
+.sheet .meta {
+color:var(--mut);
+font-size:13px;
+border-bottom:1px solid var(--line);
+padding-bottom:18px;
+margin-bottom:22px
+}
+.sheet p.body {
+font-family:Lora,serif;
+font-size:17.5px;
+line-height:1.9;
+margin-bottom:18px;
+color:#33312a
+}
+.sheet p.body::first-letter {
+font-size:52px;
+float:left;
+line-height:.9;
+padding-right:10px;
+color:var(--acc);
+font-weight:700
+}
+.x {
+position:absolute;
+top:14px;
+right:18px;
+background:none;
+border:none;
+font-size:24px;
+cursor:pointer
+}
+#toast {
+position:fixed;
+bottom:26px;
+left:50%;
+transform:translateX(-50%) translateY(80px);
+background:var(--ink);
+color:#fff;
+padding:13px 28px;
+border-radius:99px;
+transition:.3s;
+z-index:120;
+font-size:14px
+}
+#toast.show { transform:translateX(-50%) }
+@media(max-width:900px) { .hero,.cols,.about { grid-template-columns:1fr }
+.feed article { grid-template-columns:90px 1fr }
+.feed .thumb { font-size:40px; min-height:90px }
+nav { display:none }
+.sheet { padding:36px 24px }
+}
+</style>
+</head>
+<body>
+<div class="topbar">ESSAYS ON WORK, CRAFT &amp; ATTENTION — EVERY SUNDAY, 6 MIN READ</div>
+<header>
+<div class="hd">
+<div class="brand">The <em>Longform.</em>
+</div>
+<nav>
+<a href="#latest">Essays</a>
+<a href="#about">About</a>
+<a href="#faq">FAQ</a>
+</nav>
+<div class="search">
+<input id="q" placeholder="Search essays…" oninput="render()">
+<button>🔍</button>
+</div>
+</div>
+</header>
+<div class="wrap">
+<div class="hero">
+<div>
+<div class="kicker">✦ ESSAY Nº 148 — MOST READ THIS MONTH</div>
+<h1>In praise of <i>slow work</i> in a fast feed.</h1>
+<p class="dek">We measured everything and understood nothing. Notes from a year of working at half speed — and shipping twice as much.</p>
+<div class="byline">
+<div class="av">MK</div>
+<div>
+<b style="color:var(--ink)">Mira Kramer</b> · 12 min read · 4.2k claps</div>
+</div>
+<div style="margin-top:20px;display:flex;gap:10px">
+<button style="background:var(--ink);color:#fff;border:none;padding:13px 30px;border-radius:99px;font-weight:700;cursor:pointer" onclick="openPost(0)">READ ESSAY →</button>
+</div>
+</div>
+<figure class="heroImg">🕰️<figcaption>ILLUSTRATION — THE QUIET HOUR</figcaption>
+</figure>
+</div>
+<div class="topics" id="topics">
+<span id="res">
+</span>
+</div>
+<div class="cols">
+<div class="feed" id="latest">
+</div>
+<aside class="side">
+<div class="box dark">
+<h4>Get one essay every Sunday.</h4>
+<p>12,400 readers. No spam, no growth hacks — unsubscribe in one click.</p>
+<input id="nl" type="email" placeholder="you@example.com">
+<button onclick="sub()">SUBSCRIBE FREE</button>
+</div>
+<div class="box">
+<h4>Most loved ♥</h4>
+<ul class="pop" id="pop">
+</ul>
+</div>
+<div class="box">
+<h4>Browse by mood</h4>
+<div class="tagcloud">
+<span onclick="mood('slow mornings')">☕ slow mornings</span>
+<span onclick="mood('deep work')">🎧 deep work</span>
+<span onclick="mood('craft')">🪵 craft</span>
+<span onclick="mood('attention')">👁 attention</span>
+<span onclick="mood('rest')">🌙 rest</span>
+</div>
+</div>
+</aside>
+</div>
+</div>
+<div class="pull">
+<div class="wrap">
+<blockquote>"Attention is the rarest form of generosity — spend it on work that deserves it."</blockquote>
+<cite>— FROM ESSAY Nº 121</cite>
+</div>
+</div>
+<div class="wrap">
+<div class="about" id="about">
+<div class="big">✒️</div>
+<div>
+<div class="kicker">ABOUT THE AUTHOR</div>
+<h2 class="serif">Hi, I'm Mira.</h2>
+<p>Former product lead, current full-time noticer. I write weekly essays about work, craft and attention — read by designers, founders and recovering hustle-bros in 40 countries.</p>
+<p>My rule: every essay must survive a 48-hour drawer test. If I still believe it two days later, you get it Sunday.</p>
+<button style="background:none;border:2px solid var(--ink);padding:12px 28px;border-radius:99px;font-weight:700;cursor:pointer" onclick="toast('Press kit + bio sent — check your inbox after subscribing')">PRESS KIT ↓</button>
+</div>
+</div>
+<div class="faq" id="faq">
+<h2 class="serif">Letters I actually get</h2>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Is the newsletter really free? <span>+</span>
+</button>
+<p>Yes — Sundays free forever. A paid tier ($6/mo) adds monthly long reads and the annual print anthology. No paywall on the archive.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Can I republish your essays? <span>+</span>
+</button>
+<p>Excerpts under 300 words with credit + link, always fine. Full reprints need a quick email — I usually say yes.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Do you take guest posts? <span>+</span>
+</button>
+<p>Rarely, but pitches with a finished draft get read. 1,200–1,800 words, first-person, no listicles, no SEO sludge.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Where else can I find you? <span>+</span>
+</button>
+<p>Nowhere loud. RSS works, email works best — I reply to every thoughtful letter within a week.</p>
+</div>
+</div>
+</div>
+<footer>
+<div class="brand">The <em>Longform.</em>
+</div>
+<p>Written slowly in Lisbon · © 2026 Mira Kramer · RSS · Email · No trackers</p>
+</footer>
+<div id="reader">
+<div class="sheet">
+<button class="x" onclick="closeR()">✕</button>
+<div class="thumb" id="rE">🕰️</div>
+<div class="kicker" id="rC">
+</div>
+<h2 class="serif" id="rT">
+</h2>
+<div class="meta" id="rM">
+</div>
+<div id="rB">
+</div>
+<div style="display:flex;gap:10px;margin-top:10px">
+<button id="clap" style="flex:1;background:var(--ink);color:#fff;border:none;padding:13px;border-radius:99px;font-weight:700;cursor:pointer">👏 CLAP (<span id="claps">0</span>)</button>
+<button style="flex:1;background:none;border:2px solid var(--ink);padding:11px;border-radius:99px;font-weight:700;cursor:pointer" onclick="toast('Link copied — share widely')">SHARE ↗</button>
+</div>
+</div>
+</div>
+<div id="toast">
+</div>
+<script>
+const POSTS=[
+{
+c:'craft',e:'🕰️',t:'In praise of slow work in a fast feed',x:'We measured everything and understood nothing. Notes from a year at half speed.',m:'Mira Kramer · 12 min · ♥ 4.2k',cl:4213,b:['For a year I worked at half speed: no notifications before noon, one project at a time, Fridays for thinking. My output doubled — not in tickets closed, but in work that mattered a year later.','Speed is a tax on judgment. Every interruption borrows against a decision you will make tired, later. Slow work is not less work; it is work with the interest paid upfront.','Try it for a week: one MIT (most important thing) per day, phone in another room till lunch, and a notebook for the itch to check. The feed will survive without you. Your craft might not survive with it.']}
+, {
+c:'attention',e:'👁',t:'Your attention is a budget. Audit it.',x:'You would never let a stranger spend your money. Why let them spend your focus?',m:'Mira Kramer · 8 min · ♥ 3.1k',cl:3102,b:['I logged every attention-switch for a week: 214 per day. Each cost roughly 20 minutes of depth. The math was embarrassing, so I changed the defaults.','Now: inbox twice daily, news once weekly, social on desktop only. Reclaimed: ~11 hours a week. Spent on: the novel draft, long walks, actual boredom.','Audit yours for three days. You cannot optimise what you refuse to count.']}
+, {
+c:'craft',e:'🪵',t:'The drawer test: let it sit 48 hours',x:'Every essay here survives two days in a drawer. Most drafts don\'t deserve to.',m:'Mira Kramer · 6 min · ♥ 2.8k',cl:2844,b:['Write hot, publish cold. The drawer is where ego evaporates and weak arguments confess.','My rule is mechanical: finish Friday, reread Sunday. If I wince, it waits another week. If I nod, you read it over coffee.','Apply it anywhere: proposals, apologies, angry emails. Especially angry emails.']}
+, {
+c:'work',e:'💼',t:'Meetings are a tax. Here is the receipt.',x:'We cut meetings 70% for a quarter. Velocity went up. Nobody missed them.',m:'Mira Kramer · 10 min · ♥ 3.9k',cl:3901,b:['The experiment: no recurring meetings for 90 days. Async memos instead, decisions in writing, one weekly demo.','Result: shipping speed +34%, reported focus +51%, and — surprise — better decisions, because writing forces thinking.','Keep three rituals: demos, 1:1s, and celebrations. Delete the rest. If it needs a meeting, it probably needs a rewrite.']}
+, {
+c:'rest',e:'🌙',t:'Rest is a feature, not a reward',x:'You don\'t earn sleep by finishing. You finish because you slept.',m:'Mira Kramer · 7 min · ♥ 2.5k',cl:2507,b:['Treat rest like a production dependency: non-negotiable, scheduled, monitored. Eight hours, one full day off weekly, one real holiday quarterly.','Burnout is not a badge; it is a bug report from your future self. Listen early — the fix is cheaper.','This essay was written after a nap. You can tell. That is the point.']}
+, {
+c:'tools',e:'📓',t:'My boring productivity stack (2026)',x:'Notebook, calendar, one app. Everything else is theatre.',m:'Mira Kramer · 5 min · ♥ 1.9k',cl:1902,b:['Paper notebook for thinking, calendar for commitments, a single notes app for capture. That is the entire stack.','Every new tool promises freedom and delivers admin. Before adopting, I ask: what will I stop doing? Silence is usually the honest answer.','Boring tools, interesting work. Invert that and you get interesting tools, boring work.']}
+, {
+c:'work',e:'🧭',t:'Quitting the ladder: a field report',x:'Two years after leaving the title chase. Income same, life unrecognisable.',m:'Mira Kramer · 11 min · ♥ 3.4k',cl:3418,b:['I left the promotion track at 34. The first month felt like falling; the sixth felt like landing.','What replaced it: client work I choose, essays I believe, afternoons that belong to me. The ladder was leaning on someone else\'s wall.','Ambition didn\'t die — it got honest. Smaller stage, better play.']}
+, {
+c:'attention',e:'📵',t:'A month without the infinite scroll',x:'Deleted in January, back in February — with rules. The diary.',m:'Mira Kramer · 9 min · ♥ 2.2k',cl:2211,b:['Week one: phantom thumb, reaching for a feed that wasn\'t there. Week two: books finished, sleep deepened. Week three: I got bored — gloriously.','I returned with rules: desktop only, 20-minute timer, no apps after 9pm. The scroll is a tool again, not a habitat.','Your turn: one week, one rule — feeds stay off the phone. Report back; I read every letter.']}
+]; const TOPICS=[['all','All essays'],['craft','Craft'],['attention','Attention'],['work','Work'],['rest','Rest'],['tools','Tools']];
+let cat='all',cur=0; const tw=document.getElementById('topics'); TOPICS.forEach(([v,l],i)=>{
+const b=document.createElement('button');b.className='topic'+(i?'':' on');b.textContent=l;b.onclick=()=>{
+cat=v;[...tw.querySelectorAll('.topic')].forEach(x=>x.classList.remove('on'));b.classList.add('on');render()}
+;tw.insertBefore(b,res)}
+); function render(){
+const q=(document.getElementById('q').value||'').toLowerCase();const r=POSTS.map((p,i)=>({
+...p,i}
+)).filter(p=>(cat==='all'||p.c===cat)&&(p.t.toLowerCase().includes(q)||p.x.toLowerCase().includes(q)));res.textContent=r.length+' essays';const f=document.getElementById('latest');f.innerHTML=r.length?'':'<p style="color:var(--mut)">No essays found — try another word.</p>';r.forEach(p=>{
+const a=document.createElement('article');a.innerHTML=`<div class="thumb">${p.e}</div><div><div class="cat">${p.c.toUpperCase()} · Nº ${p.i+101}</div><h3 class="serif">${p.t}</h3><div class="ex">${p.x}</div><div class="meta">By <b>${p.m}</b></div></div>`;a.onclick=()=>openPost(p.i);f.appendChild(a)}
+); const pop=document.getElementById('pop');pop.innerHTML='';[...POSTS].sort((a,b)=>b.cl-a.cl).slice(0,4).forEach(p=>{
+const li=document.createElement('li');li.innerHTML=`<b>${p.t}</b><small>♥ ${p.cl.toLocaleString()} claps</small>`;li.onclick=()=>openPost(POSTS.indexOf(p));pop.appendChild(li)}
+)}
+function openPost(i){
+cur=i;const p=POSTS[i];rE.textContent=p.e;rC.textContent='✦ '+p.c.toUpperCase()+' · Nº '+(i+101);rT.textContent=p.t;rM.textContent='By '+p.m;rB.innerHTML=p.b.map(t=>`<p class="body">${t}</p>`).join('');claps.textContent=p.cl.toLocaleString();reader.classList.add('show');document.body.style.overflow='hidden'}
+function closeR(){
+reader.classList.remove('show');document.body.style.overflow=''}
+clap.onclick=()=>{
+POSTS[cur].cl++;claps.textContent=POSTS[cur].cl.toLocaleString();render()}
+; reader.addEventListener('click',e=>{
+if(e.target.id==='reader')closeR()}
+); document.addEventListener('keydown',e=>{
+if(e.key==='Escape')closeR()}
+); function mood(m){
+document.getElementById('q').value=m==='slow mornings'?'slow':m;render();toast('Essays for "'+m+'" below')}
+function sub(){
+if(!nl.value.includes('@'))return toast('Enter a valid email');toast('Welcome aboard — see you Sunday');nl.value=''}
+function toast(m){
+const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2600)}
+render();
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

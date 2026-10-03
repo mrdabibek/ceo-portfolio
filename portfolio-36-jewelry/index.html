@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ATELIER LUMIÈRE — Fine Jewellery</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* {
+margin:0;
+padding:0;
+box-sizing:border-box
+}
+:root {
+--bg:#faf8f4;
+--ink:#2b2723;
+--mut:#8f867a;
+--line:#e7e0d3;
+--gold:#b08d4f;
+--rose:#f3e7e2
+}
+body {
+background:var(--bg);
+color:var(--ink);
+font-family:Montserrat,sans-serif;
+font-weight:300
+}
+h1,h2,h3,.serif { font-family:'Cormorant Garamond',serif; font-weight:500 }
+.wrap {
+max-width:1180px;
+margin:auto;
+padding:0 26px
+}
+/* header */
+header {
+position:sticky;
+top:0;
+z-index:50;
+background:rgba(250,248,244,.92);
+backdrop-filter:blur(10px);
+border-bottom:1px solid var(--line)
+}
+.hd {
+max-width:1240px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:18px 26px
+}
+.brand {
+font-family:'Cormorant Garamond',serif;
+font-size:24px;
+letter-spacing:6px
+}
+.brand small {
+display:block;
+font-family:Montserrat;
+font-size:9px;
+letter-spacing:5px;
+color:var(--mut)
+}
+nav { display:flex; gap:28px }
+nav a {
+color:var(--ink);
+text-decoration:none;
+font-size:12px;
+letter-spacing:2px;
+opacity:.65
+}
+nav a:hover { opacity:1; color:var(--gold) }
+.hbtn {
+border:1px solid var(--ink);
+background:none;
+padding:10px 22px;
+font-size:11px;
+letter-spacing:2px;
+cursor:pointer;
+font-family:Montserrat
+}
+.hbtn:hover { background:var(--ink); color:#fff }
+/* hero */
+.hero {
+text-align:center;
+padding:84px 26px 60px;
+max-width:820px;
+margin:auto
+}
+.hero p.eyebrow {
+font-size:11px;
+letter-spacing:5px;
+color:var(--gold);
+margin-bottom:18px
+}
+.hero h1 { font-size:clamp(44px,6.5vw,84px); line-height:1.05 }
+.hero h1 i { color:var(--gold) }
+.hero p.sub {
+color:var(--mut);
+line-height:1.9;
+margin:22px auto;
+max-width:560px;
+font-size:15px
+}
+.hero .row {
+display:flex;
+gap:12px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:8px
+}
+.btn {
+padding:14px 34px;
+font-size:11px;
+letter-spacing:3px;
+cursor:pointer;
+font-family:Montserrat;
+font-weight:500
+}
+.btn.dark {
+background:var(--ink);
+color:#fff;
+border:1px solid var(--ink)
+}
+.btn.dark:hover { background:var(--gold); border-color:var(--gold) }
+.btn.line {
+background:none;
+border:1px solid var(--ink);
+color:var(--ink)
+}
+.btn.line:hover { border-color:var(--gold); color:var(--gold) }
+.strip {
+display:grid;
+grid-template-columns:repeat(4,1fr);
+border-top:1px solid var(--line);
+border-bottom:1px solid var(--line);
+max-width:1180px;
+margin:0 auto
+}
+.strip div {
+padding:22px;
+text-align:center;
+border-left:1px solid var(--line)
+}
+.strip div:first-child { border:none }
+.strip b {
+font-family:'Cormorant Garamond',serif;
+font-size:26px;
+display:block
+}
+.strip span {
+font-size:10px;
+letter-spacing:3px;
+color:var(--mut)
+}
+/* gallery */
+section { padding:76px 0 }
+.st { text-align:center; margin-bottom:36px }
+.st p {
+font-size:11px;
+letter-spacing:5px;
+color:var(--gold);
+margin-bottom:12px
+}
+.st h2 { font-size:clamp(32px,4vw,52px) }
+.filters {
+display:flex;
+gap:8px;
+justify-content:center;
+flex-wrap:wrap;
+margin-bottom:34px
+}
+.f {
+background:none;
+border:1px solid var(--line);
+padding:10px 24px;
+font-size:11px;
+letter-spacing:2px;
+cursor:pointer;
+font-family:Montserrat;
+color:var(--ink)
+}
+.f.on,.f:hover {
+background:var(--ink);
+color:#fff;
+border-color:var(--ink)
+}
+.masonry { columns:3; column-gap:20px }
+.pin {
+break-inside:avoid;
+margin-bottom:20px;
+background:#fff;
+border:1px solid var(--line);
+cursor:zoom-in;
+transition:.3s;
+position:relative
+}
+.pin:hover { box-shadow:0 24px 50px rgba(43,39,35,.12) }
+.pin .ph {
+font-size:90px;
+text-align:center;
+padding:44px 20px;
+background:linear-gradient(160deg,#fff,var(--rose))
+}
+.pin.tall .ph { font-size:120px; padding:70px 20px }
+.pin .cap { padding:18px 20px }
+.pin .cap h3 { font-size:22px }
+.pin .cap small {
+font-size:10px;
+letter-spacing:3px;
+color:var(--mut)
+}
+.pin .cap .pr {
+font-family:'Cormorant Garamond',serif;
+font-size:20px;
+color:var(--gold);
+margin-top:6px
+}
+/* story */
+.story {
+background:#fff;
+border-top:1px solid var(--line);
+border-bottom:1px solid var(--line)
+}
+.story .cols {
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
+align-items:center
+}
+.story .big {
+font-size:150px;
+text-align:center;
+background:var(--rose);
+padding:60px 20px
+}
+.story h2 { font-size:clamp(30px,3.6vw,46px); margin-bottom:16px }
+.story p {
+color:var(--mut);
+line-height:1.95;
+font-size:15px;
+margin-bottom:14px
+}
+.sign {
+font-family:'Cormorant Garamond',serif;
+font-style:italic;
+font-size:26px;
+color:var(--gold)
+}
+/* bespoke */
+.steps {
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+gap:0;
+border:1px solid var(--line)
+}
+.step {
+padding:34px 26px;
+border-left:1px solid var(--line);
+background:#fff
+}
+.step:first-child { border:none }
+.step b {
+font-family:'Cormorant Garamond',serif;
+font-size:38px;
+color:var(--gold)
+}
+.step h3 { font-size:22px; margin:8px 0 }
+.step p {
+font-size:13.5px;
+color:var(--mut);
+line-height:1.8
+}
+/* testimonials */
+.quotes {
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px
+}
+.q {
+background:#fff;
+border:1px solid var(--line);
+padding:30px
+}
+.q .qs { color:var(--gold); letter-spacing:3px }
+.q p {
+font-family:'Cormorant Garamond',serif;
+font-size:20px;
+font-style:italic;
+line-height:1.6;
+margin:12px 0
+}
+.q b {
+font-size:11px;
+letter-spacing:3px;
+color:var(--mut)
+}
+/* appointment */
+.form {
+background:#fff;
+border:1px solid var(--line);
+padding:44px;
+max-width:720px;
+margin:0 auto
+}
+.form h2 {
+font-size:36px;
+text-align:center;
+margin-bottom:6px
+}
+.form p {
+text-align:center;
+color:var(--mut);
+font-size:13px;
+margin-bottom:24px
+}
+.form .r {
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px
+}
+.form input,.form select,.form textarea {
+border:1px solid var(--line);
+background:var(--bg);
+padding:13px 16px;
+font-family:Montserrat;
+font-size:14px;
+width:100%;
+margin-bottom:12px;
+color:var(--ink)
+}
+.form input:focus,.form select:focus,.form textarea:focus { outline:none; border-color:var(--gold) }
+.form button { width:100% }
+/* faq */
+.faq { max-width:720px; margin:44px auto 0 }
+.qa { border-bottom:1px solid var(--line) }
+.qa button {
+width:100%;
+background:none;
+border:none;
+padding:18px 4px;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
+font-family:'Cormorant Garamond',serif;
+font-size:21px;
+color:var(--ink);
+text-align:left
+}
+.qa p {
+display:none;
+padding:0 4px 20px;
+color:var(--mut);
+font-size:14px;
+line-height:1.85
+}
+.qa p.open { display:block }
+/* footer */
+footer {
+background:var(--ink);
+color:#cfc8ba;
+padding:56px 26px;
+text-align:center
+}
+footer .brand { color:#fff }
+footer form {
+display:flex;
+gap:10px;
+justify-content:center;
+margin:22px 0;
+flex-wrap:wrap
+}
+footer input {
+background:none;
+border:1px solid #555;
+color:#fff;
+padding:12px 18px;
+width:min(300px,80%);
+font-family:Montserrat
+}
+footer p { font-size:12px; letter-spacing:1px }
+/* lightbox */
+#lb {
+position:fixed;
+inset:0;
+background:rgba(30,26,22,.94);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:100;
+padding:24px
+}
+#lb.show { display:flex }
+#lb figure {
+background:var(--bg);
+max-width:560px;
+width:100%;
+text-align:center;
+position:relative;
+animation:pop .3s
+}
+@keyframes pop { from { transform:scale(.94); opacity:0 } }
+#lb .ph {
+font-size:150px;
+padding:56px 20px;
+background:linear-gradient(160deg,#fff,var(--rose))
+}
+#lb figcaption { padding:26px }
+#lb h3 { font-size:30px }
+#lb p {
+color:var(--mut);
+font-size:14px;
+line-height:1.8;
+margin:10px 0
+}
+#lb .pr {
+font-family:'Cormorant Garamond',serif;
+font-size:24px;
+color:var(--gold)
+}
+#lb .nav {
+position:absolute;
+top:50%;
+font-size:30px;
+background:none;
+border:none;
+cursor:pointer;
+color:var(--ink);
+padding:10px
+}
+#prev { left:6px }
+#next { right:6px }
+#closeLb {
+position:absolute;
+top:-46px;
+right:0;
+background:none;
+border:none;
+color:#fff;
+font-size:26px;
+cursor:pointer
+}
+#lb .hint {
+color:#fff;
+font-size:11px;
+letter-spacing:2px;
+margin-top:14px;
+opacity:.6
+}
+#toast {
+position:fixed;
+bottom:26px;
+left:50%;
+transform:translateX(-50%) translateY(80px);
+background:var(--ink);
+color:#fff;
+padding:13px 30px;
+font-size:13px;
+letter-spacing:1px;
+transition:.3s;
+z-index:120
+}
+#toast.show { transform:translateX(-50%) }
+@media(max-width:860px) { .masonry { columns:2 }
+.story .cols { grid-template-columns:1fr }
+.strip { grid-template-columns:repeat(2,1fr) }
+.form .r { grid-template-columns:1fr }
+nav { display:none }
+.pin.tall .ph { font-size:90px; padding:44px 20px }
+}
+</style>
+</head>
+<body>
+<header>
+<div class="hd">
+<div class="brand">LUMIÈRE<small>PARIS · EST. 1984</small>
+</div>
+<nav>
+<a href="#gallery">Gallery</a>
+<a href="#maison">Maison</a>
+<a href="#bespoke">Bespoke</a>
+<a href="#visit">Visit</a>
+</nav>
+<button class="hbtn" onclick="scrollToId('visit')">BOOK VIEWING</button>
+</div>
+</header>
+<div class="hero">
+<p class="eyebrow">HIGH JEWELLERY · PARIS</p>
+<h1>Quiet luxury,<br>
+<i>worn forever.</i>
+</h1>
+<p class="sub">Ethically sourced diamonds, recycled 18k gold, and designs that outlive trends. Each piece is made to order in our Paris atelier — click any piece to view it up close.</p>
+<div class="row">
+<button class="btn dark" onclick="scrollToId('gallery')">VIEW GALLERY</button>
+<button class="btn line" onclick="scrollToId('bespoke')">BESPOKE SERVICE</button>
+</div>
+</div>
+<div class="strip wrap">
+<div>
+<b>40</b>
+<span>YEARS OF CRAFT</span>
+</div>
+<div>
+<b>100%</b>
+<span>TRACEABLE GOLD</span>
+</div>
+<div>
+<b>12k</b>
+<span>PIECES CREATED</span>
+</div>
+<div>
+<b>★ 4.9</b>
+<span>CLIENT RATING</span>
+</div>
+</div>
+<section id="gallery">
+<div class="wrap">
+<div class="st">
+<p>THE GALLERY</p>
+<h2>Pieces of <i style="color:var(--gold)">light</i>
+</h2>
+</div>
+<div class="filters" id="filters">
+</div>
+<div class="masonry" id="grid">
+</div>
+<p style="text-align:center;color:var(--mut);font-size:12px;letter-spacing:2px;margin-top:26px">TIP — CLICK ANY PIECE FOR LIGHTBOX · USE ← → KEYS TO BROWSE</p>
+</div>
+</section>
+<section class="story" id="maison">
+<div class="wrap cols">
+<div class="big">💎</div>
+<div>
+<p style="font-size:11px;letter-spacing:5px;color:var(--gold)">THE MAISON</p>
+<h2>Three generations of<br>goldsmiths.</h2>
+<p>Founded by Hélène Marchand in 1984, Lumière remains family-run. We buy gold only from certified recycled refineries and diamonds only with Kimberley certificates — beauty without compromise.</p>
+<p>Every commission includes a private design sketch, a wax model fitting, and lifetime resizing and cleaning.</p>
+<div class="sign">— Famille Marchand</div>
+</div>
+</div>
+</section>
+<section id="bespoke">
+<div class="wrap">
+<div class="st">
+<p>BESPOKE</p>
+<h2>From sketch to <i style="color:var(--gold)">finger</i> in four steps</h2>
+</div>
+<div class="steps">
+<div class="step">
+<b>I.</b>
+<h3 class="serif">Consultation</h3>
+<p>A 45-minute private meeting — in salon or by video — to understand the occasion, style and budget.</p>
+</div>
+<div class="step">
+<b>II.</b>
+<h3 class="serif">Sketch</h3>
+<p>Two hand-drawn proposals within a week, with stone options and honest pricing for each.</p>
+</div>
+<div class="step">
+<b>III.</b>
+<h3 class="serif">Fitting</h3>
+<p>A wax model to try on. Adjust proportions, weight and stone size before anything is cast.</p>
+</div>
+<div class="step">
+<b>IV.</b>
+<h3 class="serif">Reveal</h3>
+<p>Finished in 4–6 weeks, presented in our signature lacquered case with certificate.</p>
+</div>
+</div>
+<div class="quotes" style="margin-top:44px">
+<div class="q">
+<div class="qs">★★★★★</div>
+<p>"My engagement ring stopped my mother-in-law mid-sentence. Worth every centime."</p>
+<b>— SOPHIE L., PARIS</b>
+</div>
+<div class="q">
+<div class="qs">★★★★★</div>
+<p>"They redesigned my grandmother's brooch into a pendant I wear daily. So delicate, so kind."</p>
+<b>— ELEANOR W., LONDON</b>
+</div>
+<div class="q">
+<div class="qs">★★★★★</div>
+<p>"Transparent pricing, Kimberley papers, and a sketch I framed. True maison experience."</p>
+<b>— YUKI T., TOKYO</b>
+</div>
+</div>
+</div>
+</section>
+<section id="visit" style="padding-top:0">
+<div class="wrap">
+<div class="form">
+<h2 class="serif">Book a private viewing</h2>
+<p>8 Place Vendôme, Paris · Tue–Sat, 10h–19h · Complimentary champagne</p>
+<div class="r">
+<input id="vn" placeholder="Full name">
+<input id="ve" type="email" placeholder="Email">
+</div>
+<div class="r">
+<select>
+<option>Engagement &amp; bridal</option>
+<option>High jewellery</option>
+<option>Bespoke commission</option>
+<option>Redesign heirloom</option>
+</select>
+<input type="date" id="vd">
+</div>
+<textarea id="vm" rows="3" placeholder="Tell us about the occasion (optional)">
+</textarea>
+<button class="btn dark" onclick="book()">REQUEST APPOINTMENT</button>
+</div>
+<div class="faq">
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Are your diamonds conflict-free? <span>+</span>
+</button>
+<p>Absolutely. Every stone above 0.3ct arrives with Kimberley certification and GIA grading. Full traceability papers accompany each piece.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">What is the bespoke price range? <span>+</span>
+</button>
+<p>Redesigns from €800, engagement rings from €2,400, high jewellery on quotation. The sketch consultation is always free.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Do you resize and service? <span>+</span>
+</button>
+<p>Lifetime complimentary resizing, annual cleaning and rhodium refresh for all Lumière pieces — by post or in salon.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Can I sell back my piece? <span>+</span>
+</button>
+<p>Yes — we repurchase Lumière pieces at 70% of current gold + stone value, or credit 85% toward a new commission.</p>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<div class="brand">LUMIÈRE<small style="color:#8f867a">PARIS · EST. 1984</small>
+</div>
+<form onsubmit="event.preventDefault();toast('Welcome to the Cercle Lumière');this.reset()">
+<input required type="email" placeholder="Email for private previews">
+<button class="btn dark" style="background:var(--gold);border-color:var(--gold)" type="submit">JOIN</button>
+</form>
+<p>8 Place Vendôme, 75001 Paris · © 2026 Atelier Lumière</p>
+</footer>
+<div id="lb">
+<figure>
+<button id="closeLb" onclick="closeLb()">✕</button>
+<div class="ph" id="lbE">💍</div>
+<figcaption>
+<h3 class="serif" id="lbN">
+</h3>
+<p id="lbD">
+</p>
+<div class="pr" id="lbP">
+</div>
+<div style="margin-top:16px;display:flex;gap:10px;justify-content:center">
+<button class="btn dark" onclick="enquire()">ENQUIRE ABOUT THIS PIECE</button>
+</div>
+</figcaption>
+<button class="nav" id="prev" onclick="step(-1)">‹</button>
+<button class="nav" id="next" onclick="step(1)">›</button>
+</figure>
+</div>
+<div id="toast">
+</div>
+<script>
+const ITEMS=[
+{
+e:'💍',n:'Aube Solitaire',c:'rings',p:'€4,200',d:'1.2ct brilliant solitaire on a hand-polished 18k gold band.',tall:1}
+, {
+e:'📿',n:'Rivière de Lune',c:'necklaces',p:'€6,800',d:'Forty-two graduated diamonds on a whisper-fine chain.'}
+, {
+e:'💎',n:'Éclat Pendant',c:'necklaces',p:'€2,900',d:'Single pear-cut diamond suspended from recycled gold.',tall:1}
+, {
+e:'✨',n:'Constellation Studs',c:'earrings',p:'€1,650',d:'Star-set diamond studs, sold as a pair with certificate.'}
+, {
+e:'🌙',n:'Lune Chandelier',c:'earrings',p:'€3,400',d:'Articulated moonstone drops that catch candlelight.',tall:1}
+, {
+e:'🤍',n:'Vœu Band',c:'rings',p:'€1,980',d:'Sculpted wedding band, brushed outside, mirror inside.'}
+, {
+e:'🌟',n:'Héritage Brooch',c:'high',p:'€9,500',d:'One-of-a-kind sapphire brooch from the 1984 archive.',tall:1}
+, {
+e:'🔷',n:'Ciel Ring',c:'high',p:'€12,000',d:'Ceylon sapphire halo ring, piece unique with papers.'}
+, {
+e:'⭕',n:'Cercle Bangle',c:'bracelets',p:'€2,200',d:'Seamless 18k bangle, engraved inside with your date.'}
+, {
+e:'🌊',n:'Onde Bracelet',c:'bracelets',p:'€3,100',d:'Articulated wave links that move like water.',tall:1}
+, {
+e:'❄️',n:'Givre Tiara',c:'high',p:'€18,000',d:'Frost-inspired tiara, convertible to a necklace.'}
+, {
+e:'🍃',n:'Feuille Studs',c:'earrings',p:'€1,200',d:'Everyday gold leaf studs, feather-light.'}
+];
+const CATS=[['all','All pieces'],['rings','Rings'],['necklaces','Necklaces'],['earrings','Earrings'],['bracelets','Bracelets'],['high','High jewellery']];
+let cur='all',vis=[],idx=0; const grid=document.getElementById('grid'),ff=document.getElementById('filters'); CATS.forEach(([v,l],i)=>{
+const b=document.createElement('button');b.className='f'+(i?'':' on');b.textContent=l;b.onclick=()=>{
+cur=v;[...ff.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');render()}
+;ff.appendChild(b)}
+); function render(){
+grid.innerHTML='';vis=ITEMS.map((x,i)=>({
+...x,i}
+)).filter(x=>cur==='all'||x.c===cur);vis.forEach((x,k)=>{
+const d=document.createElement('div');d.className='pin'+(x.tall?' tall':'');d.innerHTML=`<div class="ph">${x.e}</div><div class="cap"><small>${x.c.toUpperCase()}</small><h3 class="serif">${x.n}</h3><div class="pr">${x.p}</div></div>`;d.onclick=()=>openLb(k);grid.appendChild(d)}
+)}
+function openLb(k){
+idx=k;show();document.getElementById('lb').classList.add('show');document.body.style.overflow='hidden'}
+function show(){
+const x=vis[idx];lbE.textContent=x.e;lbN.textContent=x.n;lbD.textContent=x.d;lbP.textContent=x.p+' · incl. certificate'}
+function step(d){
+idx=(idx+d+vis.length)%vis.length;show()}
+function closeLb(){
+document.getElementById('lb').classList.remove('show');document.body.style.overflow=''}
+document.addEventListener('keydown',e=>{
+if(!document.getElementById('lb').classList.contains('show'))return;if(e.key==='Escape')closeLb();if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)}
+); document.getElementById('lb').addEventListener('click',e=>{
+if(e.target.id==='lb')closeLb()}
+); function enquire(){
+closeLb();scrollToId('visit');toast('Mention "'+vis[idx].n+'" in your appointment note')}
+function book(){
+if(!vn.value||!ve.value)return toast('Please add your name and email');toast('Viewing requested — we will confirm within 24h');vn.value=ve.value=vm.value=''}
+function toast(m){
+const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2500)}
+function scrollToId(i){
+document.getElementById(i).scrollIntoView({
+behavior:'smooth'}
+)}
+render();
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

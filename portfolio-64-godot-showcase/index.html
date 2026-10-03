@@ -1,0 +1,581 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ironworks Garage — Godot Vehicle Lab by Alex Voss</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+:root{
+  --bg:#141210;
+  --steel:#1f1c18;
+  --iron:#2c2822;
+  --rust:#e8590c;
+  --brass:#fab005;
+  --cream:#f5efe2
+}
+body{
+  font-family:'Arial Narrow',Arial,sans-serif;
+  background:var(--bg);
+  color:var(--cream);
+  overflow-x:hidden
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:repeating-linear-gradient(0deg,#00000022 0 2px,transparent 2px 4px);
+  z-index:5
+}
+/* niche loader: rivet */
+#loader{
+  position:fixed;
+  inset:0;
+  background:#0d0b09;
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:center;
+  justify-content:center;
+  transition:.5s
+}
+#loader.off{
+  opacity:0;
+  visibility:hidden
+}
+#loader .gear{
+  font-size:50px;
+  animation:rot 1.4s linear infinite
+}
+@keyframes rot{
+  to{
+  transform:rotate(360deg)
+}
+}
+#loader .track{
+  width:180px;
+  height:6px;
+  background:#ffffff1c;
+  border-radius:99px;
+  overflow:hidden
+}
+#loader .track i{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,var(--rust),var(--brass));
+  animation:ld 1.1s forwards
+}
+@keyframes ld{
+  from{
+  width:0
+}
+to{
+  width:100%
+}
+}
+#loader small{
+  letter-spacing:3px;
+  color:#8a7f6a;
+  font-size:11px
+}
+::selection{
+  background:var(--rust);
+  color:#fff
+}
+nav{
+  background:#0d0b09;
+  border-bottom:3px solid var(--rust);
+  position:sticky;
+  top:0;
+  z-index:60
+}
+.nin{
+  max-width:1160px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:13px 20px;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.5px
+}
+.nin a{
+  color:var(--cream);
+  text-decoration:none;
+  opacity:.7
+}
+.nin a:hover{
+  opacity:1;
+  color:var(--brass)
+}
+.nin .sp{
+  flex:1
+}
+.plate{
+  background:var(--brass);
+  color:#141210;
+  border:0;
+  padding:9px 20px;
+  font-weight:900;
+  cursor:pointer;
+  font-family:inherit;
+  letter-spacing:1px;
+  clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)
+}
+.hero{
+  max-width:1160px;
+  margin:auto;
+  padding:52px 20px 10px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:30px
+}
+.tag{
+  display:inline-block;
+  background:var(--rust);
+  padding:6px 16px;
+  font-size:11.5px;
+  font-weight:900;
+  letter-spacing:2px;
+  clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)
+}
+h1{
+  font-size:clamp(32px,5vw,58px);
+  line-height:1;
+  text-transform:uppercase;
+  margin:14px 0 10px;
+  font-weight:900
+}
+h1 span{
+  color:var(--brass)
+}
+.hero p{
+  font-size:14px;
+  line-height:1.65;
+  color:#c9bfa9
+}
+.specs{
+  display:flex;
+  gap:10px;
+  margin-top:16px;
+  flex-wrap:wrap
+}
+.specs div{
+  background:var(--steel);
+  border:1px solid #ffffff1e;
+  border-top:3px solid var(--rust);
+  padding:12px 18px;
+  font-size:12px
+}
+.specs b{
+  font-size:20px;
+  color:var(--brass)
+}
+#lab{
+  max-width:1160px;
+  margin:auto;
+  padding:18px 20px;
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:18px
+}
+.bay{
+  background:var(--steel);
+  border:1px solid #ffffff1e;
+  border-radius:8px;
+  overflow:hidden
+}
+.bayHead{
+  background:var(--iron);
+  padding:11px 16px;
+  font-size:12.5px;
+  font-weight:900;
+  letter-spacing:1px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  border-bottom:1px solid #ffffff14
+}
+.bayHead .lamp{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#51cf66;
+  box-shadow:0 0 8px #51cf66
+}
+#drive{
+  width:100%;
+  height:300px;
+  display:block;
+  background:#0d1424
+}
+.dash{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  background:#0d0b09;
+  font-size:12px
+}
+.dash div{
+  padding:12px;
+  text-align:center;
+  border-right:1px solid #ffffff12
+}
+.dash b{
+  display:block;
+  font-size:19px;
+  color:var(--brass)
+}
+.dashBtns{
+  display:flex;
+  gap:8px;
+  padding:14px;
+  flex-wrap:wrap;
+  background:var(--steel)
+}
+.btn{
+  background:var(--rust);
+  color:#fff;
+  border:0;
+  padding:11px 20px;
+  font-weight:900;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:12.5px;
+  letter-spacing:.5px
+}
+.btn:hover{
+  background:var(--brass);
+  color:#141210
+}
+.btn.ghost{
+  background:transparent;
+  border:1.5px solid #ffffff33;
+  color:var(--cream)
+}
+.sliders{
+  padding:6px 16px 16px;
+  font-size:12.5px
+}
+.sliders label{
+  display:flex;
+  justify-content:space-between;
+  margin:12px 0 6px;
+  color:#c9bfa9
+}
+.sliders input{
+  width:100%;
+  accent-color:var(--rust)
+}
+#mapgen{
+  width:100%;
+  height:260px;
+  display:block;
+  background:#2a2118
+}
+.mapMeta{
+  display:flex;
+  gap:10px;
+  padding:12px 16px;
+  font-size:12px;
+  background:#0d0b09;
+  flex-wrap:wrap
+}
+.mapMeta b{
+  color:var(--brass)
+}
+section{
+  max-width:1160px;
+  margin:auto;
+  padding:30px 20px
+}
+h2{
+  font-size:clamp(23px,3.2vw,33px);
+  text-transform:uppercase;
+  font-weight:900
+}
+h2 span{
+  color:var(--rust)
+}
+.sub{
+  color:#8a7f6a;
+  font-size:13.5px;
+  margin:8px 0 18px
+}
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px
+}
+.grid3 div{
+  background:var(--steel);
+  border:1px solid #ffffff1a;
+  border-top:3px solid var(--brass);
+  padding:22px 20px;
+  font-size:13px;
+  line-height:1.6
+}
+.grid3 img{
+  width:100%;
+  height:130px;
+  object-fit:cover;
+  border-radius:4px;
+  margin-bottom:12px;
+  filter:sepia(.4) contrast(1.05)
+}
+.prices{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px
+}
+.prices div{
+  background:var(--steel);
+  border:1px solid #ffffff1a;
+  padding:28px 24px;
+  text-align:center
+}
+.amount{
+  font-size:34px;
+  color:var(--brass);
+  font-weight:900;
+  margin:10px 0
+}
+#toast{
+  position:fixed;
+  bottom:24px;
+  right:20px;
+  background:var(--brass);
+  color:#141210;
+  padding:13px 22px;
+  font-weight:800;
+  font-size:13px;
+  z-index:200;
+  transform:translateY(80px);
+  transition:.3s;
+  clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)
+}
+#toast.show{
+  transform:none
+}
+#auth{
+  position:fixed;
+  inset:0;
+  background:#000c;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:150
+}
+#auth.open{
+  display:flex
+}
+.abox{
+  width:min(400px,92vw);
+  background:var(--steel);
+  border-top:4px solid var(--rust);
+  padding:32px 28px
+}
+.abox input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  background:#0d0b09;
+  border:1px solid #ffffff2c;
+  color:#fff;
+  outline:0;
+  font-family:inherit
+}
+footer{
+  text-align:center;
+  color:#8a7f6a;
+  font-size:12.5px;
+  padding:30px
+}
+.rv{
+  opacity:0;
+  transform:translateY(22px);
+  transition:.6s
+}
+.rv.vis{
+  opacity:1;
+  transform:none
+}
+@media(max-width:940px){
+  .hero,#lab{
+  grid-template-columns:1fr
+}
+.dash{
+  grid-template-columns:1fr 1fr
+}
+}
+</style>
+</head>
+<body>
+<div id="loader"><div class="gear">âš™ï¸</div><div class="track"><i></i></div><small>IRONWORKS · HEATING FURNACE</small></div>
+<nav><div class="nin"><span style="font-size:20px">âš™ï¸</span><b>IRONWORKS</b><a href="#lab">DYNO BAY</a><a href="#maps">TRACKS</a><a href="#work">BUILDS</a><a href="#hire">QUOTE</a><span class="sp"></span><button class="plate" onclick="openAuth()">BOOK DYNO</button></div></nav>
+<header class="hero">
+<div><span class="tag">GODOT 4 · VEHICLE PHYSICS · EST. 2019</span><h1>Alex Voss tunes <span>arcade steel.</span></h1><p>Godot specialist — drift-tuned arcade cars, procedural tracks, tournament seeds. Drive the dyno below with <b>WASD</b>, tune grip/power/drift live, then generate a track per biome. 40+ shipped toys & client games.</p><div class="specs"><div><b>40+</b><br>games shipped</div><div><b>4.9★</b><br>client rating</div><div><b>Godot 4</b><br>+ GDScript</div><div><b>$58/hr</b><br>2-week builds</div></div></div>
+<div><img src="https://picsum.photos/seed/ironhero/560/360" style="width:100%;border:3px solid var(--rust)" alt=""></div>
+</header>
+<div id="lab">
+<div class="bay">
+<div class="bayHead"><span class="lamp"></span> BAY 01 — DYNO · WASD / ARROWS · AUTO <span id="autoState" style="color:var(--brass)">OFF</span></div>
+<canvas id="drive" width="900" height="300"></canvas>
+<div class="dash"><div>SPEED<b id="hSpeed">0 km/h</b></div><div>DRIFT<b id="hDrift">0Â°</b></div><div>LAP<b id="hLap">1</b></div><div>GRIP<b id="hGrip">High</b></div></div>
+<div class="dashBtns"><button class="btn" onmousedown="throttle(1)" onmouseup="throttle(0)">▲ GAS</button><button class="btn ghost" onclick="resetCar()">â†» RESET</button><button class="btn ghost" onclick="toggleAuto()">ðŸ¤– AUTOPILOT</button><button class="btn" onclick="openAuth()">HIRE ME →</button></div>
+<div class="sliders">
+<label>Grip <span id="vGrip">0.85</span></label><input id="rGrip" type="range" min="40" max="100" value="85" oninput="tune()">
+<label>Engine power <span id="vPow">1.2</span></label><input id="rPow" type="range" min="60" max="200" value="120" oninput="tune()">
+<label>Drift factor <span id="vDrift">0.60</span></label><input id="rDrift" type="range" min="20" max="100" value="60" oninput="tune()">
+</div>
+</div>
+<div class="bay">
+<div class="bayHead"><span class="lamp" style="background:var(--brass);box-shadow:0 0 8px var(--brass)"></span> BAY 02 — TRACK FOUNDRY</div>
+<canvas id="mapgen" width="520" height="260"></canvas>
+<div class="mapMeta"><span>SEED <b id="mSeed">#0000</b></span><span>BIOME <b id="mBiome">Desert</b></span><span>GRADE <b id="mDiff">3.0★</b></span></div>
+<div class="dashBtns"><button class="btn ghost" onclick="setBiome('Desert')">ðŸœï¸ Desert</button><button class="btn ghost" onclick="setBiome('Neon')">ðŸŒƒ Neon</button><button class="btn ghost" onclick="setBiome('Snow')">â„ï¸ Snow</button></div>
+<div class="dashBtns"><button class="btn" onclick="genMap()">ðŸŽ² NEW TRACK</button><button class="btn ghost" onclick="genMap(true)">ðŸ TOURNAMENT</button></div>
+<div style="padding:0 16px 16px;font-size:12.5px;color:#c9bfa9">Seeded RNG — same seed, same track. Tournament seeds are shareable for leaderboards.</div>
+</div>
+</div>
+<section id="work">
+<h2 class="rv">Rolled out <span>the garage</span></h2>
+<p class="sub rv">Client builds & game-jam steel.</p>
+<div class="grid3">
+<div class="rv"><img src="https://picsum.photos/seed/iron1/500/260"><b>ðŸ Desert Hauler</b><br>Godot rally · 200K plays<br><small style="color:#8a7f6a">Procedural stages + tune shop</small></div>
+<div class="rv"><img src="https://picsum.photos/seed/iron2/500/260"><b>ðŸŒƒ Neon Courier</b><br>Top-down drift · 4.8★<br><small style="color:#8a7f6a">Night city, skid FX, daily seeds</small></div>
+<div class="rv"><img src="https://picsum.photos/seed/iron3/500/260"><b>â„ï¸ Ice Relay</b><br>Multiplayer jam winner<br><small style="color:#8a7f6a">Godot + rollback netcode</small></div>
+</div>
+</section>
+<section id="hire">
+<h2 class="rv">Forge rates ðŸ”¥</h2>
+<p class="sub rv">Fixed quotes, dyno-tested.</p>
+<div class="prices">
+<div class="rv"><small>PROTOTYPE</small><div class="amount">$850</div><p style="font-size:13px;color:#8a7f6a">One drivable toy, 1 week.</p><br><button class="btn ghost" style="width:100%" onclick="openAuth()">Cast it</button></div>
+<div class="rv" style="border-top-color:var(--rust)"><small>★ GAME BUILD</small><div class="amount">$2,900</div><p style="font-size:13px;color:#8a7f6a">Full mini-game + tracks.</p><br><button class="btn" style="width:100%" onclick="openAuth()">Forge it</button></div>
+<div class="rv"><small>STUDIO</small><div class="amount">$4,500/mo</div><p style="font-size:13px;color:#8a7f6a">Ongoing Godot partner.</p><br><button class="btn ghost" style="width:100%" onclick="openAuth()">Retain</button></div>
+</div>
+</section>
+<footer>Â© 2026 Ironworks Garage · Godot 4 · <a href="#" onclick="openAuth();return false" style="color:var(--brass)">Book dyno</a></footer>
+<div id="auth"><div class="abox"><h3>Work order ðŸ“‹</h3><p style="font-size:13px;color:#8a7f6a">Brief the build — reply in ~12h.</p><input id="aemail" placeholder="Email address"><input id="amsg" placeholder="Project: e.g. drift game in Godot 4"><button class="btn" style="width:100%;margin-top:10px" onclick="doAuth()">Send brief</button><button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeAuth()">Cancel</button></div></div>
+<div id="toast"></div>
+<script>
+addEventListener('load',()=>setTimeout(()=>loader.classList.add('off'),1000));
+setTimeout(()=>loader.classList.add('off'),2400);
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200);}
+function openAuth(){document.getElementById('auth').classList.add('open');}
+function closeAuth(){document.getElementById('auth').classList.remove('open');}
+function doAuth(){const e=document.getElementById('aemail').value;if(!e||!e.includes('@'))return toast('Enter a valid email');closeAuth();toast('Brief sent! Alex replies in ~12h ðŸ');}
+document.getElementById('auth').addEventListener('click',e=>{if(e.target.id==='auth')closeAuth();});
+const dc=document.getElementById('drive'),dx=dc.getContext('2d');
+let car={x:120,y:210,vx:0,vy:0,angle:0,drift:0,gas:0};
+let grip=.85,power=1.2,driftF=.6,auto=false,keys={},lap=1,lastX=120;
+function tune(){grip=document.getElementById('rGrip').value/100;power=document.getElementById('rPow').value/100;driftF=document.getElementById('rDrift').value/100;document.getElementById('vGrip').textContent=grip.toFixed(2);document.getElementById('vPow').textContent=power.toFixed(1);document.getElementById('vDrift').textContent=driftF.toFixed(2);document.getElementById('hGrip').textContent=grip>.8?'High':grip>.6?'Medium':'Loose';}
+function throttle(d){car.gas=d;setTimeout(()=>{if(!keys['w']&&!keys['arrowup'])car.gas=0;},400);}
+function resetCar(){car={x:120,y:210,vx:0,vy:0,angle:0,drift:0,gas:0};toast('Car reset â†»');}
+function toggleAuto(){auto=!auto;document.getElementById('autoState').textContent=auto?'ON':'OFF';toast(auto?'Autopilot engaged ðŸ¤–':'Manual control');}
+document.addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true;});
+document.addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false;if(!keys['w']&&!keys['arrowup']&&!keys['s']&&!keys['arrowdown'])car.gas=0;});
+function driveLoop(){
+if(keys['w']||keys['arrowup'])car.gas=1;
+if(keys['s']||keys['arrowdown'])car.gas=-.6;
+if(auto){car.gas=1;car.angle=Math.sin(Date.now()/900)*.5;}
+const steer=(keys['a']||keys['arrowleft']?-1:0)+(keys['d']||keys['arrowright']?1:0);
+const spd=Math.hypot(car.vx,car.vy);
+car.angle+=steer*(.03+spd*.0004)*(car.gas<0?-1:1);
+car.vx+=Math.cos(car.angle)*car.gas*power*.35;
+car.vy+=Math.sin(car.angle)*car.gas*power*.35;
+car.vx*=(0.985-(1-grip)*.02);
+car.vy*=(0.985-(1-grip)*.02);
+car.drift=Math.abs(steer)*spd*driftF*.12;
+car.x+=car.vx;car.y+=car.vy;
+if(car.x>860){car.x=40;lap++;document.getElementById('hLap').textContent=lap;toast('Lap '+lap+' — '+(spd*9|0)+' km/h top!');}
+if(car.x<20)car.x=20;if(car.y<40)car.y=40;if(car.y>270)car.y=270;
+dx.clearRect(0,0,900,300);
+dx.fillStyle='#171310';dx.fillRect(0,0,900,300);
+dx.strokeStyle='#e8590c22';dx.lineWidth=1;
+for(let i=0;i<900;i+=45){dx.beginPath();dx.moveTo(i,0);dx.lineTo(i,300);dx.stroke();}
+dx.strokeStyle='#fab005';dx.lineWidth=3;dx.setLineDash([18,12]);
+dx.beginPath();dx.moveTo(0,240);dx.quadraticCurveTo(450,120,900,200);dx.stroke();dx.setLineDash([]);
+dx.save();dx.translate(car.x,car.y);dx.rotate(car.angle);
+dx.fillStyle='#e8590c';dx.shadowColor='#e8590c';dx.shadowBlur=18;
+dx.fillRect(-26,-11,52,22);
+dx.fillStyle='#0d0b09';dx.fillRect(-26,-11,14,22);
+dx.fillStyle='#fab005';dx.fillRect(8,-11,6,22);
+if(car.gas>0){dx.fillStyle='#fab005';dx.beginPath();dx.moveTo(-28,-6);dx.lineTo(-40-Math.random()*14,0);dx.lineTo(-28,6);dx.fill();}
+dx.restore();
+if(car.drift>2){dx.fillStyle=`rgba(250,176,5,${Math.min(.5,car.drift/20)})`;dx.fillRect(car.x-40,car.y+8,50,4);}
+document.getElementById('hSpeed').textContent=(spd*9|0)+' km/h';
+document.getElementById('hDrift').textContent=(car.drift*4|0)+'Â°';
+requestAnimationFrame(driveLoop);}
+driveLoop();
+const mc=document.getElementById('mapgen'),mx=mc.getContext('2d');
+let biome='Desert';
+const pal={Desert:['#2a2118','#fbbf24','#e8590c'],Neon:['#120a24','#22d3ee','#e879f9'],Snow:['#1a2230','#e2e8f0','#93c5fd']};
+function setBiome(b){biome=b;genMap();toast(b+' biome loaded');}
+function rnd(seed){return function(){seed=(seed*9301+49297)%233280;return seed/233280;};}
+function genMap(tourney){const seed=tourney?777000+Math.floor(Math.random()*999):Math.floor(Math.random()*9999);const R=rnd(seed);const[bg,road,glow]=pal[biome];mx.fillStyle=bg;mx.fillRect(0,0,520,260);mx.fillStyle='rgba(255,255,255,.06)';for(let i=0;i<40;i++){mx.fillRect(R()*520,R()*260,3,3);}const pts=[];let x=20,y=130;pts.push([x,y]);for(let i=0;i<9;i++){x+=50+R()*15;y+=(R()-.5)*120;y=Math.max(30,Math.min(230,y));pts.push([x,y]);}mx.strokeStyle=glow;mx.lineWidth=14;mx.lineJoin='round';mx.shadowColor=glow;mx.shadowBlur=12;mx.beginPath();mx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length-1;i++){mx.quadraticCurveTo(pts[i][0],pts[i][1],(pts[i][0]+pts[i+1][0])/2,(pts[i][1]+pts[i+1][1])/2);}mx.stroke();mx.shadowBlur=0;mx.strokeStyle=road;mx.lineWidth=3;mx.setLineDash([10,8]);mx.beginPath();mx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)mx.lineTo(pts[i][0],pts[i][1]);mx.stroke();mx.setLineDash([]);mx.fillStyle='#51cf66';mx.beginPath();mx.arc(pts[0][0],pts[0][1],8,0,7);mx.fill();mx.fillStyle='#fff';mx.font='bold 16px sans-serif';mx.fillText('ðŸ',pts[pts.length-1][0]-9,pts[pts.length-1][1]+6);let curves=0;for(let i=1;i<pts.length-1;i++)if(Math.abs(pts[i+1][1]-pts[i][1])>28)curves++;const diff=(2+curves*.45+R()).toFixed(1);document.getElementById('mSeed').textContent='#'+seed;document.getElementById('mBiome').textContent=biome;document.getElementById('mDiff').textContent=diff+'★';if(tourney)toast('Tournament map generated ðŸ');}
+genMap();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

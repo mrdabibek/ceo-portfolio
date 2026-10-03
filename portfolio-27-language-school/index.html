@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lingofun — Learn Playing</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box
+}
+:root{
+--yl:#ffc531;
+--or:#ff6b35;
+--pu:#7c5cff;
+--gr:#22c55e;
+--bl:#38bdf8;
+--bg:#fff9ef;
+--ink:#2b2140;
+--mut:#7d7396;
+--card:#fff
+}
+html{
+scroll-behavior:smooth
+}
+body{
+background:var(--bg);
+color:var(--ink);
+font-family:Nunito,sans-serif;
+overflow-x:hidden
+}
+::selection{
+background:var(--yl)
+}
+#preloader{
+position:fixed;
+inset:0;
+z-index:300;
+background:var(--bg);
+display:flex;
+flex-direction:column;
+gap:14px;
+align-items:center;
+justify-content:center;
+transition:.5s
+}
+#preloader.done{
+opacity:0;
+visibility:hidden
+}
+#preloader .mz{
+font-size:52px;
+animation:bnc 1s infinite alternate
+}
+@keyframes bnc{
+to{
+transform:translateY(-12px) rotate(8deg)
+}
+}
+#preloader b{
+font-family:'Baloo 2';
+font-size:26px
+}
+/* pill nav */
+nav{
+position:sticky;
+top:14px;
+z-index:100;
+max-width:1120px;
+margin:14px auto 0;
+display:flex;
+align-items:center;
+gap:20px;
+background:#fff;
+border:3px solid var(--ink);
+border-radius:99px;
+padding:10px 10px 10px 24px;
+box-shadow:5px 5px 0 var(--ink)
+}
+.logo{
+font-family:'Baloo 2';
+font-weight:800;
+font-size:22px
+}
+.logo span{
+color:var(--or)
+}
+.nlinks{
+display:flex;
+gap:18px;
+margin-left:8px
+}
+.nlinks a{
+color:var(--ink);
+text-decoration:none;
+font-weight:800;
+font-size:13.5px
+}
+.nlinks a:hover{
+color:var(--or)
+}
+.streak{
+margin-left:auto;
+background:var(--yl);
+border:2px solid var(--ink);
+border-radius:99px;
+padding:8px 16px;
+font-weight:800;
+font-size:13px
+}
+.try{
+background:var(--or);
+color:#fff;
+border:2px solid var(--ink);
+border-radius:99px;
+padding:11px 24px;
+font-weight:800;
+cursor:pointer;
+font-size:13px;
+box-shadow:3px 3px 0 var(--ink)
+}
+.try:hover{
+transform:translate(-1px,-1px);
+box-shadow:4px 4px 0 var(--ink)
+}
+/* hero playful */
+.hero{
+max-width:1120px;
+margin:26px auto 0;
+display:grid;
+grid-template-columns:1.05fr .95fr;
+gap:30px;
+align-items:center;
+padding:20px 4% 10px
+}
+.badge{
+display:inline-block;
+background:var(--pu);
+color:#fff;
+font-weight:800;
+font-size:12px;
+padding:8px 16px;
+border-radius:99px;
+border:2px solid var(--ink);
+transform:rotate(-2deg)
+}
+h1{
+font-family:'Baloo 2';
+font-size:clamp(40px,6vw,66px);
+line-height:1.02;
+margin:16px 0
+}
+h1 .hl{
+background:var(--yl);
+padding:0 12px;
+border-radius:14px;
+border:2px solid var(--ink);
+display:inline-block;
+transform:rotate(-1deg)
+}
+h1 .hl2{
+color:var(--or)
+}
+.sub{
+color:var(--mut);
+font-weight:600;
+line-height:1.7;
+max-width:460px
+}
+.cta{
+display:flex;
+gap:12px;
+margin-top:22px;
+flex-wrap:wrap
+}
+.btn-y{
+background:var(--yl);
+border:2px solid var(--ink);
+border-radius:99px;
+padding:15px 32px;
+font-weight:800;
+cursor:pointer;
+box-shadow:4px 4px 0 var(--ink);
+font-size:15px
+}
+.btn-w{
+background:#fff;
+border:2px solid var(--ink);
+border-radius:99px;
+padding:15px 32px;
+font-weight:800;
+cursor:pointer;
+box-shadow:4px 4px 0 var(--ink);
+font-size:15px
+}
+.avs{
+display:flex;
+margin-top:22px;
+align-items:center;
+gap:12px
+}
+.avs img{
+width:40px;
+height:40px;
+border-radius:50%;
+border:2px solid var(--ink);
+object-fit:cover;
+margin-left:-12px;
+background:#fff
+}
+.avs img:first-child{
+margin:0
+}
+.avs small{
+font-weight:700;
+color:var(--mut)
+}
+.hcard{
+position:relative;
+background:#fff;
+border:3px solid var(--ink);
+border-radius:28px;
+padding:26px;
+box-shadow:8px 8px 0 var(--pu)
+}
+.hcard .blob{
+position:absolute;
+width:120px;
+height:120px;
+border-radius:50%;
+filter:blur(2px);
+opacity:.5;
+z-index:0
+}
+.chat{
+position:relative;
+z-index:1;
+display:flex;
+flex-direction:column;
+gap:12px
+}
+.bub{
+background:#f3efff;
+border:2px solid var(--ink);
+border-radius:18px 18px 18px 4px;
+padding:12px 16px;
+font-weight:700;
+font-size:14px;
+max-width:85%
+}
+.bub.me{
+align-self:flex-end;
+background:var(--yl);
+border-radius:18px 18px 4px 18px
+}
+.bub .flag{
+font-size:20px
+}
+.quizline{
+display:flex;
+gap:8px;
+margin-top:6px
+}
+.quizline button{
+flex:1;
+border:2px solid var(--ink);
+background:#fff;
+border-radius:14px;
+padding:12px;
+font-weight:800;
+cursor:pointer
+}
+.quizline button:hover{
+background:var(--gr);
+color:#fff
+}
+.float-e{
+position:absolute;
+font-size:30px;
+animation:fl 3s ease-in-out infinite alternate
+}
+@keyframes fl{
+to{
+transform:translateY(-12px) rotate(10deg)
+}
+}
+/* lang strip */
+.strip{
+display:flex;
+gap:14px;
+justify-content:center;
+flex-wrap:wrap;
+padding:26px 5%
+}
+.strip span{
+background:#fff;
+border:2px solid var(--ink);
+border-radius:99px;
+padding:10px 20px;
+font-weight:800;
+font-size:14px;
+box-shadow:3px 3px 0 var(--ink)
+}
+/* sections */
+section{
+max-width:1120px;
+margin:auto;
+padding:60px 4%
+}
+.eyebrow{
+font-weight:800;
+font-size:12px;
+letter-spacing:3px;
+color:var(--pu)
+}
+h2{
+font-family:'Baloo 2';
+font-size:clamp(28px,4vw,44px);
+margin:8px 0
+}
+.lead{
+color:var(--mut);
+font-weight:600;
+max-width:600px
+}
+/* courses */
+.courses{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:18px;
+margin-top:30px
+}
+.course{
+background:var(--card);
+border:3px solid var(--ink);
+border-radius:24px;
+padding:26px;
+box-shadow:6px 6px 0 var(--ink);
+transition:.25s;
+position:relative
+}
+.course:hover{
+transform:translateY(-5px) rotate(-.5deg)
+}
+.course:nth-child(1){
+box-shadow:6px 6px 0 var(--or)
+}
+.course:nth-child(2){
+box-shadow:6px 6px 0 var(--gr)
+}
+.course:nth-child(3){
+box-shadow:6px 6px 0 var(--bl)
+}
+.course:nth-child(4){
+box-shadow:6px 6px 0 var(--pu)
+}
+.course .big{
+font-size:44px
+}
+.course h3{
+font-family:'Baloo 2';
+font-size:22px;
+margin:8px 0 4px
+}
+.course p{
+color:var(--mut);
+font-weight:600;
+font-size:13.5px
+}
+.course .lvl{
+background:#f3efff;
+border-radius:99px;
+font-size:12px;
+font-weight:800;
+padding:6px 12px;
+display:inline-block;
+margin-top:10px
+}
+.course button{
+margin-top:14px;
+width:100%;
+border:2px solid var(--ink);
+border-radius:14px;
+padding:12px;
+font-weight:800;
+cursor:pointer;
+background:var(--ink);
+color:#fff
+}
+/* quiz — kept feature */
+.quiz{
+background:var(--ink);
+color:#fff;
+border-radius:32px;
+padding:50px 6%;
+display:grid;
+grid-template-columns:.9fr 1.1fr;
+gap:36px;
+margin-top:10px;
+align-items:center;
+position:relative;
+overflow:hidden
+}
+.quiz::before{
+content:"★ ★ ★";
+position:absolute;
+top:18px;
+right:26px;
+color:#ffffff22;
+font-size:26px;
+letter-spacing:6px
+}
+.quiz h2{
+color:#fff
+}
+.quiz .lead{
+color:#b9b2d4
+}
+.qbox{
+background:#fff;
+color:var(--ink);
+border-radius:24px;
+padding:30px;
+border:3px solid var(--yl)
+}
+.qbox .q{
+font-family:'Baloo 2';
+font-size:22px
+}
+.qopts{
+display:grid;
+gap:10px;
+margin-top:18px
+}
+.qopts button{
+border:2px solid var(--ink);
+background:#fff;
+border-radius:14px;
+padding:14px;
+font-weight:800;
+font-size:15px;
+cursor:pointer;
+text-align:left;
+transition:.2s
+}
+.qopts button:hover{
+background:#f3efff
+}
+.qopts button.ok{
+background:var(--gr);
+color:#fff;
+border-color:var(--gr)
+}
+.qopts button.no{
+background:#ef4444;
+color:#fff;
+border-color:#ef4444
+}
+.qbar{
+height:10px;
+background:#eee;
+border-radius:99px;
+overflow:hidden;
+margin:14px 0
+}
+.qbar i{
+display:block;
+height:100%;
+background:var(--or);
+width:0;
+transition:.4s
+}
+.qmeta{
+display:flex;
+justify-content:space-between;
+font-weight:800;
+font-size:13px;
+color:var(--mut)
+}
+/* methods */
+.methods{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:16px;
+margin-top:30px
+}
+.mth{
+background:#fff;
+border:2px dashed var(--ink);
+border-radius:22px;
+padding:26px;
+text-align:center
+}
+.mth b{
+font-family:'Baloo 2';
+font-size:18px
+}
+.mth p{
+color:var(--mut);
+font-size:13.5px;
+font-weight:600;
+margin-top:6px
+}
+/* pricing */
+.plans{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:18px;
+margin-top:30px
+}
+.plan{
+background:#fff;
+border:3px solid var(--ink);
+border-radius:24px;
+padding:30px;
+text-align:center
+}
+.plan.hot{
+background:var(--yl);
+transform:rotate(1deg)
+}
+.plan h3{
+font-family:'Baloo 2';
+font-size:22px
+}
+.plan .p{
+font-family:'Baloo 2';
+font-size:40px
+}
+.plan ul{
+list-style:none;
+font-weight:700;
+color:#4c4468;
+font-size:13.5px;
+line-height:2;
+margin:10px 0
+}
+.plan button{
+width:100%;
+border:2px solid var(--ink);
+border-radius:14px;
+padding:13px;
+font-weight:800;
+cursor:pointer;
+background:var(--ink);
+color:#fff
+}
+/* testi */
+.testi{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:16px;
+margin-top:30px
+}
+.t{
+background:#fff;
+border:2px solid var(--ink);
+border-radius:20px;
+padding:24px;
+box-shadow:4px 4px 0 var(--bl)
+}
+.t p{
+font-weight:600;
+font-size:14px;
+line-height:1.7
+}
+.t b{
+display:block;
+margin-top:12px
+}
+.t small{
+color:var(--mut)
+}
+footer{
+background:var(--ink);
+color:#cfc8ec;
+padding:34px 5%;
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+font-size:13px;
+margin-top:30px;
+border-radius:32px 32px 0 0
+}
+.reveal{
+opacity:0;
+transform:translateY(26px) scale(.98);
+transition:.6s
+}
+.reveal.vis{
+opacity:1;
+transform:none
+}
+@media(max-width:860px){
+.hero,.quiz{
+grid-template-columns:1fr
+}
+.nlinks{
+display:none
+}
+}
+</style>
+</head>
+<body>
+<div id="preloader"><div class="mz">🦜</div><b>Lingofun!</b></div>
+<nav>
+<div class="logo">lingo<span>fun</span> 🎈</div>
+<div class="nlinks"><a href="#courses">Courses</a><a href="#quiz">Quiz</a><a href="#how">How</a><a href="#plans">Prices</a></div>
+<span class="streak">🔥 12-day streak</span>
+<button class="try" onclick="document.getElementById('quiz').scrollIntoView()">TRY QUIZ →</button>
+</nav>
+<header class="hero">
+<div>
+<span class="badge">🎉 40,000 KIDS & ADULTS LEARNING</span>
+<h1>Learn words like <span class="hl">candy.</span><br>Speak from <span class="hl2">day one.</span></h1>
+<p class="sub">English, Korean, Turkish & German in 10-minute playful lessons. Songs, memes, voice games — zero boring grammar tables.</p>
+<div class="cta"><button class="btn-y" onclick="startQuiz()">▶ PLAY QUIZ — 60 SEC</button><button class="btn-w" onclick="document.getElementById('courses').scrollIntoView()">See courses</button></div>
+<div class="avs"><div style="display:flex"><img src="https://picsum.photos/seed/lingoa1/80/80" alt=""><img src="https://picsum.photos/seed/lingoa2/80/80" alt=""><img src="https://picsum.photos/seed/lingoa3/80/80" alt=""><img src="https://picsum.photos/seed/lingoa4/80/80" alt=""></div><small>★★★★★ 4.9 · loved by parents too</small></div>
+</div>
+<div class="hcard">
+<span class="float-e" style="top:-18px;right:20px">⭐</span>
+<span class="float-e" style="bottom:-14px;left:30px;animation-delay:1s">🚀</span>
+<div class="chat">
+<div class="bub"><span class="flag">🇬🇧</span> Apple — <i>olma</i> 🍎</div>
+<div class="bub me">Olma! 🍎🍎</div>
+<div class="bub"><span class="flag">🇰🇷</span> Sarang — <i>muhabbat</i> 💜</div>
+<div class="quizline"><button onclick="yay(this)">💜 Sarang</button><button onclick="nay(this)">🍎 Apple</button></div>
+<p style="font-size:12.5px;font-weight:800;color:var(--gr)" id="miniMsg">Tap the right one — just like a real lesson 👆</p>
+</div>
+</div>
+</header>
+<div class="strip"><span>🇬🇧 English</span><span>🇰🇷 Korean</span><span>🇹🇷 Turkish</span><span>🇩🇪 German</span><span>🇺🇿 Uzbek</span></div>
+<section id="courses">
+<p class="eyebrow">★ PICK YOUR LANGUAGE</p>
+<h2>Courses that feel like games</h2>
+<p class="lead">Every course: 120 lessons · voice AI · cartoons · weekly live clubs.</p>
+<div class="courses">
+<div class="course reveal"><div class="big">🇬🇧</div><h3>English Kids</h3><p>Songs + cartoons for ages 6–12. CEFR Pre-A1 → A2.</p><span class="lvl">🟢 Beginner friendly</span><button onclick="enroll(this)">START FREE →</button></div>
+<div class="course reveal"><div class="big">🇰🇷</div><h3>Korean K-pop</h3><p>Learn through BTS lyrics, dramas & alphabet games.</p><span class="lvl">🔥 Most popular</span><button onclick="enroll(this)">START FREE →</button></div>
+<div class="course reveal"><div class="big">🇹🇷</div><h3>Turkish Daily</h3><p>Market, travel & series phrases in 10 min/day.</p><span class="lvl">🟡 A1 → B1</span><button onclick="enroll(this)">START FREE →</button></div>
+<div class="course reveal"><div class="big">🇩🇪</div><h3>German Work</h3><p>For Ausbildung & jobs: letters, interviews, B1 exam.</p><span class="lvl">🔵 Exam prep</span><button onclick="enroll(this)">START FREE →</button></div>
+</div>
+</section>
+<section id="quiz">
+<div class="quiz">
+<div>
+<p class="eyebrow" style="color:var(--yl)">★ KEPT FEATURE — 60-SECOND QUIZ</p>
+<h2>Prove you know 5 words already</h2>
+<p class="lead">Real quiz from lesson 1. Score 4+ and unlock a week free.</p>
+<p style="margin-top:16px;font-weight:800">🏆 Best score this week: <span id="best">4/5 — Malika</span></p>
+<button class="btn-y" style="margin-top:18px" onclick="startQuiz()">RESTART QUIZ ↻</button>
+</div>
+<div class="qbox">
+<div class="qmeta"><span id="qn">QUESTION 1/5</span><span>⭐ <span id="score">0</span></span></div>
+<div class="qbar"><i id="qbar"></i></div>
+<div class="q" id="qq">Loading…</div>
+<div class="qopts" id="qo"></div>
+<p style="margin-top:14px;font-weight:800;font-size:13px;color:var(--mut)" id="qmsg">Pick an answer 👆</p>
+</div>
+</div>
+<div class="methods" id="how">
+<div class="mth reveal"><div style="font-size:34px">🎧</div><b>Listen & repeat</b><p>Voice AI checks pronunciation in 0.4s.</p></div>
+<div class="mth reveal"><div style="font-size:34px">🎮</div><b>Play, don't cram</b><p>Match, tap, drag — 7 game modes.</p></div>
+<div class="mth reveal"><div style="font-size:34px">👯</div><b>Live clubs</b><p>Friday speaking clubs with natives.</p></div>
+<div class="mth reveal"><div style="font-size:34px">📈</div><b>Streak power</b><p>12-day streak = 3× better memory.</p></div>
+</div>
+</section>
+<section id="plans">
+<p class="eyebrow">★ SIMPLE PRICES</p>
+<h2>One plan, every language</h2>
+<div class="plans">
+<div class="plan"><h3>Free 🐣</h3><div class="p">$0</div><ul><li>1 lesson / day</li><li>Quiz + songs</li><li>Community</li></ul><button>Stay free</button></div>
+<div class="plan hot"><h3>Plus 🚀</h3><div class="p">$8/mo</div><ul><li>Unlimited lessons</li><li>Voice AI + clubs</li><li>Offline + certificate</li></ul><button>Go Plus →</button></div>
+<div class="plan"><h3>Family 👨‍👩‍👧</h3><div class="p">$14/mo</div><ul><li>4 seats</li><li>Kids dashboard</li><li>Parent reports</li></ul><button>For family</button></div>
+</div>
+<div class="testi">
+<div class="t"><p>"My son begs for 'one more lesson'. Never happened with school English."</p><b>Nodira, mom of Bilol (8)</b><small>English Kids · 90-day streak</small></div>
+<div class="t"><p>"Learned Hangul in a weekend through the K-pop mode. Addictive."</p><b>Sardor, 19</b><small>Korean · TOPIK 2 passed</small></div>
+<div class="t"><p>"B1 German in 5 months while working. Live clubs carried me."</p><b>Elena, nurse</b><small>German Work · B1 ✓</small></div>
+</div>
+</section>
+<footer><span>© 2026 Lingofun · learn playing</span><span>EN · KO · TR · DE · UZ — apps on iOS & Android</span></footer>
+<script>
+addEventListener('load',()=>setTimeout(()=>document.getElementById('preloader').classList.add('done'),700));
+function yay(b){document.getElementById('miniMsg').textContent='Correct! 💜 Sarang = muhabbat';b.style.background='#22c55e';b.style.color='#fff'}
+function nay(b){document.getElementById('miniMsg').textContent='Oops — try the other one 😅';b.style.background='#ef4444';b.style.color='#fff'}
+function enroll(b){b.textContent='✓ CHECK EMAIL FOR LINK';setTimeout(()=>b.textContent='START FREE →',2000)}
+// KEPT: playful quiz
+const QS=[
+{q:'What does 🍎 "apple" mean?',o:['Olma','Anor','Uzum'],a:0},
+{q:'What does 💜 "sarang" mean?',o:['Rahmat','Muhabbat','Salom'],a:1},
+{q:'"Hello" in Turkish?',o:['Merhaba','Salam','Privyet'],a:0},
+{q:'"Danke" in German means…',o:['Please','Thanks','Bye'],a:1},
+{q:'"Katta" in English?',o:['Small','Big','Sweet'],a:1}];
+let qi=0,sc=0;
+function startQuiz(){qi=0;sc=0;document.getElementById('score').textContent='0';showQ();document.getElementById('quiz').scrollIntoView({behavior:'smooth'})}
+function showQ(){
+if(qi>=QS.length){const q=document.getElementById('qq');q.textContent= sc>=4?'🎉 '+sc+'/5 — FREE WEEK UNLOCKED!':'You scored '+sc+'/5 — try again! 💪';document.getElementById('qo').innerHTML='<button onclick="startQuiz()" style="border-color:var(--or);background:var(--or);color:#fff">↻ PLAY AGAIN</button>';document.getElementById('qn').textContent='FINISHED';document.getElementById('qbar').style.width='100%';if(sc>=4)document.getElementById('best').textContent=sc+'/5 — You!';return}
+const Q=QS[qi];document.getElementById('qn').textContent='QUESTION '+(qi+1)+'/5';document.getElementById('qq').textContent=Q.q;document.getElementById('qbar').style.width=(qi/QS.length*100)+'%';document.getElementById('qmsg').textContent='Pick an answer 👆';
+const box=document.getElementById('qo');box.innerHTML='';
+Q.o.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>{if(i===Q.a){b.classList.add('ok');sc++;document.getElementById('score').textContent=sc;document.getElementById('qmsg').textContent='Correct! 🎉'}else{b.classList.add('no');document.getElementById('qmsg').textContent='Correct answer: '+Q.o[Q.a];[...box.children][Q.a].classList.add('ok')}[...box.children].forEach(x=>x.disabled=true);setTimeout(()=>{qi++;showQ()},900)};box.appendChild(b)})}
+showQ();
+const io=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('vis')),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

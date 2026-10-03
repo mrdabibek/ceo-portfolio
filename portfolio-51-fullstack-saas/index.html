@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plainbase — Minimal SaaS Admin</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+:root{
+--bg:#ffffff;
+--wash:#f7f7f5;
+--ink:#111110;
+--mut:#86867e;
+--line:#e7e7e2;
+--acc:#111110;
+}
+body{
+font-family:"Inter","SF Pro Text","Segoe UI",sans-serif;
+background:var(--bg);
+color:var(--ink);
+font-size:14px;
+}
+.app{display:flex;min-height:100vh;}
+.side{
+width:240px;
+border-right:1px solid var(--line);
+padding:22px 16px;
+position:sticky;
+top:0;
+height:100vh;
+display:flex;
+flex-direction:column;
+gap:4px;
+background:#fff;
+}
+.side h2{font-size:15px;letter-spacing:-.3px;padding:0 10px 2px;}
+.side small{color:var(--mut);font-size:12px;padding:0 10px 14px;display:block;}
+.mi{
+display:flex;
+gap:10px;
+align-items:center;
+padding:9px 12px;
+border-radius:9px;
+font-size:13.5px;
+color:#444;
+cursor:pointer;
+border:0;
+background:transparent;
+width:100%;
+text-align:left;
+}
+.mi.on,.mi:hover{background:var(--wash);color:var(--ink);font-weight:600;}
+.mi .n{
+margin-left:auto;
+background:var(--wash);
+border:1px solid var(--line);
+font-size:11px;
+border-radius:99px;
+padding:1px 9px;
+color:var(--mut);
+}
+.up{
+margin-top:auto;
+border:1px solid var(--line);
+border-radius:12px;
+padding:14px;
+font-size:12.5px;
+background:var(--wash);
+}
+.up button{
+width:100%;
+margin-top:10px;
+background:var(--ink);
+color:#fff;
+border:0;
+border-radius:8px;
+padding:9px;
+font-weight:600;
+cursor:pointer;
+}
+.main{flex:1;min-width:0;background:#fff;}
+.top{
+display:flex;
+gap:12px;
+align-items:center;
+padding:16px 30px;
+border-bottom:1px solid var(--line);
+position:sticky;
+top:0;
+background:#fff;
+z-index:5;
+}
+.top h1{font-size:18px;letter-spacing:-.4px;}
+.search{
+flex:1;
+max-width:340px;
+margin-left:auto;
+display:flex;
+gap:8px;
+align-items:center;
+border:1px solid var(--line);
+border-radius:9px;
+padding:8px 13px;
+color:var(--mut);
+background:var(--wash);
+}
+.search input{flex:1;border:0;outline:0;background:transparent;font-size:13.5px;}
+.btn{
+background:var(--ink);
+color:#fff;
+border:0;
+border-radius:9px;
+padding:10px 18px;
+font-weight:600;
+font-size:13.5px;
+cursor:pointer;
+}
+.btn.w{background:#fff;color:var(--ink);border:1px solid var(--line);}
+.wrap{padding:28px 30px;max-width:1060px;}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0 20px;}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:15px 17px;}
+.kpi small{color:var(--mut);font-size:12px;}
+.kpi b{font-size:20px;display:block;margin-top:3px;letter-spacing:-.5px;}
+.kpi em{font-style:normal;font-size:12px;color:#178a4c;}
+.toolbar{
+display:flex;
+gap:10px;
+align-items:center;
+margin-bottom:12px;
+flex-wrap:wrap;
+}
+.toolbar select{
+border:1px solid var(--line);
+border-radius:9px;
+padding:9px 12px;
+font-size:13px;
+background:#fff;
+}
+.tbl{border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+table{width:100%;border-collapse:collapse;font-size:13.5px;}
+th{
+text-align:left;
+font-size:11.5px;
+color:var(--mut);
+font-weight:600;
+padding:11px 14px;
+background:var(--wash);
+border-bottom:1px solid var(--line);
+}
+td{padding:12px 14px;border-bottom:1px solid #f0f0ec;}
+tr:last-child td{border-bottom:0;}
+tr:hover td{background:#fafaf8;}
+.st{font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--wash);border:1px solid var(--line);}
+.st.pay{background:#e9f7ee;border-color:#bfe6cb;color:#146c36;}
+.st.tri{background:#fff4d6;border-color:#ecd189;color:#7a5b00;}
+.st.can{background:#f1f1ee;color:#777;}
+.rowbtns{display:flex;gap:6px;}
+.rowbtns button{
+border:1px solid var(--line);
+background:#fff;
+border-radius:7px;
+padding:6px 11px;
+font-size:12px;
+cursor:pointer;
+}
+.rowbtns button:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
+.rowbtns .del:hover{background:#c00;border-color:#c00;}
+.pager{
+display:flex;
+gap:8px;
+align-items:center;
+justify-content:flex-end;
+margin-top:12px;
+font-size:13px;
+color:var(--mut);
+}
+.pager button{
+border:1px solid var(--line);
+background:#fff;
+border-radius:8px;
+padding:7px 13px;
+cursor:pointer;
+font-size:13px;
+}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center;padding:20px;z-index:20;}
+.modal.show{display:flex;}
+.box{background:#fff;border-radius:16px;padding:26px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2);}
+.box h3{letter-spacing:-.3px;}
+.box p{color:var(--mut);font-size:13px;margin:4px 0 14px;}
+.box label{font-size:12px;font-weight:600;display:block;margin:10px 0 5px;}
+.box input,.box select{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px;}
+.box .row{display:flex;gap:10px;margin-top:16px;}
+.box .row button{flex:1;}
+.toast{
+position:fixed;
+bottom:24px;
+left:50%;
+transform:translateX(-50%) translateY(20px);
+background:#111;
+color:#fff;
+border-radius:99px;
+padding:11px 24px;
+font-size:13.5px;
+opacity:0;
+transition:.3s;
+z-index:30;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.split{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:18px;
+}
+.panel2{
+border:1px solid var(--line);
+border-radius:12px;
+padding:18px;
+}
+.panel2 h3{font-size:14.5px;letter-spacing:-.2px;}
+.panel2>p{color:var(--mut);font-size:12.5px;margin:3px 0 12px;}
+.act{
+display:flex;
+gap:10px;
+font-size:13px;
+padding:9px 2px;
+border-bottom:1px solid #f0f0ec;
+}
+.act:last-child{border-bottom:0;}
+.act .d{
+width:30px;
+height:30px;
+border-radius:50%;
+background:var(--wash);
+border:1px solid var(--line);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:13px;
+flex-shrink:0;
+}
+.act small{color:var(--mut);display:block;font-size:11.5px;}
+.keys{display:flex;flex-direction:column;gap:8px;font-size:13px;}
+.keys div{
+display:flex;
+justify-content:space-between;
+border:1px solid var(--line);
+border-radius:8px;
+padding:9px 13px;
+background:var(--wash);
+}
+.keys kbd{
+background:#fff;
+border:1px solid var(--line);
+border-bottom-width:2px;
+border-radius:6px;
+padding:2px 9px;
+font-family:inherit;
+font-size:12px;
+}
+.integ2{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin-top:18px;
+}
+.ig{
+border:1px solid var(--line);
+border-radius:12px;
+padding:16px;
+text-align:center;
+font-size:13px;
+}
+.ig b{display:block;margin-top:6px;}
+.ig small{color:var(--mut);font-size:11.5px;}
+.ig button{
+margin-top:10px;
+border:1px solid var(--line);
+background:#fff;
+border-radius:8px;
+padding:7px 16px;
+font-size:12px;
+font-weight:600;
+cursor:pointer;
+}
+.bill{
+border:1px solid var(--line);
+border-radius:12px;
+padding:18px;
+margin-top:18px;
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:14px;
+}
+.bill h3{
+font-size:14.5px;
+}
+.bill p{
+color:var(--mut);
+font-size:12.5px;
+margin:4px 0 12px;
+}
+.bill .rowline{
+display:flex;
+justify-content:space-between;
+font-size:13px;
+padding:7px 0;
+border-bottom:1px solid #f0f0ec;
+}
+.bill .rowline:last-child{
+border-bottom:0;
+}
+.bill button{
+width:100%;
+margin-top:12px;
+}
+.foot{color:var(--mut);font-size:12px;padding:18px 0;text-align:center;}
+@media(max-width:900px){
+.side{display:none;}
+.kpis{grid-template-columns:1fr 1fr;}
+.wrap{padding:16px;}
+.tbl{overflow-x:auto;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<h2>⬛ Plainbase</h2>
+<small>acme · admin console</small>
+<button class="mi on">Customers <span class="n" id="n1">8</span></button>
+<button class="mi">Subscriptions <span class="n">312</span></button>
+<button class="mi">Invoices <span class="n">96</span></button>
+<button class="mi">Products <span class="n">12</span></button>
+<button class="mi">Team</button>
+<button class="mi">Audit log</button>
+<button class="mi">Settings</button>
+<div class="up">
+<b>Usage — 78%</b><br>
+<span style="color:var(--mut)">312 / 400 seats</span>
+<button onclick="toast('Upgrade link copied')">Upgrade →</button>
+</div>
+</aside>
+<div class="main">
+<div class="top">
+<h1>Customers</h1>
+<div class="search">⌕ <input id="q" placeholder="Search name or email…"></div>
+<button class="btn w" onclick="seedExport()">Export</button>
+<button class="btn" onclick="openM()">＋ New customer</button>
+</div>
+<div class="wrap">
+<p style="color:var(--mut)">Full CRUD demo — create, search, filter, edit, delete. Stored in memory.</p>
+<div class="kpis">
+<div class="kpi"><small>MRR</small><b>$48,210</b><em>▲ +6.2%</em></div>
+<div class="kpi"><small>Active subs</small><b>1,284</b><em>▲ +31</em></div>
+<div class="kpi"><small>Churn</small><b>1.8%</b><em>▼ healthy</em></div>
+<div class="kpi"><small>Trials</small><b>96</b><em>▲ +12 today</em></div>
+</div>
+<div class="toolbar">
+<select id="f"><option value="">All statuses</option><option>paying</option><option>trial</option><option>canceled</option></select>
+<span style="color:var(--mut);font-size:13px" id="count"></span>
+</div>
+<div class="tbl">
+<table>
+<thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Status</th><th>MRR</th><th></th></tr></thead>
+<tbody id="rows"></tbody>
+</table>
+</div>
+<div class="pager">
+<button onclick="page(-1)">← Prev</button>
+<span id="pg">Page 1 / 1</span>
+<button onclick="page(1)">Next →</button>
+</div>
+<div class="split">
+<div class="panel2">
+<h3>Recent activity</h3>
+<p>Every create, edit and delete lands here.</p>
+<div class="act"><div class="d">＋</div><div><b>Ada upgraded</b><small>Scale $149 · 2h ago</small></div></div>
+<div class="act"><div class="d">✎</div><div><b>Alan changed plan</b><small>Growth → Scale · 5h ago</small></div></div>
+<div class="act"><div class="d">−</div><div><b>Steve canceled</b><small>exit survey: price · 1d ago</small></div></div>
+<div class="act"><div class="d">◎</div><div><b>96 trials started</b><small>highest this month · 1d ago</small></div></div>
+</div>
+<div class="panel2">
+<h3>Keyboard shortcuts</h3>
+<p>Built for operators who live in the dashboard.</p>
+<div class="keys">
+<div><span>New customer</span><kbd>C</kbd></div>
+<div><span>Focus search</span><kbd>/</kbd></div>
+<div><span>Next page</span><kbd>→</kbd></div>
+<div><span>Export CSV</span><kbd>E</kbd></div>
+</div>
+</div>
+</div>
+<div class="integ2">
+<div class="ig">⬣<b>Stripe</b><br><small>billing live</small><br><button>Manage</button></div>
+<div class="ig">✉<b>Postmark</b><br><small>email live</small><br><button>Manage</button></div>
+<div class="ig">◍<b>Slack</b><br><small>alerts on</small><br><button>Manage</button></div>
+<div class="ig">⧉<b>API</b><br><small>v2 · 99.99%</small><br><button>Docs</button></div>
+</div>
+<div class="bill">
+<div>
+<h3>Current cycle</h3>
+<p>Oct 1 – Oct 31 · Growth plan</p>
+<div class="rowline"><span>Seats 312 × $49</span><b>$15,288</b></div>
+<div class="rowline"><span>Overage API</span><b>$210</b></div>
+<div class="rowline"><span>Discount −10%</span><b>−$1,550</b></div>
+<div class="rowline"><span><b>Total due</b></span><b>$13,948</b></div>
+</div>
+<div>
+<h3>Payment method</h3>
+<p>Charged on the 1st, receipts by email.</p>
+<div class="rowline"><span>Visa •••• 4242</span><b>default</b></div>
+<div class="rowline"><span>Invoice email</span><b>billing@acme.co</b></div>
+<div class="rowline"><span>VAT ID</span><b>verified ✓</b></div>
+<button class="btn w" onclick="toast('Billing portal opened (demo)')">Manage billing</button>
+</div>
+<div>
+<h3>Need more?</h3>
+<p>400 seats included. Overage is $0.8/seat/day, prorated.</p>
+<div class="rowline"><span>Seats used</span><b>312 / 400</b></div>
+<div class="rowline"><span>Forecast Nov</span><b>~340</b></div>
+<div class="rowline"><span>Recommend</span><b>stay ✓</b></div>
+<button class="btn" onclick="toast('Seats added (demo)')">Add 50 seats</button>
+</div>
+</div>
+<div class="foot">Plainbase demo · nothing leaves your browser</div>
+</div>
+</div>
+</div>
+<div class="modal" id="modal">
+<div class="box">
+<h3 id="mt">New customer</h3>
+<p>Minimal fields, like Stripe's dashboard.</p>
+<label>Name</label><input id="fn" placeholder="Ada Lovelace">
+<label>Email</label><input id="fe" placeholder="ada@company.com">
+<label>Plan</label>
+<select id="fp"><option>Starter $19</option><option>Growth $49</option><option>Scale $149</option></select>
+<label>Status</label>
+<select id="fs"><option>paying</option><option>trial</option><option>canceled</option></select>
+<div class="row">
+<button class="btn w" onclick="closeM()">Cancel</button>
+<button class="btn" onclick="save()">Save</button>
+</div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var rows=[
+["Ada Lovelace","ada@analytical.io","Scale $149","paying",149],
+["Alan Turing","alan@bletchley.uk","Growth $49","paying",49],
+["Grace Hopper","grace@navy.mil","Growth $49","trial",0],
+["Linus T.","linus@kernel.org","Starter $19","paying",19],
+["M. Curie","marie@radium.fr","Scale $149","paying",149],
+["S. Jobs","steve@apple.co","Growth $49","canceled",0],
+["K. Johnson","katherine@nasa.gov","Starter $19","trial",0],
+["D. Ritchie","dennis@bell.io","Growth $49","paying",49]
+];
+var editI=-1,pgi=0,per=6;
+function filtered(){
+var q=document.getElementById('q').value.toLowerCase(),
+f=document.getElementById('f').value;
+return rows.map(function(r,i){return {r:r,i:i};}).filter(function(o){
+return (!q||(o.r[0]+o.r[1]).toLowerCase().includes(q))&&(!f||o.r[3]===f);
+});
+}
+function render(){
+var L=filtered(),pages=Math.max(1,Math.ceil(L.length/per));
+if(pgi>=pages)pgi=pages-1;
+var tb=document.getElementById('rows');tb.innerHTML='';
+L.slice(pgi*per,pgi*per+per).forEach(function(o){
+var cls=o.r[3]==='paying'?'pay':(o.r[3]==='trial'?'tri':'can');
+tb.innerHTML+='<tr><td><b>'+o.r[0]+'</b></td><td>'+o.r[1]+'</td><td>'+o.r[2]+'</td><td><span class="st '+cls+'">'+o.r[3]+'</span></td><td>$'+o.r[4]+'</td><td><div class="rowbtns"><button onclick="openM('+o.i+')">Edit</button><button class="del" onclick="del('+o.i+')">Delete</button></div></td></tr>';
+});
+document.getElementById('count').textContent=L.length+' customers';
+document.getElementById('pg').textContent='Page '+(pgi+1)+' / '+pages;
+document.getElementById('n1').textContent=rows.length;
+}
+function page(d){pgi+=d;if(pgi<0)pgi=0;render();}
+function del(i){if(!confirm('Delete '+rows[i][0]+'?'))return;rows.splice(i,1);toast('Customer deleted');render();}
+function openM(i){
+editI=(typeof i==='number')?i:-1;
+document.getElementById('mt').textContent=editI<0?'New customer':'Edit customer';
+if(editI>=0){
+document.getElementById('fn').value=rows[i][0];
+document.getElementById('fe').value=rows[i][1];
+document.getElementById('fp').value=rows[i][2];
+document.getElementById('fs').value=rows[i][3];
+}else{document.getElementById('fn').value='';document.getElementById('fe').value='';}
+document.getElementById('modal').classList.add('show');
+}
+function closeM(){document.getElementById('modal').classList.remove('show');}
+function save(){
+var n=document.getElementById('fn').value.trim()||'Untitled',
+e=document.getElementById('fe').value.trim()||'no@email.co',
+p=document.getElementById('fp').value,s=document.getElementById('fs').value;
+var mrr=s==='paying'?parseInt(p.match(/\$(\d+)/)[1]):0;
+if(editI<0)rows.unshift([n,e,p,s,mrr]);else rows[editI]=[n,e,p,s,mrr];
+closeM();toast(editI<0?'Customer created ✓':'Changes saved ✓');render();
+}
+function seedExport(){
+var s='name,email,plan,status,mrr\n'+rows.map(function(r){return r.join(',');}).join('\n');
+var b=new Blob([s],{type:'text/csv'});var a=document.createElement('a');
+a.href=URL.createObjectURL(b);a.download='customers.csv';a.click();toast('CSV downloaded');
+}
+var tt=null;
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('show');},2200);}
+document.getElementById('q').addEventListener('input',function(){pgi=0;render();});
+document.getElementById('f').addEventListener('change',function(){pgi=0;render();});
+render();
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

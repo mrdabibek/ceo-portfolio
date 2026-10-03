@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RedLine Motors — Car Rental</title>
+<meta name="description" content="RedLine Motors — performance car rental with instant booking calculator.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+
+:root {
+  --bg:#0b0b0d;
+  --bg2:#141417;
+  --red:#e10600;
+  --red2:#ff2e2e;
+  --txt:#f5f5f4;
+  --mut:#a1a1aa;
+  --line:#26262b;
+  --card:#16161a;
+  --r:18px;
+}
+* { margin:0; padding:0; box-sizing:border-box }
+html { scroll-behavior:smooth }
+body {
+  background:var(--bg);
+  color:var(--txt);
+  font-family:'Inter',sans-serif;
+  line-height:1.6;
+  overflow-x:hidden
+}
+h1,h2,h3,.cond { font-family:'Archivo',sans-serif; line-height:1.05; text-transform:uppercase }
+::selection { background:var(--red); color:#fff }
+img { display:block; max-width:100% }
+.topstrip {
+  background:var(--red);
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  text-align:center;
+  padding:8px 12px
+}
+nav {
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(11,11,13,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)
+}
+.nav-in {
+  max-width:1240px;
+  margin:0 auto;
+  padding:14px 24px;
+  display:flex;
+  align-items:center;
+  gap:28px
+}
+.logo {
+  font-family:'Archivo';
+  font-weight:900;
+  font-size:22px;
+  letter-spacing:.02em;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:#fff
+}
+.logo i {
+  width:34px;
+  height:34px;
+  background:var(--red);
+  border-radius:9px;
+  display:grid;
+  place-items:center;
+  font-style:normal;
+  font-size:18px
+}
+.logo small {
+  font-size:11px;
+  color:var(--mut);
+  font-weight:500;
+  letter-spacing:.2em;
+  display:block;
+  line-height:1
+}
+.nlinks { display:flex; gap:22px; margin-left:12px }
+.nlinks a { color:var(--mut); text-decoration:none; font-size:14px; font-weight:600 }
+.nlinks a:hover { color:#fff }
+.nav-r { margin-left:auto; display:flex; align-items:center; gap:14px }
+.phone { font-size:13px; color:var(--mut); text-decoration:none; font-weight:600 }
+.phone b { color:#fff }
+.btn {
+  border:0;
+  cursor:pointer;
+  font-family:'Archivo';
+  font-weight:800;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  font-size:13px;
+  padding:13px 24px;
+  border-radius:10px;
+  background:var(--red);
+  color:#fff;
+  transition:.2s;
+  text-decoration:none;
+  display:inline-block
+}
+.btn:hover { background:var(--red2); transform:translateY(-2px) }
+.btn.dark { background:#fff; color:#111 }
+.btn.ghost { background:transparent; border:1px solid var(--line); color:#fff }
+.hero {
+  max-width:1240px;
+  margin:0 auto;
+  padding:48px 24px 60px;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:36px;
+  align-items:stretch
+}
+.hero-copy { padding:28px 0 }
+.kick {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:#1c1c21;
+  border:1px solid var(--line);
+  border-left:3px solid var(--red);
+  padding:7px 14px;
+  font-size:12px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--mut);
+  font-weight:700
+}
+.hero h1 { font-size:clamp(44px,6vw,84px); font-weight:900; margin:18px 0 14px }
+.hero h1 span { color:var(--red) }
+.hero p.lead { color:var(--mut); font-size:17px; max-width:480px }
+.specs {
+  display:flex;
+  gap:0;
+  margin:26px 0;
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  max-width:520px
+}
+.specs div { flex:1; padding:14px 16px; background:var(--card) }
+.specs div+div { border-left:1px solid var(--line) }
+.specs b { font-family:'Archivo'; font-size:22px; display:block }
+.specs small { color:var(--mut); font-size:12px; text-transform:uppercase; letter-spacing:.1em }
+.hero-cta { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px }
+.hero-img {
+  position:relative;
+  border-radius:20px;
+  overflow:hidden;
+  min-height:440px;
+  border:1px solid var(--line)
+}
+.hero-img img {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+.hero-img::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.75)) }
+.race-tag {
+  position:absolute;
+  top:16px;
+  left:16px;
+  z-index:2;
+  background:var(--red);
+  font-family:'Archivo';
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:.12em;
+  padding:8px 14px;
+  border-radius:8px
+}
+.hero-cap {
+  position:absolute;
+  bottom:18px;
+  left:18px;
+  right:18px;
+  z-index:2;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:12px
+}
+.hero-cap b { font-family:'Archivo'; font-size:20px }
+.hero-cap small { color:#d4d4d8; font-size:13px }
+.price-chip {
+  background:#fff;
+  color:#111;
+  border-radius:12px;
+  padding:10px 16px;
+  text-align:center
+}
+.price-chip b { font-size:22px }
+.calc {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:28px;
+  max-width:1240px;
+  margin:0 auto 10px
+}
+.calc-grid { display:grid; grid-template-columns:1.2fr 1fr 1fr auto; gap:14px; align-items:end }
+.field label {
+  display:block;
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--mut);
+  font-weight:700;
+  margin-bottom:8px
+}
+.field select,.field input {
+  width:100%;
+  background:#0f0f12;
+  border:1px solid var(--line);
+  color:#fff;
+  border-radius:10px;
+  padding:13px 14px;
+  font-family:inherit;
+  font-size:14px;
+  outline:none
+}
+.field select:focus,.field input:focus { border-color:var(--red) }
+.checks { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px }
+.checks label {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  background:#0f0f12;
+  border:1px solid var(--line);
+  border-radius:99px;
+  padding:8px 14px;
+  font-size:13px;
+  cursor:pointer;
+  color:var(--mut)
+}
+.checks label.on { border-color:var(--red); color:#fff }
+.total {
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-top:18px;
+  padding-top:18px;
+  border-top:1px dashed var(--line)
+}
+.total b { font-family:'Archivo'; font-size:38px }
+.total small { color:var(--mut) }
+section { max-width:1240px; margin:0 auto; padding:70px 24px }
+.sec-k {
+  color:var(--red);
+  font-family:'Archivo';
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:.3em;
+  text-transform:uppercase
+}
+.sec-h {
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:20px;
+  margin:10px 0 28px;
+  flex-wrap:wrap
+}
+.sec-h h2 { font-size:clamp(28px,3.6vw,46px); font-weight:900 }
+.sec-h p { color:var(--mut); max-width:440px; font-size:15px }
+.fleet { display:grid; grid-template-columns:repeat(3,1fr); gap:18px }
+.car {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+  transition:.25s
+}
+.car:hover { transform:translateY(-6px); border-color:var(--red) }
+.car img { width:100%; height:210px; object-fit:cover }
+.car-body { padding:20px }
+.car-body .cls { font-size:11px; letter-spacing:.2em; color:var(--red); font-weight:800 }
+.car-body h3 { font-size:20px; margin:6px 0 }
+.meta {
+  display:flex;
+  gap:14px;
+  color:var(--mut);
+  font-size:13px;
+  margin:10px 0 14px
+}
+.car-row { display:flex; justify-content:space-between; align-items:center }
+.car-row b { font-family:'Archivo'; font-size:24px }
+.car-row b small { font-size:13px; color:var(--mut); font-weight:500 }
+.mini-btn {
+  background:#fff;
+  color:#111;
+  border:0;
+  border-radius:9px;
+  padding:10px 18px;
+  font-family:'Archivo';
+  font-weight:800;
+  font-size:12px;
+  cursor:pointer;
+  text-transform:uppercase
+}
+.strip {
+  background:var(--red);
+  margin:20px 0;
+  overflow:hidden;
+  white-space:nowrap;
+  padding:13px 0;
+  transform:rotate(-1deg)
+}
+.strip span {
+  font-family:'Archivo';
+  font-weight:900;
+  color:#fff;
+  letter-spacing:.1em;
+  font-size:15px;
+  margin:0 18px
+}
+.steps { display:grid; grid-template-columns:repeat(3,1fr); gap:18px }
+.step { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:26px }
+.step b.num {
+  font-family:'Archivo';
+  font-size:44px;
+  color:transparent;
+  -webkit-text-stroke:1.5px var(--red);
+  display:block
+}
+.step h3 { margin:10px 0 8px; font-size:18px }
+.step p { color:var(--mut); font-size:14px }
+.split { display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:center }
+.split img {
+  width:100%;
+  height:420px;
+  object-fit:cover;
+  border-radius:18px;
+  border:1px solid var(--line)
+}
+ul.tick { list-style:none; margin:18px 0; display:grid; gap:10px }
+ul.tick li { display:flex; gap:10px; align-items:center; font-size:14.5px }
+ul.tick i {
+  width:26px;
+  height:26px;
+  background:var(--red);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-style:normal;
+  color:#fff;
+  font-size:14px;
+  flex-shrink:0
+}
+.gal { display:grid; grid-template-columns:repeat(4,1fr); gap:12px }
+.gal img {
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:14px;
+  border:1px solid var(--line)
+}
+.revs { display:grid; grid-template-columns:repeat(3,1fr); gap:18px }
+.rev { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:24px }
+.rev .stars { color:var(--red); letter-spacing:2px }
+.rev p { color:#d4d4d8; font-size:14px; margin:12px 0 }
+.rev div { display:flex; gap:12px; align-items:center }
+.rev img { width:44px; height:44px; border-radius:50%; object-fit:cover }
+.faq { max-width:760px; display:grid; gap:10px }
+.faq details { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 20px }
+.faq summary {
+  cursor:pointer;
+  font-weight:700;
+  font-family:'Archivo';
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:.04em
+}
+.faq p { color:var(--mut); font-size:14px; margin-top:8px }
+.cta-band {
+  background:linear-gradient(120deg,#1a1a1f,#2a0a0a);
+  border:1px solid var(--red);
+  border-radius:24px;
+  padding:54px;
+  text-align:center
+}
+.cta-band h2 { font-size:clamp(30px,4vw,52px) }
+.cta-band p { color:var(--mut); margin:12px 0 24px }
+footer { border-top:1px solid var(--line); margin-top:40px }
+.f-in {
+  max-width:1240px;
+  margin:0 auto;
+  padding:36px 24px 22px;
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1fr;
+  gap:24px
+}
+.f-in h4 {
+  font-family:'Archivo';
+  font-size:12px;
+  letter-spacing:.2em;
+  color:var(--mut);
+  margin-bottom:12px
+}
+.f-in a {
+  display:block;
+  color:var(--mut);
+  text-decoration:none;
+  font-size:14px;
+  margin:6px 0
+}
+.f-base {
+  max-width:1240px;
+  margin:0 auto;
+  padding:16px 24px;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  color:var(--mut);
+  font-size:13px;
+  flex-wrap:wrap;
+  gap:8px
+}
+.rv { opacity:0; transform:translateY(26px); transition:.7s }
+.rv.on { opacity:1; transform:none }
+.overlay {
+  position:fixed;
+  inset:0;
+  z-index:200;
+  background:rgba(0,0,0,.7);
+  display:grid;
+  place-items:center;
+  opacity:0;
+  visibility:hidden;
+  transition:.3s;
+  padding:16px
+}
+.overlay.open { opacity:1; visibility:visible }
+.modal {
+  width:min(440px,94vw);
+  background:#141417;
+  border:1px solid var(--line);
+  border-top:4px solid var(--red);
+  border-radius:18px;
+  padding:30px
+}
+.modal h3 { font-size:22px; margin-bottom:6px }
+.modal p.s { color:var(--mut); font-size:13px; margin-bottom:18px }
+.modal input {
+  width:100%;
+  background:#0c0c0e;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:13px 14px;
+  color:#fff;
+  margin:8px 0;
+  font-family:inherit
+}
+.tabs { display:flex; gap:8px; margin-bottom:16px }
+.tabs button {
+  flex:1;
+  padding:11px;
+  border-radius:9px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--mut);
+  font-family:'Archivo';
+  font-weight:800;
+  font-size:12px;
+  cursor:pointer
+}
+.tabs button.on { background:var(--red); color:#fff; border-color:var(--red) }
+#toast {
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:#fff;
+  color:#111;
+  padding:13px 26px;
+  border-radius:99px;
+  font-weight:700;
+  font-size:14px;
+  transition:.35s;
+  opacity:0;
+  z-index:300
+}
+#toast.show { transform:translateX(-50%); opacity:1 }
+@media(max-width:940px) { .hero { grid-template-columns:1fr }
+.calc-grid { grid-template-columns:1fr 1fr }
+.fleet,.steps,.revs { grid-template-columns:1fr }
+.split { grid-template-columns:1fr }
+.gal { grid-template-columns:repeat(2,1fr) }
+.nlinks { display:none }
+.f-in { grid-template-columns:1fr 1fr }
+.calc-grid { grid-template-columns:1fr }
+}
+
+
+</style>
+</head>
+<body>
+<div class="topstrip">Free cancellation 48h &nbsp;•&nbsp; Full insurance included &nbsp;•&nbsp; 4.9★ rated fleet</div>
+<nav><div class="nav-in">
+<a class="logo" href="#"><i>◈</i><span>REDLINE<small>MOTORS</small></span></a>
+<div class="nlinks"><a href="#fleet">Fleet</a><a href="#calc">Calculator</a><a href="#steps">How it works</a><a href="#reviews">Reviews</a><a href="#faq">FAQ</a></div>
+<div class="nav-r"><a class="phone" href="tel:+998000000000">24/7 <b>+998 90 000 00 00</b></a><button class="btn" onclick="openAuth()">Book now</button></div>
+</div></nav>
+<header class="hero">
+<div class="hero-copy">
+<span class="kick">● Performance rental — Tashkent</span>
+<h1>Drive the <span>fast lane.</span><br>Pay by the day.</h1>
+<p class="lead">120+ sports, SUV and business cars. Transparent daily rates, full insurance, airport delivery in 40 minutes.</p>
+<div class="specs"><div><b>120+</b><small>Cars ready</small></div><div><b>40 min</b><small>Delivery</small></div><div><b>4.9★</b><small>2 400 reviews</small></div></div>
+<div class="hero-cta"><a href="#calc" class="btn">Calculate my trip</a><a href="#fleet" class="btn ghost">Browse fleet</a></div>
+</div>
+<div class="hero-img">
+<span class="race-tag">NEW — BMW M4 2025</span>
+<img src="https://picsum.photos/seed/redline-hero/1000/800" alt="Sports car" loading="eager">
+<div class="hero-cap"><div><b>BMW M4 Competition</b><br><small>510 hp • Auto • Full insurance</small></div><div class="price-chip"><b>$89</b><br><small>/ day</small></div></div>
+</div>
+</header>
+<div class="calc rv" id="calc">
+<div class="sec-k">Booking calculator</div>
+<h2 class="cond" style="font-size:26px;margin:8px 0 18px">Estimate your rental in seconds</h2>
+<div class="calc-grid">
+<div class="field"><label>Car class</label><select id="carSel">
+<option value="45">Economy — $45/day</option>
+<option value="69" selected>Business — $69/day</option>
+<option value="89">Sport — $89/day</option>
+<option value="129">Premium SUV — $129/day</option>
+</select></div>
+<div class="field"><label>Days</label><input id="daysIn" type="number" min="1" max="30" value="3"></div>
+<div class="field"><label>Promo code</label><input id="promoIn" placeholder="e.g. RED10"></div>
+<button class="btn" onclick="calcPrice()">Calculate</button>
+</div>
+<div class="checks" id="extras">
+<label data-p="12"><input type="checkbox" hidden> Child seat +$12</label>
+<label data-p="20"><input type="checkbox" hidden> Full cover +$20</label>
+<label data-p="15"><input type="checkbox" hidden> Airport delivery +$15</label>
+<label data-p="0"><input type="checkbox" hidden> Second driver free</label>
+</div>
+<div class="total"><div><small>Estimated total</small><br><b id="totalOut">$207</b></div><small id="breakOut">Business × 3 days. Insurance included.</small><button class="btn dark" style="margin-left:auto" onclick="openAuth()">Reserve this car →</button></div>
+</div>
+<section id="fleet">
+<div class="sec-k">The fleet</div>
+<div class="sec-h"><h2>Pick your machine</h2><p>Every car detailed, fuelled and inspected before each handover.</p></div>
+<div class="fleet">
+<article class="car rv"><img src="https://picsum.photos/seed/redline-1/700/450" alt="Economy" loading="lazy"><div class="car-body"><span class="cls">Economy</span><h3>Chevrolet Cobalt</h3><div class="meta"><span>⚙ Auto</span><span>⛽ Petrol</span><span>👥 5 seats</span></div><div class="car-row"><b>$45 <small>/day</small></b><button class="mini-btn" onclick="pickCar(45,'Cobalt')">Book</button></div></div></article>
+<article class="car rv"><img src="https://picsum.photos/seed/redline-2/700/450" alt="Business" loading="lazy"><div class="car-body"><span class="cls">Business</span><h3>Toyota Camry 2024</h3><div class="meta"><span>⚙ Auto</span><span>⛽ Hybrid</span><span>👥 5 seats</span></div><div class="car-row"><b>$69 <small>/day</small></b><button class="mini-btn" onclick="pickCar(69,'Camry')">Book</button></div></div></article>
+<article class="car rv"><img src="https://picsum.photos/seed/redline-3/700/450" alt="Sport" loading="lazy"><div class="car-body"><span class="cls">Sport</span><h3>BMW M4 Competition</h3><div class="meta"><span>⚙ Auto</span><span>⚡ 510 hp</span><span>👥 4 seats</span></div><div class="car-row"><b>$89 <small>/day</small></b><button class="mini-btn" onclick="pickCar(89,'M4')">Book</button></div></div></article>
+<article class="car rv"><img src="https://picsum.photos/seed/redline-4/700/450" alt="SUV" loading="lazy"><div class="car-body"><span class="cls">SUV</span><h3>Land Cruiser 300</h3><div class="meta"><span>⚙ 4x4</span><span>⛽ Diesel</span><span>👥 7 seats</span></div><div class="car-row"><b>$129 <small>/day</small></b><button class="mini-btn" onclick="pickCar(129,'Cruiser')">Book</button></div></div></article>
+<article class="car rv"><img src="https://picsum.photos/seed/redline-5/700/450" alt="Electric" loading="lazy"><div class="car-body"><span class="cls">Electric</span><h3>Tesla Model 3</h3><div class="meta"><span>⚙ Auto</span><span>⚡ 500 km</span><span>👥 5 seats</span></div><div class="car-row"><b>$79 <small>/day</small></b><button class="mini-btn" onclick="pickCar(79,'Tesla')">Book</button></div></div></article>
+<article class="car rv"><img src="https://picsum.photos/seed/redline-6/700/450" alt="Minivan" loading="lazy"><div class="car-body"><span class="cls">Family</span><h3>Kia Carnival</h3><div class="meta"><span>⚙ Auto</span><span>⛽ Petrol</span><span>👥 8 seats</span></div><div class="car-row"><b>$95 <small>/day</small></b><button class="mini-btn" onclick="pickCar(95,'Carnival')">Book</button></div></div></article>
+</div>
+</section>
+<div class="strip"><span>REDLINE MOTORS ◆ FULL INSURANCE ◆ 24/7 SUPPORT ◆ FREE CANCELLATION ◆ REDLINE MOTORS ◆ FULL INSURANCE ◆ 24/7 SUPPORT ◆ FREE CANCELLATION ◆</span></div>
+<section id="steps">
+<div class="sec-k">How it works</div>
+<div class="sec-h"><h2>On the road in 3 steps</h2></div>
+<div class="steps">
+<div class="step rv"><b class="num">01</b><h3>Calculate & choose</h3><p>Use the calculator above, pick dates and extras. Price you see is price you pay.</p></div>
+<div class="step rv"><b class="num">02</b><h3>Verify in 5 minutes</h3><p>Passport + licence photo in the booking form. Approval usually within 15 minutes.</p></div>
+<div class="step rv"><b class="num">03</b><h3>Get the keys</h3><p>Pickup at our hub or free airport delivery. Deposit blocked, not charged.</p></div>
+</div>
+</section>
+<section>
+<div class="split">
+<div class="rv"><div class="sec-k">Why RedLine</div><h2 class="cond" style="font-size:clamp(28px,3vw,42px);margin:10px 0">No hidden fees. Ever.</h2>
+<p style="color:var(--mut)">Deposit from $200, fuel policy full-to-full, mileage 300 km/day included.</p>
+<ul class="tick"><li><i>✓</i> Full CASCO + OSAGO in every rate</li><li><i>✓</i> Free second driver on weekly bookings</li><li><i>✓</i> 24/7 roadside + replacement car</li><li><i>✓</i> English / Russian / Uzbek support</li></ul>
+<button class="btn" onclick="openAuth()">Create booking account</button></div>
+<div class="rv"><img src="https://picsum.photos/seed/redline-split/800/700" alt="Garage" loading="lazy"></div>
+</div>
+</section>
+<section>
+<div class="sec-k">Garage life</div>
+<div class="sec-h"><h2>Fresh from the lot</h2></div>
+<div class="gal rv">
+<img src="https://picsum.photos/seed/redline-g1/600/450" alt="g1" loading="lazy">
+<img src="https://picsum.photos/seed/redline-g2/600/450" alt="g2" loading="lazy">
+<img src="https://picsum.photos/seed/redline-g3/600/450" alt="g3" loading="lazy">
+<img src="https://picsum.photos/seed/redline-g4/600/450" alt="g4" loading="lazy">
+</div>
+</section>
+<section id="reviews">
+<div class="sec-k">Reviews</div>
+<div class="sec-h"><h2>Drivers rate us 4.9</h2></div>
+<div class="revs">
+<div class="rev rv"><div class="stars">★★★★★</div><p>"M4 was flawless, delivery to airport in 35 min. Deposit released next day."</p><div><img src="https://picsum.photos/seed/redline-u1/200/200" alt="u" loading="lazy"><span><b>Jasur K.</b><br><small style="color:var(--mut)">Rented M4 • 5 days</small></span></div></div>
+<div class="rev rv"><div class="stars">★★★★★</div><p>"Calculator price matched final bill to the dollar. Rare honesty."</p><div><img src="https://picsum.photos/seed/redline-u2/200/200" alt="u" loading="lazy"><span><b>Daniel M.</b><br><small style="color:var(--mut)">Rented Camry • 9 days</small></span></div></div>
+<div class="rev rv"><div class="stars">★★★★★</div><p>"Child seat, full cover, everything in one booking. Very smooth."</p><div><img src="https://picsum.photos/seed/redline-u3/200/200" alt="u" loading="lazy"><span><b>Amelia R.</b><br><small style="color:var(--mut)">Rented Carnival • 4 days</small></span></div></div>
+</div>
+</section>
+<section id="faq">
+<div class="sec-k">FAQ</div>
+<div class="sec-h"><h2>Before you book</h2></div>
+<div class="faq rv">
+<details open><summary>What deposit do you hold?</summary><p>$200–$500 by class, blocked on card and released within 24h after return.</p></details>
+<details><summary>Is mileage limited?</summary><p>300 km/day included, then $0.25/km. Weekly rates include 2 000 km.</p></details>
+<details><summary>Can I drive outside the city?</summary><p>Yes, nationwide. Cross-border trips need 48h notice for green card.</p></details>
+<details><summary>Do I need an account?</summary><p>Yes for booking — register once, then one-click reservations and invoices.</p></details>
+</div>
+</section>
+<section><div class="cta-band rv">
+<h2 class="cond">Need wheels this weekend?</h2>
+<p>3 cars left in Sport class for Friday. Lock your rate now.</p>
+<button class="btn" onclick="openAuth()">Reserve — free cancellation</button>
+</div></section>
+<footer><div class="f-in">
+<div><a class="logo" href="#"><i>◈</i><span>REDLINE</span></a><p style="color:var(--mut);font-size:14px;margin-top:10px;max-width:280px">Performance rental hub open daily 08:00–23:00. Airport delivery 24/7.</p></div>
+<div><h4>Fleet</h4><a href="#fleet">Economy</a><a href="#fleet">Business</a><a href="#fleet">Sport</a></div>
+<div><h4>Company</h4><a href="#steps">How it works</a><a href="#reviews">Reviews</a><a href="#">Careers</a></div>
+<div><h4>Legal</h4><a href="#">Insurance terms</a><a href="#">Privacy</a><a href="#">Contacts</a></div>
+</div><div class="f-base"><span>© 2026 RedLine Motors. Picsum photos.</span><span>Full-to-full • CASCO included</span></div></footer>
+<div class="overlay" id="ov"><div class="modal">
+<div class="tabs"><button id="tIn" class="on" onclick="tabAuth(false)">Sign in</button><button id="tUp" onclick="tabAuth(true)">Register</button></div>
+<div id="fIn"><h3 class="cond">Welcome back</h3><p class="s">Sign in to manage bookings & invoices.</p><input type="email" placeholder="Email"><input type="password" placeholder="Password"><button class="btn" style="width:100%;margin-top:10px" onclick="doneAuth()">Sign in →</button></div>
+<div id="fUp" style="display:none"><h3 class="cond">Create account</h3><p class="s">One account for bookings, deposits, receipts.</p><input type="text" placeholder="Full name"><input type="email" placeholder="Email"><input type="password" placeholder="Password"><button class="btn" style="width:100%;margin-top:10px" onclick="doneAuth()">Register →</button></div>
+</div></div>
+<div id="toast"></div>
+<script>
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}})},{threshold:.12});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+document.querySelectorAll('#extras label').forEach(function(l){l.addEventListener('click',function(){setTimeout(function(){l.classList.toggle('on');calcPrice()},0)})});
+function extrasSum(){var s=0;document.querySelectorAll('#extras label.on').forEach(function(l){s+=parseInt(l.dataset.p||0)});return s}
+function calcPrice(){var rate=parseInt(document.getElementById('carSel').value);var d=Math.max(1,parseInt(document.getElementById('daysIn').value)||1);var ex=extrasSum();var sub=rate*d+ex;var promo=document.getElementById('promoIn').value.trim().toUpperCase();var disc=0;if(promo==='RED10')disc=Math.round(sub*.1);var total=sub-disc;document.getElementById('totalOut').textContent='$'+total;var nm=document.getElementById('carSel').selectedOptions[0].text.split('—')[0].trim();document.getElementById('breakOut').textContent=nm+' × '+d+' day(s) + extras $'+ex+(disc?' − 10% promo':'')+'. Insurance included.'}
+function pickCar(rate,name){var s=document.getElementById('carSel');for(var i=0;i<s.options.length;i++){if(parseInt(s.options[i].value)===rate){s.selectedIndex=i;break}}calcPrice();document.getElementById('calc').scrollIntoView({behavior:'smooth'});toast(name+' selected — adjust days & reserve')}
+calcPrice();
+var ov=document.getElementById('ov');
+function openAuth(){ov.classList.add('open')}
+ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')ov.classList.remove('open')});
+function tabAuth(up){document.getElementById('fIn').style.display=up?'none':'block';document.getElementById('fUp').style.display=up?'block':'none';document.getElementById('tIn').classList.toggle('on',!up);document.getElementById('tUp').classList.toggle('on',up)}
+function doneAuth(){ov.classList.remove('open');toast('Welcome — booking account ready (demo)')}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2600)}
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

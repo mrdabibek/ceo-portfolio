@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Crumb & Craft — Rustic Bakery</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Karla:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box
+}
+:root{
+--wood:#3b2413;
+--crust:#b4692a;
+--cream:#faf3e7;
+--paper:#fffdf7;
+--ink:#2e1e10;
+--mut:#8a7360;
+--line:#e7d8bf
+}
+html{
+scroll-behavior:smooth
+}
+body{
+background:var(--cream);
+color:var(--ink);
+font-family:Karla,sans-serif;
+overflow-x:hidden
+}
+::selection{
+background:var(--crust);
+color:#fff
+}
+#preloader{
+position:fixed;
+inset:0;
+z-index:300;
+background:var(--wood);
+color:var(--cream);
+display:flex;
+flex-direction:column;
+gap:12px;
+align-items:center;
+justify-content:center;
+transition:.5s
+}
+#preloader.done{
+opacity:0;
+visibility:hidden
+}
+#preloader .br{
+font-size:50px;
+animation:rk 1s ease-in-out infinite alternate
+}
+@keyframes rk{
+to{
+transform:rotate(-10deg)
+}
+}
+#preloader b{
+font-family:'DM Serif Display',serif;
+font-size:28px
+}
+#preloader small{
+letter-spacing:4px;
+font-size:11px;
+opacity:.7
+}
+/* wooden nav */
+.topnote{
+background:var(--wood);
+color:#e8c88f;
+text-align:center;
+font-size:12.5px;
+padding:9px;
+font-weight:700;
+letter-spacing:1px
+}
+nav{
+position:sticky;
+top:0;
+z-index:100;
+display:flex;
+align-items:center;
+gap:24px;
+padding:14px 5%;
+background:rgba(250,243,231,.95);
+border-bottom:2px solid var(--wood)
+}
+.logo{
+font-family:'DM Serif Display',serif;
+font-size:25px
+}
+.logo span{
+color:var(--crust)
+}
+.nlinks{
+display:flex;
+gap:22px
+}
+.nlinks a{
+color:var(--ink);
+text-decoration:none;
+font-weight:700;
+font-size:13.5px
+}
+.nlinks a:hover{
+color:var(--crust)
+}
+.hours{
+margin-left:auto;
+font-size:12.5px;
+font-weight:700;
+color:var(--mut);
+border:1px dashed var(--crust);
+padding:8px 14px;
+border-radius:99px
+}
+.orderbtn{
+background:var(--wood);
+color:#fff;
+border:0;
+padding:12px 26px;
+border-radius:99px;
+font-weight:800;
+cursor:pointer;
+font-size:13px
+}
+/* hero rustic */
+.hero{
+max-width:1180px;
+margin:auto;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+align-items:center;
+padding:50px 5% 30px
+}
+.stamp{
+display:inline-block;
+border:2px solid var(--crust);
+color:var(--crust);
+font-weight:800;
+font-size:12px;
+letter-spacing:2px;
+padding:8px 16px;
+border-radius:4px;
+transform:rotate(-2deg)
+}
+h1{
+font-family:'DM Serif Display',serif;
+font-size:clamp(42px,5.5vw,68px);
+line-height:1.02;
+margin:16px 0;
+font-weight:400
+}
+h1 em{
+color:var(--crust)
+}
+.sub{
+color:var(--mut);
+line-height:1.75;
+font-size:15px;
+max-width:460px
+}
+.cta{
+display:flex;
+gap:12px;
+margin-top:24px;
+flex-wrap:wrap
+}
+.btn-w{
+background:var(--wood);
+color:#fff;
+border:0;
+padding:15px 32px;
+border-radius:99px;
+font-weight:800;
+cursor:pointer;
+font-size:14px
+}
+.btn-c{
+background:transparent;
+border:2px solid var(--wood);
+padding:14px 30px;
+border-radius:99px;
+font-weight:800;
+cursor:pointer;
+font-size:14px
+}
+.fresh{
+display:flex;
+gap:12px;
+margin-top:22px;
+flex-wrap:wrap
+}
+.fresh span{
+background:var(--paper);
+border:1px solid var(--line);
+border-radius:12px;
+padding:10px 16px;
+font-size:13px;
+font-weight:700
+}
+.hboard{
+position:relative
+}
+.hboard img{
+width:100%;
+height:460px;
+object-fit:cover;
+border-radius:22px;
+border:3px solid var(--wood);
+box-shadow:10px 10px 0 var(--line)
+}
+.hcard{
+position:absolute;
+bottom:22px;
+left:22px;
+background:var(--paper);
+border:2px solid var(--wood);
+border-radius:16px;
+padding:16px 20px;
+box-shadow:5px 5px 0 var(--wood)
+}
+.hcard b{
+font-family:'DM Serif Display',serif;
+font-size:20px
+}
+/* ticker */
+.tick{
+background:var(--wood);
+color:#e8c88f;
+font-weight:800;
+font-size:13px;
+letter-spacing:2px;
+padding:12px 0;
+overflow:hidden;
+white-space:nowrap
+}
+.tick div{
+display:inline-block;
+animation:mq 22s linear infinite
+}
+@keyframes mq{
+to{
+transform:translateX(-50%)
+}
+}
+/* sections */
+section{
+max-width:1180px;
+margin:auto;
+padding:66px 5%
+}
+.eyebrow{
+color:var(--crust);
+font-weight:800;
+letter-spacing:3px;
+font-size:12px
+}
+h2{
+font-family:'DM Serif Display',serif;
+font-size:clamp(30px,4vw,46px);
+margin:8px 0;
+font-weight:400
+}
+.lead{
+color:var(--mut);
+max-width:600px;
+line-height:1.7
+}
+/* menu */
+.cats{
+display:flex;
+gap:10px;
+margin:24px 0;
+flex-wrap:wrap
+}
+.cats button{
+background:var(--paper);
+border:1px solid var(--line);
+border-radius:99px;
+padding:10px 22px;
+cursor:pointer;
+font-weight:800;
+font-size:13px
+}
+.cats button.on{
+background:var(--wood);
+color:#fff;
+border-color:var(--wood)
+}
+.menu{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+gap:18px
+}
+.bcard{
+background:var(--paper);
+border:1px solid var(--line);
+border-radius:20px;
+overflow:hidden;
+transition:.3s
+}
+.bcard:hover{
+transform:translateY(-5px);
+box-shadow:0 20px 40px #3b241322
+}
+.bcard img{
+width:100%;
+height:190px;
+object-fit:cover
+}
+.bcard .in{
+padding:20px
+}
+.bcard h3{
+font-family:'DM Serif Display',serif;
+font-size:21px
+}
+.bcard p{
+color:var(--mut);
+font-size:13.5px;
+margin:6px 0
+}
+.bcard .pr{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:12px
+}
+.bcard .pr b{
+font-size:19px
+}
+.qty{
+display:flex;
+gap:8px;
+align-items:center
+}
+.qty button{
+width:30px;
+height:30px;
+border-radius:50%;
+border:1px solid var(--wood);
+background:#fff;
+cursor:pointer;
+font-weight:800
+}
+.addbtn{
+background:var(--crust);
+border:0;
+color:#fff;
+border-radius:99px;
+padding:10px 20px;
+font-weight:800;
+cursor:pointer
+}
+/* craft split */
+.craft{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:36px;
+margin-top:14px;
+align-items:center;
+background:var(--wood);
+color:#f3e6cf;
+border-radius:28px;
+padding:50px 6%
+}
+.craft h2{
+color:#fff
+}
+.craft p{
+color:#cdb897;
+line-height:1.8;
+font-size:14.5px
+}
+.craft img{
+width:100%;
+height:380px;
+object-fit:cover;
+border-radius:18px
+}
+.steps{
+margin-top:18px;
+display:grid;
+gap:12px
+}
+.steps div{
+background:rgba(255,255,255,.07);
+border:1px solid rgba(255,255,255,.15);
+border-radius:14px;
+padding:14px 18px;
+font-size:13.5px
+}
+/* cakes order */
+.order{
+background:var(--paper);
+border:2px solid var(--wood);
+border-radius:26px;
+padding:44px 6%;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:32px;
+margin-top:14px
+}
+.opt{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin:10px 0 18px
+}
+.opt button{
+border:1px solid var(--line);
+background:#fff;
+border-radius:12px;
+padding:11px 18px;
+cursor:pointer;
+font-weight:700;
+font-size:13px
+}
+.opt button.on{
+background:var(--wood);
+color:#fff;
+border-color:var(--wood)
+}
+.order input,.order textarea{
+width:100%;
+padding:13px 16px;
+border:1px solid var(--line);
+border-radius:12px;
+outline:none;
+margin:8px 0;
+background:#fff
+}
+.big-btn{
+width:100%;
+background:var(--crust);
+color:#fff;
+border:0;
+padding:16px;
+border-radius:14px;
+font-weight:800;
+font-size:15px;
+cursor:pointer
+}
+/* reviews */
+.revs{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:16px;
+margin-top:28px
+}
+.rev{
+background:var(--paper);
+border:1px solid var(--line);
+border-radius:18px;
+padding:24px
+}
+.rev p{
+font-size:14px;
+line-height:1.7
+}
+.rev b{
+display:block;
+margin-top:10px;
+font-size:13px
+}
+/* faq */
+.faq{
+margin-top:26px;
+display:grid;
+gap:10px
+}
+.faq details{
+background:var(--paper);
+border:1px solid var(--line);
+border-radius:12px;
+padding:16px 20px
+}
+.faq summary{
+cursor:pointer;
+font-weight:800
+}
+.faq p{
+color:var(--mut);
+font-size:13.5px;
+margin-top:8px
+}
+footer{
+background:var(--wood);
+color:#d9bd8d;
+padding:36px 5%;
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+font-size:13px
+}
+/* drawer + auth */
+#drawer{
+position:fixed;
+top:0;
+right:-380px;
+width:min(360px,93%);
+height:100%;
+background:var(--paper);
+z-index:200;
+padding:28px;
+transition:.4s;
+border-left:3px solid var(--wood);
+overflow:auto
+}
+#drawer.open{
+right:0
+}
+#drawer h3{
+font-family:'DM Serif Display',serif;
+font-size:26px
+}
+.citem{
+display:flex;
+justify-content:space-between;
+border-bottom:1px dashed var(--line);
+padding:11px 0;
+font-size:14px
+}
+.checkout{
+width:100%;
+background:var(--wood);
+color:#fff;
+border:0;
+border-radius:99px;
+padding:15px;
+font-weight:800;
+cursor:pointer;
+margin-top:14px
+}
+#auth{
+position:fixed;
+inset:0;
+background:rgba(46,30,16,.5);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:210;
+padding:20px
+}
+#auth.open{
+display:flex
+}
+.abox{
+background:var(--paper);
+border-radius:22px;
+padding:36px;
+width:min(400px,100%);
+border:2px solid var(--wood)
+}
+.abox h3{
+font-family:'DM Serif Display',serif;
+font-size:26px
+}
+.tabs{
+display:flex;
+background:var(--cream);
+border-radius:99px;
+padding:4px;
+margin:16px 0
+}
+.tabs button{
+flex:1;
+border:0;
+background:none;
+padding:10px;
+border-radius:99px;
+cursor:pointer;
+font-weight:800
+}
+.tabs button.on{
+background:var(--wood);
+color:#fff
+}
+.abox input{
+width:100%;
+padding:13px 16px;
+margin:7px 0;
+border:1px solid var(--line);
+border-radius:12px;
+outline:none
+}
+.abox .go{
+width:100%;
+background:var(--crust);
+color:#fff;
+border:0;
+padding:14px;
+border-radius:99px;
+font-weight:800;
+cursor:pointer;
+margin-top:10px
+}
+.reveal{
+opacity:0;
+transform:translateY(24px);
+transition:.6s
+}
+.reveal.vis{
+opacity:1;
+transform:none
+}
+@media(max-width:860px){
+.hero,.craft,.order{
+grid-template-columns:1fr
+}
+.nlinks,.hours{
+display:none
+}
+}
+</style>
+</head>
+<body>
+<div id="preloader"><div class="br">🥖</div><b>Crumb & Craft</b><small>WOOD-FIRED SINCE 2012</small></div>
+<div class="topnote">🔥 From the oven at 6:00 & 16:00 daily · sourdough sells out by 10am — preorder below</div>
+<nav>
+<div class="logo">Crumb <span>&</span> Craft</div>
+<div class="nlinks"><a href="#menu">Menu</a><a href="#craft">Craft</a><a href="#cakes">Cakes</a><a href="#faq">Visit</a></div>
+<span class="hours">● OPEN · till 21:00</span>
+<button class="login orderbtn" style="background:transparent;color:var(--wood);border:2px solid var(--wood)" onclick="openAuth()">Log in</button>
+<button class="orderbtn" onclick="toggleDrawer(true)">🧺 Basket (<span id="cnt">0</span>)</button>
+</nav>
+<header class="hero">
+<div>
+<span class="stamp">★ WOOD-FIRED · SLOW FERMENT · № 1 IN TOWN</span>
+<h1>Bread with a <em>crust you hear.</em></h1>
+<p class="sub">48-hour sourdough, croissants laminated over 3 days, and village cakes from grandma's notebook. No mixes, no rush — ever.</p>
+<div class="cta"><button class="btn-w" onclick="document.getElementById('menu').scrollIntoView()">See today's menu →</button><button class="btn-c" onclick="document.getElementById('cakes').scrollIntoView()">Order a cake</button></div>
+<div class="fresh"><span>🍞 sourdough 6:00</span><span>🥐 croissant 8:00</span><span>🥧 pie 12:00</span></div>
+</div>
+<div class="hboard">
+<img src="https://picsum.photos/seed/crumbhero/700/600" alt="">
+<div class="hcard"><small style="color:var(--crust);font-weight:800">FROM TODAY'S OVEN</small><b>Sourdough № 4 — walnut</b><p style="font-size:13px;color:var(--mut)">12 left · $6</p></div>
+</div>
+</header>
+<div class="tick"><div>&nbsp;🥖 SOURDOUGH 48H &nbsp;·&nbsp; 🥐 CROISSANT 27 LAYERS &nbsp;·&nbsp; 🍯 HONEY CAKE SINCE 2012 &nbsp;·&nbsp; 🥖 SOURDOUGH 48H &nbsp;·&nbsp; 🥐 CROISSANT 27 LAYERS &nbsp;·&nbsp; 🍯 HONEY CAKE SINCE 2012 &nbsp;</div></div>
+<section id="menu">
+<p class="eyebrow">TODAY'S SHELF</p>
+<h2>What came out of the oven</h2>
+<p class="lead">Quantities update live. Preorder for pickup after 16:00.</p>
+<div class="cats" id="cats"><button class="on" data-c="all">All</button><button data-c="bread">Breads</button><button data-c="sweet">Sweet</button><button data-c="pie">Pies</button></div>
+<div class="menu" id="menuGrid"></div>
+<div class="craft" id="craft">
+<div>
+<p class="eyebrow" style="color:#e8c88f">OUR CRAFT</p>
+<h2>Three days for one croissant</h2>
+<p>Day 1 — levain wakes up. Day 2 — 27 folds of French butter. Day 3 — 4am bake while the town sleeps. Taste the patience.</p>
+<div class="steps"><div><b>🌾 Flour</b> — stone-milled, single farm, no bleach.</div><div><b>🔥 Fire</b> — oak-fired deck oven, 280°C, steam burst.</div><div><b>⏳ Time</b> — 48h ferment. Sour, open crumb, keeps 5 days.</div></div>
+</div>
+<img src="https://picsum.photos/seed/crumbcraft/600/500" alt="">
+</div>
+</section>
+<section id="cakes">
+<p class="eyebrow">CUSTOM CAKES</p>
+<h2>A cake for your story</h2>
+<div class="order">
+<div>
+<p style="font-weight:800">1 · Filling</p>
+<div class="opt" id="oFill"><button class="on" data-p="28">Honey</button><button data-p="32">Cherry-choco</button><button data-p="30">Carrot-walnut</button></div>
+<p style="font-weight:800">2 · Size</p>
+<div class="opt" id="oSize"><button class="on" data-p="0">1 kg · 8 pers</button><button data-p="18">2 kg +$18</button><button data-p="34">3 kg +$34</button></div>
+<p style="font-weight:800">3 · Writing on top</p>
+<input id="ctext" placeholder='e.g. "Happy 30th, Dono!"'>
+<p style="font-weight:800">Phone for pickup</p>
+<input id="cphone" placeholder="+998 …">
+<button class="big-btn" onclick="cakeOrder()">ORDER CAKE — $<span id="cprice">28</span> 🎂</button>
+<p id="cmsg" style="margin-top:10px;font-size:13.5px;color:var(--crust);font-weight:700"></p>
+</div>
+<div><img src="https://picsum.photos/seed/crumbcake/500/600" style="width:100%;height:100%;min-height:380px;object-fit:cover;border-radius:18px" alt=""></div>
+</div>
+<div class="revs">
+<div class="rev"><p>"Sourdough № 4 ruined supermarket bread for me forever."</p><b>Otabek R.</b><small>★★★★★ · regular since 2019</small></div>
+<div class="rev"><p>"Honey cake like my childhood — ordered for mom's 60th, she cried."</p><b>Elena V.</b><small>★★★★★ · custom cake</small></div>
+<div class="rev"><p>"Croissant shatters exactly right. Coffee + corner table = morning ritual."</p><b>Kamilla S.</b><small>★★★★★ · croissant club</small></div>
+</div>
+<div class="faq" id="faq">
+<details><summary>Where are you?</summary><p>Navoi 12, old town — look for the smell. Open 7:00–21:00, oven days Tue–Sun.</p></details>
+<details><summary>Do you deliver?</summary><p>Yes, within the city 9:00–19:00. Cakes need 48h notice.</p></details>
+<details><summary>Gluten-free?</summary><p>Rice-buckwheat loaf every Friday. Tell us a day ahead and we reserve one.</p></details>
+</div>
+</section>
+<footer><span>© 2026 Crumb & Craft · wood-fired bakery</span><span>Navoi 12 · 7:00–21:00 · +998 90 111 22 33</span></footer>
+<div id="drawer"><h3>Your basket 🥖</h3><p style="color:var(--mut);font-size:13px;margin:6px 0 14px">Baked at 6:00 & 16:00 — pickup or delivery.</p><div id="cart"></div><p style="margin-top:14px;font-size:20px;font-weight:800">Total: $<span id="total">0</span></p><button class="checkout" onclick="this.textContent='✓ SENT TO OVEN — see you soon'">CHECKOUT →</button></div>
+<div id="auth" onclick="if(event.target==this)this.classList.remove('open')"><div class="abox"><h3>Crumb club 🥐</h3><p style="color:var(--mut);font-size:13.5px">Preorders + birthday cake −15%.</p><div class="tabs"><button class="on" id="t1" onclick="tab(1)">Login</button><button id="t2" onclick="tab(2)">Register</button></div><div id="f1"><input placeholder="Email"><input type="password" placeholder="Password"><button class="go" onclick="ok(this)">Login →</button></div><div id="f2" style="display:none"><input placeholder="Full name"><input placeholder="Email"><input type="password" placeholder="Create password"><button class="go" onclick="ok(this)">Join club 🍞</button></div></div></div>
+<script>
+addEventListener('load',()=>setTimeout(()=>document.getElementById('preloader').classList.add('done'),700));
+function tab(n){t1.classList.toggle('on',n==1);t2.classList.toggle('on',n==2);f1.style.display=n==1?'block':'none';f2.style.display=n==2?'block':'none'}
+function openAuth(){document.getElementById('auth').classList.add('open')}
+function ok(b){b.textContent='🥖 Welcome back!';setTimeout(()=>document.getElementById('auth').classList.remove('open'),900)}
+const MENU=[
+{n:'Sourdough № 4',c:'bread',p:6,d:'Walnut · 48h ferment'},{n:'Village Rye',c:'bread',p:5,d:'Dark, malty, 900 g'},
+{n:'Butter Croissant',c:'sweet',p:3,d:'27 layers · French butter'},{n:'Honey Cake',c:'sweet',p:18,d:'Since 2012 · 1 kg'},
+{n:'Apple Lattice Pie',c:'pie',p:12,d:'Orchard apples · cinnamon'},{n:'Cherry Sourdough Pie',c:'pie',p:14,d:'Summer cherry · rye crust'},
+{n:'Cinnamon Swirl',c:'sweet',p:4,d:'Brioche · 6:00 batch'},{n:'Baguette Duo',c:'bread',p:4,d:'Crackling · 2 pcs'}];
+let cat='all',cart=[];
+function render(){const g=document.getElementById('menuGrid');g.innerHTML='';MENU.filter(x=>cat==='all'||x.c===cat).forEach((x,i)=>{g.innerHTML+='<div class="bcard reveal vis"><img loading="lazy" src="https://picsum.photos/seed/crumb'+i+'/400/300"><div class="in"><h3>'+x.n+'</h3><p>'+x.d+'</p><div class="pr"><b>$'+x.p+'</b><button class="addbtn" onclick="add('+MENU.indexOf(x)+')">Add +</button></div></div></div>'})}
+render();
+document.querySelectorAll('#cats button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#cats button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cat=b.dataset.c;render()});
+function add(i){cart.push(MENU[i]);draw();toggleDrawer(true)}
+function draw(){document.getElementById('cnt').textContent=cart.length;const b=document.getElementById('cart');b.innerHTML=cart.length?'':'<p style="color:var(--mut)">Empty — the oven is warm though.</p>';let s=0;cart.forEach((c,i)=>{s+=c.p;b.innerHTML+='<div class="citem"><span>'+c.n+'</span><span>$'+c.p+' <a href="#" onclick="cart.splice('+i+',1);draw();return false">✕</a></span></div>'});document.getElementById('total').textContent=s}
+function toggleDrawer(o){document.getElementById('drawer').classList.toggle('open',o)}
+function cval(id){let s=0;document.querySelectorAll('#'+id+' button.on').forEach(b=>s+=+b.dataset.p);return s}
+document.querySelectorAll('.opt').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{[...g.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('cprice').textContent=cval('oFill')+cval('oSize')}));
+function cakeOrder(){const t=cval('oFill')+cval('oSize');cart.push({n:'Custom cake "'+(document.getElementById('ctext').value||'no text')+'"',p:t});draw();document.getElementById('cmsg').textContent='✓ Cake queued — we call '+ (document.getElementById('cphone').value||'you') +' to confirm. ($'+t+')';toggleDrawer(true)}
+const io=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('vis')),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

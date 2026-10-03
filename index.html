@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#8b5cf6">
+<meta property="og:title" content="CEO & Lead Architect — 74+ Enterprise & Creative Digital Products">
+<meta property="og:description" content="Production portfolio of 74+ high-ticket digital products: SaaS platforms, Flutter & iOS apps, Godot & WebGL games, autonomous AI agents and executive dashboards.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="icon.svg">
+<meta name="twitter:card" content="summary_large_image">
+<title>CEO & Lead Architect — 74+ Enterprise & Creative Digital Products</title>
+<meta name="description" content="Production portfolio of 74+ high-ticket digital products: SaaS platforms, Flutter & iOS apps, Godot & WebGL games, autonomous AI agents and executive dashboards.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==================== DESIGN TOKENS & RESET ==================== */
+*, *::before, *::after {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+:root {
+  --bg-deep: #07070d;
+  --bg-surface: #0f0f1b;
+  --bg-card: rgba(18, 18, 32, 0.75);
+  --bg-card-hover: rgba(28, 28, 48, 0.85);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(168, 85, 247, 0.5);
+  --border-gold: rgba(245, 158, 11, 0.4);
+  --text-main: #f8fafc;
+  --text-dim: #94a3b8;
+  --text-muted: #64748b;
+  --purple: #8b5cf6;
+  --purple-glow: rgba(139, 92, 246, 0.35);
+  --cyan: #06b6d4;
+  --cyan-glow: rgba(6, 182, 212, 0.35);
+  --amber: #f59e0b;
+  --amber-glow: rgba(245, 158, 11, 0.3);
+  --emerald: #10b981;
+  --font-display: 'Sora', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
+  --radius-pill: 9999px;
+  --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  color: var(--text-main);
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Subtle ambient background canvas & noise */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+}
+
+::selection {
+  background: var(--purple);
+  color: #fff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: #27273a;
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--purple);
+}
+
+/* ==================== PRELOADER ==================== */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: #06060a;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#loader.done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-brand {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #c084fc, #38bdf8, #f472b6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: pulseBrand 1.4s ease-in-out infinite alternate;
+}
+@keyframes pulseBrand {
+  from { opacity: 0.7; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1.02); }
+}
+.loader-bar {
+  width: 240px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  position: relative;
+}
+.loader-bar-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 0%;
+  background: linear-gradient(90deg, var(--purple), var(--cyan));
+  border-radius: var(--radius-pill);
+  transition: width 0.3s ease;
+}
+.loader-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* ==================== NAVIGATION BAR ==================== */
+.navbar {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1320px, 94%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: rgba(15, 15, 27, 0.82);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  transition: var(--transition);
+}
+.navbar.scrolled {
+  border-color: rgba(168, 85, 247, 0.25);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(139, 92, 246, 0.15);
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text-main);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.3px;
+}
+.nav-brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--purple), var(--cyan));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #fff;
+  box-shadow: 0 4px 15px var(--purple-glow);
+}
+.nav-brand-label {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #d8b4fe;
+  letter-spacing: 1px;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-flagship-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.25));
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  transition: var(--transition);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+}
+.nav-flagship-btn:hover {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.45));
+  border-color: #fbbf24;
+  transform: translateY(-1px);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+  color: #fff;
+}
+.nav-flagship-btn i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fbbf24;
+  box-shadow: 0 0 10px #fbbf24;
+  animation: pulseGlow 1.2s infinite alternate;
+}
+@keyframes pulseGlow {
+  from { opacity: 0.4; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1.2); }
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-cta {
+  background: linear-gradient(135deg, var(--purple), #6366f1);
+  color: #fff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+  box-shadow: 0 4px 18px var(--purple-glow);
+}
+.nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5);
+}
+
+/* ==================== HERO SECTION ==================== */
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: 130px 24px 40px;
+  max-width: 1240px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: var(--radius-pill);
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #c084fc;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  backdrop-filter: blur(10px);
+}
+.hero-pill i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 10px #22c55e;
+  animation: pulseGlow 1.5s infinite alternate;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(34px, 5.5vw, 68px);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  margin-bottom: 20px;
+}
+.hero-title-grad {
+  background: linear-gradient(135deg, #ffffff 30%, #c084fc 65%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-subtitle {
+  color: var(--text-dim);
+  font-size: clamp(16px, 1.8vw, 19px);
+  max-width: 780px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+
+/* Hero action bar */
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--purple), #6366f1);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+  box-shadow: 0 8px 30px var(--purple-glow);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(139, 92, 246, 0.55);
+}
+.btn-gold {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #000;
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+  box-shadow: 0 8px 30px var(--amber-glow);
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(245, 158, 11, 0.5);
+  color: #000;
+}
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  padding: 14px 26px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Hero metrics row */
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 22px 28px;
+  background: rgba(18, 18, 32, 0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+.metric-item {
+  text-align: center;
+}
+.metric-num {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.2vw, 36px);
+  font-weight: 800;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #fff, #cbd5e1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.metric-num span {
+  color: var(--purple);
+}
+.metric-lbl {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ==================== FLAGSHIP SPOTLIGHT BANNER ==================== */
+.flagship-banner {
+  max-width: 1240px;
+  margin: 40px auto 30px;
+  padding: 0 24px;
+}
+.flagship-card {
+  background: linear-gradient(135deg, rgba(26, 20, 8, 0.85), rgba(12, 12, 20, 0.95));
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 24px;
+  padding: 34px 40px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 36px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 50px rgba(245, 158, 11, 0.1);
+}
+.flagship-card::before {
+  content: "";
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.25), transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+.flagship-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 14px;
+}
+.flagship-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: #fff;
+}
+.flagship-title em {
+  font-style: normal;
+  color: #fbbf24;
+}
+.flagship-desc {
+  color: #cbd5e1;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+.flagship-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.flagship-feat-tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+.flagship-preview-pane {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.flagship-preview-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.flagship-preview-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.flagship-val {
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+/* ==================== CONTROLS: SEARCH & FILTERS ==================== */
+.controls-wrap {
+  max-width: 1240px;
+  margin: 0 auto 30px;
+  padding: 0 24px;
+  position: sticky;
+  top: 76px;
+  z-index: 80;
+}
+.controls-bar {
+  background: rgba(15, 15, 27, 0.92);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.search-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.search-box {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--text-muted);
+  font-size: 16px;
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  padding: 13px 44px 13px 44px;
+  background: rgba(6, 6, 12, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: var(--transition);
+}
+.search-input:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+  background: rgba(10, 10, 20, 0.95);
+}
+.search-shortcut {
+  position: absolute;
+  right: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 7px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  pointer-events: none;
+}
+
+.sort-select {
+  background: rgba(6, 6, 12, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+  color: var(--text-main);
+  padding: 12px 20px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.sort-select:focus {
+  border-color: var(--purple);
+}
+
+/* Filter categories */
+.categories-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.categories-row::-webkit-scrollbar {
+  display: none;
+}
+.cat-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.cat-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.cat-btn.active {
+  background: var(--purple);
+  color: #fff;
+  border-color: var(--purple);
+  box-shadow: 0 4px 18px var(--purple-glow);
+}
+.cat-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  opacity: 0.75;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+}
+
+/* Tech Stack Quick Filter Chips */
+.tech-chips-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.tech-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+.tech-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.tech-chip:hover {
+  color: #fff;
+  border-color: var(--cyan);
+}
+.tech-chip.active {
+  background: rgba(6, 182, 212, 0.18);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* Results counter & indicator */
+.results-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  padding: 0 4px;
+}
+.results-live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  margin-right: 6px;
+}
+
+/* ==================== PROJECTS GRID ==================== */
+.projects-section {
+  max-width: 1240px;
+  margin: 0 auto 80px;
+  padding: 0 24px;
+}
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+/* Project Card */
+.pcard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+  backdrop-filter: blur(12px);
+  position: relative;
+}
+.pcard:hover {
+  transform: translateY(-8px);
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+/* Card Visual Header */
+.pcard-header {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  background: #0d0d18;
+}
+.pcard-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: brightness(0.88) contrast(1.05);
+}
+.pcard:hover .pcard-img {
+  transform: scale(1.06);
+  filter: brightness(1) contrast(1.1);
+}
+.pcard-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 7, 13, 0.2) 0%, rgba(15, 15, 27, 0.95) 100%);
+}
+
+/* Card Top Badges */
+.pcard-badges {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+.pcard-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(10, 10, 20, 0.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  color: #fff;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+}
+.pcard-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+.pcard-highlight {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: rgba(139, 92, 246, 0.25);
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  color: #d8b4fe;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+/* Card Body */
+.pcard-body {
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.pcard-icon-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.pcard-icon {
+  font-size: 20px;
+}
+.pcard-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.25;
+}
+.pcard-desc {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  line-height: 1.55;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* Tech Stack Pills */
+.pcard-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.pcard-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+}
+
+/* Card Footer Actions */
+.pcard-actions {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.pcard-btn-preview {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.2));
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+.pcard-btn-preview:hover {
+  background: linear-gradient(135deg, var(--purple), var(--cyan));
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px var(--purple-glow);
+}
+.pcard-btn-tab {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: var(--transition);
+}
+.pcard-btn-tab:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.pcard-btn-pitch {
+  grid-column: 1 / -1;
+  background: transparent;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  color: var(--text-muted);
+  padding: 7px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.pcard-btn-pitch:hover {
+  border-color: var(--purple);
+  color: #d8b4fe;
+  background: rgba(139, 92, 246, 0.06);
+}
+
+/* Empty state */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+}
+.empty-state h3 {
+  font-size: 22px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+/* ==================== LIVE PREVIEW SIMULATOR MODAL ==================== */
+#previewModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(14px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+#previewModal.open {
+  display: flex;
+  opacity: 1;
+}
+.preview-window {
+  background: #0f0f1b;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 20px;
+  width: 96vw;
+  max-width: 1400px;
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9), 0 0 50px rgba(139, 92, 246, 0.2);
+  animation: modalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes modalPop {
+  from { transform: scale(0.95) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+.preview-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #141424;
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+}
+.preview-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.preview-dots {
+  display: flex;
+  gap: 6px;
+}
+.preview-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.preview-dot.red { background: #ef4444; }
+.preview-dot.yellow { background: #f59e0b; }
+.preview-dot.green { background: #10b981; }
+
+.preview-title-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.preview-project-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+.preview-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cyan);
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+/* Device Switcher */
+.device-switcher {
+  display: flex;
+  background: #090912;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 3px;
+  gap: 4px;
+}
+.dev-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.dev-btn:hover {
+  color: #fff;
+}
+.dev-btn.active {
+  background: var(--purple);
+  color: #fff;
+  font-weight: 700;
+}
+
+.preview-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.preview-action-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 7px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+.preview-action-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* Preview Canvas / Iframe area */
+.preview-stage {
+  flex: 1;
+  background: #06060c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: padding 0.3s ease;
+}
+.preview-frame-wrap {
+  height: 100%;
+  width: 100%;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), height 0.35s ease, border-radius 0.35s ease;
+  display: flex;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  position: relative;
+}
+.preview-frame-wrap.desktop {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+.preview-frame-wrap.tablet {
+  width: 768px;
+  height: 94%;
+  border: 12px solid #1a1a2e;
+  border-radius: 28px;
+}
+.preview-frame-wrap.mobile {
+  width: 390px;
+  height: 94%;
+  border: 14px solid #1a1a2e;
+  border-radius: 40px;
+}
+.preview-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
+  border-radius: inherit;
+}
+.preview-spinner {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  pointer-events: none;
+  display: none;
+}
+
+/* ==================== UPWORK PITCH GENERATOR MODAL ==================== */
+#pitchModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 1050;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#pitchModal.open {
+  display: flex;
+}
+.pitch-box {
+  background: #111122;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: 24px;
+  width: min(650px, 94%);
+  padding: 32px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
+  animation: modalPop 0.3s ease;
+}
+.pitch-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.pitch-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+}
+.pitch-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #fff;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pitch-select-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.pitch-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.pitch-select {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  background: #090914;
+  border: 1px solid var(--border);
+  color: #fff;
+  font-size: 13px;
+  outline: none;
+}
+.pitch-textarea {
+  width: 100%;
+  height: 220px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  background: #090914;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 18px;
+}
+.pitch-textarea:focus {
+  border-color: var(--purple);
+}
+.pitch-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ==================== TOAST NOTIFICATION ==================== */
+#toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 2000;
+  background: #1e1e36;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px var(--purple-glow);
+  font-size: 13.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  pointer-events: none;
+}
+#toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ==================== FOOTER ==================== */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 60px 24px 40px;
+  background: rgba(10, 10, 18, 0.6);
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.footer-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.footer-stack {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0 30px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.footer-copy {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Floating back to top button */
+#backTop {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 90;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(18, 18, 32, 0.8);
+  border: 1px solid var(--border);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+}
+#backTop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+#backTop:hover {
+  background: var(--purple);
+  border-color: var(--purple);
+  transform: translateY(-2px);
+}
+
+/* ==================== RESPONSIVE BREAKPOINTS ==================== */
+@media (max-width: 900px) {
+  .metrics-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .flagship-card {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  .controls-wrap {
+    position: static;
+  }
+  .nav-btn.hide-mob {
+    display: none;
+  }
+  .preview-window {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+  .device-switcher {
+    display: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Ambient Canvas Background -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- Preloader -->
+<div id="loader">
+  <div class="loader-brand">CEO · PORTFOLIO</div>
+  <div class="loader-bar"><div class="loader-bar-fill" id="lfill"></div></div>
+  <div class="loader-text" id="ltxt">Initializing 71 production builds…</div>
+</div>
+
+<!-- Sticky Navbar -->
+<nav class="navbar" id="mainNav">
+  <a class="nav-brand" href="#top">
+    <div class="nav-brand-mark">◈</div>
+    <span>CEO<span style="color:var(--purple)">·LAB</span></span>
+    <span class="nav-brand-label">ARCHITECT</span>
+  </a>
+
+  <div class="nav-actions">
+    <a class="nav-flagship-btn" href="flagship/index.html">
+      <i></i> ★ NOVA STUDIO ($10K FLAGSHIP)
+    </a>
+    <button class="nav-btn hide-mob" id="soundToggle" onclick="toggleAudio()" title="Sound Effects">
+      <span id="soundIcon">🔊</span> Sound <b id="soundState">ON</b>
+    </button>
+    <button class="nav-btn hide-mob" onclick="openPitchModal()" title="Generate Upwork Proposal">
+      📋 Pitch Generator
+    </button>
+    <a class="nav-cta" href="flagship/index.html#contact">
+      Invite to Job →
+    </a>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<header class="hero" id="top">
+  <div class="hero-pill">
+    <i></i> CEO & Lead Software Architect · 8+ Yrs · 100% Upwork Success
+  </div>
+  
+  <h1 class="hero-title">
+    70+ Enterprise & Creative<br>
+    <span class="hero-title-grad">Digital Products Shipped</span>
+  </h1>
+  
+  <p class="hero-subtitle">
+    Fullstack SaaS platforms, high-performance Flutter & iOS apps, 2D/3D Godot & WebGL games, autonomous AI agents, and executive analytics dashboards. Clean architecture, production-ready.
+  </p>
+
+  <div class="hero-actions">
+    <a class="btn-gold" href="flagship/index.html">
+      ★ Open Flagship Studio ($10K Scope) →
+    </a>
+    <button class="btn-primary" onclick="openPitchModal()">
+      📋 Upwork Proposal Generator
+    </button>
+    <a class="btn-secondary" href="#projects-anchor">
+      ▶ Browse 70+ Projects
+    </a>
+  </div>
+
+  <!-- Live Metrics Strip -->
+  <div class="metrics-strip">
+    <div class="metric-item">
+      <div class="metric-num"><span class="cnt" data-target="71">0</span>+</div>
+      <div class="metric-lbl">Shipped Projects</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num"><span class="cnt" data-target="12">0</span></div>
+      <div class="metric-lbl">Core Tech Stacks</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num"><span class="cnt" data-target="100">0</span>%</div>
+      <div class="metric-lbl">Job Success Score</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num">$<span class="cnt" data-target="10">0</span>K+</div>
+      <div class="metric-lbl">Project Tier Scope</div>
+    </div>
+  </div>
+</header>
+
+<!-- Flagship Showcase Spotlight Card -->
+<div class="flagship-banner">
+  <div class="flagship-card">
+    <div>
+      <div class="flagship-badge">★ FLAGSHIP SIGNATURE STUDIO</div>
+      <h2 class="flagship-title">NOVA Studio — <em>$10,000</em> Digital Products</h2>
+      <p class="flagship-desc">
+        Experience our flagship agency environment featuring a live real-time financial MRR chart canvas, an interactive project scope & quote estimator, an interactive reflex benchmark, and an intelligent AI concierge chatbot.
+      </p>
+      <div class="flagship-features">
+        <span class="flagship-feat-tag">Go & Python Backend</span>
+        <span class="flagship-feat-tag">Godot 3D & Three.js</span>
+        <span class="flagship-feat-tag">Flutter & Swift iOS</span>
+        <span class="flagship-feat-tag">Interactive Playground</span>
+      </div>
+      <a class="btn-gold" href="flagship/index.html">
+        Launch Flagship Studio Experience →
+      </a>
+    </div>
+    <div class="flagship-preview-pane">
+      <div class="flagship-preview-row">
+        <span>ARCHITECT</span>
+        <span class="flagship-val">CEO & Lead Software Architect</span>
+      </div>
+      <div class="flagship-preview-row">
+        <span>LIVE MRR BENCHMARK</span>
+        <span class="flagship-val">$48.2K ▲ 99.99% Uptime</span>
+      </div>
+      <div class="flagship-preview-row">
+        <span>RESPONSE TIME</span>
+        <span class="flagship-val">&lt; 24h Fixed Quote</span>
+      </div>
+      <div class="flagship-preview-row">
+        <span>CONTRACTS SIGNED</span>
+        <span class="flagship-val">Sprint ($1.5K) · Product ($10K)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="projects-anchor"></div>
+
+<!-- Interactive Search, Filters, and Sorter -->
+<div class="controls-wrap">
+  <div class="controls-bar">
+    <div class="search-row">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by name, tech (Flutter, Godot, Python, Three.js, Crypto, SaaS, etc.)…">
+        <span class="search-shortcut">/</span>
+      </div>
+      <select id="sortSelect" class="sort-select">
+        <option value="featured">★ Featured & Highest Tier</option>
+        <option value="num-asc">Project # (01 → 74)</option>
+        <option value="num-desc">Project # (74 → 01)</option>
+        <option value="title">Alphabetical (A-Z)</option>
+      </select>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="categories-row" id="catRow">
+      <button class="cat-btn active" data-cat="all">All Projects <span class="cat-count" id="cCountAll">74</span></button>
+      <button class="cat-btn" data-cat="saas">⚡ SaaS & Fullstack <span class="cat-count">13</span></button>
+      <button class="cat-btn" data-cat="shop">🛍️ E-Commerce & Retail <span class="cat-count">15</span></button>
+      <button class="cat-btn" data-cat="mobile">📱 Mobile & OS <span class="cat-count">10</span></button>
+      <button class="cat-btn" data-cat="game">🎮 Games & 3D WebGL <span class="cat-count">10</span></button>
+      <button class="cat-btn" data-cat="ai">🤖 AI & Automation <span class="cat-count">7</span></button>
+      <button class="cat-btn" data-cat="dashboard">📊 Dashboards & FinTech <span class="cat-count">8</span></button>
+      <button class="cat-btn" data-cat="services">🏢 Services & Landings <span class="cat-count">11</span></button>
+    </div>
+
+    <!-- Tech Stack Filter Chips -->
+    <div class="tech-chips-row" id="techRow">
+      <span class="tech-label">Filter Tech:</span>
+      <span class="tech-chip" data-tech="Python">Python</span>
+      <span class="tech-chip" data-tech="Go">Go</span>
+      <span class="tech-chip" data-tech="Flutter">Flutter</span>
+      <span class="tech-chip" data-tech="Swift">Swift</span>
+      <span class="tech-chip" data-tech="Godot">Godot</span>
+      <span class="tech-chip" data-tech="Three.js">Three.js</span>
+      <span class="tech-chip" data-tech="Canvas">Canvas 2D</span>
+      <span class="tech-chip" data-tech="AI">AI/LLM</span>
+      <span class="tech-chip" data-tech="Crypto">Web3/Crypto</span>
+      <span class="tech-chip" data-tech="Tailwind">Tailwind</span>
+    </div>
+
+    <!-- Results meta bar -->
+    <div class="results-meta">
+      <div><span class="results-live-dot"></span>Showing <b id="matchCount" style="color:#fff">74</b> of 74 verified production builds</div>
+      <div id="activeFilterDesc">Category: All Projects</div>
+    </div>
+  </div>
+</div>
+
+<!-- Projects Grid Section -->
+<section class="projects-section">
+  <div class="projects-grid" id="projectsGrid"></div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">◈ CEO·LAB & NOVA STUDIO</div>
+    <p style="color:var(--text-dim); max-width:600px; margin:0 auto 10px;">
+      Architecture & Full-Stack Engineering for high-ticket digital products. Ready for immediate deployment, contract hire, or CTO-as-a-service.
+    </p>
+    <div class="footer-stack">
+      <span>Python</span> • <span>Go (Golang)</span> • <span>Flutter</span> • <span>Godot Engine</span> • <span>Three.js</span> • <span>Swift</span> • <span>Kotlin</span> • <span>SQLite</span> • <span>WebAssembly</span>
+    </div>
+    <div class="footer-copy">
+      © 2026 CEO Portfolio Hub. All 66 digital products engineered for production performance.
+    </div>
+  </div>
+</footer>
+
+<!-- Floating Back to Top Button -->
+<button id="backTop" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- ==================== LIVE PREVIEW SIMULATOR MODAL ==================== -->
+<div id="previewModal" onclick="if(event.target===this)closePreview()">
+  <div class="preview-window">
+    <div class="preview-topbar">
+      <div class="preview-meta">
+        <div class="preview-dots">
+          <div class="preview-dot red" onclick="closePreview()" title="Close"></div>
+          <div class="preview-dot yellow" onclick="reloadPreview()" title="Reload"></div>
+          <div class="preview-dot green" onclick="toggleFullscreen()" title="Fullscreen"></div>
+        </div>
+        <div class="preview-title-box">
+          <span class="preview-project-title" id="prevTitle">Project Title</span>
+          <span class="preview-badge" id="prevBadge">LIVE DEMO</span>
+        </div>
+      </div>
+
+      <!-- Device Switcher -->
+      <div class="device-switcher">
+        <button class="dev-btn active" data-dev="desktop" onclick="setDevice('desktop')">🖥️ Desktop</button>
+        <button class="dev-btn" data-dev="tablet" onclick="setDevice('tablet')">📱 Tablet</button>
+        <button class="dev-btn" data-dev="mobile" onclick="setDevice('mobile')">📱 Mobile</button>
+      </div>
+
+      <!-- Right actions -->
+      <div class="preview-right-actions">
+        <button class="preview-action-btn" onclick="copyCurrentPitch()">📋 Copy Pitch</button>
+        <a class="preview-action-btn" id="prevExternal" href="#" target="_blank">↗ New Tab</a>
+        <button class="preview-action-btn" onclick="closePreview()">✕</button>
+      </div>
+    </div>
+
+    <!-- Simulator Frame -->
+    <div class="preview-stage">
+      <div class="preview-spinner" id="prevSpinner">Loading live project simulation…</div>
+      <div class="preview-frame-wrap desktop" id="prevWrap">
+        <iframe id="prevFrame" class="preview-iframe" src="about:blank"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== UPWORK PROPOSAL PITCH GENERATOR MODAL ==================== -->
+<div id="pitchModal" onclick="if(event.target===this)closePitchModal()">
+  <div class="pitch-box">
+    <div class="pitch-header">
+      <div class="pitch-title">📋 Upwork Proposal Generator</div>
+      <button class="pitch-close" onclick="closePitchModal()">✕</button>
+    </div>
+    
+    <div class="pitch-select-row">
+      <div>
+        <label class="pitch-label">Select Reference Project</label>
+        <select id="pitchProjectSelect" class="pitch-select" onchange="updatePitchText()"></select>
+      </div>
+      <div>
+        <label class="pitch-label">Client / Proposal Tone</label>
+        <select id="pitchToneSelect" class="pitch-select" onchange="updatePitchText()">
+          <option value="direct">Direct & High-Converting (Recommended)</option>
+          <option value="technical">Technical Lead & Architecture Deep-Dive</option>
+          <option value="fast">Rapid MVP Launch (7-14 Days)</option>
+        </select>
+      </div>
+    </div>
+
+    <label class="pitch-label">Generated Proposal Pitch (Ready to paste on Upwork):</label>
+    <textarea id="pitchOutput" class="pitch-textarea" readonly></textarea>
+
+    <div class="pitch-actions">
+      <button class="btn-secondary" onclick="closePitchModal()">Close</button>
+      <button class="btn-primary" onclick="copyPitchFromModal()">📋 Copy to Clipboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast element -->
+<div id="toast"><span id="toastMsg">Notification message</span></div>
+
+<!-- ==================== JAVASCRIPT LOGIC ==================== -->
+<script>
+const PROJECTS = [{"n": "01", "slug": "saas-landing", "folder": "portfolio-01-saas-landing", "title": "NovaFlow — SaaS Analytics Platform", "desc": "NovaFlow unifies dashboards, automation and team collaboration in one fast workspace.", "cat": "saas", "stack": ["Python", "Go", "Charts", "REST API"], "val": "$9.8K", "badge": "HOT", "icon": "⚡"}, {"n": "02", "slug": "fashion-shop", "folder": "portfolio-02-fashion-shop", "title": "VELVET & CO — Fashion Boutique", "desc": "VELVET & CO — capsule collections, perfect tailoring, sustainable fabric.", "cat": "shop", "stack": ["E-Commerce", "Tailwind", "Cart", "Filter"], "val": "$4.5K", "badge": "LUXURY", "icon": "🛍️"}, {"n": "03", "slug": "restaurant", "folder": "portfolio-03-restaurant", "title": "Saffron House — Modern Restaurant", "desc": "Saffron House — fire, spice and unforgettable flavor. Reserve a table.", "cat": "services", "stack": ["Restaurant", "Reservation", "Menu", "Animations"], "val": "$3.2K", "badge": "POPULAR", "icon": "🍷"}, {"n": "04", "slug": "clinic", "folder": "portfolio-04-clinic", "title": "MediCare+ — Family Clinic", "desc": "MediCare+ — care that puts you first. Book an appointment in 60 seconds.", "cat": "services", "stack": ["Healthcare", "Doctor Booking", "HIPAA UI"], "val": "$4.0K", "badge": "CLEAN", "icon": "🩺"}, {"n": "05", "slug": "real-estate", "folder": "portfolio-05-real-estate", "title": "Haven Estates — Premium Real Estate", "desc": "Haven Estates — find a home that finds you back. Curated villas, penthouses and lofts.", "cat": "services", "stack": ["Real Estate", "Mortgage Calc", "Map View"], "val": "$5.5K", "badge": "FEATURED", "icon": "🏡"}, {"n": "06", "slug": "travel", "folder": "portfolio-06-travel", "title": "Wanderlust — Travel Agency", "desc": "Wanderlust — collect moments, not souvenirs. Small-group tours, honest prices.", "cat": "services", "stack": ["Travel", "Booking Engine", "Tour Showcase"], "val": "$3.8K", "badge": "STUNNING", "icon": "✈️"}, {"n": "07", "slug": "fitness", "folder": "portfolio-07-fitness", "title": "IronPulse — Fitness Club", "desc": "IronPulse — stronger every single rep. 24/7 brutalist training ground.", "cat": "mobile", "stack": ["Fitness UI", "BMI Calculator", "Workout Engine"], "val": "$4.2K", "badge": "INTERACTIVE", "icon": "💪"}, {"n": "08", "slug": "education", "folder": "portfolio-08-education", "title": "BrightMinds — Online Academy", "desc": "BrightMinds — learn faster, remember longer. Bite-size courses with live mentors.", "cat": "services", "stack": ["EdTech", "Course Catalog", "Quiz System"], "val": "$5.0K", "badge": "ACADEMY", "icon": "🎓"}, {"n": "09", "slug": "photographer", "folder": "portfolio-09-photographer", "title": "Elena Ray — Photography Studio", "desc": "Elena Ray — portraits that feel like you. Weddings, editorial, studio.", "cat": "services", "stack": ["Photography", "Masonry Grid", "Lightbox 60fps"], "val": "$2.8K", "badge": "MINIMAL", "icon": "📷"}, {"n": "10", "slug": "coffee", "folder": "portfolio-10-coffee", "title": "Ember Roast — Specialty Coffee", "desc": "Ember Roast — coffee worth slowing down for. Single-origin, roasted weekly.", "cat": "shop", "stack": ["Coffee Roaster", "Subscription", "Cart"], "val": "$3.2K", "badge": "ARTISAN", "icon": "☕"}, {"n": "11", "slug": "law-firm", "folder": "portfolio-11-law-firm", "title": "Sterling & Cole — Law Firm", "desc": "Sterling & Cole — forty years of counsel. Corporate, property, family, litigation.", "cat": "services", "stack": ["Corporate Law", "Attorney Bios", "Consultation"], "val": "$4.5K", "badge": "CORPORATE", "icon": "⚖️"}, {"n": "12", "slug": "car-rental", "folder": "portfolio-12-car-rental", "title": "RedLine Motors — Car Rental", "desc": "RedLine Motors — performance car rental with instant booking calculator.", "cat": "services", "stack": ["Car Rental", "Fleet Filter", "Date Range Picker"], "val": "$5.2K", "badge": "DYNAMIC", "icon": "🏎️"}, {"n": "13", "slug": "hotel", "folder": "portfolio-13-hotel", "title": "Maison Olive — Boutique Hotel", "desc": "Maison Olive — editorial boutique hotel with suites, dining and garden courtyard.", "cat": "services", "stack": ["Luxury Resort", "Room Booking", "Amenity Grid"], "val": "$6.0K", "badge": "RESORT", "icon": "🏨"}, {"n": "14", "slug": "crypto", "folder": "portfolio-14-crypto", "title": "PulseChain — Crypto Terminal", "desc": "PulseChain — pro crypto terminal with live ticker, charts and low-fee trading.", "cat": "dashboard", "stack": ["Crypto Exchange", "Live Ticker", "Orderbook"], "val": "$8.5K", "badge": "WEB3", "icon": "🪙"}, {"n": "15", "slug": "nft", "folder": "portfolio-15-nft", "title": "PRISM — NFT Gallery", "desc": "PRISM — curated NFT gallery: drops, artists and collectors.", "cat": "dashboard", "stack": ["NFT Gallery", "Web3 Bidding", "Digital Art"], "val": "$6.5K", "badge": "CRYPTO", "icon": "🎨"}, {"n": "16", "slug": "ai-startup", "folder": "portfolio-16-ai-startup", "title": "Northloop AI — Startup", "desc": "Northloop AI — meeting notes, actions and CRM updates on autopilot.", "cat": "ai", "stack": ["Autonomous AI", "Prompt Sandbox", "LLM API"], "val": "$7.5K", "badge": "AI CORE", "icon": "🤖"}, {"n": "17", "slug": "interior", "folder": "portfolio-17-interior", "title": "Kanso Home — Japandi Interiors", "desc": "Kanso Home — Japandi interior studio: calm wood, soft light, before-after renovations.", "cat": "services", "stack": ["Architectural", "Interior Design", "Before/After"], "val": "$4.2K", "badge": "AESTHETIC", "icon": "🛋️"}, {"n": "18", "slug": "beauty-salon", "folder": "portfolio-18-beauty-salon", "title": "Blush & Bloom — Beauty Atelier", "desc": "Blush and Bloom — soft beauty atelier: facials, nails, bridal. Pricing-first booking.", "cat": "services", "stack": ["Salon & Spa", "Schedule Engine", "Service Tier"], "val": "$3.5K", "badge": "ELEGANT", "icon": "✨"}, {"n": "19", "slug": "pet-shop", "folder": "portfolio-19-pet-shop", "title": "Waggy — Happy Pet Shop", "desc": "Waggy — playful pet shop: grooming, treats, vet and boarding with wagging tails.", "cat": "shop", "stack": ["Pet Boutique", "Category Filter", "Checkout"], "val": "$3.8K", "badge": "CUTE", "icon": "🐾"}, {"n": "20", "slug": "construction", "folder": "portfolio-20-construction", "title": "IronPeak — Construction Co.", "desc": "IronPeak — industrial construction: homes, warehouses, renovations with instant estimator.", "cat": "services", "stack": ["Construction Smeta", "Cost Estimator", "Specs"], "val": "$5.8K", "badge": "ENTERPRISE", "icon": "🏗️"}, {"n": "21", "slug": "logistics", "folder": "portfolio-21-logistics", "title": "NorthBeam Logistics — Tracking Dashboard", "desc": "NorthBeam — freight dashboard: express, warehousing and live tracking across 120 countries.", "cat": "dashboard", "stack": ["Freight Tracking", "Route Maps", "Rate Calc"], "val": "$6.2K", "badge": "LOGISTICS", "icon": "🚢"}, {"n": "22", "slug": "job-board", "folder": "portfolio-22-job-board", "title": "Hireline — Job Board", "desc": "Hireline — minimal job board: 1 200+ remote and local roles with one-click apply.", "cat": "saas", "stack": ["Dev Job Board", "Salary Filter", "Quick Apply"], "val": "$5.5K", "badge": "PORTAL", "icon": "💼"}, {"n": "23", "slug": "music-band", "folder": "portfolio-23-music-band", "title": "VOLTLINE — Official Band Site", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "services", "stack": ["Music Band", "Audio Player", "Tour Schedule"], "val": "$3.0K", "badge": "AUDIO", "icon": "🎸"}, {"n": "24", "slug": "movie", "folder": "portfolio-24-movie", "title": "LUMEN Cinema — Now Showing", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "services", "stack": ["Cinema Streaming", "Seat Picker", "Trailer Modal"], "val": "$6.5K", "badge": "CINEMA", "icon": "🎬"}, {"n": "25", "slug": "game-landing", "folder": "portfolio-25-game-landing", "title": "STARFALL — Play Beyond", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "game", "stack": ["Action RPG", "Character Specs", "Pre-Order"], "val": "$6.8K", "badge": "GAMING", "icon": "⚔️"}, {"n": "26", "slug": "charity", "folder": "portfolio-26-charity", "title": "GreenRoot — Charity Foundation", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "services", "stack": ["Charity", "Live Donation Counter", "Impact Metrics"], "val": "$3.5K", "badge": "NONPROFIT", "icon": "❤️"}, {"n": "27", "slug": "language-school", "folder": "portfolio-27-language-school", "title": "Lingofun — Learn Playing", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "saas", "stack": ["Language Lab", "Interactive Quiz", "Audio Rec"], "val": "$4.8K", "badge": "EDTECH", "icon": "🗣️"}, {"n": "28", "slug": "wedding", "folder": "portfolio-28-wedding", "title": "A & J — 14 . 09 . 2026", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "services", "stack": ["Luxury Wedding", "RSVP Form", "Countdown Timer"], "val": "$2.5K", "badge": "ROMANTIC", "icon": "💍"}, {"n": "29", "slug": "flower-shop", "folder": "portfolio-29-flower-shop", "title": "Petal & Stem — Flower Atelier", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "shop", "stack": ["Florist Atelier", "Custom Bouquet Builder", "Delivery"], "val": "$3.4K", "badge": "BOTANIC", "icon": "🌸"}, {"n": "30", "slug": "bakery", "folder": "portfolio-30-bakery", "title": "Crumb & Craft — Rustic Bakery", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "shop", "stack": ["French Bakery", "Fresh Bakes Queue", "Order Sync"], "val": "$3.2K", "badge": "ARTISAN", "icon": "🥐"}, {"n": "31", "slug": "burger", "folder": "portfolio-31-burger", "title": "BURGERLAB — Build Your Beast", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "shop", "stack": ["Burger Builder", "Live Calorie Engine", "Visual Stack"], "val": "$4.6K", "badge": "INTERACTIVE", "icon": "🍔"}, {"n": "32", "slug": "sushi", "folder": "portfolio-32-sushi", "title": "ENSO — Sushi & Silence", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "services", "stack": ["Omakase Dining", "Tasting Course", "Table Reserve"], "val": "$4.0K", "badge": "JAPANESE", "icon": "🍣"}, {"n": "33", "slug": "furniture", "folder": "portfolio-33-furniture", "title": "NORDHEM — Scandinavian Furniture", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "shop", "stack": ["Nordic Furniture", "3D Room Configurator", "AR View"], "val": "$6.2K", "badge": "3D READY", "icon": "🪑"}, {"n": "34", "slug": "watch-shop", "folder": "portfolio-34-watch-shop", "title": "MAISON NOIR — Haute Horlogerie", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "shop", "stack": ["Horology Timepieces", "Watch Specs", "Luxe Zoom"], "val": "$7.0K", "badge": "HAUTE", "icon": "⌚"}, {"n": "35", "slug": "sneakers", "folder": "portfolio-35-sneakers", "title": "KICKLAB — Build Your Heat", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "shop", "stack": ["Sneaker Drop", "Live Release Countdown", "Sizes"], "val": "$5.8K", "badge": "STREETWEAR", "icon": "👟"}, {"n": "36", "slug": "jewelry", "folder": "portfolio-36-jewelry", "title": "ATELIER LUMIÈRE — Fine Jewellery", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "shop", "stack": ["Fine Jewelry", "Carat & Clarity Filter", "3D Sparkle"], "val": "$6.5K", "badge": "DIAMOND", "icon": "💎"}, {"n": "37", "slug": "bookstore", "folder": "portfolio-37-bookstore", "title": "The Bound Page — Independent Bookstore", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "shop", "stack": ["Bookstore Haven", "Genre Filter", "Reading List"], "val": "$3.6K", "badge": "LITERARY", "icon": "📚"}, {"n": "38", "slug": "pharmacy", "folder": "portfolio-38-pharmacy", "title": "VitaPlus — Online Pharmacy", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "shop", "stack": ["Digital Pharmacy", "Rx Upload", "Medicine Search"], "val": "$5.2K", "badge": "HEALTH", "icon": "💊"}, {"n": "39", "slug": "optics", "folder": "portfolio-39-optics", "title": "ClearView Optics — Glasses & Eye Care", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "shop", "stack": ["Designer Optics", "Virtual Frame Try-on", "Lenses"], "val": "$4.8K", "badge": "EYEWEAR", "icon": "👓"}, {"n": "40", "slug": "digital-agency", "folder": "portfolio-40-digital-agency", "title": "NOVA Studio — Digital Agency", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "services", "stack": ["Digital Agency", "Interactive Portfolio", "Case Studies"], "val": "$5.5K", "badge": "CREATIVE", "icon": "🚀"}, {"n": "41", "slug": "seo-agency", "folder": "portfolio-41-seo-agency", "title": "RankUp — SEO Agency", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "services", "stack": ["SEO Platform", "Live Domain Audit Tool", "Charts"], "val": "$5.0K", "badge": "ANALYTICS", "icon": "📈"}, {"n": "42", "slug": "freelancer-personal", "folder": "portfolio-42-freelancer-personal", "title": "JULES KRAMER — Full-Stack Developer", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "services", "stack": ["Personal Brand", "Lead Architect", "Booking Call"], "val": "$3.5K", "badge": "AUTHORITY", "icon": "👤"}, {"n": "43", "slug": "blog", "folder": "portfolio-43-blog", "title": "The Longform — Essays on Work & Craft", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "services", "stack": ["Tech Essays", "Reading Time", "Dark Mode Toggle"], "val": "$2.8K", "badge": "EDITORIAL", "icon": "📰"}, {"n": "44", "slug": "news", "folder": "portfolio-44-news", "title": "The Daily Meridian — Breaking News", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "services", "stack": ["Breaking News", "Live News Ticker", "Category Tabs"], "val": "$4.5K", "badge": "PUBLISHING", "icon": "📡"}, {"n": "45", "slug": "finance-dashboard", "folder": "portfolio-45-finance-dashboard", "title": "LedgerLine — Terminal Finance Dashboard", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "dashboard", "stack": ["Wealth OS", "Portfolio Allocation", "Live Net Worth"], "val": "$9.0K", "badge": "FINTECH", "icon": "💹"}, {"n": "46", "slug": "hr-dashboard", "folder": "portfolio-46-hr-dashboard", "title": "PeopleHub — HR Pipeline Dashboard", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "dashboard", "stack": ["HR Talent Pulse", "Staff KPI Tracker", "Payroll Sync"], "val": "$7.2K", "badge": "HR TECH", "icon": "👥"}, {"n": "47", "slug": "startup-landing", "folder": "portfolio-47-startup-landing", "title": "Northloop — Ship calmer sprints", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "saas", "stack": ["Startup Waitlist", "Gamified Referral", "Viral Loop"], "val": "$4.2K", "badge": "GROWTH", "icon": "🔥"}, {"n": "48", "slug": "event-conference", "folder": "portfolio-48-event-conference", "title": "FutureConf 2026 — Design Forward", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "services", "stack": ["Global Tech Conference", "Speaker Grid", "Ticket Buy"], "val": "$4.8K", "badge": "EVENT", "icon": "🎤"}, {"n": "49", "slug": "taxi-app", "folder": "portfolio-49-taxi-app", "title": "GoRide — Taxi Fare Calculator", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "mobile", "stack": ["Taxi Mobility", "Surge Pricing Calc", "Route Map"], "val": "$6.0K", "badge": "TRANSIT", "icon": "🚕"}, {"n": "50", "slug": "gym-app", "folder": "portfolio-50-gym-app", "title": "FORGE — Gym Timer & WOD", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "mobile", "stack": ["HIIT & Tabata Coach", "Audio Metronome", "Presets"], "val": "$4.0K", "badge": "WORKOUT", "icon": "⏱️"}, {"n": "51", "slug": "fullstack-saas", "folder": "portfolio-51-fullstack-saas", "title": "Plainbase — Minimal SaaS Admin", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "saas", "stack": ["Go", "Python", "JWT Auth", "Full CRUD", "Admin DB"], "val": "$9.8K", "badge": "FLAGSHIP", "icon": "⚡"}, {"n": "52", "slug": "fullstack-shop", "folder": "portfolio-52-fullstack-shop", "title": "Marlow & Co. — Shop Admin", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "shop", "stack": ["Fullstack Commerce", "Stripe Checkout", "Inventory"], "val": "$8.5K", "badge": "ENTERPRISE", "icon": "🛒"}, {"n": "53", "slug": "chat-app", "folder": "portfolio-53-chat-app", "title": "Relay — Team Chat (Slack-style)", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "saas", "stack": ["Realtime WebSocket", "Encrypted Chat", "Status"], "val": "$7.8K", "badge": "REALTIME", "icon": "💬"}, {"n": "54", "slug": "flutter-fitness", "folder": "portfolio-54-flutter-fitness", "title": "PulseFit — Mobile Fitness App", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "mobile", "stack": ["Flutter", "Dart", "iOS/Android Health Engine"], "val": "$8.0K", "badge": "FLUTTER", "icon": "🏃"}, {"n": "55", "slug": "iphone-banking", "folder": "portfolio-55-iphone-banking", "title": "Nova Bank — iPhone Banking", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "mobile", "stack": ["Swift", "iOS 18 Dynamic Island", "FaceID Mock"], "val": "$8.5K", "badge": "APPLE iOS", "icon": "📱"}, {"n": "56", "slug": "food-delivery", "folder": "portfolio-56-food-delivery", "title": "Verde — Farm-to-Door Delivery", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "mobile", "stack": ["Food Delivery", "Live Courier ETA Map", "Basket"], "val": "$7.5K", "badge": "ON-DEMAND", "icon": "🍕"}, {"n": "57", "slug": "windows11-clone", "folder": "portfolio-57-windows11-clone", "title": "Boreal 11 — Windows Web Clone", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "mobile", "stack": ["Windows 11 WebOS", "Draggable Windows", "CLI Shell"], "val": "$7.0K", "badge": "WEB-OS", "icon": "🪟"}, {"n": "58", "slug": "file-terminal", "folder": "portfolio-58-file-terminal", "title": "Phosphor — File Desk + Terminal", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "saas", "stack": ["Virtual Terminal", "Unix Bash Shell", "File Tree"], "val": "$6.5K", "badge": "DEV TOOLS", "icon": "💻"}, {"n": "59", "slug": "macos-clone", "folder": "portfolio-59-macos-clone", "title": "Apricot — macOS Web Clone", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "mobile", "stack": ["macOS Sequoia Clone", "Dock", "Finder", "Apps"], "val": "$7.2K", "badge": "MACOS", "icon": "🍏"}, {"n": "60", "slug": "swift-showcase", "folder": "portfolio-60-swift-showcase", "title": "Northwind Apps — Swift & iOS Developer", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "mobile", "stack": ["Swift Architecture", "CoreData", "Metal Graphic"], "val": "$8.0K", "badge": "SWIFT", "icon": "🦅"}, {"n": "61", "slug": "platformer-game", "folder": "portfolio-61-platformer-game", "title": "Moss Temple — 2D Platformer", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "game", "stack": ["2D Canvas Game", "Physics Engine", "Sound FX", "60 FPS"], "val": "$6.0K", "badge": "PLAYABLE", "icon": "🎮"}, {"n": "62", "slug": "racer-game", "folder": "portfolio-62-racer-game", "title": "Harbor GP — Night Racer", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "game", "stack": ["Retro 3D Racer", "Pseudo-3D Track", "Drift Mechanics"], "val": "$7.0K", "badge": "PLAYABLE", "icon": "🏎️"}, {"n": "63", "slug": "puzzle-2048", "folder": "portfolio-63-puzzle-2048", "title": "Inkboard — Playable 2048", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "game", "stack": ["Cyberpunk 2048", "Neon Canvas", "Combos & High Score"], "val": "$4.5K", "badge": "PLAYABLE", "icon": "🧩"}, {"n": "64", "slug": "godot-showcase", "folder": "portfolio-64-godot-showcase", "title": "Ironworks Garage — Godot Vehicle Lab", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "game", "stack": ["Godot Engine", "GDScript Showcase", "3D Shaders"], "val": "$7.5K", "badge": "GODOT", "icon": "👾"}, {"n": "65", "slug": "ai-chatbot", "folder": "portfolio-65-ai-chatbot", "title": "Ember — Concierge Chatbots", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "ai", "stack": ["Conversational AI", "Speech Synthesis Voice", "Personas"], "val": "$5.0K", "badge": "VOICE AI", "icon": "🎙️"}, {"n": "66", "slug": "ai-automation", "folder": "portfolio-66-ai-automation", "title": "Loom — AI Automation Atelier", "desc": "Production-ready digital product built with clean architecture, responsive UX, and high-performance frontend engineering.", "cat": "ai", "stack": ["Workflow Automation", "Neural Pipeline", "Node Canvas"], "val": "$7.5K", "badge": "PIPELINE", "icon": "⚡"}, {"n": "SS", "slug": "subway-surfers", "folder": "subway-surfers", "title": "Subway Surfers — Metro Rush 3D (Telegram WebApp)", "desc": "Official 3D endless runner game with touch swipe controls, Web Audio synth, and Telegram Mini App integration.", "cat": "game", "stack": ["Three.js", "Telegram Mini App", "Web Audio", "WebGL 60FPS"], "val": "$8.5K", "badge": "TELEGRAM APP", "icon": "🏃"}, {"n": "67", "slug": "cybershield", "folder": "portfolio-67-cybershield", "title": "CyberShield — Zero-Trust SOC & Cloud Defense", "desc": "AI-powered Security Operations Center with real-time packet telemetry, live threat attack map, and MITRE ATT&CK mitigation.", "cat": "saas", "stack": ["Zero-Trust", "WebGL Map", "SOC Telemetry", "Tactical Audio"], "val": "$12.0K", "badge": "ENTERPRISE", "icon": "🛡️"}, {"n": "68", "slug": "solaria-health", "folder": "portfolio-68-solaria-health", "title": "Solaria Health — Precision Longevity OS", "desc": "AI longevity & epigenetic biomarker telemetry platform with dynamic biological age calculation and intervention simulator.", "cat": "services", "stack": ["HealthTech", "Biomarker Telemetry", "SVG Gauges", "Longevity AI"], "val": "$8.5K", "badge": "HEALTH AI", "icon": "🧬"}, {"n": "69", "slug": "nexus-quant", "folder": "portfolio-69-nexus-quant", "title": "NexusQuant — HFT Algorithmic Yield Engine", "desc": "High-frequency algorithmic trading terminal with live 60 FPS candlestick charts, Level 2 orderbook, and paper execution.", "cat": "dashboard", "stack": ["Quant Trading", "Canvas Candlesticks", "Orderbook Engine", "WebSocket Mock"], "val": "$14.0K", "badge": "QUANT FINTECH", "icon": "⚡"}, {"n": "70", "slug": "aetheria-luxury", "folder": "portfolio-70-aetheria-luxury", "title": "Aetheria — Autonomous Yachts & Mach 2.2 Jets", "desc": "Ultra-luxury experiential charter atelier with interactive voyage distance calculators and sovereign VIP concierge.", "cat": "shop", "stack": ["Haute Luxe UI", "Bespoke Estimator", "Ambient Canvas", "VIP Concierge"], "val": "$9.5K", "badge": "HAUTE LUXE", "icon": "⚜️"}, {"n": "71", "slug": "neural-matrix", "folder": "portfolio-71-neural-matrix", "title": "NeuralMatrix OS — Autonomous Multi-Agent AI", "desc": "Swarm AI orchestrator with interactive draggable canvas node topology, token streaming, and zero-trust sandboxing.", "cat": "ai", "stack": ["Multi-Agent AI", "Canvas Topology", "Web Audio", "Edge Tensors"], "val": "$16.5K", "badge": "AI SWARM", "icon": "⬡"}, {"n": "72", "slug": "hyperion-spatial", "folder": "portfolio-72-hyperion-spatial", "title": "Hyperion Vision — Spatial Computing OS", "desc": "Spatial reality platform with 3D interactive wireframe polyhedron, mouse parallax tilt card, and visionOS glassmorphism.", "cat": "game", "stack": ["Spatial Computing", "3D Canvas", "VisionOS UI", "Web Audio"], "val": "$15.0K", "badge": "SPATIAL 3D", "icon": "🥽"}, {"n": "73", "slug": "omni-pay", "folder": "portfolio-73-omni-pay", "title": "OmniPay Global — Multi-Rail FinTech Core", "desc": "Tier-1 cross-border multi-rail liquidity router with 3D titanium card tilt, real-time ledger stream, and sub-second settlement.", "cat": "dashboard", "stack": ["FinTech Core", "Multi-Rail Routing", "3D Card Parallax", "Ledger Engine"], "val": "$18.0K", "badge": "FINTECH PRO", "icon": "💳"}];
+
+let currentCat = 'all';
+let currentTech = '';
+let currentSort = 'featured';
+let searchQuery = '';
+let currentPreviewProject = null;
+let audioEnabled = true;
+
+// Web Audio API Synthesizer for high-end subtle tactile clicks & pings
+let audioCtx = null;
+function initAudio() {
+  if (!audioCtx) {
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    } catch(e) {}
+  }
+}
+function playSound(type) {
+  if (!audioEnabled) return;
+  initAudio();
+  if (!audioCtx) return;
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  if (type === 'click') {
+    osc.frequency.setValueAtTime(800, now);
+    osc.frequency.exponentialRampToValueAtTime(300, now + 0.04);
+    gain.gain.setValueAtTime(0.04, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+    osc.start(now);
+    osc.stop(now + 0.04);
+  } else if (type === 'hover') {
+    osc.frequency.setValueAtTime(540, now);
+    gain.gain.setValueAtTime(0.015, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+    osc.start(now);
+    osc.stop(now + 0.03);
+  } else if (type === 'chime') {
+    osc.frequency.setValueAtTime(587.33, now); // D5
+    osc.frequency.setValueAtTime(880, now + 0.05); // A5
+    gain.gain.setValueAtTime(0.06, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+    osc.start(now);
+    osc.stop(now + 0.25);
+  }
+}
+
+function toggleAudio() {
+  audioEnabled = !audioEnabled;
+  document.getElementById('soundIcon').textContent = audioEnabled ? '🔊' : '🔇';
+  document.getElementById('soundState').textContent = audioEnabled ? 'ON' : 'OFF';
+  showToast(audioEnabled ? 'Sound feedback enabled' : 'Sound feedback muted');
+}
+
+// Preloader Progress
+(function initLoader() {
+  let p = 0;
+  const bar = document.getElementById('lfill');
+  const timer = setInterval(() => {
+    p += Math.floor(Math.random() * 20) + 10;
+    if (p >= 100) {
+      p = 100;
+      clearInterval(timer);
+      bar.style.width = '100%';
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('done');
+        animateMetrics();
+      }, 300);
+    } else {
+      bar.style.width = p + '%';
+    }
+  }, 60);
+})();
+
+// Animated Counter Numbers
+function animateMetrics() {
+  document.querySelectorAll('.cnt').forEach(el => {
+    const target = parseInt(el.getAttribute('data-target'), 10);
+    let cur = 0;
+    const step = Math.max(1, Math.ceil(target / 25));
+    const t = setInterval(() => {
+      cur += step;
+      if (cur >= target) {
+        cur = target;
+        clearInterval(t);
+      }
+      el.textContent = cur;
+    }, 40);
+  });
+}
+
+// Ambient Particle Canvas
+(function initCanvas() {
+  const c = document.getElementById('bg-canvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h;
+  let particles = [];
+
+  function resize() {
+    w = c.width = window.innerWidth;
+    h = c.height = window.innerHeight;
+    particles = Array.from({ length: 45 }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      radius: Math.random() * 1.8 + 0.8,
+      alpha: Math.random() * 0.4 + 0.1,
+      color: Math.random() > 0.5 ? '#8b5cf6' : '#06b6d4'
+    }));
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function loop() {
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha;
+      ctx.fill();
+    });
+
+    // subtle connecting lines
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 100) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = '#8b5cf6';
+          ctx.globalAlpha = (1 - dist / 100) * 0.12;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+// Render Projects
+function renderProjects() {
+  const grid = document.getElementById('projectsGrid');
+  let list = [...PROJECTS];
+
+  // Category filter
+  if (currentCat !== 'all') {
+    list = list.filter(p => p.cat === currentCat);
+  }
+
+  // Tech stack filter
+  if (currentTech) {
+    const needle = currentTech.toLowerCase();
+    list = list.filter(p => 
+      p.stack.some(s => s.toLowerCase().includes(needle)) ||
+      p.title.toLowerCase().includes(needle) ||
+      p.desc.toLowerCase().includes(needle)
+    );
+  }
+
+  // Search filter
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    list = list.filter(p => 
+      p.title.toLowerCase().includes(q) ||
+      p.desc.toLowerCase().includes(q) ||
+      p.slug.toLowerCase().includes(q) ||
+      p.stack.some(s => s.toLowerCase().includes(q)) ||
+      p.n.includes(q)
+    );
+  }
+
+  // Sorting
+  if (currentSort === 'featured') {
+    // Put highest ticket & flagship items first
+    list.sort((a, b) => {
+      const va = parseFloat(a.val.replace(/[^0-9.]/g, '')) || 0;
+      const vb = parseFloat(b.val.replace(/[^0-9.]/g, '')) || 0;
+      return vb - va;
+    });
+  } else if (currentSort === 'num-asc') {
+    list.sort((a, b) => parseInt(a.n) - parseInt(b.n));
+  } else if (currentSort === 'num-desc') {
+    list.sort((a, b) => parseInt(b.n) - parseInt(a.n));
+  } else if (currentSort === 'title') {
+    list.sort((a, b) => a.title.localeCompare(b.title));
+  }
+
+  document.getElementById('matchCount').textContent = list.length;
+
+  if (list.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <h3>No projects match your filter</h3>
+        <p>Try searching for a different keyword or reset categories.</p>
+        <button class="btn-secondary" style="margin-top:16px" onclick="resetFilters()">Reset All Filters</button>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map((p, idx) => {
+    const href = `${p.folder}/index.html`;
+    const stackPills = p.stack.map(s => `<span class="pcard-tag">${s}</span>`).join('');
+    
+    // Curated SVG gradient background with seed image
+    return `
+      <div class="pcard" style="animation-delay:${idx * 0.03}s">
+        <div class="pcard-header">
+          <img class="pcard-img" loading="lazy" src="https://picsum.photos/seed/ceo${p.n}/600/320" alt="${p.title}" onerror="this.src='https://picsum.photos/seed/tech${p.n}/600/320'">
+          <div class="pcard-overlay"></div>
+          <div class="pcard-badges">
+            <span class="pcard-num">#${p.n}</span>
+            <span class="pcard-highlight">${p.badge}</span>
+            <span class="pcard-val">${p.val}</span>
+          </div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-icon-title">
+            <span class="pcard-icon">${p.icon}</span>
+            <h3 class="pcard-title">${p.title}</h3>
+          </div>
+          <p class="pcard-desc">${p.desc}</p>
+          <div class="pcard-stack">${stackPills}</div>
+          <div class="pcard-actions">
+            <button class="pcard-btn-preview" onclick="openPreview('${p.n}')">
+              ⚡ Quick Preview
+            </button>
+            <a class="pcard-btn-tab" href="${href}" target="_blank">
+              ↗ Live Site
+            </a>
+            <button class="pcard-btn-pitch" onclick="quickCopyPitch('${p.n}')">
+              📋 Copy Proposal Pitch
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Event Listeners for Filters
+document.querySelectorAll('#catRow .cat-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    playSound('click');
+    document.querySelectorAll('#catRow .cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCat = btn.getAttribute('data-cat');
+    document.getElementById('activeFilterDesc').textContent = 'Category: ' + btn.textContent.trim();
+    renderProjects();
+  });
+});
+
+document.querySelectorAll('#techRow .tech-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    playSound('click');
+    if (chip.classList.contains('active')) {
+      chip.classList.remove('active');
+      currentTech = '';
+    } else {
+      document.querySelectorAll('#techRow .tech-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      currentTech = chip.getAttribute('data-tech');
+    }
+    renderProjects();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  searchQuery = e.target.value.trim();
+  renderProjects();
+
+// Register Service Worker for PWA & instant caching
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+
+});
+
+document.getElementById('sortSelect').addEventListener('change', (e) => {
+  playSound('click');
+  currentSort = e.target.value;
+  renderProjects();
+
+// Register Service Worker for PWA & instant caching
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+
+});
+
+// Keyboard shortcut '/' to search
+window.addEventListener('keydown', (e) => {
+  if (e.key === '/' && document.activeElement !== document.getElementById('searchInput')) {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+    document.getElementById('searchInput').select();
+  }
+  if (e.key === 'Escape') {
+    closePreview();
+    closePitchModal();
+  }
+});
+
+// Reset filters
+function resetFilters() {
+  searchQuery = '';
+  document.getElementById('searchInput').value = '';
+  currentCat = 'all';
+  currentTech = '';
+  document.querySelectorAll('#catRow .cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
+  document.querySelectorAll('#techRow .tech-chip').forEach(c => c.classList.remove('active'));
+  renderProjects();
+}
+
+// ==================== LIVE SIMULATOR MODAL ====================
+function openPreview(num) {
+  playSound('chime');
+  const project = PROJECTS.find(p => p.n === num);
+  if (!project) return;
+  currentPreviewProject = project;
+
+  document.getElementById('prevTitle').textContent = `${project.title} (#${project.n})`;
+  document.getElementById('prevBadge').textContent = project.val + ' · ' + project.cat.toUpperCase();
+  document.getElementById('prevExternal').href = `${project.folder}/index.html`;
+
+  const frame = document.getElementById('prevFrame');
+  const spinner = document.getElementById('prevSpinner');
+  spinner.style.display = 'block';
+  frame.src = `${project.folder}/index.html`;
+
+  frame.onload = () => {
+    spinner.style.display = 'none';
+  };
+
+  document.getElementById('previewModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePreview() {
+  playSound('click');
+  const modal = document.getElementById('previewModal');
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+  document.getElementById('prevFrame').src = 'about:blank';
+}
+
+function reloadPreview() {
+  playSound('click');
+  const frame = document.getElementById('prevFrame');
+  frame.contentWindow.location.reload();
+}
+
+function setDevice(device) {
+  playSound('click');
+  document.querySelectorAll('.dev-btn').forEach(b => b.classList.toggle('active', b.dataset.dev === device));
+  const wrap = document.getElementById('prevWrap');
+  wrap.className = 'preview-frame-wrap ' + device;
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.getElementById('previewModal').requestFullscreen().catch(err => {});
+  } else {
+    document.exitFullscreen().catch(err => {});
+  }
+}
+
+function copyCurrentPitch() {
+  if (!currentPreviewProject) return;
+  quickCopyPitch(currentPreviewProject.n);
+}
+
+// ==================== PITCH GENERATOR ====================
+function populatePitchSelect() {
+  const sel = document.getElementById('pitchProjectSelect');
+  sel.innerHTML = PROJECTS.map(p => `
+    <option value="${p.n}">#${p.n} - ${p.title} (${p.val})</option>
+  `).join('');
+}
+
+function openPitchModal(selectedNum) {
+  playSound('chime');
+  populatePitchSelect();
+  if (selectedNum) {
+    document.getElementById('pitchProjectSelect').value = selectedNum;
+  }
+  updatePitchText();
+  document.getElementById('pitchModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePitchModal() {
+  playSound('click');
+  document.getElementById('pitchModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+
+function getLiveBaseUrl() {
+  if (location.protocol.startsWith('http')) {
+    return location.origin;
+  }
+  return 'https://ceo-portfolio.vercel.app';
+}
+
+function updatePitchText() {
+  const num = document.getElementById('pitchProjectSelect').value;
+  const tone = document.getElementById('pitchToneSelect').value;
+  const p = PROJECTS.find(x => x.n === num) || PROJECTS[0];
+  const stackStr = p.stack.join(', ');
+
+  let pitch = '';
+  if (tone === 'direct') {
+    pitch = `Hi there,
+
+I saw your job post and can build this cleanly and on schedule.
+
+I have already engineered and launched a production build with a very similar architecture: "${p.title}". It features ${stackStr} with clean state management, modular components, and responsive performance.
+
+Live reference build: ${getLiveBaseUrl()}/${p.folder}/index.html
+
+How I work:
+1. Architecture review & fixed-scope roadmap within 24 hours.
+2. Iterative sprints with daily transparent updates.
+3. Complete deployment with 30-day post-launch warranty.
+
+Let's jump on a quick 10-minute call or chat to review your scope and start immediately.
+
+Best regards,
+CEO & Lead Software Architect`;
+  } else if (tone === 'technical') {
+    pitch = `Hello,
+
+As a Lead Software Architect with 8+ years of engineering experience across ${stackStr}, I specialize in delivering high-performance, maintainable software systems from scratch.
+
+Relevant Production Case Study: "${p.title}"
+- Stack: ${stackStr}
+- Architecture: Modular, low-latency, fully tested
+- Live Interactive Demo: ${getLiveBaseUrl()}/${p.folder}/index.html
+
+I ensure zero technical debt, documented REST/WebSocket APIs, and scalable infrastructure.
+
+When is a good time for a technical alignment call?
+
+Sincerely,
+CEO & Lead Software Architect`;
+  } else {
+    pitch = `Hey,
+
+Need this launched fast without cutting corners? I can ship your MVP in 7–14 days.
+
+Check out my live build "${p.title}" (${stackStr}) to see the design quality and snappiness I deliver: ${getLiveBaseUrl()}/${p.folder}/index.html
+
+I am available to start today and commit 40 hrs/week. Let's discuss your timeline!
+
+Cheers,
+Lead Developer`;
+  }
+
+  document.getElementById('pitchOutput').value = pitch;
+}
+
+function copyPitchFromModal() {
+  playSound('chime');
+  const text = document.getElementById('pitchOutput').value;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('✓ Upwork proposal pitch copied to clipboard!');
+  }).catch(() => {
+    showToast('Pitch ready — select and copy manually.');
+  });
+}
+
+function quickCopyPitch(num) {
+  playSound('chime');
+  const p = PROJECTS.find(x => x.n === num);
+  if (!p) return;
+  const snippet = `Hi! I have built and shipped "${p.title}" using ${p.stack.join(', ')}. Live build reference: ${getLiveBaseUrl()}/${p.folder}/index.html — I can deliver the same quality for your project within your deadline. Let's connect!`;
+  navigator.clipboard.writeText(snippet).then(() => {
+    showToast(`✓ Proposal snippet for #${p.n} copied to clipboard!`);
+  }).catch(() => {
+    openPitchModal(num);
+  });
+}
+
+// ==================== TOAST & SCROLL ====================
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3200);
+}
+
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('mainNav');
+  const btn = document.getElementById('backTop');
+  if (window.scrollY > 40) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+  if (window.scrollY > 400) {
+    btn.classList.add('show');
+  } else {
+    btn.classList.remove('show');
+  }
+});
+
+// Initial render
+document.addEventListener('DOMContentLoaded', () => {
+  renderProjects();
+
+// Register Service Worker for PWA & instant caching
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+
+});
+</script>
+</body>
+</html>

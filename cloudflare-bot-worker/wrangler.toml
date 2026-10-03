@@ -1,0 +1,7 @@
+name = "usegravity-telegram-bot"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Cloudflare Cron Triggers: Post automatically every 3 hours 24/7
+[triggers]
+crons = ["0 */3 * * *"]

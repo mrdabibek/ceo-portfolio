@@ -1,0 +1,27 @@
+# Environments & Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+venv/
+.venv/
+
+# Logs & Temp
+*.log
+*.tmp
+*.bak
+nohup.out
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Cloudflare Wrangler Cache
+.wrangler/
+
+bot_config.json
+

@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison Olive — Boutique Hotel</title>
+<meta name="description" content="Maison Olive — editorial boutique hotel with suites, dining and garden courtyard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --paper:#f6f1e7;
+  --paper2:#efe6d4;
+  --ink:#22201b;
+  --mut:#7a7264;
+  --olive:#6b7043;
+  --gold:#b08d4c;
+  --line:#ddd2bd;
+  --card:#fffdf7;
+}
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+html { scroll-behavior:smooth }
+body {
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Jost',sans-serif;
+  line-height:1.7;
+  overflow-x:hidden
+}
+h1,h2,h3,.serif {
+  font-family:'Playfair Display',serif;
+  font-weight:600;
+  line-height:1.12
+}
+::selection { background:var(--olive); color:#fff }
+img { display:block; max-width:100% }
+.announce {
+  background:var(--ink);
+  color:#efe6d4;
+  text-align:center;
+  font-size:11px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  padding:9px 12px
+}
+.announce em { color:var(--gold); font-style:normal }
+nav {
+  border-bottom:1px solid var(--line);
+  background:rgba(246,241,231,.9);
+  backdrop-filter:blur(10px);
+  position:sticky;
+  top:0;
+  z-index:100
+}
+.nav-in {
+  max-width:1240px;
+  margin:0 auto;
+  padding:16px 28px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:16px
+}
+.nleft,.nright {
+  display:flex;
+  gap:24px;
+  align-items:center
+}
+.nright { justify-content:flex-end }
+.nleft a,.nright a {
+  color:var(--ink);
+  text-decoration:none;
+  font-size:13px;
+  letter-spacing:.16em;
+  text-transform:uppercase
+}
+.nleft a:hover,.nright a:hover { color:var(--olive) }
+.brand {
+  text-align:center;
+  text-decoration:none;
+  color:var(--ink)
+}
+.brand b {
+  font-family:'Playfair Display';
+  font-size:26px;
+  display:block;
+  letter-spacing:.04em
+}
+.brand small {
+  font-size:10px;
+  letter-spacing:.5em;
+  text-transform:uppercase;
+  color:var(--mut)
+}
+.btn {
+  border:0;
+  cursor:pointer;
+  font-family:'Jost';
+  font-weight:500;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-size:12px;
+  padding:14px 26px;
+  background:var(--ink);
+  color:#f6f1e7;
+  transition:.25s;
+  text-decoration:none;
+  display:inline-block
+}
+.btn:hover { background:var(--olive) }
+.btn.line {
+  background:transparent;
+  border:1px solid var(--ink);
+  color:var(--ink)
+}
+.btn.line:hover { background:var(--ink); color:#fff }
+.hero {
+  max-width:1240px;
+  margin:0 auto;
+  padding:44px 28px 20px;
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:44px;
+  align-items:center
+}
+.eyebrow {
+  font-size:11px;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:flex;
+  align-items:center;
+  gap:12px
+}
+.eyebrow::before {
+  content:"";
+  width:36px;
+  height:1px;
+  background:var(--gold);
+  display:inline-block
+}
+.hero h1 { font-size:clamp(44px,5.6vw,76px); margin:16px 0 }
+.hero h1 em { font-style:italic; color:var(--olive) }
+.hero p.lead {
+  color:var(--mut);
+  font-size:17px;
+  max-width:440px;
+  font-weight:300
+}
+.hero-cta {
+  display:flex;
+  gap:12px;
+  margin-top:26px;
+  flex-wrap:wrap
+}
+.sign {
+  display:flex;
+  gap:14px;
+  margin-top:26px;
+  align-items:center;
+  color:var(--mut);
+  font-size:13px
+}
+.sign b {
+  font-family:'Playfair Display';
+  font-style:italic;
+  font-size:22px;
+  color:var(--ink);
+  font-weight:500
+}
+.slider {
+  position:relative;
+  border-radius:4px;
+  overflow:hidden;
+  background:#000
+}
+.slides { position:relative; height:520px }
+.slides img {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity 1s
+}
+.slides img.on { opacity:1 }
+.s-cap {
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:28px;
+  background:linear-gradient(transparent,rgba(0,0,0,.65));
+  color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  z-index:2
+}
+.s-cap b {
+  font-family:'Playfair Display';
+  font-size:22px;
+  font-weight:500
+}
+.s-cap small {
+  opacity:.8;
+  font-size:13px;
+  letter-spacing:.1em
+}
+.s-nav {
+  position:absolute;
+  top:20px;
+  right:20px;
+  z-index:2;
+  display:flex;
+  gap:8px
+}
+.s-nav button {
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.5);
+  background:rgba(0,0,0,.3);
+  color:#fff;
+  cursor:pointer;
+  font-size:18px;
+  backdrop-filter:blur(6px)
+}
+.s-dots {
+  position:absolute;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:8px;
+  z-index:3
+}
+.s-dots i {
+  width:26px;
+  height:3px;
+  background:rgba(255,255,255,.35);
+  cursor:pointer
+}
+.s-dots i.on { background:#fff }
+.marq {
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  margin:30px 0 0;
+  overflow:hidden;
+  white-space:nowrap;
+  padding:14px 0;
+  background:var(--paper2)
+}
+.marq span {
+  font-family:'Playfair Display';
+  font-style:italic;
+  font-size:16px;
+  color:var(--mut);
+  margin:0 22px
+}
+section {
+  max-width:1240px;
+  margin:0 auto;
+  padding:72px 28px
+}
+.sec-head {
+  text-align:center;
+  max-width:620px;
+  margin:0 auto 38px
+}
+.sec-head h2 { font-size:clamp(30px,3.6vw,48px); margin:12px 0 }
+.sec-head p { color:var(--mut); font-weight:300 }
+.rooms {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px
+}
+.room {
+  background:var(--card);
+  border:1px solid var(--line);
+  padding:14px 14px 22px;
+  transition:.3s
+}
+.room:hover { transform:translateY(-6px); box-shadow:0 30px 60px -30px rgba(0,0,0,.3) }
+.room img {
+  width:100%;
+  height:250px;
+  object-fit:cover
+}
+.room-body { padding:16px 8px 0 }
+.room-body .no {
+  font-size:11px;
+  letter-spacing:.3em;
+  color:var(--gold)
+}
+.room-body h3 { font-size:24px; margin:6px 0 }
+.room-body p {
+  color:var(--mut);
+  font-size:14.5px;
+  font-weight:300
+}
+.room-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid var(--line)
+}
+.room-row b { font-family:'Playfair Display'; font-size:22px }
+.room-row b small {
+  font-size:13px;
+  color:var(--mut);
+  font-family:'Jost'
+}
+.ed {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:44px;
+  align-items:center;
+  background:var(--ink);
+  color:#efe6d4;
+  border-radius:4px;
+  overflow:hidden
+}
+.ed img {
+  width:100%;
+  height:480px;
+  object-fit:cover
+}
+.ed-txt { padding:56px 52px 56px 8px }
+.ed-txt h2 { font-size:clamp(30px,3.4vw,46px); margin:12px 0 14px }
+.ed-txt p {
+  color:#c9c0ab;
+  font-weight:300;
+  margin-bottom:14px
+}
+.feat {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:22px
+}
+.feat div { border-top:1px solid rgba(255,255,255,.15); padding-top:12px }
+.feat b {
+  font-family:'Playfair Display';
+  font-size:19px;
+  display:block
+}
+.feat small { color:#c9c0ab; font-size:13px }
+.dine {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:22px
+}
+.dine figure { position:relative; overflow:hidden }
+.dine img {
+  width:100%;
+  height:340px;
+  object-fit:cover;
+  transition:.6s
+}
+.dine figure:hover img { transform:scale(1.05) }
+.dine figcaption {
+  position:absolute;
+  bottom:16px;
+  left:16px;
+  right:16px;
+  background:rgba(246,241,231,.94);
+  padding:14px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+.dine figcaption b { font-family:'Playfair Display'; font-size:18px }
+.gal {
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:12px
+}
+.gal img {
+  width:100%;
+  height:240px;
+  object-fit:cover
+}
+.gal img:first-child {
+  height:100%;
+  min-height:492px;
+  grid-row:span 2
+}
+.quotes {
+  text-align:center;
+  max-width:720px;
+  margin:0 auto
+}
+.quotes blockquote {
+  font-family:'Playfair Display';
+  font-style:italic;
+  font-size:clamp(20px,2.6vw,30px);
+  line-height:1.5
+}
+.quotes .who {
+  margin-top:16px;
+  color:var(--mut);
+  font-size:13px;
+  letter-spacing:.2em;
+  text-transform:uppercase
+}
+.q-dots {
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  margin-top:18px
+}
+.q-dots i {
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--line);
+  cursor:pointer
+}
+.q-dots i.on { background:var(--olive) }
+.book {
+  background:var(--paper2);
+  border:1px solid var(--line);
+  padding:44px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:36px;
+  align-items:center
+}
+.book h2 { font-size:clamp(28px,3vw,42px) }
+.book form {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
+}
+.book label {
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--mut)
+}
+.book input,.book select {
+  width:100%;
+  background:#fff;
+  border:1px solid var(--line);
+  padding:13px 14px;
+  font-family:inherit;
+  margin-top:6px
+}
+.book .full { grid-column:1/-1 }
+.faq {
+  max-width:720px;
+  margin:0 auto;
+  display:grid;
+  gap:10px
+}
+.faq details {
+  background:var(--card);
+  border:1px solid var(--line);
+  padding:16px 22px
+}
+.faq summary {
+  cursor:pointer;
+  font-family:'Playfair Display';
+  font-size:17px
+}
+.faq p {
+  color:var(--mut);
+  font-size:14px;
+  margin-top:8px;
+  font-weight:300
+}
+footer {
+  background:var(--ink);
+  color:#cfc6b2;
+  margin-top:40px
+}
+.f-in {
+  max-width:1240px;
+  margin:0 auto;
+  padding:52px 28px 24px;
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1fr;
+  gap:28px
+}
+.f-in h4 {
+  font-size:11px;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:14px
+}
+.f-in a {
+  display:block;
+  color:#cfc6b2;
+  text-decoration:none;
+  font-size:14px;
+  margin:7px 0;
+  font-weight:300
+}
+.f-base {
+  max-width:1240px;
+  margin:0 auto;
+  padding:18px 28px;
+  border-top:1px solid rgba(255,255,255,.12);
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  flex-wrap:wrap;
+  gap:8px
+}
+.rv {
+  opacity:0;
+  transform:translateY(24px);
+  transition:.7s
+}
+.rv.on { opacity:1; transform:none }
+.overlay {
+  position:fixed;
+  inset:0;
+  z-index:200;
+  background:rgba(34,32,27,.6);
+  backdrop-filter:blur(6px);
+  display:grid;
+  place-items:center;
+  opacity:0;
+  visibility:hidden;
+  transition:.3s;
+  padding:16px
+}
+.overlay.open { opacity:1; visibility:visible }
+.modal {
+  width:min(440px,94vw);
+  background:var(--card);
+  border-radius:4px;
+  padding:36px;
+  border-top:4px solid var(--olive)
+}
+.modal h3 { font-family:'Playfair Display'; font-size:26px }
+.modal p.s {
+  color:var(--mut);
+  font-size:14px;
+  margin:6px 0 16px;
+  font-weight:300
+}
+.modal input {
+  width:100%;
+  border:1px solid var(--line);
+  background:#fff;
+  padding:13px 14px;
+  margin:7px 0;
+  font-family:inherit
+}
+#toast {
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--ink);
+  color:#fff;
+  padding:13px 26px;
+  font-size:14px;
+  transition:.35s;
+  opacity:0;
+  z-index:300
+}
+#toast.show { transform:translateX(-50%); opacity:1 }
+@media(max-width:940px) { .nav-in { grid-template-columns:1fr auto }
+.nleft { display:none }
+.hero,.ed,.dine,.book { grid-template-columns:1fr }
+.ed-txt { padding:28px }
+.rooms { grid-template-columns:1fr }
+.gal { grid-template-columns:1fr 1fr }
+.gal img:first-child { min-height:240px; grid-row:auto }
+.f-in { grid-template-columns:1fr 1fr }
+.slides { height:380px }
+}
+
+</style>
+</head>
+<body>
+<div class="announce">Autumn rates — save 20% on garden suites <em>· code OLIVE20 ·</em> open all year</div>
+<nav><div class="nav-in">
+<div class="nleft"><a href="#rooms">Suites</a><a href="#story">Maison</a><a href="#dining">Dining</a></div>
+<a class="brand" href="#"><b>Maison Olive</b><small>Boutique Hotel</small></a>
+<div class="nright"><a href="#gallery">Gallery</a><a href="#faq">FAQ</a><a href="#" class="btn" style="padding:11px 20px" onclick="openAuth(event)">Reserve</a></div>
+</div></nav>
+<header class="hero">
+<div>
+<div class="eyebrow">Est. 1962 — Old Town</div>
+<h1>Slow mornings,<br><em>olive garden</em> evenings.</h1>
+<p class="lead">28 rooms around a century-old courtyard. Stone walls, linen sheets, breakfast under fig trees.</p>
+<div class="hero-cta"><a href="#book" class="btn">Check availability</a><a href="#rooms" class="btn line">View suites</a></div>
+<div class="sign"><span>— hostess</span><b>Claire Dubois</b><span>★ 4.97 · 1 800 stays</span></div>
+</div>
+<div class="slider">
+<div class="slides" id="slides">
+<img class="on" src="https://picsum.photos/seed/olive-1/1000/700" alt="Courtyard">
+<img src="https://picsum.photos/seed/olive-2/1000/700" alt="Suite">
+<img src="https://picsum.photos/seed/olive-3/1000/700" alt="Dining">
+</div>
+<div class="s-nav"><button onclick="slide(-1)">‹</button><button onclick="slide(1)">›</button></div>
+<div class="s-cap"><div><b id="sTitle">The Fig Courtyard</b><br><small id="sSub">Breakfast served 07:30 — 11:00</small></div><small>01 / 03</small></div>
+<div class="s-dots" id="sDots"><i class="on"></i><i></i><i></i></div>
+</div>
+</header>
+<div class="marq"><span>Fig courtyard ✦ Linen & stone ✦ Slow breakfast ✦ Garden suites ✦ Fig courtyard ✦ Linen & stone ✦ Slow breakfast ✦ Garden suites ✦</span></div>
+<section id="rooms">
+<div class="sec-head rv"><div class="eyebrow" style="justify-content:center">Rooms & suites</div><h2>Three ways to stay</h2><p>All rates include garden breakfast, bicycles and late checkout on Sundays.</p></div>
+<div class="rooms">
+<article class="room rv"><img src="https://picsum.photos/seed/olive-r1/700/500" alt="Classic" loading="lazy"><div class="room-body"><span class="no">N°01 — CLASSIC</span><h3>Garden Room</h3><p>22 m², courtyard view, rain shower, queen linen bed.</p><div class="room-row"><b>$120 <small>/ night</small></b><a href="#book" class="btn line" style="padding:10px 18px">Select</a></div></div></article>
+<article class="room rv"><img src="https://picsum.photos/seed/olive-r2/700/500" alt="Suite" loading="lazy"><div class="room-body"><span class="no">N°02 — SIGNATURE</span><h3>Olive Suite</h3><p>38 m², private terrace, stone bath, fig-tree view.</p><div class="room-row"><b>$210 <small>/ night</small></b><a href="#book" class="btn" style="padding:10px 18px">Select</a></div></div></article>
+<article class="room rv"><img src="https://picsum.photos/seed/olive-r3/700/500" alt="Loft" loading="lazy"><div class="room-body"><span class="no">N°03 — LOFT</span><h3>Atelier Loft</h3><p>45 m², skylight studio, kitchenette, ideal for weeks.</p><div class="room-row"><b>$260 <small>/ night</small></b><a href="#book" class="btn line" style="padding:10px 18px">Select</a></div></div></article>
+</div>
+</section>
+<section id="story" style="padding-top:0"><div class="ed rv">
+<img src="https://picsum.photos/seed/olive-story/800/800" alt="Story" loading="lazy">
+<div class="ed-txt"><div class="eyebrow">Our maison</div><h2>A house that slows time down.</h2><p>Built in 1911 as an olive-oil merchant's home, kept in the family for three generations. We restored it stone by stone — no TV in rooms, books instead.</p><div class="feat"><div><b>28 rooms</b><small>no two alike</small></div><div><b>1911</b><small>heritage walls</small></div><div><b>300 m²</b><small>fig garden</small></div><div><b>4.97★</b><small>guest rating</small></div></div></div>
+</div></section>
+<section id="dining" style="padding-top:0">
+<div class="sec-head rv"><div class="eyebrow" style="justify-content:center">Table d'hôte</div><h2>Eat where the light is</h2><p>Fire kitchen, garden tables, natural wines from the valley.</p></div>
+<div class="dine rv">
+<figure><img src="https://picsum.photos/seed/olive-d1/800/600" alt="Restaurant" loading="lazy"><figcaption><b>Fig & Fire — dinner</b><span>18:00–22:30 →</span></figcaption></figure>
+<figure><img src="https://picsum.photos/seed/olive-d2/800/600" alt="Breakfast" loading="lazy"><figcaption><b>Garden breakfast</b><span>included →</span></figcaption></figure>
+</div>
+</section>
+<section id="gallery" style="padding-top:0">
+<div class="sec-head rv"><div class="eyebrow" style="justify-content:center">Journal</div><h2>Postcards from the house</h2></div>
+<div class="gal rv">
+<img src="https://picsum.photos/seed/olive-g1/800/900" alt="g1" loading="lazy">
+<img src="https://picsum.photos/seed/olive-g2/600/450" alt="g2" loading="lazy">
+<img src="https://picsum.photos/seed/olive-g3/600/450" alt="g3" loading="lazy">
+<img src="https://picsum.photos/seed/olive-g4/600/450" alt="g4" loading="lazy">
+<img src="https://picsum.photos/seed/olive-g5/600/450" alt="g5" loading="lazy">
+</div>
+</section>
+<section style="padding-top:0"><div class="quotes rv">
+<div class="eyebrow" style="justify-content:center">Guest book</div>
+<blockquote id="quote">"We came for two nights and stayed for six. Breakfast under the fig tree is worth the trip alone."</blockquote>
+<div class="who" id="qWho">— Sofia & Marc, stayed in Olive Suite</div>
+<div class="q-dots" id="qDots"><i class="on"></i><i></i><i></i></div>
+</div></section>
+<section id="book" style="padding-top:0"><div class="book rv">
+<div><div class="eyebrow">Reservations</div><h2>Check your dates</h2><p style="color:var(--mut);font-weight:300">Best rate when you book direct. Free cancellation up to 7 days.</p><p class="serif" style="font-style:italic;margin-top:12px">From $120 / night · breakfast included</p></div>
+<form onsubmit="return bookNow(event)">
+<div><label>Check-in</label><input type="date" required></div>
+<div><label>Check-out</label><input type="date" required></div>
+<div><label>Guests</label><select><option>2 guests</option><option>1 guest</option><option>3 guests</option><option>4 guests</option></select></div>
+<div><label>Room</label><select><option>Garden Room</option><option>Olive Suite</option><option>Atelier Loft</option></select></div>
+<button class="btn full" style="margin-top:8px">Request to book →</button>
+</form>
+</div></section>
+<section id="faq" style="padding-top:0">
+<div class="sec-head rv"><div class="eyebrow" style="justify-content:center">Good to know</div><h2>Questions, answered</h2></div>
+<div class="faq rv">
+<details open><summary>Is breakfast really included?</summary><p>Yes — full garden breakfast with eggs, cheese, figs and sourdough, 07:30–11:00.</p></details>
+<details><summary>Do I need an account to reserve?</summary><p>Yes, one free account holds your reservation, invoices and preferences. Click Reserve above.</p></details>
+<details><summary>Are children welcome?</summary><p>Very. Cots free, interconnecting rooms on request, garden is fully enclosed.</p></details>
+</div>
+</section>
+<footer><div class="f-in">
+<div><b class="serif" style="font-size:26px">Maison Olive</b><p style="font-weight:300;font-size:14px;margin-top:10px;max-width:280px">14 Rue des Figuiers, Old Town. Reception 07:00–23:00 daily.</p></div>
+<div><h4>Stay</h4><a href="#rooms">Garden Room</a><a href="#rooms">Olive Suite</a><a href="#rooms">Atelier Loft</a></div>
+<div><h4>House</h4><a href="#story">Our story</a><a href="#dining">Dining</a><a href="#gallery">Journal</a></div>
+<div><h4>Contact</h4><a href="#">hello@maisonolive.co</a><a href="#">+998 90 000 00 00</a><a href="#">Press</a></div>
+</div><div class="f-base"><span>© 2026 Maison Olive · Picsum photos</span><span>Breakfast included · Late checkout Sundays</span></div></footer>
+<div class="overlay" id="ov"><div class="modal">
+<h3>Reserve your stay</h3><p class="s">Members get best rate + free late checkout. Sign in or create a free account.</p>
+<input type="email" placeholder="Email"><input type="password" placeholder="Password">
+<button class="btn" style="width:100%;margin-top:10px" onclick="doneAuth()">Continue →</button>
+<p style="font-size:12px;color:var(--mut);margin-top:10px;text-align:center">Demo only — no real charge.</p>
+</div></div>
+<div id="toast"></div>
+<script>
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}})},{threshold:.12});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+var idx=0,titles=[['The Fig Courtyard','Breakfast served 07:30 — 11:00'],['Olive Suite N°4','Private terrace · stone bath'],['Fire Kitchen','Dinner 18:00 — 22:30']];
+var imgs=document.querySelectorAll('#slides img'),dots=document.querySelectorAll('#sDots i'),capT=document.getElementById('sTitle'),capS=document.getElementById('sSub');
+function show(n){idx=(n+imgs.length)%imgs.length;imgs.forEach(function(im,i){im.classList.toggle('on',i===idx)});dots.forEach(function(d,i){d.classList.toggle('on',i===idx)});capT.textContent=titles[idx][0];capS.textContent=titles[idx][1]}
+function slide(d){show(idx+d);restart()}
+dots.forEach(function(d,i){d.onclick=function(){show(i);restart()}});
+var timer=setInterval(function(){show(idx+1)},5000);
+function restart(){clearInterval(timer);timer=setInterval(function(){show(idx+1)},5000)}
+var qi=0,quotes=[['"We came for two nights and stayed for six. Breakfast under the fig tree is worth the trip alone."','— Sofia & Marc, stayed in Olive Suite'],['"Stone walls, linen sheets, zero noise. The calmest sleep in years."','— Daniel K., Garden Room'],['"Staff remembered our names and our coffee. We will be back."','— Amira R., Atelier Loft']];
+var qEl=document.getElementById('quote'),qw=document.getElementById('qWho'),qd=document.querySelectorAll('#qDots i');
+function qShow(n){qi=(n+quotes.length)%quotes.length;qEl.textContent=quotes[qi][0];qw.textContent=quotes[qi][1];qd.forEach(function(d,i){d.classList.toggle('on',i===qi)})}
+qd.forEach(function(d,i){d.onclick=function(){qShow(i)}});
+setInterval(function(){qShow(qi+1)},6000);
+var ov=document.getElementById('ov');
+function openAuth(e){if(e)e.preventDefault();ov.classList.add('open')}
+ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')ov.classList.remove('open')});
+function doneAuth(){ov.classList.remove('open');toast('Welcome — member rate unlocked (demo)')}
+function bookNow(e){e.preventDefault();toast('Request sent — we reply within 2 hours (demo)');return false}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2600)}
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+pywinauto>=0.6.8
+comtypes
+pywin32
+mss
+pyautogui
+Pillow
+pytesseract ; Telegram OCR fallback (optional, needs Tesseract binary)
+requests

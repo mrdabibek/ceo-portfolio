@@ -1,0 +1,687 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Northwind Apps — Swift & iOS Developer</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+:root{
+  --bg:#f2f4f8;
+  --card:#fff;
+  --tx:#0f1b2d;
+  --mut:#67748a;
+  --teal:#0ea5a5;
+  --navy:#0f1b2d;
+  --r:22px
+}
+body{
+  font-family:-apple-system,'SF Pro Display','Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--tx);
+  overflow-x:hidden
+}
+::selection{
+  background:var(--teal);
+  color:#fff
+}
+/* niche loader: app icon bounce */
+#loader{
+  position:fixed;
+  inset:0;
+  background:var(--navy);
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  align-items:center;
+  justify-content:center;
+  transition:.5s
+}
+#loader.done{
+  opacity:0;
+  visibility:hidden
+}
+#loader .apps{
+  display:flex;
+  gap:12px
+}
+#loader .apps i{
+  width:54px;
+  height:54px;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  font-size:26px;
+  animation:bnc 1s infinite
+}
+#loader .apps i:nth-child(2){
+  animation-delay:.12s
+}
+#loader .apps i:nth-child(3){
+  animation-delay:.24s
+}
+#loader .apps i:nth-child(4){
+  animation-delay:.36s
+}
+@keyframes bnc{
+  40%{
+  transform:translateY(-14px)
+}
+}
+#loader small{
+  color:#8ea0b8;
+  letter-spacing:3px;
+  font-size:11px
+}
+nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#f2f4f8cc;
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid #0001
+}
+.nin{
+  max-width:1160px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:22px;
+  padding:14px 20px;
+  font-size:13.5px
+}
+.nin b{
+  font-size:17px
+}
+.nin b span{
+  color:var(--teal)
+}
+.nin a{
+  color:var(--tx);
+  text-decoration:none;
+  opacity:.7
+}
+.nin a:hover{
+  opacity:1
+}
+.nin .sp{
+  flex:1
+}
+.pill{
+  background:var(--navy);
+  color:#fff!important;
+  padding:9px 22px;
+  border-radius:99px;
+  font-weight:700;
+  opacity:1!important;
+  text-decoration:none
+}
+.hero{
+  max-width:1160px;
+  margin:auto;
+  padding:64px 20px 10px;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:44px;
+  align-items:center
+}
+.eyebrow{
+  color:var(--teal);
+  font-weight:800;
+  font-size:12.5px;
+  letter-spacing:1.5px;
+  text-transform:uppercase
+}
+h1{
+  font-size:clamp(36px,5.2vw,60px);
+  line-height:1.04;
+  letter-spacing:-2px;
+  margin:12px 0 14px
+}
+h1 span{
+  color:var(--teal)
+}
+.hero p{
+  color:var(--mut);
+  font-size:16.5px;
+  line-height:1.65
+}
+.hbtns{
+  display:flex;
+  gap:12px;
+  margin-top:22px;
+  flex-wrap:wrap
+}
+.btnB{
+  background:var(--teal);
+  color:#fff;
+  border:0;
+  padding:14px 30px;
+  border-radius:16px;
+  font-weight:800;
+  cursor:pointer;
+  font-size:15px
+}
+.btnG{
+  border:1.5px solid #0f1b2d22;
+  background:#fff;
+  padding:14px 30px;
+  border-radius:16px;
+  font-weight:800;
+  cursor:pointer;
+  font-size:15px;
+  color:var(--tx)
+}
+.stats{
+  display:flex;
+  gap:26px;
+  margin-top:26px;
+  flex-wrap:wrap
+}
+.stats b{
+  font-size:24px
+}
+.stats small{
+  color:var(--mut);
+  display:block;
+  font-size:12px
+}
+/* today layout */
+section{
+  max-width:1160px;
+  margin:auto;
+  padding:44px 20px
+}
+h2{
+  font-size:clamp(25px,3.4vw,36px);
+  letter-spacing:-1px
+}
+.sub{
+  color:var(--mut);
+  margin:8px 0 24px;
+  font-size:15px
+}
+.today{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:18px
+}
+.featCard{
+  background:var(--navy);
+  color:#fff;
+  border-radius:26px;
+  overflow:hidden;
+  position:relative;
+  min-height:340px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:30px;
+  cursor:pointer
+}
+.featCard img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.55
+}
+.featCard .in{
+  position:relative
+}
+.featCard small{
+  background:#ffffff26;
+  padding:6px 14px;
+  border-radius:99px;
+  font-size:11.5px;
+  letter-spacing:1px
+}
+.featCard h3{
+  font-size:30px;
+  margin:12px 0 6px
+}
+.side{
+  display:grid;
+  gap:18px
+}
+.miniApp{
+  background:var(--card);
+  border-radius:20px;
+  padding:18px;
+  display:flex;
+  gap:14px;
+  align-items:center;
+  box-shadow:0 8px 26px #0f1b2d12
+}
+.miniApp img{
+  width:64px;
+  height:64px;
+  border-radius:15px;
+  object-fit:cover
+}
+.miniApp .get{
+  margin-left:auto;
+  background:#eef2f7;
+  color:var(--teal);
+  border:0;
+  font-weight:800;
+  padding:7px 22px;
+  border-radius:99px;
+  cursor:pointer
+}
+.miniApp .get:hover{
+  background:var(--teal);
+  color:#fff
+}
+.storeGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px
+}
+.appCard{
+  background:var(--card);
+  border-radius:var(--r);
+  overflow:hidden;
+  box-shadow:0 8px 30px #0f1b2d10;
+  transition:.3s;
+  cursor:pointer
+}
+.appCard:hover{
+  transform:translateY(-6px)
+}
+.appCard img{
+  width:100%;
+  height:150px;
+  object-fit:cover
+}
+.appCard .bd{
+  padding:16px
+}
+.appCard .bd small{
+  color:var(--mut);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1px
+}
+.appCard h3{
+  margin:6px 0 4px
+}
+.stars{
+  color:#ff9f0a;
+  font-size:13px
+}
+.get{
+  background:#eef2f7;
+  color:var(--teal);
+  border:0;
+  font-weight:800;
+  padding:6px 20px;
+  border-radius:99px;
+  cursor:pointer;
+  float:right
+}
+.get:hover{
+  background:var(--teal);
+  color:#fff
+}
+/* code */
+.codeSec{
+  background:var(--navy);
+  color:#fff;
+  border-radius:28px;
+  padding:38px
+}
+.tabs{
+  display:flex;
+  gap:8px;
+  margin:18px 0;
+  flex-wrap:wrap
+}
+.tab{
+  background:#ffffff12;
+  border:1px solid #ffffff22;
+  color:#fff;
+  padding:9px 20px;
+  border-radius:99px;
+  cursor:pointer;
+  font-size:13px;
+  font-family:ui-monospace,monospace
+}
+.tab.on{
+  background:var(--teal);
+  border-color:var(--teal);
+  font-weight:700
+}
+pre{
+  background:#070d18;
+  border:1px solid #ffffff18;
+  border-radius:16px;
+  padding:22px;
+  overflow:auto;
+  font-family:ui-monospace,Menlo,monospace;
+  font-size:13px;
+  line-height:1.75;
+  min-height:260px
+}
+.k{
+  color:#7dd3fc
+}
+.s{
+  color:#5eead4
+}
+.f{
+  color:#a5b4fc
+}
+.c{
+  color:#64748b
+}
+.n{
+  color:#fbbf24
+}
+.t{
+  color:#34d399
+}
+/* process */
+.steps{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:14px
+}
+.steps div{
+  background:var(--card);
+  border-radius:18px;
+  padding:24px 20px;
+  box-shadow:0 6px 20px #0f1b2d0c
+}
+.steps .n{
+  font-size:13px;
+  font-weight:800;
+  color:var(--teal);
+  letter-spacing:1px
+}
+/* pricing */
+.prices{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:16px
+}
+.price{
+  background:var(--card);
+  border-radius:20px;
+  padding:30px 26px;
+  box-shadow:0 8px 26px #0f1b2d10
+}
+.price.hot{
+  border:2px solid var(--teal)
+}
+.amount{
+  font-size:36px;
+  font-weight:800;
+  margin:10px 0
+}
+.price ul{
+  list-style:none;
+  margin:14px 0;
+  font-size:13.5px;
+  color:var(--mut);
+  line-height:2
+}
+.price li::before{
+  content:'✓ ';
+  color:var(--teal);
+  font-weight:800
+}
+/* faq */
+.faq{
+  background:var(--card);
+  border-radius:16px;
+  margin-bottom:10px;
+  overflow:hidden
+}
+.faq button{
+  width:100%;
+  text-align:left;
+  background:none;
+  border:0;
+  padding:18px 20px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  color:var(--tx)
+}
+.faq p{
+  display:none;
+  padding:0 20px 18px;
+  color:var(--mut);
+  font-size:14px;
+  line-height:1.6
+}
+.faq.open p{
+  display:block
+}
+/* reviews */
+.revGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px
+}
+.rev{
+  background:var(--card);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 6px 20px #0f1b2d0c
+}
+.cta{
+  background:linear-gradient(135deg,#0f1b2d,#0ea5a5);
+  border-radius:28px;
+  color:#fff;
+  text-align:center;
+  padding:60px 24px;
+  margin:20px auto;
+  max-width:1120px
+}
+footer{
+  text-align:center;
+  color:var(--mut);
+  font-size:13px;
+  padding:30px
+}
+.reveal{
+  opacity:0;
+  transform:translateY(26px);
+  transition:.7s
+}
+.reveal.vis{
+  opacity:1;
+  transform:none
+}
+#signin{
+  position:fixed;
+  inset:0;
+  background:#0f1b2daa;
+  backdrop-filter:blur(8px);
+  z-index:300;
+  display:none;
+  align-items:center;
+  justify-content:center
+}
+#signin.open{
+  display:flex
+}
+.scard{
+  width:min(390px,92vw);
+  background:#fff;
+  border-radius:24px;
+  padding:34px 30px;
+  text-align:center
+}
+.scard input{
+  width:100%;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  border:1.5px solid #e2e8f0;
+  outline:0;
+  font-family:inherit
+}
+@media(max-width:900px){
+  .hero{
+  grid-template-columns:1fr;
+  text-align:center
+}
+.hbtns,.stats{
+  justify-content:center
+}
+.today{
+  grid-template-columns:1fr
+}
+}
+</style>
+</head>
+<body>
+<div id="loader"><div class="apps"><i style="background:#0ea5a5">ðŸ§­</i><i style="background:#f59e0b">ðŸ³</i><i style="background:#6366f1">ðŸŽµ</i><i style="background:#10b981">ðŸ’ª</i></div><small>NORTHWIND APPS</small></div>
+<nav><div class="nin"><b>â—ˆ North<span>wind</span></b><a href="#today">Today</a><a href="#apps">Apps</a><a href="#code">Swift</a><a href="#process">Process</a><a href="#pricing">Pricing</a><span class="sp"></span><a href="#" class="pill" onclick="openSign();return false">Get the App</a></div></nav>
+<header class="hero">
+<div><div class="eyebrow">SwiftUI · iOS 17 · watchOS · Top Developer</div><h1>Apps Apple<br><span>features. I build</span> them.</h1><p>I'm <b>Sam Reed</b> — 60+ App Store launches, 3 Editor's Choice, 2.4M downloads. Native Swift, offline-first, 120fps motion, App Store connect handled end-to-end.</p><div class="hbtns"><button class="btnB" onclick="document.getElementById('apps').scrollIntoView({behavior:'smooth'})">Explore my apps</button><button class="btnG" onclick="openSign()">Book intro call →</button></div><div class="stats"><div><b>60+</b><small>Apps shipped</small></div><div><b>4.9★</b><small>Avg rating</small></div><div><b>2.4M</b><small>Downloads</small></div><div><b>3Ã—</b><small>Editor's Choice</small></div></div></div>
+<div class="side">
+<div class="featCard reveal"><img src="https://picsum.photos/seed/nwfeat/700/500" alt=""><div class="in"><small>APP OF THE DAY</small><h3>Trailhead — hike anywhere offline</h3><p style="opacity:.85;font-size:14px">Maps, GPX & widgets. 900K downloads in year one.</p></div></div>
+</div>
+</header>
+<section id="today">
+<h2 class="reveal">Today on Northwind ðŸ“±</h2>
+<p class="sub reveal">Editorial picks from my own shelf.</p>
+<div class="today">
+<div class="featCard reveal"><img src="https://picsum.photos/seed/nwfeat2/700/500" alt=""><div class="in"><small>EDITOR'S CHOICE</small><h3>Ledgerly — money, calmly</h3><p style="opacity:.85;font-size:14px">Budgets that feel like a game. $1.4M ARR for its founder.</p></div></div>
+<div class="side">
+<div class="miniApp reveal"><img src="https://picsum.photos/seed/nw1/200/200"><div><b>PulseFit</b><br><small style="color:var(--mut)">Health · 4.9★ · 82K</small></div><button class="get">GET</button></div>
+<div class="miniApp reveal"><img src="https://picsum.photos/seed/nw2/200/200"><div><b>Yumly</b><br><small style="color:var(--mut)">Food · 4.9★ · 61K</small></div><button class="get">GET</button></div>
+<div class="miniApp reveal"><img src="https://picsum.photos/seed/nw3/200/200"><div><b>Waveform</b><br><small style="color:var(--mut)">Music · 4.7★ · 30K</small></div><button class="get">GET</button></div>
+</div>
+</div>
+</section>
+<section id="apps">
+<h2 class="reveal">App Store shelf ðŸª</h2>
+<p class="sub reveal">Real apps, real revenue.</p>
+<div class="storeGrid">
+<div class="appCard reveal"><img src="https://picsum.photos/seed/nwa/500/300"><div class="bd"><button class="get">GET</button><small>Navigation · â„–1 Travel</small><h3>Trailhead</h3><div class="stars">★★★★★ 4.9 · 40K</div><p style="font-size:13px;color:var(--mut);margin-top:8px">Offline maps + Live Activities. 900K downloads.</p></div></div>
+<div class="appCard reveal"><img src="https://picsum.photos/seed/nwb/500/300"><div class="bd"><button class="get">GET</button><small>Finance · Editor's Choice</small><h3>Ledgerly</h3><div class="stars">★★★★★ 4.8 · 52K</div><p style="font-size:13px;color:var(--mut);margin-top:8px">Swift Charts + Face ID vault. $1.4M ARR.</p></div></div>
+<div class="appCard reveal"><img src="https://picsum.photos/seed/nwc/500/300"><div class="bd"><button class="get">GET</button><small>Health · Top 5</small><h3>PulseFit</h3><div class="stars">★★★★★ 4.9 · 82K</div><p style="font-size:13px;color:var(--mut);margin-top:8px">HealthKit + Watch complications that people love.</p></div></div>
+<div class="appCard reveal"><img src="https://picsum.photos/seed/nwd/500/300"><div class="bd"><button class="get">GET</button><small>Food · App of the Day</small><h3>Yumly</h3><div class="stars">★★★★★ 4.9 · 61K</div><p style="font-size:13px;color:var(--mut);margin-top:8px">Core ML recipe scanner from a photo.</p></div></div>
+</div>
+</section>
+<section id="code"><div class="codeSec reveal"><div class="eyebrow" style="color:#5eead4">Production Swift</div><h2 style="color:#fff">Snippet playground</h2><p class="sub">Tap tabs — patterns I ship.</p><div class="tabs"><button class="tab on" onclick="showTab(0,this)">SwiftUI View</button><button class="tab" onclick="showTab(1,this)">Async Await</button><button class="tab" onclick="showTab(2,this)">SwiftData</button><button class="tab" onclick="showTab(3,this)">Live Activity</button></div><pre id="codePre"></pre></div></section>
+<section id="process">
+<h2 class="reveal">Idea → App Store in 6 weeks</h2>
+<p class="sub reveal">TestFlight every Friday. No surprises.</p>
+<div class="steps">
+<div class="reveal"><div class="n">WEEK 1</div><b>Blueprint</b><p style="color:var(--mut);font-size:13.5px;margin-top:6px">Wireframes, scope lock, App Store keywords.</p></div>
+<div class="reveal"><div class="n">WEEK 2–3</div><b>Build sprint</b><p style="color:var(--mut);font-size:13.5px;margin-top:6px">SwiftUI + design system, weekly TestFlight.</p></div>
+<div class="reveal"><div class="n">WEEK 4</div><b>Polish</b><p style="color:var(--mut);font-size:13.5px;margin-top:6px">Motion, haptics, widgets, paywall (RevenueCat).</p></div>
+<div class="reveal"><div class="n">WEEK 5–6</div><b>Launch</b><p style="color:var(--mut);font-size:13.5px;margin-top:6px">Review submission, screenshots, featuring pitch.</p></div>
+</div>
+</section>
+<section id="pricing">
+<h2 class="reveal">Hire per milestone ðŸ’³</h2>
+<p class="sub reveal">Fixed quotes, App Store guarantee.</p>
+<div class="prices">
+<div class="price reveal"><small>MVP</small><div class="amount">$3,900</div><p style="color:var(--mut);font-size:13.5px">One app, 4 weeks, TestFlight.</p><ul><li>5–7 screens SwiftUI</li><li>Backend: Supabase/Firebase</li><li>TestFlight + review help</li></ul><button class="btnG" style="width:100%" onclick="openSign()">Start MVP</button></div>
+<div class="price hot reveal"><small>â­ FEATURED · FULL APP</small><div class="amount">$7,500</div><p style="color:var(--mut);font-size:13.5px">Editorial-quality launch.</p><ul><li>Everything in MVP</li><li>Widgets + Watch app</li><li>Paywall + analytics</li><li>Featuring pitch kit</li></ul><button class="btnB" style="width:100%" onclick="openSign()">Claim slot</button></div>
+<div class="price reveal"><small>PARTNER</small><div class="amount">$1,800/mo</div><p style="color:var(--mut);font-size:13.5px">Iterate after launch.</p><ul><li>Weekly releases</li><li>A/B tests + ASO</li><li>Crash-free 99.9%</li></ul><button class="btnG" style="width:100%" onclick="openSign()">Retain me</button></div>
+</div>
+</section>
+<section>
+<h2 class="reveal">Questions, answered â“</h2>
+<p class="sub reveal">Tap to expand.</p>
+<div class="faq reveal"><button onclick="this.parentElement.classList.toggle('open')">Do you handle App Store review? →</button><p>Yes — screenshots, privacy labels, review notes and rejections. 100% first-pass rate in the last 20 apps.</p></div>
+<div class="faq reveal"><button onclick="this.parentElement.classList.toggle('open')">UIKit or SwiftUI? →</button><p>SwiftUI first, UIKit where it earns it (complex gestures, legacy SDKs). All new code is Swift 6 + strict concurrency.</p></div>
+<div class="faq reveal"><button onclick="this.parentElement.classList.toggle('open')">Who owns the code? →</button><p>You do — GitHub repo in your org from day one, MIT-licensed, docs included.</p></div>
+<div class="faq reveal"><button onclick="this.parentElement.classList.toggle('open')">Backend included? →</button><p>Yes via Supabase/Firebase/CloudKit. Auth, push, sync and paywalls wired and tested.</p></div>
+</section>
+<section>
+<h2 class="reveal">Client love â­</h2>
+<p class="sub reveal">Founders & App Store reviews.</p>
+<div class="revGrid">
+<div class="rev reveal"><div class="stars">★★★★★</div><p>"Sam took us from idea to Editor's Choice in 10 weeks. Flawless TestFlight process."</p><b>Sarah M.</b> <small style="color:var(--mut)">— Fintech Founder</small></div>
+<div class="rev reveal"><div class="stars">★★★★★</div><p>"Retention +34% after the SwiftUI relaunch. Motion design is unreal."</p><b>James L.</b> <small style="color:var(--mut)">— YC Startup</small></div>
+<div class="rev reveal"><div class="stars">★★★★★</div><p>"Communicates like a PM, codes like Apple. Rehired 4 times."</p><b>Anna K.</b> <small style="color:var(--mut)">— Health CEO</small></div>
+</div>
+</section>
+<div class="cta reveal"><h2>Have an app idea? Let's ship it. ðŸ§­</h2><p style="opacity:.85;margin:10px 0 22px">Free 30-min discovery · NDA friendly · $65/hr</p><button class="btnG" onclick="openSign()">Get the App & Book →</button></div>
+<footer>Â© 2026 Northwind Apps · Crafted in Swift · <a href="#" onclick="openSign();return false" style="color:var(--teal)">Sign in</a></footer>
+<div id="signin"><div class="scard"><div style="font-size:44px">â—ˆ</div><h3>Get the app</h3><p style="color:var(--mut);font-size:13px">Beta invites & quotes</p><input placeholder="Email"><input type="password" placeholder="Password"><button class="btnB" style="width:100%;margin-top:14px" onclick="closeSign()">Continue →</button><p style="margin-top:12px;font-size:12px;color:var(--mut);cursor:pointer" onclick="closeSign()">Cancel</p></div></div>
+<script>
+addEventListener('load',()=>setTimeout(()=>loader.classList.add('done'),1200));
+setTimeout(()=>loader.classList.add('done'),2600);
+const snippets=[
+'<span class="c">// SwiftUI — offline trail card</span>\n<span class="k">struct</span> <span class="t">TrailCard</span>: <span class="t">View</span> {\n  <span class="k">let</span> trail: <span class="t">Trail</span>\n  <span class="k">@Environment</span>(\\.modelContext) <span class="k">var</span> ctx\n  <span class="k">var</span> body: <span class="k">some</span> <span class="t">View</span> {\n    <span class="f">AsyncImage</span>(url: trail.map) { <span class="f">CachedImage</span>($0) }\n      .cornerRadius(<span class="n">18</span>)\n    <span class="f">Label</span>(trail.difficulty, systemImage: <span class="s">"mountain.2"</span>)\n      .font(.caption).foregroundStyle(.secondary)\n  }\n}',
+'<span class="c">// Swift 6 — async sync engine</span>\n<span class="k">actor</span> <span class="t">SyncEngine</span> {\n  <span class="k">func</span> <span class="f">pull</span>() <span class="k">async throws</span> {\n    <span class="k">let</span> (data, _) = <span class="k">try await</span> <span class="f">URLSession</span>.shared\n      .data(from: <span class="f">URL</span>(string: <span class="s">"https://api.app/trails"</span>)!)\n    <span class="k">try await</span> store.<span class="f">save</span>(data)\n  }\n}',
+'<span class="c">// SwiftData — offline-first model</span>\n<span class="k">@Model</span> <span class="k">final class</span> <span class="t">Trail</span> {\n  <span class="k">var</span> name: <span class="t">String</span>\n  <span class="k">var</span> gpx: <span class="t">Data</span>?\n  <span class="k">var</span> downloaded = <span class="n">false</span>\n}\n<span class="k">@Query</span>(filter: <span class="s">#Predicate</span> { $0.downloaded })\n<span class="k">var</span> offline: [<span class="t">Trail</span>]',
+'<span class="c">// Live Activity — hike progress</span>\n<span class="k">struct</span> <span class="t">HikeLive</span>: <span class="t">Widget</span> {\n  <span class="k">var</span> body: <span class="k">some</span> <span class="t">WidgetConfiguration</span> {\n    <span class="f">ActivityConfiguration</span>(<span class="k">for</span>: <span class="t">Hike</span>.<span class="k">self</span>) { ctx <span class="k">in</span>\n      <span class="f">ProgressView</span>(value: ctx.state.pct)\n      <span class="f">Text</span>(ctx.state.eta).font(.caption2)\n    }\n  }\n}'];
+function showTab(i,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');codePre.innerHTML=snippets[i];}
+codePre.innerHTML=snippets[0];
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+function openSign(){signin.classList.add('open');}function closeSign(){signin.classList.remove('open');}
+signin.addEventListener('click',e=>{if(e.target.id==='signin')closeSign();});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeSign();signin.classList.remove('open');});
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

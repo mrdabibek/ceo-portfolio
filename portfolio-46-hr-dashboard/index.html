@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PeopleHub — HR Pipeline Dashboard</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+:root{
+--bg:#eef3fb;
+--card:#ffffff;
+--ink:#0f2040;
+--mut:#64748f;
+--line:#dbe4f2;
+--blue:#2563eb;
+--blue-d:#1e40af;
+--sky:#e3eefe;
+--grn:#16a34a;
+--amber:#d97706;
+--red:#dc2626;
+}
+body{
+font-family:"Segoe UI",Inter,Arial,sans-serif;
+background:var(--bg);
+color:var(--ink);
+font-size:14px;
+}
+.app{display:flex;min-height:100vh;}
+/* icon rail + panel sidebar */
+.rail{
+width:70px;
+background:var(--blue-d);
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:14px 0;
+gap:8px;
+position:sticky;
+top:0;
+height:100vh;
+}
+.rail .logo{
+width:42px;
+height:42px;
+background:#fff;
+color:var(--blue-d);
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+font-size:18px;
+}
+.rail button{
+width:44px;
+height:44px;
+border:0;
+border-radius:12px;
+background:transparent;
+color:#bcd0f7;
+font-size:18px;
+cursor:pointer;
+}
+.rail button.on,
+.rail button:hover{
+background:rgba(255,255,255,.18);
+color:#fff;
+}
+.panel{
+width:248px;
+background:var(--card);
+border-right:1px solid var(--line);
+padding:20px 16px;
+position:sticky;
+top:0;
+height:100vh;
+overflow:auto;
+}
+.panel h2{font-size:17px;}
+.panel p{color:var(--mut);font-size:12px;margin:4px 0 14px;}
+.dept{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:9px 12px;
+border-radius:10px;
+font-size:13px;
+cursor:pointer;
+border:1px solid transparent;
+}
+.dept:hover{background:var(--sky);}
+.dept.on{background:var(--sky);border-color:var(--blue);font-weight:700;}
+.dept span{
+background:var(--sky);
+color:var(--blue-d);
+font-size:11px;
+border-radius:99px;
+padding:2px 9px;
+font-weight:700;
+}
+.hiring{
+margin-top:16px;
+background:linear-gradient(135deg,var(--blue),#60a5fa);
+color:#fff;
+border-radius:14px;
+padding:16px;
+}
+.hiring b{font-size:26px;display:block;}
+.hiring button{
+margin-top:10px;
+border:0;
+background:#fff;
+color:var(--blue-d);
+font-weight:700;
+padding:8px 14px;
+border-radius:99px;
+cursor:pointer;
+font-size:12px;
+}
+/* main */
+.main{flex:1;min-width:0;}
+.top{
+background:var(--card);
+border-bottom:1px solid var(--line);
+padding:14px 26px;
+display:flex;
+gap:14px;
+align-items:center;
+position:sticky;
+top:0;
+z-index:5;
+}
+.search{
+flex:1;
+max-width:380px;
+background:var(--bg);
+border:1px solid var(--line);
+border-radius:99px;
+padding:8px 16px;
+display:flex;
+gap:8px;
+color:var(--mut);
+}
+.search input{
+flex:1;
+border:0;
+outline:0;
+background:transparent;
+font-size:13px;
+}
+.avatar{
+width:38px;
+height:38px;
+border-radius:50%;
+background:var(--blue);
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+}
+.btn{
+background:var(--blue);
+color:#fff;
+border:0;
+padding:10px 18px;
+border-radius:99px;
+font-weight:700;
+cursor:pointer;
+font-size:13px;
+}
+.btn.line{
+background:#fff;
+color:var(--blue-d);
+border:1.5px solid var(--blue);
+}
+.wrap{padding:26px;max-width:1220px;}
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+margin:16px 0 20px;
+}
+.stat{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:16px;
+padding:16px 18px;
+display:flex;
+gap:12px;
+align-items:center;
+}
+.ico{
+width:44px;
+height:44px;
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+flex-shrink:0;
+}
+.stat b{font-size:21px;display:block;}
+.stat small{color:var(--mut);}
+/* kanban */
+.board-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:6px 0 12px;
+}
+.board-head h3{font-size:16px;}
+.filters{display:flex;gap:8px;}
+.filters button{
+border:1px solid var(--line);
+background:#fff;
+padding:7px 14px;
+border-radius:99px;
+font-size:12px;
+cursor:pointer;
+color:var(--mut);
+}
+.filters button.on{
+background:var(--ink);
+color:#fff;
+border-color:var(--ink);
+}
+.board{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+align-items:start;
+}
+.col{
+background:#e2e9f5;
+border-radius:16px;
+padding:12px;
+min-height:300px;
+}
+.col h4{
+font-size:12px;
+letter-spacing:1px;
+text-transform:uppercase;
+color:var(--mut);
+display:flex;
+justify-content:space-between;
+padding:4px 6px 12px;
+}
+.col h4 b{
+background:#fff;
+border-radius:99px;
+padding:1px 9px;
+color:var(--ink);
+}
+.col.drag{outline:2px dashed var(--blue);}
+.card{
+background:#fff;
+border-radius:12px;
+padding:13px;
+margin-bottom:10px;
+border:1px solid var(--line);
+box-shadow:0 2px 8px rgba(15,32,64,.06);
+cursor:grab;
+}
+.card:active{cursor:grabbing;}
+.card .who{
+display:flex;
+gap:10px;
+align-items:center;
+margin-bottom:8px;
+}
+.face{
+width:34px;
+height:34px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#fff;
+font-weight:700;
+font-size:13px;
+flex-shrink:0;
+}
+.card small{color:var(--mut);font-size:11px;}
+.tag{
+display:inline-block;
+font-size:10px;
+font-weight:700;
+padding:3px 9px;
+border-radius:99px;
+margin-top:8px;
+}
+.t-b{background:var(--sky);color:var(--blue-d);}
+.t-g{background:#dcfce7;color:#166534;}
+.t-a{background:#fef3c7;color:#92400e;}
+.t-r{background:#fee2e2;color:#991b1b;}
+.card .meta{
+display:flex;
+justify-content:space-between;
+margin-top:10px;
+font-size:11px;
+color:var(--mut);
+}
+/* table */
+.table-card{
+margin-top:18px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:16px;
+padding:18px;
+}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}
+th{
+text-align:left;
+font-size:11px;
+letter-spacing:1px;
+color:var(--mut);
+text-transform:uppercase;
+padding:10px;
+border-bottom:1px solid var(--line);
+}
+td{padding:11px 10px;border-bottom:1px solid #eef2f8;}
+tr:hover td{background:#f6f9ff;}
+.st{font-size:11px;font-weight:700;padding:4px 11px;border-radius:99px;}
+.st.a{background:#dcfce7;color:#166534;}
+.st.v{background:#fef3c7;color:#92400e;}
+.st.o{background:#e0e7ff;color:#3730a3;}
+.foot{text-align:center;color:var(--mut);font-size:12px;padding:20px;}
+@media(max-width:1100px){
+.board{grid-template-columns:1fr 1fr;}
+.stats{grid-template-columns:1fr 1fr;}
+.panel{display:none;}
+}
+@media(max-width:640px){
+.board{grid-template-columns:1fr;}
+.stats{grid-template-columns:1fr;}
+.rail{display:none;}
+.wrap{padding:14px;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="rail">
+<div class="logo">P</div>
+<button class="on" title="Dashboard">▦</button>
+<button title="People">◉</button>
+<button title="Jobs">▤</button>
+<button title="Calendar">▧</button>
+<button title="Docs">⧉</button>
+<button title="Settings" style="margin-top:auto">⚙</button>
+</div>
+<aside class="panel">
+<h2>PeopleHub</h2>
+<p>Acme Inc · 248 employees</p>
+<div id="depts">
+<div class="dept on">Engineering <span>86</span></div>
+<div class="dept">Design <span>24</span></div>
+<div class="dept">Sales <span>52</span></div>
+<div class="dept">Marketing <span>31</span></div>
+<div class="dept">Support <span>55</span></div>
+</div>
+<div class="hiring">
+<small>OPEN ROLES</small>
+<b>18</b>
+<span style="font-size:12px;opacity:.9">6 in final interview</span><br>
+<button onclick="alert('Job board link copied!')">＋ Post a job</button>
+</div>
+<p style="margin-top:14px">⦿ Attrition 4.2% · healthy<br>⦿ eNPS 61 · excellent</p>
+</aside>
+<div class="main">
+<div class="top">
+<div class="search">⌕ <input id="q" placeholder="Search candidates, employees…"></div>
+<button class="btn line" onclick="alert('Invite sent!')">Invite</button>
+<button class="btn" onclick="addCand()">＋ Add candidate</button>
+<div class="avatar">HR</div>
+</div>
+<div class="wrap">
+<div style="display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:10px">
+<div>
+<h1 style="font-size:26px;letter-spacing:-.5px">Hiring pipeline</h1>
+<p style="color:var(--mut)">Drag cards between stages · changes auto-save</p>
+</div>
+<span style="font-size:12px;color:var(--mut)" id="saved">● saved just now</span>
+</div>
+<div class="stats">
+<div class="stat"><div class="ico" style="background:#e0e7ff">◉</div><div><b>248</b><small>Headcount · +12 MoM</small></div></div>
+<div class="stat"><div class="ico" style="background:#dcfce7">◎</div><div><b>94%</b><small>Attendance this week</small></div></div>
+<div class="stat"><div class="ico" style="background:#fef3c7">⬣</div><div><b>18</b><small>Open roles</small></div></div>
+<div class="stat"><div class="ico" style="background:#fee2e2">♥</div><div><b>61</b><small>eNPS score</small></div></div>
+</div>
+<div class="board-head">
+<h3>Kanban — drag &amp; drop works</h3>
+<div class="filters" id="flt">
+<button class="on">All</button>
+<button>Engineering</button>
+<button>Design</button>
+<button>Sales</button>
+</div>
+</div>
+<div class="board" id="board">
+<div class="col" data-s="Applied"><h4>Applied <b>3</b></h4></div>
+<div class="col" data-s="Screen"><h4>Screening <b>2</b></h4></div>
+<div class="col" data-s="Interview"><h4>Interview <b>3</b></h4></div>
+<div class="col" data-s="Offer"><h4>Offer <b>2</b></h4></div>
+</div>
+<div class="table-card">
+<h3>Team directory</h3>
+<p style="color:var(--mut);font-size:12px">Search filters this table too</p>
+<table>
+<thead><tr><th>Name</th><th>Role</th><th>Dept</th><th>Status</th><th>Start</th></tr></thead>
+<tbody id="rows"></tbody>
+</table>
+</div>
+<div class="foot">PeopleHub demo · drag cards, filter, search — all client-side</div>
+</div>
+</div>
+</div>
+<script>
+var cands=[
+{name:"A. Yusupova",role:"Frontend Dev",dept:"Engineering",stage:"Applied",tag:"t-b",init:"AY",col:"#2563eb",score:"★ 4.6"},
+{name:"J. Carter",role:"UX Designer",dept:"Design",stage:"Applied",tag:"t-g",init:"JC",col:"#16a34a",score:"★ 4.8"},
+{name:"M. Aliyev",role:"SDR",dept:"Sales",stage:"Applied",tag:"t-a",init:"MA",col:"#d97706",score:"★ 4.1"},
+{name:"S. Park",role:"Backend Dev",dept:"Engineering",stage:"Screen",tag:"t-b",init:"SP",col:"#7c3aed",score:"★ 4.9"},
+{name:"L. Gomez",role:"Illustrator",dept:"Design",stage:"Screen",tag:"t-g",init:"LG",col:"#db2777",score:"★ 4.3"},
+{name:"D. Kim",role:"DevOps",dept:"Engineering",stage:"Interview",tag:"t-b",init:"DK",col:"#0891b2",score:"★ 4.7"},
+{name:"N. Karimova",role:"PM",dept:"Engineering",stage:"Interview",tag:"t-b",init:"NK",col:"#ea580c",score:"★ 4.5"},
+{name:"T. Brown",role:"AE",dept:"Sales",stage:"Interview",tag:"t-r",init:"TB",col:"#dc2626",score:"★ 4.2"},
+{name:"E. Stone",role:"Data Analyst",dept:"Engineering",stage:"Offer",tag:"t-g",init:"ES",col:"#16a34a",score:"★ 4.9"},
+{name:"R. Diaz",role:"Brand Designer",dept:"Design",stage:"Offer",tag:"t-g",init:"RD",col:"#4f46e5",score:"★ 4.7"}
+];
+var team=[
+["S. Akhmedov","Engineering Manager","Engineering","active","2021"],
+["K. Lee","Product Designer","Design","active","2022"],
+["O. Smith","Sales Lead","Sales","vacation","2020"],
+["F. Nazarova","HR Partner","Marketing","active","2023"],
+["P. Jones","Support L2","Support","onboarding","2026"],
+["H. Musaev","Backend Dev","Engineering","active","2022"]
+];
+var filter="All",query="";
+function cardHTML(c,i){
+return '<div class="card" draggable="true" data-i="'+i+'"><div class="who"><div class="face" style="background:'+c.col+'">'+c.init+'</div><div><b>'+c.name+'</b><br><small>'+c.role+' · '+c.dept+'</small></div></div><span class="tag '+c.tag+'">'+c.stage+'</span><div class="meta"><span>'+c.score+'</span><span>⋮⋮ drag</span></div></div>';
+}
+function renderBoard(){
+var cols=document.querySelectorAll('.col');
+cols.forEach(function(col){
+var s=col.dataset.s;
+col.querySelectorAll('.card').forEach(function(n){n.remove();});
+var list=cands.map(function(c,i){return {c:c,i:i};}).filter(function(o){
+return o.c.stage===s&&(filter==="All"||o.c.dept===filter)&&(!query||(o.c.name+o.c.role).toLowerCase().includes(query));
+});
+col.querySelector('b').textContent=list.length;
+list.forEach(function(o){col.insertAdjacentHTML('beforeend',cardHTML(o.c,o.i));});
+});
+bindDrag();
+}
+function renderTeam(){
+var tb=document.getElementById('rows');tb.innerHTML='';
+team.filter(function(t){return !query||t.join(' ').toLowerCase().includes(query);}).forEach(function(t){
+var st=t[3]==='active'?'a':(t[3]==='vacation'?'v':'o');
+tb.innerHTML+='<tr><td><b>'+t[0]+'</b></td><td>'+t[1]+'</td><td>'+t[2]+'</td><td><span class="st '+st+'">'+t[3]+'</span></td><td>'+t[4]+'</td></tr>';
+});
+}
+var dragI=null;
+function bindDrag(){
+document.querySelectorAll('.card').forEach(function(el){
+el.addEventListener('dragstart',function(){dragI=+el.dataset.i;});
+});
+}
+document.querySelectorAll('.col').forEach(function(col){
+col.addEventListener('dragover',function(e){e.preventDefault();col.classList.add('drag');});
+col.addEventListener('dragleave',function(){col.classList.remove('drag');});
+col.addEventListener('drop',function(e){
+e.preventDefault();col.classList.remove('drag');
+if(dragI===null)return;
+cands[dragI].stage=col.dataset.s;
+document.getElementById('saved').textContent='● saved '+new Date().toLocaleTimeString();
+renderBoard();
+});
+});
+document.getElementById('flt').addEventListener('click',function(e){
+if(e.target.tagName!=='BUTTON')return;
+filter=e.target.textContent;
+var b=[].slice.call(this.children);b.forEach(function(x){x.classList.remove('on');});
+e.target.classList.add('on');renderBoard();
+});
+document.getElementById('q').addEventListener('input',function(e){
+query=e.target.value.toLowerCase();renderBoard();renderTeam();
+});
+document.querySelectorAll('.dept').forEach(function(d){
+d.addEventListener('click',function(){
+document.querySelectorAll('.dept').forEach(function(x){x.classList.remove('on');});
+d.classList.add('on');filter=d.textContent.trim().split(' ')[0];
+renderBoard();
+});
+});
+function addCand(){
+var n=prompt('Candidate name:','New Talent');if(!n)return;
+cands.push({name:n,role:"Frontend Dev",dept:"Engineering",stage:"Applied",tag:"t-b",init:n[0],col:"#2563eb",score:"★ new"});
+renderBoard();
+}
+renderBoard();renderTeam();
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

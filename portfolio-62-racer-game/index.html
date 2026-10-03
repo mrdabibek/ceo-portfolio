@@ -1,0 +1,557 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Harbor GP — Night Racer by Kai Tanaka</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+:root{
+  --bg:#0d0a1a;
+  --mag:#f0f;
+  --mag2:#ff2fb3;
+  --cy:#22d3ee;
+  --panel:#161130
+}
+body{
+  font-family:Verdana,'Segoe UI',sans-serif;
+  background:var(--bg);
+  color:#efeaff;
+  overflow-x:hidden
+}
+/* niche loader: chequered flag */
+#loader{
+  position:fixed;
+  inset:0;
+  background:#0a0716;
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:center;
+  justify-content:center;
+  transition:.5s
+}
+#loader.done{
+  opacity:0;
+  visibility:hidden
+}
+#loader .flag{
+  font-size:16px;
+  letter-spacing:2px
+}
+#loader .car{
+  font-size:46px;
+  animation:rev 0.5s infinite alternate
+}
+@keyframes rev{
+  from{
+  transform:translateX(-10px)
+}
+to{
+  transform:translateX(10px)
+}
+}
+#loader .track{
+  width:190px;
+  height:6px;
+  background:#ffffff1c;
+  border-radius:99px;
+  overflow:hidden
+}
+#loader .track i{
+  display:block;
+  height:100%;
+  background:repeating-linear-gradient(90deg,#fff 0 10px,#000 10px 20px);
+  animation:mv 0.6s linear infinite
+}
+@keyframes mv{
+  to{
+  transform:translateX(-20px)
+}
+}
+#loader small{
+  letter-spacing:3px;
+  color:#8b86ad;
+  font-size:11px
+}
+header.top{
+  border-bottom:1px solid #ffffff18;
+  background:#0d0a1af2;
+  position:sticky;
+  top:0;
+  z-index:60
+}
+.nin{
+  max-width:1080px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:13px 20px
+}
+.nin .lamp{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 0 10px #22c55e
+}
+.nin a{
+  color:#efeaff;
+  text-decoration:none;
+  font-size:13px;
+  opacity:.7
+}
+.nin a:hover{
+  opacity:1
+}
+.nin .sp{
+  flex:1
+}
+.sbtn{
+  background:linear-gradient(90deg,var(--mag2),#7c3aed);
+  color:#fff;
+  border:0;
+  padding:10px 22px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  font-style:italic
+}
+.hero{
+  max-width:1080px;
+  margin:auto;
+  padding:46px 20px 8px;
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:26px;
+  align-items:center
+}
+.eyebrow{
+  color:var(--cy);
+  font-weight:800;
+  letter-spacing:2px;
+  font-size:11.5px;
+  border:1px solid #22d3ee55;
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:99px
+}
+h1{
+  font-size:clamp(30px,5vw,54px);
+  font-style:italic;
+  line-height:1.02;
+  margin:12px 0
+}
+h1 span{
+  background:linear-gradient(90deg,#ff2fb3,#7c3aed,#22d3ee);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent
+}
+.hero p{
+  opacity:.7;
+  font-size:14px;
+  line-height:1.6
+}
+.spec{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:16px
+}
+.spec div{
+  background:var(--panel);
+  border:1px solid #ffffff1a;
+  border-radius:12px;
+  padding:12px;
+  font-size:12px
+}
+.spec b{
+  font-size:17px;
+  font-style:italic
+}
+#gameSec{
+  max-width:1080px;
+  margin:auto;
+  padding:12px 20px
+}
+#gwrap{
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid #ff2fb355;
+  box-shadow:0 0 60px #ff2fb322
+}
+canvas{
+  display:block;
+  width:100%;
+  height:440px;
+  background:#0b0e1e
+}
+#hudTop{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  display:flex;
+  gap:8px;
+  padding:12px;
+  z-index:5;
+  font-weight:800;
+  font-size:12.5px;
+  flex-wrap:wrap
+}
+.chip{
+  background:#0d0a1acc;
+  border:1px solid #ffffff2c;
+  padding:7px 13px;
+  border-radius:8px;
+  font-variant-numeric:tabular-nums;
+  transform:skewX(-8deg)
+}
+#msg{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items:center;
+  justify-content:center;
+  background:#0a0716e6;
+  z-index:6;
+  text-align:center;
+  padding:20px
+}
+#msg.hide{
+  display:none
+}
+#startBtn{
+  background:linear-gradient(90deg,#ff2fb3,#7c3aed);
+  border:0;
+  color:#fff;
+  font-weight:900;
+  padding:14px 44px;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+  font-style:italic
+}
+#hudBottom{
+  display:flex;
+  gap:0;
+  background:var(--panel);
+  border-top:1px solid #ffffff18;
+  font-size:12px
+}
+#hudBottom div{
+  flex:1;
+  padding:12px;
+  text-align:center;
+  border-right:1px solid #ffffff12
+}
+#hudBottom b{
+  display:block;
+  font-size:17px;
+  font-style:italic
+}
+.ctl{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+  flex-wrap:wrap;
+  font-size:12px
+}
+.ctl span{
+  background:var(--panel);
+  border:1px solid #ffffff1c;
+  padding:8px 14px;
+  border-radius:99px
+}
+section{
+  max-width:1080px;
+  margin:auto;
+  padding:30px 20px
+}
+h2.t{
+  font-size:clamp(22px,3vw,30px);
+  font-style:italic
+}
+.sub{
+  opacity:.6;
+  margin-bottom:18px;
+  font-size:13.5px
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:14px
+}
+.card{
+  background:var(--panel);
+  border:1px solid #ffffff1a;
+  border-radius:14px;
+  overflow:hidden
+}
+.card img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  filter:saturate(1.4) contrast(1.1)
+}
+.card .bd{
+  padding:14px;
+  font-size:13px
+}
+.card .bd p{
+  opacity:.6;
+  margin-top:5px
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+  background:var(--panel);
+  border-radius:12px;
+  overflow:hidden
+}
+td,th{
+  padding:12px 14px;
+  border-bottom:1px solid #ffffff12;
+  text-align:left
+}
+.skills{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:12px
+}
+.skills div{
+  background:var(--panel);
+  border:1px solid #ffffff1a;
+  border-radius:12px;
+  padding:20px;
+  text-align:center;
+  font-size:13px
+}
+.cta{
+  margin:14px auto;
+  max-width:1040px;
+  background:linear-gradient(90deg,#ff2fb3,#7c3aed 60%,#22d3ee);
+  border-radius:16px;
+  text-align:center;
+  padding:48px 24px;
+  font-weight:800;
+  font-style:italic
+}
+footer{
+  text-align:center;
+  opacity:.55;
+  font-size:13px;
+  padding:26px
+}
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:.7s
+}
+.reveal.vis{
+  opacity:1;
+  transform:none
+}
+#signin{
+  position:fixed;
+  inset:0;
+  background:#000a;
+  z-index:300;
+  display:none;
+  align-items:center;
+  justify-content:center
+}
+#signin.open{
+  display:flex
+}
+.scard{
+  width:min(370px,92vw);
+  background:var(--panel);
+  border:1px solid #ff2fb355;
+  border-radius:16px;
+  padding:32px 28px;
+  text-align:center
+}
+.scard input{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border-radius:9px;
+  border:1px solid #ffffff2c;
+  background:#ffffff10;
+  color:#fff;
+  outline:0
+}
+@media(max-width:860px){
+  .hero{
+  grid-template-columns:1fr
+}
+#hudBottom{
+  flex-wrap:wrap
+}
+}
+</style>
+</head>
+<body>
+<div id="loader"><div class="flag">ðŸðŸðŸ</div><div class="car">ðŸŽï¸ðŸ’¨</div><div class="track"><i></i></div><small>HARBOR GP · GRID READY</small></div>
+<header class="top"><div class="nin"><span class="lamp"></span><b style="font-style:italic">HARBOR·GP</b><a href="#gameSec">Night Race</a><a href="#work">Paddock</a><a href="#laps">Timing</a><span class="sp"></span><button class="sbtn" onclick="openSign()">PIT PASS · Sign in</button></div></header>
+<header class="hero"><div><span class="eyebrow">â—‰ LIVE · HARBOR CIRCUIT · 3 LAPS · DRIFT ON</span><h1>Kai Tanaka makes <span>harbors drift.</span></h1><p>Top-down night racer: velocity + grip-lerp drift, 4 checkpoints per lap, handbrake on Space. Off-track = gravel trap. Beat 45s and take the podium.</p><div class="spec"><div>ðŸ <b>3 laps</b><br>4 checkpoints each</div><div>ðŸ’¨ <b>Drift</b><br>Space = handbrake</div><div>âš¡ <b>Top speed</b><br><span id="specTop">—</span> km/h</div><div>ðŸ† <b>Best</b><br><span id="specBest">—</span></div></div></div><div><img src="https://picsum.photos/seed/harborhero/480/340" style="width:100%;border-radius:14px;border:1px solid #ff2fb355" alt=""></div></header>
+<div id="gameSec"><div id="gwrap">
+<div id="hudTop"><span class="chip">â± <span id="hTime">0.00</span>s</span><span class="chip">LAP <span id="hLap">1</span>/3</span><span class="chip">DRIFT <span id="hDrift">0</span>m</span><span class="chip">SPD <span id="hSpeed">0</span></span><span class="chip">BEST <span id="hBest">--</span></span></div>
+<canvas id="cv" width="960" height="440"></canvas>
+<div id="msg"><div style="font-size:46px">ðŸŒƒðŸ</div><h2 style="font-size:30px;font-style:italic">HARBOR GP · NIGHT</h2><p style="opacity:.7;font-size:14px">WASD / arrows · Space = handbrake · hit glowing checkpoints in order</p><button id="startBtn" onclick="startGame()">▶ LIGHTS OUT</button></div>
+<div id="hudBottom"><div>P1 <b id="bSpeed">0 km/h</b>speed</div><div>P2 <b id="bDrift">0 m</b>drift</div><div>P3 <b id="bLap">–</b>last lap</div><div>P4 <b id="bBest2">–</b>best total</div></div>
+</div><div class="ctl"><span>W accelerate</span><span>S brake</span><span>A/D steer</span><span>Space drift</span><span>off-track slows you</span></div></div>
+<section id="work"><h2 class="t reveal">Paddock ðŸ› ï¸</h2><p class="sub reveal">Games from the pit lane.</p><div class="grid">
+<div class="card reveal"><img src="https://picsum.photos/seed/hb1/500/300"><div class="bd"><b>Neon GP</b> — arcade · 800K plays<p>Custom drift engine</p></div></div>
+<div class="card reveal"><img src="https://picsum.photos/seed/hb2/500/300"><div class="bd"><b>Drift Kings</b> — mobile · 4.7★<p>Unity · 200K installs</p></div></div>
+<div class="card reveal"><img src="https://picsum.photos/seed/hb3/500/300"><div class="bd"><b>Pixel Kart</b> — 8p multiplayer<p>Node + WebSockets</p></div></div>
+</div></section>
+<section id="laps"><h2 class="t reveal">Timing tower â±ï¸</h2><p class="sub reveal">Live in this browser.</p><table class="reveal"><tr><th>Lap</th><th>Time</th><th>Top speed</th></tr><tbody id="lapBoard"><tr><td colspan="3" style="opacity:.6">No laps yet — lights out to start.</td></tr></tbody></table></section>
+<section><h2 class="t reveal">Telemetry ðŸ”§</h2><p class="sub reveal">Why it feels fast.</p><div class="skills">
+<div class="reveal"><div style="font-size:28px">ðŸŒ€</div><b>Drift model</b><br><small style="opacity:.6">Grip lerp 0.06–0.16</small></div>
+<div class="reveal"><div style="font-size:28px">ðŸš¦</div><b>Checkpoints</b><br><small style="opacity:.6">Angle state machine</small></div>
+<div class="reveal"><div style="font-size:28px">ðŸ›ž</div><b>Skid marks</b><br><small style="opacity:.6">Fading trail pool</small></div>
+<div class="reveal"><div style="font-size:28px">ðŸŒƒ</div><b>Night render</b><br><small style="opacity:.6">Neon glow pass</small></div>
+</div></section>
+<div class="cta reveal">BRANDED MINI-GAME IN 3 WEEKS →<br><button class="sbtn" style="margin-top:14px;background:#fff;color:#000" onclick="openSign()">Hire Kai — $62/hr</button></div>
+<footer>Â© 2026 Kai Tanaka · Harbor GP · <a href="#" onclick="openSign();return false" style="color:#ff2fb3">Pit pass</a></footer>
+<div id="signin"><div class="scard"><div style="font-size:42px">ðŸ</div><h3>Pit pass</h3><input placeholder="Driver tag"><input type="password" placeholder="Password"><button class="sbtn" style="width:100%;margin-top:14px" onclick="closeSign()">Join Race →</button><p style="margin-top:10px;font-size:12px;opacity:.6;cursor:pointer" onclick="closeSign()">Cancel</p></div></div>
+<script>
+addEventListener('load',()=>setTimeout(()=>loader.classList.add('done'),1200));
+setTimeout(()=>loader.classList.add('done'),2600);
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const W=cv.width,H=cv.height,keys={};
+addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true;if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(e.key.toLowerCase()))e.preventDefault();});
+addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
+const CX=W/2,CY=H/2,RX=340,RY=140;
+const car={x:CX+RX,y:CY,a:-Math.PI/2,vx:0,vy:0,spd:0};
+let run=false,t0=0,elapsed=0,lap=1,cp=0,driftM=0,marks=[],laps=[],best=+localStorage.getItem('td_best')||0;
+if(best){hBest.textContent=best.toFixed(2)+'s';specBest.textContent=best.toFixed(2)+'s';bBest2.textContent=best.toFixed(2)+'s';}
+const cps=[0,Math.PI/2,Math.PI,-Math.PI/2];
+function trackPoint(a,w){return{x:CX+Math.cos(a)*RX*w,y:CY+Math.sin(a)*RY*w};}
+function onTrack(x,y){const dx=(x-CX)/RX,dy=(y-CY)/RY;const d=dx*dx+dy*dy;return d>0.55&&d<1.35;}
+function startGame(){msg.classList.add('hide');Object.assign(car,{x:CX+RX,y:CY,a:-Math.PI/2,vx:0,vy:0,spd:0});run=true;lap=1;cp=0;elapsed=0;driftM=0;marks=[];laps=[];renderLaps();t0=performance.now();loop();}
+function angOf(x,y){return Math.atan2((y-CY)/RY,(x-CX)/RX);}
+function near(a,b){let d=Math.abs(a-b)%(Math.PI*2);return Math.min(d,Math.PI*2-d)<0.35;}
+function renderLaps(){lapBoard.innerHTML=laps.length?laps.map((l,i)=>`<tr><td>Lap ${i+1}</td><td>${l.t.toFixed(2)}s</td><td>${l.top} km/h</td></tr>`).join(''):'<tr><td colspan="3" style="opacity:.6">Racing”¦ hit all 4 checkpoints.</td></tr>';if(laps.length){bLap.textContent=laps[laps.length-1].t.toFixed(2)+'s';}}
+let top=0,lapStart=0;
+function loop(){if(!run)return;requestAnimationFrame(loop);
+const up=keys['w']||keys['arrowup'],dn=keys['s']||keys['arrowdown'],lf=keys['a']||keys['arrowleft'],rt=keys['d']||keys['arrowright'],hb=keys[' '];
+const acc=up?0.28:0,brk=dn?0.32:0;
+const fx=Math.cos(car.a),fy=Math.sin(car.a);
+const sf=Math.min(Math.abs(car.spd)/4,1);
+if(lf)car.a-=0.045*sf-(hb?0.02:0);
+if(rt)car.a+=0.045*sf+(hb?0.02:0);
+car.vx+=fx*acc;car.vy+=fy*acc;
+car.vx*=(dn?0.96:0.992);car.vy*=(dn?0.96:0.992);
+const sp=Math.hypot(car.vx,car.vy);
+const grip=hb?0.06:0.16;
+const tx=fx*sp,ty=fy*sp;
+car.vx+=(tx-car.vx)*grip;car.vy+=(ty-car.vy)*grip;
+car.x+=car.vx;car.y+=car.vy;
+car.spd=sp;top=Math.max(top,sp*38);
+const kmh=Math.round(sp*38);
+const off=!onTrack(car.x,car.y);
+if(off){car.vx*=0.94;car.vy*=0.94;}
+const lat=Math.abs(-Math.sin(car.a)*car.vx+Math.cos(car.a)*car.vy);
+const drifting=lat>1.4&&sp>2;
+if(drifting){driftM+=sp*0.12;marks.push({x:car.x,y:car.y,a:car.a,l:50});}
+marks=marks.filter(m=>m.l-->0);
+const ca=angOf(car.x,car.y);
+if(near(ca,cps[cp])){cp++;if(cp>=4){cp=0;const lt=(performance.now()-t0-lapStartTotal())/1000;laps.push({t:lt,top:Math.round(top)});top=0;lapStart=performance.now();renderLaps();if(lap>=3){finish();return;}lap++;}}
+elapsed=(performance.now()-t0)/1000;
+hTime.textContent=elapsed.toFixed(2);hLap.textContent=Math.min(lap,3);hDrift.textContent=Math.floor(driftM);hSpeed.textContent=kmh;
+bSpeed.textContent=kmh+' km/h';bDrift.textContent=Math.floor(driftM)+' m';specTop.textContent=kmh+' km/h';
+ctx.clearRect(0,0,W,H);
+ctx.fillStyle='#0a0d20';ctx.fillRect(0,0,W,H);
+ctx.fillStyle='#ff2fb322';
+for(let i=0;i<50;i++){const gx=(i*173)%W,gy=(i*97)%H;ctx.fillRect(gx,gy,2,2);}
+ctx.lineWidth=64;ctx.strokeStyle='#1a1440';ctx.beginPath();ctx.ellipse(CX,CY,RX,RY,0,0,7);ctx.stroke();
+ctx.lineWidth=56;ctx.strokeStyle='#2c2560';ctx.beginPath();ctx.ellipse(CX,CY,RX,RY,0,0,7);ctx.stroke();
+ctx.lineWidth=3;ctx.strokeStyle='#ff2fb388';ctx.setLineDash([18,14]);ctx.beginPath();ctx.ellipse(CX,CY,RX,RY,0,0,7);ctx.stroke();ctx.setLineDash([]);
+const s=trackPoint(-Math.PI/2,1);ctx.fillStyle='#fff';for(let i=0;i<6;i++)ctx.fillRect(s.x-20+i*7,s.y-28,(i%2?4:2),10);
+cps.forEach((a,i)=>{const p=trackPoint(a,1);ctx.fillStyle=i===cp?'#22d3ee':'#ffffff22';ctx.shadowColor=i===cp?'#22d3ee':'transparent';ctx.shadowBlur=i===cp?14:0;ctx.beginPath();ctx.arc(p.x,p.y,8,0,7);ctx.fill();ctx.shadowBlur=0;});
+for(const m of marks){ctx.save();ctx.translate(m.x,m.y);ctx.rotate(m.a);ctx.fillStyle=`rgba(255,47,179,${m.l/90})`;ctx.fillRect(-8,-9,14,3);ctx.fillRect(-8,7,14,3);ctx.restore();}
+ctx.save();ctx.translate(car.x,car.y);ctx.rotate(car.a);
+ctx.shadowColor=drifting?'#22d3ee':'#ff2fb3';ctx.shadowBlur=18;
+ctx.fillStyle=drifting?'#22d3ee':'#ff2fb3';
+roundRect(-16,-9,32,18,5);ctx.fill();
+ctx.shadowBlur=0;ctx.fillStyle='#0b0e18';ctx.fillRect(2,-6,7,12);
+ctx.fillStyle='#fff';ctx.fillRect(-14,-6,4,3);ctx.fillRect(-14,3,4,3);
+ctx.restore();
+if(drifting){ctx.font='italic 14px Verdana';ctx.fillStyle='#22d3ee';ctx.fillText('ðŸ’¨ DRIFT',car.x+20,car.y-18);}
+}
+function lapStartTotal(){return laps.reduce((a,l)=>a+l.t*1000,0);}
+function roundRect(x,y,w,h,r){ctx.beginPath();ctx.roundRect?ctx.roundRect(x,y,w,h,r):ctx.rect(x,y,w,h);}
+function finish(){run=false;const total=elapsed;if(!best||total<best){best=total;localStorage.setItem('td_best',best);}hBest.textContent=best.toFixed(2)+'s';bBest2.textContent=best.toFixed(2)+'s';specBest.textContent=best.toFixed(2)+'s';msg.innerHTML=`<div style="font-size:46px">ðŸ†</div><h2 style="font-size:30px;font-style:italic">PODIUM · P1</h2><p>Total ${total.toFixed(2)}s · Drift ${Math.floor(driftM)}m · Best ${best.toFixed(2)}s</p><button id="startBtn" onclick="startGame()">â†» BACK TO GRID</button>`;msg.classList.remove('hide');}
+(function idle(){if(run)return;requestAnimationFrame(idle);ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0d20';ctx.fillRect(0,0,W,H);ctx.lineWidth=64;ctx.strokeStyle='#1a1440';ctx.beginPath();ctx.ellipse(CX,CY,RX,RY,0,0,7);ctx.stroke();ctx.lineWidth=56;ctx.strokeStyle='#2c2560';ctx.beginPath();ctx.ellipse(CX,CY,RX,RY,0,0,7);ctx.stroke();ctx.save();ctx.translate(CX+RX,CY);ctx.rotate(-Math.PI/2+Math.sin(Date.now()/900)*0.2);ctx.fillStyle='#ff2fb3';roundRect(-16,-9,32,18,5);ctx.fill();ctx.restore();})();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+function openSign(){signin.classList.add('open');}function closeSign(){signin.classList.remove('open');}
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

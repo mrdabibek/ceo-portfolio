@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STARFALL — Play Beyond</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box
+}
+:root{
+--cy:#00f0ff;
+--mg:#ff2bd6;
+--lm:#b6ff00;
+--bg:#070312;
+--card:#0f0a24;
+--line:#2a2060;
+--txt:#eef2ff;
+--mut:#9b93c9
+}
+html{
+scroll-behavior:smooth
+}
+body{
+background:var(--bg);
+color:var(--txt);
+font-family:'Chakra Petch',sans-serif;
+overflow-x:hidden
+}
+::selection{
+background:var(--mg);
+color:#fff
+}
+#preloader{
+position:fixed;
+inset:0;
+z-index:300;
+background:#05020f;
+display:flex;
+flex-direction:column;
+gap:16px;
+align-items:center;
+justify-content:center;
+transition:.5s
+}
+#preloader.done{
+opacity:0;
+visibility:hidden
+}
+#preloader b{
+font-family:Orbitron;
+font-size:30px;
+letter-spacing:6px;
+color:var(--cy);
+text-shadow:0 0 24px var(--cy)
+}
+#preloader .bar{
+width:240px;
+height:4px;
+background:#1a1440;
+border-radius:99px;
+overflow:hidden
+}
+#preloader .bar i{
+display:block;
+height:100%;
+width:50%;
+background:linear-gradient(90deg,var(--cy),var(--mg));
+animation:ld 1s infinite
+}
+@keyframes ld{
+0%{
+transform:translateX(-100%)
+}
+100%{
+transform:translateX(400%)
+}
+}
+#preloader small{
+color:var(--mut);
+letter-spacing:4px;
+font-size:11px
+}
+/* side HUD nav */
+nav{
+position:fixed;
+top:0;
+left:0;
+right:0;
+z-index:100;
+display:flex;
+align-items:center;
+gap:24px;
+padding:14px 4%;
+background:rgba(7,3,18,.85);
+backdrop-filter:blur(12px);
+border-bottom:1px solid var(--line)
+}
+.logo{
+font-family:Orbitron;
+font-weight:900;
+font-size:20px;
+letter-spacing:2px
+}
+.logo span{
+color:var(--mg);
+text-shadow:0 0 14px var(--mg)
+}
+.nlinks{
+display:flex;
+gap:22px
+}
+.nlinks a{
+color:var(--mut);
+text-decoration:none;
+font-size:13px;
+font-weight:700;
+letter-spacing:1px
+}
+.nlinks a:hover{
+color:var(--cy)
+}
+.hud{
+margin-left:auto;
+display:flex;
+gap:10px;
+align-items:center
+}
+.pill{
+border:1px solid var(--line);
+border-radius:99px;
+padding:8px 16px;
+font-size:12px;
+color:var(--cy)
+}
+.dl{
+background:linear-gradient(90deg,var(--cy),var(--mg));
+border:0;
+color:#000;
+font-family:Orbitron;
+font-weight:800;
+font-size:12px;
+padding:12px 24px;
+border-radius:10px;
+cursor:pointer;
+clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%)
+}
+/* hero */
+.hero{
+position:relative;
+min-height:100vh;
+display:flex;
+align-items:center;
+padding:120px 5% 60px;
+overflow:hidden
+}
+#stars{
+position:absolute;
+inset:0;
+width:100%;
+height:100%
+}
+.glow1,.glow2{
+position:absolute;
+border-radius:50%;
+filter:blur(110px);
+opacity:.5;
+pointer-events:none
+}
+.glow1{
+width:520px;
+height:520px;
+background:#3b0a6e;
+top:-140px;
+right:-100px
+}
+.glow2{
+width:420px;
+height:420px;
+background:#063a4d;
+bottom:-120px;
+left:-120px
+}
+.hgrid{
+position:relative;
+z-index:2;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:44px;
+max-width:1180px;
+margin:auto;
+align-items:center;
+width:100%
+}
+.tag{
+display:inline-block;
+border:1px solid var(--cy);
+color:var(--cy);
+font-size:11px;
+letter-spacing:3px;
+padding:8px 16px;
+border-radius:99px;
+box-shadow:0 0 18px #00f0ff55
+}
+h1{
+font-family:Orbitron;
+font-weight:900;
+font-size:clamp(40px,6vw,74px);
+line-height:1;
+margin:18px 0
+}
+h1 .c{
+color:var(--cy);
+text-shadow:0 0 26px var(--cy)
+}
+h1 .m{
+color:var(--mg);
+text-shadow:0 0 26px var(--mg)
+}
+.sub{
+color:var(--mut);
+line-height:1.7;
+max-width:480px;
+font-size:15px
+}
+.cta{
+display:flex;
+gap:12px;
+margin-top:26px;
+flex-wrap:wrap
+}
+.btn-c{
+background:var(--cy);
+color:#000;
+border:0;
+font-family:Orbitron;
+font-weight:800;
+padding:15px 30px;
+border-radius:10px;
+cursor:pointer;
+font-size:13px;
+box-shadow:0 0 26px #00f0ff66
+}
+.btn-m{
+background:transparent;
+color:#fff;
+border:1px solid var(--mg);
+padding:15px 30px;
+border-radius:10px;
+cursor:pointer;
+font-family:Orbitron;
+font-size:13px
+}
+.specs{
+display:flex;
+gap:22px;
+margin-top:28px
+}
+.specs b{
+font-family:Orbitron;
+font-size:22px;
+color:var(--lm)
+}
+.specs small{
+color:var(--mut);
+font-size:12px
+}
+.char{
+position:relative
+}
+.char img{
+width:100%;
+height:480px;
+object-fit:cover;
+border-radius:24px;
+border:1px solid var(--line);
+box-shadow:0 0 60px #ff2bd633
+}
+.hudcard{
+position:absolute;
+bottom:-20px;
+left:20px;
+right:20px;
+background:rgba(10,6,28,.9);
+border:1px solid var(--line);
+border-radius:16px;
+padding:16px 20px;
+display:flex;
+gap:18px;
+align-items:center;
+backdrop-filter:blur(10px)
+}
+.hudcard .hp{
+flex:1
+}
+.hudcard .bar{
+height:8px;
+background:#221a52;
+border-radius:99px;
+overflow:hidden;
+margin-top:6px
+}
+.hudcard .bar i{
+display:block;
+height:100%;
+width:78%;
+background:linear-gradient(90deg,var(--lm),var(--cy))
+}
+.hudcard b{
+font-family:Orbitron;
+font-size:14px
+}
+/* ticker */
+.tick{
+border-top:1px solid var(--line);
+border-bottom:1px solid var(--line);
+background:#0a0620;
+padding:14px 0;
+overflow:hidden;
+white-space:nowrap;
+font-family:Orbitron;
+font-size:13px;
+letter-spacing:2px;
+color:var(--lm)
+}
+.tick div{
+display:inline-block;
+animation:mq 20s linear infinite
+}
+@keyframes mq{
+to{
+transform:translateX(-50%)
+}
+}
+/* sections */
+section{
+padding:80px 5%;
+max-width:1180px;
+margin:auto
+}
+.eyebrow{
+font-family:Orbitron;
+font-size:12px;
+letter-spacing:4px;
+color:var(--cy)
+}
+h2{
+font-family:Orbitron;
+font-size:clamp(26px,4vw,42px);
+margin:12px 0 10px
+}
+.lead{
+color:var(--mut);
+max-width:600px;
+line-height:1.7;
+font-size:14.5px
+}
+/* features */
+.feats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:18px;
+margin-top:36px
+}
+.feat{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:18px;
+padding:28px;
+position:relative;
+overflow:hidden;
+transition:.3s
+}
+.feat:hover{
+border-color:var(--cy);
+transform:translateY(-5px)
+}
+.feat::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:3px;
+background:linear-gradient(90deg,var(--cy),var(--mg))
+}
+.feat .ic{
+font-size:30px
+}
+.feat h3{
+font-family:Orbitron;
+font-size:16px;
+margin:12px 0 8px
+}
+.feat p{
+color:var(--mut);
+font-size:13.5px;
+line-height:1.7
+}
+/* gallery + req */
+.split{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:26px;
+margin-top:36px
+}
+.shots{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px
+}
+.shots img{
+width:100%;
+height:170px;
+object-fit:cover;
+border-radius:14px;
+border:1px solid var(--line);
+cursor:pointer;
+transition:.3s
+}
+.shots img:hover{
+border-color:var(--mg);
+transform:scale(1.03)
+}
+.shots img.wide{
+grid-column:span 2;
+height:210px
+}
+.reqtabs{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:18px;
+padding:28px
+}
+.rtabs{
+display:flex;
+gap:8px;
+margin:16px 0
+}
+.rtabs button{
+flex:1;
+background:transparent;
+border:1px solid var(--line);
+color:var(--mut);
+padding:11px;
+border-radius:10px;
+cursor:pointer;
+font-family:Orbitron;
+font-size:12px
+}
+.rtabs button.on{
+background:var(--cy);
+color:#000;
+border-color:var(--cy)
+}
+.reqtabs ul{
+list-style:none;
+color:var(--mut);
+font-size:13.5px;
+line-height:2.2
+}
+.reqtabs ul b{
+color:#fff
+}
+/* classes */
+.classes{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
+margin-top:36px
+}
+.cls{
+background:linear-gradient(180deg,#141033,#0b0722);
+border:1px solid var(--line);
+border-radius:18px;
+overflow:hidden;
+text-align:center;
+transition:.3s
+}
+.cls:hover{
+transform:translateY(-6px) rotate(-1deg);
+border-color:var(--lm)
+}
+.cls img{
+width:100%;
+height:200px;
+object-fit:cover
+}
+.cls .in{
+padding:22px
+}
+.cls h3{
+font-family:Orbitron;
+font-size:17px
+}
+.cls .pw{
+margin:12px 0;
+font-size:12px;
+color:var(--mut)
+}
+.cls .bar{
+height:6px;
+background:#221a52;
+border-radius:99px;
+overflow:hidden;
+margin:6px 0
+}
+.cls .bar i{
+display:block;
+height:100%
+}
+.cls button{
+margin-top:14px;
+width:100%;
+background:transparent;
+border:1px solid var(--lm);
+color:var(--lm);
+padding:11px;
+border-radius:10px;
+cursor:pointer;
+font-family:Orbitron;
+font-size:12px
+}
+/* leaderboard */
+.board{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:18px;
+margin-top:30px;
+overflow:hidden
+}
+.brow{
+display:grid;
+grid-template-columns:60px 1fr auto auto;
+gap:14px;
+align-items:center;
+padding:14px 22px;
+border-bottom:1px solid var(--line);
+font-size:14px
+}
+.brow:first-child{
+background:#171031;
+font-family:Orbitron;
+font-size:12px;
+letter-spacing:2px;
+color:var(--mut)
+}
+.brow .rk{
+font-family:Orbitron;
+font-weight:800;
+color:var(--cy)
+}
+.brow.top .rk{
+color:var(--gold,#f5c518)
+}
+.av{
+width:36px;
+height:36px;
+border-radius:50%;
+object-fit:cover
+}
+/* download */
+.dlbox{
+background:linear-gradient(120deg,#00f0ff22,#ff2bd622);
+border:1px solid var(--line);
+border-radius:24px;
+padding:50px 8%;
+text-align:center;
+margin-top:20px
+}
+.dlbox .os{
+display:flex;
+gap:12px;
+justify-content:center;
+margin-top:24px;
+flex-wrap:wrap
+}
+.dlbox .os button{
+background:#fff;
+color:#000;
+border:0;
+font-family:Orbitron;
+font-weight:800;
+font-size:13px;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer
+}
+.dlbox .os button.ghost{
+background:transparent;
+color:#fff;
+border:1px solid var(--line)
+}
+footer{
+border-top:1px solid var(--line);
+padding:28px 5%;
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+color:var(--mut);
+font-size:13px
+}
+.reveal{
+opacity:0;
+transform:translateY(28px);
+transition:.6s
+}
+.reveal.vis{
+opacity:1;
+transform:none
+}
+@media(max-width:860px){
+.hgrid,.split{
+grid-template-columns:1fr
+}
+.nlinks{
+display:none
+}
+}
+</style>
+</head>
+<body>
+<div id="preloader"><b>STARFALL</b><div class="bar"><i></i></div><small>LOADING WORLD…</small></div>
+<nav>
+<div class="logo">STAR<span>FALL</span></div>
+<div class="nlinks"><a href="#feats">World</a><a href="#shots">Media</a><a href="#cls">Classes</a><a href="#rank">Ranking</a><a href="#dl">Download</a></div>
+<div class="hud"><span class="pill">● 12,408 online</span><button class="dl" onclick="document.getElementById('dl').scrollIntoView()">PLAY FREE</button></div>
+</nav>
+<header class="hero">
+<canvas id="stars"></canvas>
+<div class="glow1"></div><div class="glow2"></div>
+<div class="hgrid">
+<div>
+<span class="tag">SEASON 04 — VOIDBORN RISES</span>
+<h1>PLAY <span class="c">BEYOND</span><br>THE <span class="m">VOID</span></h1>
+<p class="sub">Open-world action RPG. 60-hour story, 4-player co-op, zero pay-to-win. Explore the shattered Isles of Nara on PC, PlayStation and mobile.</p>
+<div class="cta"><button class="btn-c" onclick="document.getElementById('dl').scrollIntoView()">▶ PLAY FREE NOW</button><button class="btn-m" onclick="document.getElementById('shots').scrollIntoView()">WATCH WORLD</button></div>
+<div class="specs"><div><b>4.9★</b><br><small>2M reviews</small></div><div><b>60H</b><br><small>story mode</small></div><div><b>4P</b><br><small>co-op squad</small></div></div>
+</div>
+<div class="char">
+<img src="https://picsum.photos/seed/starhero/700/800" alt="Hero">
+<div class="hudcard"><div style="font-size:30px">🛡️</div><div class="hp"><b>KAEL — LVL 87 VOIDBLADE</b><div class="bar"><i></i></div></div><span style="color:var(--lm);font-family:Orbitron">78%</span></div>
+</div>
+</div>
+</header>
+<div class="tick"><div>&nbsp;◆ SEASON 04 LIVE &nbsp; ◆ NEW MAP: VOID ISLES &nbsp; ◆ DOUBLE XP WEEKEND &nbsp; ◆ SEASON 04 LIVE &nbsp; ◆ NEW MAP: VOID ISLES &nbsp; ◆ DOUBLE XP WEEKEND &nbsp;</div></div>
+<section id="feats">
+<p class="eyebrow">// 01 — THE WORLD</p>
+<h2>One world. A hundred ways to break it.</h2>
+<p class="lead">Physics-driven combat, living weather and choices that actually branch the map.</p>
+<div class="feats">
+<div class="feat reveal"><div class="ic">🌌</div><h3>OPEN VOID MAP</h3><p>9 biomes, seamless loading, grappling-hook traversal across floating isles.</p></div>
+<div class="feat reveal"><div class="ic">⚔️</div><h3>COMBO COMBAT</h3><p>120+ skills, weapon fusion and parry windows tuned for controllers.</p></div>
+<div class="feat reveal"><div class="ic">🤝</div><h3>4P CO-OP RAIDS</h3><p>Weekly void-rifts for squads. Matchmaking under 20 seconds.</p></div>
+<div class="feat reveal"><div class="ic">🏠</div><h3>BUILD & CRAFT</h3><p>Your sky-ship is your base. Upgrade engines, gardens and cannons.</p></div>
+</div>
+<div class="split" id="shots">
+<div class="shots">
+<img class="wide" id="big" src="https://picsum.photos/seed/starshot0/800/400" alt="">
+<img src="https://picsum.photos/seed/starshot1/400/300" onclick="swapShot(this)" alt="">
+<img src="https://picsum.photos/seed/starshot2/400/300" onclick="swapShot(this)" alt="">
+<img src="https://picsum.photos/seed/starshot3/400/300" onclick="swapShot(this)" alt="">
+<img src="https://picsum.photos/seed/starshot4/400/300" onclick="swapShot(this)" alt="">
+</div>
+<div class="reqtabs">
+<h3 style="font-family:Orbitron">SYSTEM REQUIREMENTS</h3>
+<p style="color:var(--mut);font-size:13px">Runs on a potato. Shines on a beast.</p>
+<div class="rtabs"><button class="on" onclick="req(0,this)">MINIMUM</button><button onclick="req(1,this)">RECOMMENDED</button><button onclick="req(2,this)">ULTRA</button></div>
+<ul id="reqList"></ul>
+</div>
+</div>
+</section>
+<section id="cls">
+<p class="eyebrow">// 02 — CLASSES</p>
+<h2>Choose your fighter</h2>
+<div class="classes">
+<div class="cls reveal"><img src="https://picsum.photos/seed/starcls1/400/300" alt=""><div class="in"><h3>VOIDBLADE ⚔️</h3><div class="pw">ATK<div class="bar"><i style="width:92%;background:var(--mg)"></i></div>DEF<div class="bar"><i style="width:60%;background:var(--cy)"></i></div></div><button onclick="pick(this)">SELECT CLASS</button></div></div>
+<div class="cls reveal"><img src="https://picsum.photos/seed/starcls2/400/300" alt=""><div class="in"><h3>STARSHOOTER 🔫</h3><div class="pw">ATK<div class="bar"><i style="width:85%;background:var(--mg)"></i></div>SPD<div class="bar"><i style="width:90%;background:var(--lm)"></i></div></div><button onclick="pick(this)">SELECT CLASS</button></div></div>
+<div class="cls reveal"><img src="https://picsum.photos/seed/starcls3/400/300" alt=""><div class="in"><h3>RUNESMITH 🛠️</h3><div class="pw">DEF<div class="bar"><i style="width:95%;background:var(--cy)"></i></div>SUP<div class="bar"><i style="width:88%;background:var(--lm)"></i></div></div><button onclick="pick(this)">SELECT CLASS</button></div></div>
+<div class="cls reveal"><img src="https://picsum.photos/seed/starcls4/400/300" alt=""><div class="in"><h3>STORMCALLER 🌩️</h3><div class="pw">MAG<div class="bar"><i style="width:97%;background:var(--mg)"></i></div>SPD<div class="bar"><i style="width:75%;background:var(--cy)"></i></div></div><button onclick="pick(this)">SELECT CLASS</button></div></div>
+</div>
+</section>
+<section id="rank">
+<p class="eyebrow">// 03 — HALL OF FAME</p>
+<h2>Top void-hunters this week</h2>
+<div class="board" id="board">
+<div class="brow"><span>RANK</span><span>PLAYER</span><span>SCORE</span><span>WINS</span></div>
+</div>
+<div class="dlbox" id="dl">
+<p class="eyebrow">FREE TO PLAY · NO CARD NEEDED</p>
+<h2>Drop into Nara tonight</h2>
+<p class="lead" style="margin:0 auto">120 GB on PC · 18 GB on mobile · cross-save everywhere.</p>
+<div class="os"><button onclick="dl(this)">⬇ PC DOWNLOAD</button><button class="ghost" onclick="dl(this)">PLAYSTATION</button><button class="ghost" onclick="dl(this)">APP STORE / GP</button></div>
+<p style="color:var(--mut);font-size:12.5px;margin-top:16px" id="dlmsg">Servers: EU 12ms · ASIA 34ms · US 88ms</p>
+</div>
+</section>
+<footer><span>© 2026 Starfall Studios</span><span>PC · PS5 · iOS · Android · Discord 400K</span></footer>
+<script>
+addEventListener('load',()=>setTimeout(()=>document.getElementById('preloader').classList.add('done'),800));
+// star canvas
+const c=document.getElementById('stars'),x=c.getContext('2d');let S=[];
+function rs(){c.width=c.offsetWidth;c.height=c.offsetHeight;S=Array.from({length:120},()=>({x:Math.random()*c.width,y:Math.random()*c.height,s:Math.random()*2+.4,v:Math.random()*.6+.1}))}
+rs();addEventListener('resize',rs);
+(function anim(){x.clearRect(0,0,c.width,c.height);S.forEach(p=>{p.y-=p.v;if(p.y<0)p.y=c.height;x.fillStyle=p.s>1.5?'#ff2bd6':'#00f0ff';x.globalAlpha=.4+Math.random()*.5;x.fillRect(p.x,p.y,p.s,p.s)});x.globalAlpha=1;requestAnimationFrame(anim)})();
+// shots
+function swapShot(el){document.getElementById('big').src=el.src.replace('/400/300','/800/400')}
+// reqs
+const REQS=[
+['<b>OS:</b> Win 10 64-bit','<b>CPU:</b> i5-8400 / R5 2600','<b>RAM:</b> 8 GB','<b>GPU:</b> GTX 1060 6GB','<b>Disk:</b> 120 GB SSD'],
+['<b>OS:</b> Win 11 64-bit','<b>CPU:</b> i7-12700 / R7 5800X','<b>RAM:</b> 16 GB','<b>GPU:</b> RTX 3070','<b>Disk:</b> 120 GB NVMe'],
+['<b>OS:</b> Win 11 64-bit','<b>CPU:</b> i9-14900K','<b>RAM:</b> 32 GB','<b>GPU:</b> RTX 4080 · 4K120','<b>Disk:</b> 120 GB NVMe']];
+function req(i,btn){document.querySelectorAll('.rtabs button').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.getElementById('reqList').innerHTML=REQS[i].map(l=>'<li>'+l+'</li>').join('')}
+req(0,document.querySelector('.rtabs button'));
+function pick(b){document.querySelectorAll('.cls button').forEach(x=>x.textContent='SELECT CLASS');b.textContent='✓ SELECTED — SEE YOU IN NARA'}
+function dl(b){document.getElementById('dlmsg').textContent='Preparing '+b.textContent.trim()+' build… check your downloads folder. (demo)';b.textContent='✓ QUEUED'}
+// board
+const P=[['NovaStrike',9840,132],['void_king',9210,121],['Aisha_Plays',8870,110],['Tимур_TV',8430,98],['ghost.exe',8102,95],['Luna',7990,90]];
+const bd=document.getElementById('board');
+P.forEach((p,i)=>{bd.innerHTML+='<div class="brow'+(i<3?' top':'')+'"><span class="rk">#'+(i+1)+'</span><span style="display:flex;gap:10px;align-items:center"><img class="av" src="https://picsum.photos/seed/starp'+i+'/80/80">'+p[0]+'</span><span style="font-family:Orbitron">'+p[1]+'</span><span style="color:var(--mut)">'+p[2]+'</span></div>'});
+const io=new IntersectionObserver(e=>e.forEach(v=>v.isIntersecting&&v.target.classList.add('vis')),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

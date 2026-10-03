@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ClearView Optics — Glasses & Eye Care</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+* {
+margin:0;
+padding:0;
+box-sizing:border-box
+}
+:root {
+--bg:#eef4fb;
+--ink:#10233a;
+--mut:#5b7691;
+--blue:#0f6fde;
+--blue2:#0a4fa3;
+--light:#d8e9fb;
+--line:#c6d9ec;
+--cyan:#22c3d6
+}
+body {
+background:var(--bg);
+color:var(--ink);
+font-family:Manrope,sans-serif
+}
+h1,h2,h3,.disp { font-family:Fraunces,serif }
+.wrap {
+max-width:1180px;
+margin:auto;
+padding:0 22px
+}
+/* header */
+.topbar {
+background:var(--ink);
+color:#bcd7f2;
+text-align:center;
+font-size:12.5px;
+padding:9px;
+letter-spacing:.5px
+}
+header {
+position:sticky;
+top:0;
+z-index:60;
+background:rgba(255,255,255,.92);
+backdrop-filter:blur(10px);
+border-bottom:1px solid var(--line)
+}
+.hd {
+max-width:1240px;
+margin:auto;
+display:flex;
+align-items:center;
+gap:18px;
+padding:14px 22px
+}
+.brand {
+font-family:Fraunces,serif;
+font-size:23px;
+font-weight:700;
+white-space:nowrap
+}
+.brand em { color:var(--blue); font-style:normal }
+nav { display:flex; gap:22px }
+nav a {
+color:var(--ink);
+text-decoration:none;
+font-size:13.5px;
+font-weight:600;
+opacity:.7
+}
+nav a:hover { opacity:1; color:var(--blue) }
+.hacts {
+margin-left:auto;
+display:flex;
+gap:10px
+}
+.btn {
+padding:12px 24px;
+border-radius:12px;
+font-weight:700;
+cursor:pointer;
+font-size:14px;
+font-family:Manrope;
+border:none
+}
+.btn.b { background:var(--blue); color:#fff }
+.btn.b:hover { background:var(--blue2) }
+.btn.o {
+background:#fff;
+border:2px solid var(--line);
+color:var(--ink)
+}
+.btn.o:hover { border-color:var(--blue); color:var(--blue) }
+/* hero */
+.hero {
+display:grid;
+grid-template-columns:1.05fr 1fr;
+gap:26px;
+align-items:center;
+padding:40px 0
+}
+.heroC h1 { font-size:clamp(34px,4.6vw,58px); line-height:1.06 }
+.heroC h1 i { color:var(--blue) }
+.heroC>p {
+color:var(--mut);
+margin:16px 0 22px;
+line-height:1.75
+}
+.hrow {
+display:flex;
+gap:10px;
+flex-wrap:wrap
+}
+.proof {
+display:flex;
+gap:26px;
+margin-top:26px
+}
+.proof b { font-size:24px; display:block }
+.proof span {
+font-size:11.5px;
+color:var(--mut);
+letter-spacing:1px
+}
+.try {
+background:#fff;
+border:1px solid var(--line);
+border-radius:24px;
+padding:34px;
+text-align:center;
+box-shadow:0 30px 60px rgba(15,111,222,.12)
+}
+.try .face { font-size:120px; line-height:1 }
+#glasses {
+font-size:64px;
+margin-top:-58px;
+transition:.3s;
+display:block;
+filter:drop-shadow(0 6px 10px rgba(0,0,0,.2))
+}
+.try h3 { font-size:22px; margin:14px 0 4px }
+.try p {
+color:var(--mut);
+font-size:13.5px;
+margin-bottom:16px
+}
+.faces {
+display:flex;
+gap:8px;
+justify-content:center;
+flex-wrap:wrap;
+margin-bottom:12px
+}
+.face-b {
+border:2px solid var(--line);
+background:#fff;
+border-radius:10px;
+padding:9px 14px;
+cursor:pointer;
+font-weight:700;
+font-size:13px
+}
+.face-b.on {
+border-color:var(--blue);
+color:var(--blue);
+background:#eaf3fe
+}
+.shapes {
+display:flex;
+gap:8px;
+justify-content:center;
+flex-wrap:wrap
+}
+.shape-b {
+border:2px solid var(--line);
+background:#fff;
+border-radius:99px padding:0;
+padding:9px 16px;
+border-radius:99px;
+cursor:pointer;
+font-size:22px
+}
+.shape-b.on { border-color:var(--blue); background:#eaf3fe }
+/* finder */
+.finder {
+background:#fff;
+border:1px solid var(--line);
+border-radius:22px;
+padding:40px 36px;
+margin:10px 0 34px
+}
+.finder h2 { font-size:clamp(24px,3vw,36px); text-align:center }
+.finder>p {
+text-align:center;
+color:var(--mut);
+margin:8px 0 24px
+}
+.fsteps {
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px
+}
+.fstep h4 {
+font-size:12px;
+letter-spacing:2px;
+color:var(--mut);
+margin-bottom:10px
+}
+.pickrow {
+display:flex;
+gap:8px;
+flex-wrap:wrap
+}
+.pick {
+border:2px solid var(--line);
+background:#fff;
+border-radius:10px;
+padding:10px 16px;
+cursor:pointer;
+font-weight:600;
+font-size:13.5px
+}
+.pick.on {
+background:var(--ink);
+color:#fff;
+border-color:var(--ink)
+}
+#findRes {
+margin-top:22px;
+background:var(--bg);
+border-radius:14px;
+padding:20px;
+font-size:14.5px;
+line-height:1.7;
+display:none
+}
+/* shop */
+section { padding:20px 0 60px }
+.toolbar {
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+align-items:center;
+margin-bottom:22px
+}
+.chip {
+border:2px solid var(--line);
+background:#fff;
+padding:10px 20px;
+border-radius:99px;
+cursor:pointer;
+font-weight:700;
+font-size:13px
+}
+.chip.on {
+background:var(--ink);
+color:#fff;
+border-color:var(--ink)
+}
+.toolbar select {
+margin-left:auto;
+border:2px solid var(--line);
+border-radius:10px;
+padding:10px 14px;
+font-family:Manrope;
+font-size:13px;
+background:#fff
+}
+#res {
+width:100%;
+color:var(--mut);
+font-size:13px
+}
+.grid {
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+gap:16px
+}
+.card {
+background:#fff;
+border:1px solid var(--line);
+border-radius:18px;
+padding:24px 20px;
+text-align:center;
+transition:.28s;
+position:relative;
+display:flex;
+flex-direction:column
+}
+.card:hover { transform:translateY(-5px); box-shadow:0 20px 44px rgba(15,111,222,.15) }
+.card .g { font-size:66px }
+.card h3 { font-size:17px; margin:10px 0 2px }
+.card small { color:var(--mut); font-size:12.5px }
+.card .tag {
+display:inline-block;
+background:var(--light);
+color:var(--blue2);
+font-size:11px;
+font-weight:800;
+padding:4px 12px;
+border-radius:99px;
+margin-top:8px
+}
+.card .prow {
+display:flex;
+gap:8px;
+margin:14px 0;
+justify-content:center
+}
+.card .prow button {
+flex:1;
+border:2px solid var(--line);
+background:#fff;
+border-radius:10px;
+padding:9px;
+cursor:pointer;
+font-weight:700;
+font-size:12.5px
+}
+.card .prow button:first-child:hover { border-color:var(--blue); color:var(--blue) }
+.card .prow button:last-child {
+background:var(--blue);
+color:#fff;
+border-color:var(--blue)
+}
+.card .prow button:last-child:hover { background:var(--blue2) }
+.badge {
+position:absolute;
+top:12px;
+left:12px;
+background:var(--cyan);
+color:#06333a;
+font-size:10px;
+font-weight:800;
+padding:4px 10px;
+border-radius:99px
+}
+/* exam */
+.exam {
+background:var(--ink);
+color:#dbe9f8;
+border-radius:24px;
+padding:52px 44px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+align-items:center;
+margin-top:48px
+}
+.exam h2 { font-size:clamp(26px,3.4vw,40px); color:#fff }
+.exam h2 i { color:var(--cyan) }
+.exam p {
+opacity:.75;
+line-height:1.8;
+margin:14px 0 20px
+}
+.exam ul { list-style:none; margin-bottom:22px }
+.exam li {
+padding:9px 0;
+border-bottom:1px solid #ffffff22;
+font-size:14.5px
+}
+.exam li b { color:var(--cyan) }
+.eye {
+font-size:120px;
+text-align:center;
+background:#ffffff10;
+border-radius:20px;
+padding:40px 20px
+}
+/* booking */
+.book {
+background:#fff;
+border:1px solid var(--line);
+border-radius:22px;
+padding:42px;
+max-width:720px;
+margin:48px auto 0
+}
+.book h2 { text-align:center; font-size:30px }
+.book p {
+text-align:center;
+color:var(--mut);
+font-size:13.5px;
+margin:8px 0 22px
+}
+.book .r {
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px
+}
+.book input,.book select {
+border:2px solid var(--line);
+border-radius:10px;
+padding:13px 16px;
+font-family:Manrope;
+font-size:14px;
+width:100%;
+margin-bottom:12px
+}
+.book button { width:100% }
+/* reviews */
+.revs {
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:16px;
+margin-top:26px
+}
+.rev {
+background:#fff;
+border:1px solid var(--line);
+border-radius:16px;
+padding:24px
+}
+.rev .stars { color:#f59e0b }
+.rev p {
+font-size:14px;
+line-height:1.7;
+margin:10px 0;
+color:#33475e
+}
+.rev b { font-size:12px; color:var(--mut) }
+/* faq */
+.faq { max-width:740px; margin:44px auto 0 }
+.qa {
+background:#fff;
+border:1px solid var(--line);
+border-radius:12px;
+margin-bottom:10px
+}
+.qa button {
+width:100%;
+background:none;
+border:none;
+padding:16px 20px;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
+font-weight:700;
+font-size:15px;
+text-align:left
+}
+.qa p {
+display:none;
+padding:0 20px 18px;
+color:var(--mut);
+font-size:14px;
+line-height:1.75
+}
+.qa p.open { display:block }
+/* footer */
+footer {
+background:var(--ink);
+color:#8fa9c4;
+padding:44px 22px;
+text-align:center;
+font-size:13px;
+margin-top:56px
+}
+/* toast */
+#toast {
+position:fixed;
+bottom:26px;
+left:50%;
+transform:translateX(-50%) translateY(80px);
+background:var(--ink);
+color:#fff;
+padding:13px 28px;
+border-radius:12px;
+transition:.3s;
+z-index:120;
+font-size:14px
+}
+#toast.show { transform:translateX(-50%) }
+@media(max-width:900px) { .hero,.exam { grid-template-columns:1fr }
+.fsteps { grid-template-columns:1fr }
+nav { display:none }
+.book .r { grid-template-columns:1fr }
+}
+</style>
+</head>
+<body>
+<div class="topbar">👁️ Free eye test with every frame · 100-day free returns · 2-year warranty</div>
+<header>
+<div class="hd">
+<div class="brand">Clear<em>View</em> 👓</div>
+<nav>
+<a href="#tryon">Virtual Try-On</a>
+<a href="#shop">Frames</a>
+<a href="#exam">Eye Test</a>
+<a href="#book">Book Visit</a>
+</nav>
+<div class="hacts">
+<button class="btn o" onclick="scrollToId('book')">BOOK EYE TEST</button>
+</div>
+</div>
+</header>
+<div class="wrap">
+<div class="hero">
+<div class="heroC">
+<h1>See the world in <i>high definition.</i>
+</h1>
+<p>Designer frames from $89 including prescription lenses. Try them on virtually, test your eyes in store, love them for 100 days — or send them back.</p>
+<div class="hrow">
+<button class="btn b" onclick="scrollToId('tryon')">👓 TRY ON NOW</button>
+<button class="btn o" onclick="scrollToId('shop')">SHOP FRAMES</button>
+</div>
+<div class="proof">
+<div>
+<b>120k+</b>
+<span>HAPPY EYES</span>
+</div>
+<div>
+<b>4.9★</b>
+<span>6,100 REVIEWS</span>
+</div>
+<div>
+<b>100-DAY</b>
+<span>FREE RETURNS</span>
+</div>
+</div>
+</div>
+<div class="try" id="tryon">
+<div class="face" id="faceBase">🙂</div>
+<span id="glasses">🕶️</span>
+<h3 class="disp" id="tryName">Aviator Classic</h3>
+<p id="tryDesc">Teardrop · suits oval &amp; square faces · $129 incl. lenses</p>
+<div class="faces" id="faces">
+</div>
+<div class="shapes" id="shapes">
+</div>
+<button class="btn b" style="width:100%;margin-top:16px" onclick="addTry()">ADD THIS FRAME — <span id="tryPrice">$129</span>
+</button>
+</div>
+</div>
+<div class="finder">
+<h2 class="disp">Frame finder — 20 seconds</h2>
+<p>Answer 3 questions, get 3 perfect frames. Optician-approved logic.</p>
+<div class="fsteps">
+<div class="fstep">
+<h4>1 · FACE SHAPE</h4>
+<div class="pickrow" id="fFace">
+</div>
+</div>
+<div class="fstep">
+<h4>2 · DAILY USE</h4>
+<div class="pickrow" id="fUse">
+</div>
+</div>
+<div class="fstep">
+<h4>3 · BUDGET</h4>
+<div class="pickrow" id="fBud">
+</div>
+</div>
+</div>
+<div style="text-align:center;margin-top:20px">
+<button class="btn b" onclick="find()">FIND MY FRAMES →</button>
+</div>
+<div id="findRes">
+</div>
+</div>
+</div>
+<section id="shop">
+<div class="wrap">
+<div class="toolbar" id="chips">
+<span id="res">
+</span>
+</div>
+<div class="grid" id="grid">
+</div>
+<div class="exam" id="exam">
+<div>
+<h2>Eye test, <i>minus</i> the waiting room.</h2>
+<p>25-minute comprehensive exam with OCT retinal scan — the same tech hospitals use. Prescription valid for all our frames.</p>
+<ul>
+<li>
+<b>$25</b> — full exam + OCT scan (free with any frame)</li>
+<li>
+<b>Kids</b> — free under-12 tests every Saturday</li>
+<li>
+<b>Contact lenses</b> — fitting + trial pair, $15</li>
+</ul>
+<button class="btn b" style="background:var(--cyan);color:#06333a" onclick="scrollToId('book')">BOOK $25 EXAM</button>
+</div>
+<div class="eye">👁️</div>
+</div>
+<div class="revs">
+<div class="rev">
+<div class="stars">★★★★★</div>
+<p>"Virtual try-on nailed my fit. Ordered Tuesday, wearing them Friday — prescription perfect."</p>
+<b>— JASUR T. · verified</b>
+</div>
+<div class="rev">
+<div class="stars">★★★★★</div>
+<p>"The OCT scan caught early pressure issues my old clinic missed for years. Genuinely grateful."</p>
+<b>— MARIA S. · verified</b>
+</div>
+<div class="rev">
+<div class="stars">★★★★☆</div>
+<p>"Great frames, honest pricing. Saturday kids' test was free and actually thorough."</p>
+<b>— DAVID O. · verified</b>
+</div>
+</div>
+<div class="book" id="book">
+<h2 class="disp">Book a visit</h2>
+<p>Downtown &amp; Riverside stores · Mon–Sat 9:00–20:00 · confirmation by SMS</p>
+<div class="r">
+<input id="bn" placeholder="Full name">
+<input id="bp" placeholder="Phone number">
+</div>
+<div class="r">
+<select>
+<option>Full eye test — $25</option>
+<option>Free kids test (Sat)</option>
+<option>Contact lens fitting — $15</option>
+<option>Frame styling — free</option>
+</select>
+<input type="date" id="bd">
+</div>
+<button class="btn b" onclick="book()">CONFIRM BOOKING</button>
+</div>
+<div class="faq">
+<h2 class="disp" style="text-align:center;margin-bottom:16px">Good to know</h2>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Are lenses really included in the price? <span>+</span>
+</button>
+<p>Yes — single-vision 1.5 index lenses with anti-scratch and UV coating are included. Premium thin-down and blue-cut upgrades from $19.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">How do 100-day returns work? <span>+</span>
+</button>
+<p>Wear them everywhere for 100 days. If you don't love them, return for full refund or remake — even with prescription lenses.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Can I use my own prescription? <span>+</span>
+</button>
+<p>Of course — upload any prescription under 12 months old at checkout, or bring it to the store.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Do you do kids' glasses? <span>+</span>
+</button>
+<p>Yes — flexible, nearly unbreakable kids' range from $59, with free replacement if they break within a year.</p>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<b style="color:#fff;font-size:18px">ClearView Optics 👓</b>
+<p>Downtown &amp; Riverside · Mon–Sat 9–20 · © 2026</p>
+</footer>
+<div id="toast">
+</div>
+<script>
+const FRAMES=[
+{
+g:'🕶️',n:'Aviator Classic',f:'oval square',u:'driving',b:'mid',p:129,t:'Teardrop · metal',d:'The timeless pilot shape. Suits oval & square faces.'}
+, {
+g:'👓',n:'Oslo Round',f:'square heart',u:'office',b:'low',p:89,t:'Round · acetate',d:'Soft round acetate that flatters angular faces.'}
+, {
+g:'🥸',n:'Bold Camden',f:'oval round',u:'style',b:'mid',p:119,t:'Chunky · acetate',d:'Statement chunky frame, feather-light despite the look.'}
+, {
+g:'🤓',n:'Study Hall',f:'heart oval',u:'office',b:'low',p:95,t:'Rectangle · mixed',d:'The workhorse: light, narrow, disappears on video calls.'}
+, {
+g:'😎',n:'Riviera Sport',f:'round oval',u:'sport',b:'high',p:159,t:'Wrap · polarised',d:'Grip temples + polarised lenses. For runs and road trips.',badge:'SPORT'}
+, {
+g:'🧐',n:'Atelier Titanium',f:'square oval',u:'office',b:'high',p:249,t:'Rimless · titanium',d:'8-gram Japanese titanium. The lightest frame we sell.',badge:'PREMIUM'}
+, {
+g:'👓',n:'Harbour Clear',f:'heart round',u:'style',b:'mid',p:109,t:'Transparent · acetate',d:'Crystal acetate that goes with every outfit.'}
+, {
+g:'🕶️',n:'Night Drive Pro',f:'oval heart',u:'driving',b:'high',p:179,t:'Yellow tint · coated',d:'Contrast-boosting night-driving lenses in a slim frame.',badge:'NEW'}
+]; const FACES=[['🙂','Round'],['😐','Oval'],['😀','Square'],['😊','Heart']];
+let ti=0,fi=0,cart=[]; const facesEl=document.getElementById('faces'),shEl=document.getElementById('shapes'); FACES.forEach(([e,l],i)=>{
+const b=document.createElement('button');b.className='face-b'+(i?'':' on');b.textContent=e+' '+l;b.onclick=()=>{
+fi=i;faceBase.textContent=e;[...facesEl.children].forEach(x=>x.classList.remove('on'));b.classList.add('on')}
+;facesEl.appendChild(b)}
+); const shapeBtns=[]; FRAMES.forEach((f,i)=>{
+const b=document.createElement('button');b.className='shape-b'+(i?'':' on');b.textContent=f.g;b.title=f.n;b.onclick=()=>setTry(i);shEl.appendChild(b);shapeBtns.push(b)}
+); function setTry(i){
+ti=i;const f=FRAMES[i];glasses.textContent=f.g;tryName.textContent=f.n;tryDesc.textContent=f.t+' · '+f.d.split('.')[0]+' · $'+f.p+' incl. lenses';tryPrice.textContent='$'+f.p;shapeBtns.forEach((x,k)=>x.classList.toggle('on',k===i))}
+function addTry(){
+cart.push(FRAMES[ti]);toast(FRAMES[ti].n+' added — '+cart.length+' in bag')}
+/* finder */
+const FF=['Oval','Square','Round','Heart'],FU=['Office','Driving','Sport','Style'],FB=['Under $100','$100–150','$150+']; let sF=null,sU=null,sB=null;
+function picks(el,arr,cb){const w=document.getElementById(el);arr.forEach(a=>{const b=document.createElement('button');b.className='pick';b.textContent=a;b.onclick=()=>{[...w.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');cb(a)};w.appendChild(b)})}
+picks('fFace',FF,v=>sF=v);picks('fUse',FU,v=>sU=v);picks('fBud',FB,v=>sB=v);
+function find(){const r=document.getElementById('findRes');if(!sF||!sU||!sB){r.style.display='block';r.textContent='Please answer all 3 questions first.';return}
+const use=sU.toLowerCase(),bud=sB.includes('100–')?'mid':(sB.includes('150')?'high':'low');
+let m=FRAMES.filter(f=>f.u===use&&f.b===bud);if(!m.length)m=FRAMES.filter(f=>f.u===use);if(!m.length)m=FRAMES.slice(0,3);
+r.style.display='block';r.innerHTML='<b>Your matches ('+sF+' face · '+sU+'):</b><br>'+m.slice(0,3).map(f=>`${f.g} <b>${f.n}</b> — $${f.p} · ${f.t} <button class="pick" onclick="addIdx(${FRAMES.indexOf(f)})">ADD</button>`).join('<br>')}
+function addIdx(i){cart.push(FRAMES[i]);toast(FRAMES[i].n+' added — '+cart.length+' in bag')}
+/* shop */
+const CATS=[['all','All frames'],['office','Office'],['driving','Driving'],['sport','Sport'],['style','Style']]; let cat='all';
+const chips=document.getElementById('chips');
+CATS.forEach(([v,l],i)=>{const b=document.createElement('button');b.className='chip'+(i?'':' on');b.textContent=l;b.onclick=()=>{cat=v;[...chips.querySelectorAll('.chip')].forEach(x=>x.classList.remove('on'));b.classList.add('on');render()};chips.insertBefore(b,res)});
+function render(){const g=document.getElementById('grid');const r=FRAMES.filter(f=>cat==='all'||f.u===cat);res.textContent=r.length+' frames · lenses included';g.innerHTML='';r.forEach(f=>{const d=document.createElement('div');d.className='card';d.innerHTML=(f.badge?`<span class="badge">${f.badge}</span>`:'')+`<div class="g">${f.g}</div><h3 class="disp">${f.n}</h3><small>${f.t} · $${f.p}</small><span class="tag">LENSES INCLUDED</span><div class="prow"><button onclick="setTry(${FRAMES.indexOf(f)});scrollToId('tryon')">TRY ON</button><button onclick="addIdx(${FRAMES.indexOf(f)})">ADD</button></div>`;g.appendChild(d)})}
+function book(){if(!bn.value||!bp.value)return toast('Please add name and phone');toast('Booked! SMS confirmation on its way');bn.value=bp.value=''}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2600)}
+function scrollToId(i){document.getElementById(i).scrollIntoView({behavior:'smooth'})}
+setTry(0);render();
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

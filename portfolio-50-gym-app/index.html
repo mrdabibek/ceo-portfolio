@@ -1,0 +1,583 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FORGE — Gym Timer &amp; WOD</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+:root{
+--bg:#0a0a0b;
+--card:#131316;
+--line:#232328;
+--red:#ff2d2d;
+--txt:#f5f5f4;
+--mut:#8e8e93;
+}
+body{
+font-family:"Arial Black",Inter,"Segoe UI",sans-serif;
+background:var(--bg);
+color:var(--txt);
+}
+.nav{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:18px 28px;
+border-bottom:1px solid var(--line);
+position:sticky;
+top:0;
+background:rgba(10,10,11,.92);
+z-index:5;
+}
+.logo{font-weight:900;font-size:19px;letter-spacing:1px;}
+.logo span{color:var(--red);}
+.links{display:flex;gap:26px;font-size:13px;color:var(--mut);font-family:Inter,Arial,sans-serif;font-weight:700;letter-spacing:1px;}
+.links a{color:inherit;text-decoration:none;}
+.links a:hover{color:#fff;}
+.btn{
+background:var(--red);
+border:0;color:#fff;font-weight:900;
+padding:12px 26px;border-radius:10px;cursor:pointer;
+font-size:14px;letter-spacing:.5px;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 22px 50px;}
+.hero{
+display:grid;
+grid-template-columns:1.1fr .9fr;
+gap:20px;
+align-items:stretch;
+}
+.timer-card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:22px;
+padding:30px;
+text-align:center;
+position:relative;
+overflow:hidden;
+}
+.timer-card::before{
+content:"FORGE";
+position:absolute;top:10px;left:0;right:0;
+font-size:64px;font-weight:900;color:rgba(255,255,255,.03);
+letter-spacing:6px;
+}
+.modes{display:flex;gap:8px;justify-content:center;margin:14px 0 6px;position:relative;}
+.modes button{
+background:#1c1c21;border:1px solid var(--line);color:var(--mut);
+font-family:Inter,Arial,sans-serif;font-weight:700;font-size:12px;
+padding:9px 18px;border-radius:99px;cursor:pointer;
+}
+.modes button.on{background:var(--red);border-color:var(--red);color:#fff;}
+.ring{position:relative;width:250px;height:250px;margin:14px auto;}
+.ring svg{transform:rotate(-90deg);}
+#time{
+position:absolute;inset:0;display:flex;flex-direction:column;
+align-items:center;justify-content:center;
+}
+#time b{font-size:54px;letter-spacing:-2px;font-variant-numeric:tabular-nums;}
+#time span{font-family:Inter,Arial,sans-serif;font-size:12px;color:var(--mut);letter-spacing:3px;}
+.ctrl{display:flex;gap:10px;justify-content:center;margin-top:8px;position:relative;}
+.ctrl button{
+border:1px solid var(--line);background:#1c1c21;color:#fff;
+font-weight:900;padding:13px 26px;border-radius:12px;cursor:pointer;font-size:14px;
+}
+.ctrl .go{background:var(--red);border-color:var(--red);min-width:150px;}
+.rounds{display:flex;gap:8px;justify-content:center;margin-top:14px;}
+.rounds button{
+width:40px;height:40px;border-radius:50%;border:1px solid var(--line);
+background:transparent;color:var(--mut);font-weight:900;cursor:pointer;
+}
+.rounds button.on{background:#fff;color:#000;border-color:#fff;}
+.side{display:flex;flex-direction:column;gap:16px;}
+.wod{
+background:linear-gradient(135deg,#1a0505,#2b0a0a);
+border:1px solid #4a1515;
+border-radius:22px;
+padding:24px;
+}
+.wod small{color:var(--red);font-family:Inter,Arial,sans-serif;font-weight:800;letter-spacing:2px;font-size:11px;}
+.wod h2{font-size:26px;margin:6px 0 12px;}
+.wod ul{list-style:none;font-family:Inter,Arial,sans-serif;font-size:14px;display:flex;flex-direction:column;gap:9px;}
+.wod li{
+background:rgba(0,0,0,.4);border:1px solid #3a1414;border-radius:10px;
+padding:10px 14px;display:flex;justify-content:space-between;
+}
+.wod li.done{opacity:.4;text-decoration:line-through;}
+.wod li button{background:transparent;border:1px solid var(--red);color:var(--red);border-radius:8px;padding:3px 12px;cursor:pointer;font-weight:800;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.st{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center;}
+.st b{font-size:22px;display:block;}
+.st small{font-family:Inter,Arial,sans-serif;color:var(--mut);font-size:11px;letter-spacing:1px;}
+/* plan */
+.plan{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;}
+.plan h3{font-size:18px;}
+.plan>p{font-family:Inter,Arial,sans-serif;color:var(--mut);font-size:13px;margin:4px 0 14px;}
+.ex{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.e{background:#0d0d10;border:1px solid var(--line);border-radius:14px;padding:16px;font-family:Inter,Arial,sans-serif;}
+.e .pic{font-size:34px;}
+.e b{display:block;margin:8px 0 2px;}
+.e small{color:var(--mut);font-size:12px;}
+.e .sets{display:flex;gap:6px;margin-top:10px;}
+.e .sets button{flex:1;background:#1c1c21;border:1px solid var(--line);color:#fff;border-radius:8px;padding:7px;cursor:pointer;font-weight:800;}
+.e .sets button.hit{background:var(--red);border-color:var(--red);}
+.coaches{
+margin-top:20px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+}
+.coach{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:18px;
+padding:22px;
+text-align:center;
+}
+.coach .face{
+width:64px;
+height:64px;
+border-radius:50%;
+margin:0 auto 10px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+font-size:20px;
+color:#fff;
+}
+.coach b{font-size:15px;}
+.coach small{
+font-family:Inter,Arial,sans-serif;
+color:var(--mut);
+font-size:12px;
+}
+.coach p{
+font-family:Inter,Arial,sans-serif;
+font-size:12.5px;
+color:var(--mut);
+margin:10px 0 14px;
+}
+.coach button{
+background:transparent;
+border:1.5px solid var(--red);
+color:var(--red);
+border-radius:99px;
+padding:8px 22px;
+font-weight:800;
+cursor:pointer;
+font-size:12px;
+}
+.pricing{
+margin-top:20px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+}
+.pr{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:18px;
+padding:24px;
+font-family:Inter,Arial,sans-serif;
+}
+.pr.hot{
+border-color:var(--red);
+box-shadow:0 0 0 1px var(--red);
+}
+.pr .val{font-size:30px;font-weight:900;margin:6px 0;font-family:"Arial Black",Arial,sans-serif;}
+.pr ul{
+list-style:none;
+font-size:13px;
+color:var(--mut);
+display:flex;
+flex-direction:column;
+gap:7px;
+margin:12px 0 18px;
+}
+.pr button{
+width:100%;
+background:var(--red);
+border:0;
+color:#fff;
+font-weight:800;
+border-radius:10px;
+padding:12px;
+cursor:pointer;
+}
+.faq3{
+margin-top:20px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:18px;
+padding:24px;
+font-family:Inter,Arial,sans-serif;
+}
+.faq3 h3{
+font-family:"Arial Black",Arial,sans-serif;
+margin-bottom:12px;
+}
+.faq3 details{
+border-top:1px solid var(--line);
+padding:13px 4px;
+font-size:14px;
+}
+.faq3 summary{
+font-weight:700;
+cursor:pointer;
+}
+.faq3 p{
+color:var(--mut);
+margin-top:6px;
+font-size:13px;
+}
+.shelf{
+margin-top:20px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:22px;
+padding:24px;
+}
+.shelf h3{
+font-size:18px;
+}
+.shelf>p{
+font-family:Inter,Arial,sans-serif;
+color:var(--mut);
+font-size:13px;
+margin:4px 0 14px;
+}
+.shelf-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+.item{
+background:#0d0d10;
+border:1px solid var(--line);
+border-radius:14px;
+padding:18px;
+text-align:center;
+font-family:Inter,Arial,sans-serif;
+}
+.item .pic{
+font-size:32px;
+}
+.item b{
+display:block;
+margin:8px 0 2px;
+font-size:13.5px;
+}
+.item small{
+color:var(--mut);
+font-size:12px;
+}
+.item .pr2{
+color:var(--red);
+font-weight:900;
+font-size:15px;
+margin-top:8px;
+display:block;
+}
+.item button{
+margin-top:10px;
+width:100%;
+background:transparent;
+border:1.5px solid var(--red);
+color:var(--red);
+border-radius:8px;
+padding:8px;
+font-weight:800;
+cursor:pointer;
+font-size:12px;
+}
+.table2{
+margin-top:20px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:22px;
+padding:24px;
+overflow-x:auto;
+}
+.table2 h3{
+font-size:18px;
+}
+.table2>p{
+font-family:Inter,Arial,sans-serif;
+color:var(--mut);
+font-size:13px;
+margin:4px 0 14px;
+}
+.table2 table{
+width:100%;
+border-collapse:collapse;
+font-family:Inter,Arial,sans-serif;
+font-size:13px;
+min-width:640px;
+}
+.table2 th{
+text-align:left;
+font-size:11px;
+letter-spacing:2px;
+color:var(--red);
+padding:10px 12px;
+border-bottom:1px solid var(--line);
+}
+.table2 td{
+padding:11px 12px;
+border-bottom:1px solid #1a1a20;
+}
+.table2 tr:hover td{
+background:#16161b;
+}
+.table2 .hot{
+color:var(--red);
+font-weight:800;
+}
+.rules{
+margin-top:20px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+.rule{
+background:#14060a;
+border:1px solid #3a1414;
+border-radius:16px;
+padding:18px;
+text-align:center;
+font-family:Inter,Arial,sans-serif;
+}
+.rule .e{font-size:26px;}
+.rule b{display:block;font-size:13px;margin:8px 0 3px;}
+.rule small{color:var(--mut);font-size:11.5px;}
+.log{margin-top:18px;background:#000;border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-family:Consolas,monospace;font-size:12px;max-height:150px;overflow:auto;}
+.log div{padding:3px 0;border-bottom:1px dotted #222;}
+footer{text-align:center;color:var(--mut);font-family:Inter,Arial,sans-serif;font-size:12px;}
+@media(max-width:900px){
+.hero{grid-template-columns:1fr;}
+.ex{grid-template-columns:1fr;}
+.links{display:none;}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+<div class="logo">FORGE<span>◆</span></div>
+<div class="links"><a href="#">PROGRAMS</a><a href="#">COACHES</a><a href="#">PRICING</a><a href="#">COMMUNITY</a></div>
+<button class="btn">START TRIAL</button>
+</nav>
+<div class="wrap">
+<div class="hero">
+<div class="timer-card">
+<div class="modes" id="modes">
+<button class="on" data-s="1500">WORK 25:00</button>
+<button data-s="300">REST 5:00</button>
+<button data-s="60">TABATA :60</button>
+<button data-s="1800">WOD 30:00</button>
+</div>
+<div class="ring">
+<svg width="250" height="250">
+<circle cx="125" cy="125" r="110" fill="none" stroke="#232328" stroke-width="14"/>
+<circle id="arc" cx="125" cy="125" r="110" fill="none" stroke="#ff2d2d" stroke-width="14" stroke-linecap="round" stroke-dasharray="691" stroke-dashoffset="0"/>
+</svg>
+<div id="time"><b id="clock">25:00</b><span id="state">READY</span></div>
+</div>
+<div class="ctrl">
+<button class="go" id="go">▶ START</button>
+<button id="reset">↺</button>
+<button id="sound">♪ ON</button>
+</div>
+<div class="rounds" id="rounds">
+<button class="on">1</button><button>2</button><button>3</button><button>4</button><button>5</button>
+</div>
+</div>
+<div class="side">
+<div class="wod">
+<small>◆ TODAY'S WOD — MURPH PREP</small>
+<h2>“Iron Monday”</h2>
+<ul id="wod">
+<li><span>400m run</span><button>done</button></li>
+<li><span>50 air squats</span><button>done</button></li>
+<li><span>30 push-ups</span><button>done</button></li>
+<li><span>20 pull-ups</span><button>done</button></li>
+<li><span>400m run</span><button>done</button></li>
+</ul>
+</div>
+<div class="stats">
+<div class="st"><b id="s1">12:40</b><small>BEST WOD</small></div>
+<div class="st"><b id="s2">86</b><small>WORKOUTS</small></div>
+<div class="st"><b id="s3">1,940</b><small>KCAL WK</small></div>
+</div>
+</div>
+</div>
+<div class="plan">
+<h3>Session builder — tap sets as you finish</h3>
+<p>Tap a set chip to mark it. Progress saves below in the log.</p>
+<div class="ex">
+<div class="e"><div class="pic">🏋️</div><b>Back squat</b><small>5 × 5 · 100kg</small><div class="sets"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button></div></div>
+<div class="e"><div class="pic">💪</div><b>Bench press</b><small>4 × 8 · 80kg</small><div class="sets"><button>1</button><button>2</button><button>3</button><button>4</button></div></div>
+<div class="e"><div class="pic">🤸</div><b>Plank</b><small>3 × 60s</small><div class="sets"><button>1</button><button>2</button><button>3</button></div></div>
+</div>
+<div class="log" id="log"><div>[ready] timer loaded · press START</div></div>
+</div>
+<div class="shelf">
+<h3>Fuel shelf — members −15%</h3>
+<p>Protein, creatine, wraps. Grab after class, billed to your account.</p>
+<div class="shelf-grid">
+<div class="item"><div class="pic">🥤</div><b>Whey 1kg</b><small>choco / vanilla</small><span class="pr2">$38</span><button>Add</button></div>
+<div class="item"><div class="pic">⚡</div><b>Creatine 500g</b><small>micronized</small><span class="pr2">$24</span><button>Add</button></div>
+<div class="item"><div class="pic">🤲</div><b>Chalk ball</b><small>60g refillable</small><span class="pr2">$6</span><button>Add</button></div>
+<div class="item"><div class="pic">🧵</div><b>Wrist wraps</b><small>stiff / flex</small><span class="pr2">$18</span><button>Add</button></div>
+</div>
+</div>
+<div class="table2">
+<h3>Weekly timetable</h3>
+<p>Prime-time classes fill fast — book from the timer screen.</p>
+<table>
+<tr><th>TIME</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th></tr>
+<tr><td><b>07:00</b></td><td>Iron WOD</td><td>Spin 45</td><td>Iron WOD</td><td>Yoga</td><td class="hot">Murph prep ★</td></tr>
+<tr><td><b>09:00</b></td><td>Mobility</td><td>Kettlebell</td><td>Mobility</td><td>Kettlebell</td><td>Open gym</td></tr>
+<tr><td><b>12:30</b></td><td>Lunch express</td><td>Lunch express</td><td>Olympic lifting</td><td>Lunch express</td><td>Lunch express</td></tr>
+<tr><td><b>18:00</b></td><td class="hot">Prime WOD ★</td><td>Boxing basics</td><td class="hot">Prime WOD ★</td><td>Boxing basics</td><td>Team Friday</td></tr>
+<tr><td><b>19:30</b></td><td>Strength club</td><td>Core + sauna</td><td>Strength club</td><td>Core + sauna</td><td>Movie night lift</td></tr>
+<tr><td><b>21:00</b></td><td>Night lift</td><td>Night lift</td><td>Night lift</td><td>Night lift</td><td>—</td></tr>
+</table>
+</div>
+<div class="rules">
+<div class="rule"><div class="e">🔥</div><b>No ego lifting</b><small>form first, always</small></div>
+<div class="rule"><div class="e">⏱️</div><b>Respect the clock</b><small>rounds start together</small></div>
+<div class="rule"><div class="e">🧹</div><b>Wipe down</b><small>leave it cleaner</small></div>
+<div class="rule"><div class="e">🤝</div><b>Cheer last place</b><small>loudest for final finisher</small></div>
+</div>
+<div class="stats" style="margin-top:16px">
+<div class="st"><b>182kg</b><small>GYM DEADLIFT RECORD</small></div>
+<div class="st"><b>3:58</b><small>FASTEST MURPH</small></div>
+<div class="st"><b>412</b><small>ACTIVE MEMBERS</small></div>
+</div>
+<div class="coaches">
+<div class="coach"><div class="face" style="background:#ff2d2d">DK</div><b>D. Karimov</b><br><small>Strength · 12 yrs</small><p>500+ athletes to first pull-up. Believes in chalk.</p><button>Book intro</button></div>
+<div class="coach"><div class="face" style="background:#7c3aed">AN</div><b>A. Nazarova</b><br><small>HIIT · 8 yrs</small><p>Tabata terrorist. Playlists so loud they count as cardio.</p><button>Book intro</button></div>
+<div class="coach"><div class="face" style="background:#0891b2">JO</div><b>J. Okafor</b><br><small>Mobility · 10 yrs</small><p>Fixes desks one spine at a time. Stretch or else.</p><button>Book intro</button></div>
+</div>
+<div class="pricing">
+<div class="pr"><h4>Off-peak</h4><div class="val">$29</div><ul><li>✓ 06:00–16:00 access</li><li>✓ 1 group class / week</li><li>✓ Locker room</li></ul><button>Choose</button></div>
+<div class="pr hot"><h4>All-in ★</h4><div class="val">$59</div><ul><li>✓ 24/7 access</li><li>✓ Unlimited classes</li><li>✓ Sauna + timer app</li></ul><button>Choose</button></div>
+<div class="pr"><h4>Pro coaching</h4><div class="val">$149</div><ul><li>✓ Everything in All-in</li><li>✓ 4× PT sessions</li><li>✓ Nutrition plan</li></ul><button>Choose</button></div>
+</div>
+<div class="faq3">
+<h3>HOUSE QUESTIONS</h3>
+<details open><summary>First workout free?</summary><p>Yes — trial week includes 2 classes + full gym floor access.</p></details>
+<details><summary>Do I need experience?</summary><p>No. Every WOD scales: RX, scaled, and beginner versions on the board.</p></details>
+<details><summary>What to bring?</summary><p>Just shoes and water. Chalk, belts and bands live at the rig.</p></details>
+<details><summary>Can I freeze membership?</summary><p>Up to 2 months a year, free, from the app in one tap.</p></details>
+</div>
+<footer style="margin-top:18px">FORGE demo · beep uses WebAudio · no account needed</footer>
+</div>
+<script>
+var total=1500,left=1500,tick=null,on=false,beep=true;
+var arc=document.getElementById('arc'),CLOCK=document.getElementById('clock');
+function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function draw(){CLOCK.textContent=fmt(left);arc.style.strokeDashoffset=691*(1-left/total);}
+function say(m){var l=document.getElementById('log');l.insertAdjacentHTML('afterbegin','<div>['+new Date().toLocaleTimeString()+'] '+m+'</div>');}
+function ping(f){if(!beep)return;try{var a=new (window.AudioContext||window.webkitAudioContext)();var o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=f||880;g.gain.value=.12;o.start();o.stop(a.currentTime+.18);}catch(e){}}
+document.getElementById('modes').addEventListener('click',function(e){
+if(e.target.tagName!=='BUTTON')return;
+var b=this.querySelectorAll('button');b.forEach(function(x){x.classList.remove('on');});
+e.target.classList.add('on');stop();
+total=left=+e.target.dataset.s;draw();
+document.getElementById('state').textContent='READY · '+e.target.textContent;
+say('mode → '+e.target.textContent);
+});
+function stop(){on=false;clearInterval(tick);document.getElementById('go').textContent='▶ START';}
+document.getElementById('go').addEventListener('click',function(){
+if(on){stop();document.getElementById('state').textContent='PAUSED';say('paused at '+fmt(left));return;}
+on=true;this.textContent='❚❚ PAUSE';document.getElementById('state').textContent='RUNNING';
+say('started '+fmt(left));
+tick=setInterval(function(){
+left--;draw();
+if(left<=5&&left>0)ping(660);
+if(left<=0){stop();ping(440);ping(880);document.getElementById('state').textContent='DONE ✓';say('interval complete ✓');left=total;setTimeout(draw,800);}
+},1000);
+});
+document.getElementById('reset').addEventListener('click',function(){stop();left=total;draw();document.getElementById('state').textContent='READY';say('reset');});
+document.getElementById('sound').addEventListener('click',function(){beep=!beep;this.textContent=beep?'♪ ON':'♪ OFF';});
+document.getElementById('rounds').addEventListener('click',function(e){
+if(e.target.tagName!=='BUTTON')return;
+var b=this.querySelectorAll('button');b.forEach(function(x){x.classList.remove('on');});
+e.target.classList.add('on');say('round '+e.target.textContent+' selected');
+});
+document.getElementById('wod').addEventListener('click',function(e){
+if(e.target.tagName!=='BUTTON')return;
+e.target.closest('li').classList.toggle('done');
+e.target.textContent=e.target.closest('li').classList.contains('done')?'✓':'done';
+say('wod item toggled');
+});
+document.querySelectorAll('.e .sets').forEach(function(box){
+box.addEventListener('click',function(e){
+if(e.target.tagName!=='BUTTON')return;
+e.target.classList.toggle('hit');
+say('set '+e.target.textContent+' '+(e.target.classList.contains('hit')?'✔':'○'));
+});
+});
+draw();
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

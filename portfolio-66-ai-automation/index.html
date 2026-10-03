@@ -1,0 +1,626 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loom — AI Automation Atelier by Maya Chen</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+:root{
+  --bg:#fbfaf7;
+  --ink:#22201c;
+  --lilac:#7c6cf0;
+  --mint:#0fa968;
+  --peach:#ff8a5c;
+  --line:#e7e1d5;
+  --card:#fff
+}
+body{
+  font-family:'Outfit','Sora',Verdana,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden
+}
+::selection{
+  background:var(--lilac);
+  color:#fff
+}
+/* niche loader: weaving */
+#loader{
+  position:fixed;
+  inset:0;
+  background:var(--bg);
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:center;
+  justify-content:center;
+  transition:.5s
+}
+#loader.off{
+  opacity:0;
+  visibility:hidden
+}
+#loader .threads{
+  display:flex;
+  gap:6px
+}
+#loader .threads i{
+  width:8px;
+  height:44px;
+  border-radius:99px;
+  animation:wv 1s infinite alternate
+}
+#loader .threads i:nth-child(1){
+  background:var(--lilac)
+}
+#loader .threads i:nth-child(2){
+  background:var(--peach);
+  animation-delay:.12s
+}
+#loader .threads i:nth-child(3){
+  background:var(--mint);
+  animation-delay:.24s
+}
+#loader .threads i:nth-child(4){
+  background:var(--lilac);
+  animation-delay:.36s
+}
+#loader .threads i:nth-child(5){
+  background:var(--peach);
+  animation-delay:.48s
+}
+@keyframes wv{
+  from{
+  transform:scaleY(.4)
+}
+to{
+  transform:scaleY(1)
+}
+}
+#loader small{
+  letter-spacing:3px;
+  font-size:11px;
+  color:#8a8474
+}
+nav{
+  position:sticky;
+  top:0;
+  z-index:60;
+  background:#fbfaf7ee;
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)
+}
+.nin{
+  max-width:1180px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:14px 20px;
+  font-size:13.5px
+}
+.nin b{
+  font-size:19px
+}
+.nin b span{
+  color:var(--lilac)
+}
+.nin a{
+  color:var(--ink);
+  text-decoration:none;
+  opacity:.65
+}
+.nin a:hover{
+  opacity:1
+}
+.nin .sp{
+  flex:1
+}
+.btn{
+  background:var(--ink);
+  color:#fff;
+  border:0;
+  padding:11px 24px;
+  font-weight:800;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:13px;
+  border-radius:99px
+}
+.btn:hover{
+  background:var(--lilac)
+}
+.btn.loom{
+  background:var(--lilac)
+}
+.hero{
+  max-width:1180px;
+  margin:auto;
+  padding:50px 20px 8px;
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:30px;
+  align-items:start
+}
+.pill{
+  display:inline-block;
+  background:#efeafd;
+  border:1px solid #7c6cf055;
+  padding:7px 16px;
+  border-radius:99px;
+  font-size:12px;
+  font-weight:800;
+  color:var(--lilac)
+}
+h1{
+  font-size:clamp(32px,4.8vw,56px);
+  line-height:1.03;
+  margin:14px 0 10px;
+  letter-spacing:-1px
+}
+h1 span{
+  color:var(--lilac)
+}
+.hero p{
+  color:#6b655a;
+  font-size:14.5px;
+  line-height:1.65
+}
+.kpis{
+  display:flex;
+  gap:10px;
+  margin-top:16px;
+  flex-wrap:wrap
+}
+.kpis div{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px 18px;
+  font-size:12px
+}
+.kpis b{
+  font-size:19px
+}
+/* loom board */
+#loomBoard{
+  max-width:1180px;
+  margin:auto;
+  padding:16px 20px;
+  display:grid;
+  grid-template-columns:1.5fr .7fr;
+  gap:16px
+}
+.stage{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden
+}
+.stageHead{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 18px;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+  font-weight:800
+}
+.stageHead .live{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--mint);
+  box-shadow:0 0 8px var(--mint)
+}
+#canvas{
+  position:relative;
+  height:400px;
+  background:radial-gradient(circle at 20% 20%,#7c6cf008,transparent),linear-gradient(#fbfaf7,#f4f0e8);
+  overflow:hidden
+}
+#canvas svg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none
+}
+.node{
+  position:absolute;
+  width:170px;
+  background:#fff;
+  border:1.5px solid var(--ink);
+  border-radius:14px;
+  padding:11px 13px;
+  font-size:12px;
+  cursor:grab;
+  box-shadow:3px 3px 0 var(--ink);
+  user-select:none
+}
+.node b{
+  display:flex;
+  gap:7px;
+  align-items:center;
+  font-size:12px
+}
+.node small{
+  display:block;
+  color:#8a8474;
+  margin-top:4px
+}
+.node .st{
+  display:block;
+  font-size:11px;
+  margin-top:6px;
+  min-height:15px
+}
+.node .dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  display:inline-block
+}
+.node.run{
+  border-color:var(--peach);
+  box-shadow:3px 3px 0 var(--peach);
+  animation:shake .4s infinite alternate
+}
+@keyframes shake{
+  to{
+  transform:translateX(2px)
+}
+}
+.node.done{
+  border-color:var(--mint);
+  box-shadow:3px 3px 0 var(--mint)
+}
+.node.fail{
+  border-color:#fa5252;
+  box-shadow:3px 3px 0 #fa5252
+}
+.runbar{
+  display:flex;
+  gap:8px;
+  padding:14px 16px;
+  border-top:1px solid var(--line);
+  flex-wrap:wrap;
+  align-items:center
+}
+.runbar button{
+  border:1.5px solid var(--ink);
+  background:#fff;
+  padding:10px 18px;
+  border-radius:99px;
+  font-family:inherit;
+  font-size:12.5px;
+  font-weight:800;
+  cursor:pointer
+}
+.runbar button.go{
+  background:var(--lilac);
+  color:#fff;
+  border-color:var(--lilac)
+}
+.runbar label{
+  font-size:12px;
+  color:#6b655a
+}
+.runbar input{
+  width:70px;
+  padding:8px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  font-family:inherit
+}
+#progWrap{
+  height:8px;
+  background:#efe9db;
+  border-radius:99px;
+  margin:0 16px 14px;
+  overflow:hidden
+}
+#progBar{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--mint),var(--lilac));
+  border-radius:99px;
+  transition:.4s
+}
+.sideCol{
+  display:flex;
+  flex-direction:column;
+  gap:16px
+}
+.panel{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px 18px
+}
+.panel h3{
+  font-size:16px;
+  margin-bottom:4px
+}
+#log{
+  height:220px;
+  overflow:auto;
+  font-size:12px;
+  line-height:1.9;
+  background:#22201c;
+  color:#efe9db;
+  border-radius:12px;
+  padding:14px;
+  font-family:ui-monospace,monospace
+}
+#log .ok{
+  color:#51cf66
+}
+#log .err{
+  color:#ff8787
+}
+#log .warn{
+  color:#ffd43b
+}
+#log .info{
+  color:#a5b4fc
+}
+#chart{
+  width:100%;
+  height:180px;
+  border-radius:12px;
+  background:#22201c
+}
+.tbar{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px
+}
+.tbar button{
+  flex:1;
+  border:1.5px solid var(--line);
+  background:#fff;
+  padding:11px;
+  border-radius:12px;
+  font-family:inherit;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  min-width:120px
+}
+.tbar button:hover{
+  border-color:var(--lilac)
+}
+section{
+  max-width:1180px;
+  margin:auto;
+  padding:30px 20px
+}
+h2{
+  font-size:clamp(23px,3.2vw,33px);
+  letter-spacing:-.5px
+}
+.sub{
+  color:#6b655a;
+  font-size:13.5px;
+  margin:8px 0 18px
+}
+.tpl3{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px
+}
+.tpl3 div{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:24px 20px;
+  font-size:13px
+}
+.tpl3 .big{
+  font-size:30px
+}
+#toast{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--ink);
+  color:#fff;
+  padding:12px 26px;
+  border-radius:99px;
+  font-size:13px;
+  z-index:200;
+  transition:.3s
+}
+#toast.show{
+  transform:translateX(-50%) translateY(0)
+}
+#auth{
+  position:fixed;
+  inset:0;
+  background:#22201caa;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:150
+}
+#auth.open{
+  display:flex
+}
+.abox{
+  width:min(400px,92vw);
+  background:#fff;
+  border-radius:20px;
+  padding:32px 28px
+}
+.abox input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  outline:0;
+  font-family:inherit
+}
+footer{
+  text-align:center;
+  color:#8a8474;
+  font-size:12.5px;
+  padding:30px
+}
+.rv{
+  opacity:0;
+  transform:translateY(22px);
+  transition:.7s
+}
+.rv.vis{
+  opacity:1;
+  transform:none
+}
+@media(max-width:960px){
+  .hero,#loomBoard{
+  grid-template-columns:1fr
+}
+}
+</style>
+</head>
+<body>
+<div id="loader"><div class="threads"><i></i><i></i><i></i><i></i><i></i></div><small>LOOM · WARPING THREADS</small></div>
+<nav><div class="nin"><b>ðŸ§µ Lo<span>om</span></b><a href="#loomBoard">Atelier</a><a href="#tpl">Patterns</a><a href="#rate">Rates</a><span class="sp"></span><button class="btn" onclick="openAuth()">Free audit</button></div></nav>
+<header class="hero">
+<div><span class="pill">ðŸ§¶ ZAPIER · MAKE · GPT · SHEETS · CRM</span><h1>Weave boring work <span>into background magic.</span></h1><p>I'm <b>Maya Chen</b> — automation atelier: leads, content & support pipelines you can watch run. Drag blocks on the loom, press run, read the log. 120+ flows, 8.4k tasks/day and counting.</p><div class="kpis"><div><b id="kTasks">8,412</b><br>tasks / day</div><div><b id="lastRun">–</b><br>last run</div><div><b id="avgStep">–</b><br>avg / block</div></div><div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"><button class="btn loom" onclick="runSim()">▶ Weave & run</button><button class="btn" style="background:#fff;color:var(--ink);border:1.5px solid var(--ink)" onclick="openAuth()">Free audit →</button></div></div>
+<div class="panel"><h3>ðŸ§¾ What I take off your plate</h3><p class="sub">One loom, endless fabric.</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px"><div style="background:#f4f0e8;border-radius:12px;padding:14px">ðŸ“¥ <b>Lead machine</b><br><small style="color:#6b655a">Scrape → enrich → CRM</small></div><div style="background:#f4f0e8;border-radius:12px;padding:14px">âœï¸ <b>Content factory</b><br><small style="color:#6b655a">Brief → draft → schedule</small></div><div style="background:#f4f0e8;border-radius:12px;padding:14px">ðŸŽ§ <b>Support autopilot</b><br><small style="color:#6b655a">Ticket → answer → escalate</small></div><div style="background:#f4f0e8;border-radius:12px;padding:14px">ðŸ“Š <b>Report loom</b><br><small style="color:#6b655a">Sync → summarize → alert</small></div></div></div>
+</header>
+<div id="loomBoard">
+<div class="stage">
+<div class="stageHead"><span class="live"></span> ATELIER LOOM — drag blocks · <span style="color:#8a8474">wires auto-route</span><span style="margin-left:auto;color:#8a8474" id="blkCount"></span></div>
+<div id="canvas"><svg id="wires"></svg></div>
+<div id="progWrap"><div id="progBar"></div></div>
+<div class="runbar"><button class="go" onclick="runSim()">▶ Run</button><button onclick="resetSim()">â†» Reset</button><button onclick="addRandom()">+ Block</button><button onclick="exportFlow()">â¤“ Export</button><label>speed <input id="rSpd" type="number" value="2" min="1" max="8">Ã—</label><label>fail <input id="rFail" type="number" value="8" min="0" max="50">%</label></div>
+</div>
+<div class="sideCol">
+<div class="panel"><h3>ðŸ“œ Loom log</h3><div id="log" style="margin-top:10px"></div></div>
+<div class="panel"><h3>â± Timing weave</h3><canvas id="chart" width="400" height="180" style="margin-top:10px"></canvas></div>
+</div>
+</div>
+<section id="tpl">
+<h2 class="rv">Patterns to reweave ðŸ§¶</h2>
+<p class="sub rv">One click loads the warp.</p>
+<div class="tbar rv"><button onclick="loadTpl(0)">ðŸ“¥ Lead machine</button><button onclick="loadTpl(1)">âœï¸ Content factory</button><button onclick="loadTpl(2)">ðŸŽ§ Support autopilot</button></div>
+<div class="tpl3" style="margin-top:16px">
+<div class="rv"><div class="big">ðŸ“¥</div><b>Lead machine</b><p style="color:#6b655a;margin-top:6px">Trigger → Scraper → GPT enrich → CRM. 300 leads/night while you sleep.</p></div>
+<div class="rv"><div class="big">âœï¸</div><b>Content factory</b><p style="color:#6b655a;margin-top:6px">Brief → draft → human check → schedule. 30 posts/week.</p></div>
+<div class="rv"><div class="big">ðŸŽ§</div><b>Support autopilot</b><p style="color:#6b655a;margin-top:6px">Ticket → RAG answer → escalate. âˆ’70% first replies.</p></div>
+</div>
+</section>
+<section>
+<h2 class="rv">Add a thread âž•</h2>
+<p class="sub rv">Blocks snap onto the loom.</p>
+<div class="tbar rv"><button onclick="addNode('mail')">ðŸ“§ Email Sender</button><button onclick="addNode('crm')">ðŸ’¼ CRM Push</button><button onclick="addNode('filter')">ðŸ§© Filter / Branch</button><button onclick="addNode('gpt')">ðŸ§  GPT Enrich</button></div>
+</section>
+<section id="rate">
+<h2 class="rv">Atelier rates ðŸ§¾</h2>
+<p class="sub rv">Quoted after a free audit.</p>
+<div class="tpl3">
+<div class="rv"><small>SINGLE FLOW</small><div style="font-size:34px;font-weight:900">$450</div><p style="color:#6b655a">One pipeline + docs. 1 week.</p><br><button class="btn" style="width:100%" onclick="openAuth()">Weave it</button></div>
+<div class="rv" style="border:2px solid var(--lilac)"><small>â­ ATELIER · POPULAR</small><div style="font-size:34px;font-weight:900">$1,400</div><p style="color:#6b655a">3 flows + dashboard + alerts.</p><br><button class="btn loom" style="width:100%" onclick="openAuth()">Claim slot</button></div>
+<div class="rv"><small>RESIDENT</small><div style="font-size:34px;font-weight:900">$2,800/mo</div><p style="color:#6b655a">Always-on optimizer.</p><br><button class="btn" style="width:100%" onclick="openAuth()">Retain</button></div>
+</div>
+</section>
+<footer>Â© 2026 Loom Atelier · Woven, not written · <a href="#" onclick="openAuth();return false" style="color:var(--lilac)">Free audit</a></footer>
+<div id="auth"><div class="abox"><h3>Free automation audit ðŸ§µ</h3><p style="font-size:13px;color:#6b655a">I map 3 flows you can automate.</p><input id="aemail" placeholder="Email address"><button class="btn loom" style="width:100%;margin-top:10px" onclick="doAuth()">Request audit</button><button class="btn" style="width:100%;margin-top:8px;background:#fff;color:var(--ink);border:1.5px solid var(--ink)" onclick="closeAuth()">Cancel</button></div></div>
+<div id="toast"></div>
+<script>
+addEventListener('load',()=>setTimeout(()=>loader.classList.add('off'),1000));
+setTimeout(()=>loader.classList.add('off'),2400);
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200);}
+function openAuth(){document.getElementById('auth').classList.add('open');}
+function closeAuth(){document.getElementById('auth').classList.remove('open');}
+function doAuth(){const e=document.getElementById('aemail').value;if(!e||!e.includes('@'))return toast('Enter a valid email');closeAuth();toast('Audit requested! Reply in 24h âš¡');}
+document.getElementById('auth').addEventListener('click',e=>{if(e.target.id==='auth')closeAuth();});
+const canvas=document.getElementById('canvas'),wires=document.getElementById('wires'),logEl=document.getElementById('log');
+const ICONS={trigger:'âš¡',scrape:'ðŸŒ',gpt:'ðŸ§ ',sheets:'ðŸ“Š',tg:'âœˆï¸',mail:'ðŸ“§',crm:'ðŸ’¼',filter:'ðŸ§©'};
+const NAMES={trigger:'Trigger · 15 min',scrape:'Scraper · 50 URLs',gpt:'GPT Enrich',sheets:'Sheets Sync',tg:'Telegram Alert',mail:'Email Sender',crm:'CRM Push',filter:'Filter / Branch'};
+let nodes=[{id:'trigger',x:20,y:20},{id:'scrape',x:220,y:60},{id:'gpt',x:420,y:140},{id:'sheets',x:220,y:230},{id:'tg',x:420,y:260}];
+let running=false;
+function log(msg,cls){const d=document.createElement('div');d.className=cls||'';const t=new Date().toLocaleTimeString();d.innerHTML=`[${t}] ${msg}`;logEl.appendChild(d);logEl.scrollTop=logEl.scrollHeight;}
+function drawNodes(){canvas.querySelectorAll('.node').forEach(n=>n.remove());nodes.forEach(n=>{const d=document.createElement('div');d.className='node';d.id='n_'+n.id;d.style.left=n.x+'px';d.style.top=n.y+'px';const col=n.id==='trigger'?'#0fa968':n.id.startsWith('gpt')?'#7c6cf0':n.id.startsWith('tg')?'#0ea5e9':'#ff8a5c';d.innerHTML=`<b><span class="dot" style="background:${col}"></span>${ICONS[n.id.split('_')[0]]||'âš™ï¸'} ${NAMES[n.id]||n.id}</b><small>id: ${n.id}</small><span class="st" id="st_${n.id}"></span>`;d.onmousedown=e=>drag(e,n,d);d.ontouchstart=e=>drag(e,n,d);canvas.appendChild(d);});const bc=document.getElementById('blkCount');if(bc)bc.textContent=nodes.length+' blocks';drawWires();}
+function center(n){return{x:n.x+85,y:n.y+34};}
+function drawWires(){const order=nodes;let s='';for(let i=0;i<order.length-1;i++){const a=center(order[i]),b=center(order[i+1]);const mx=(a.x+b.x)/2;s+=`<path d="M${a.x},${a.y} C${mx},${a.y} ${mx},${b.y} ${b.x},${b.y}" stroke="#7c6cf088" stroke-width="2" fill="none" stroke-dasharray="6 4"/>`;}wires.innerHTML=s;}
+function drag(e,n,el){e.preventDefault();const sx=(e.touches?e.touches[0].clientX:e.clientX)-n.x,sy=(e.touches?e.touches[0].clientY:e.clientY)-n.y;function mv(ev){const cx=ev.touches?ev.touches[0].clientX:ev.clientX,cy=ev.touches?ev.touches[0].clientY:ev.clientY;const r=canvas.getBoundingClientRect();n.x=Math.max(0,Math.min(r.width-175,cx-r.left-sx));n.y=Math.max(0,Math.min(r.height-70,cy-r.top-sy));el.style.left=n.x+'px';el.style.top=n.y+'px';drawWires();}function up(){document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);if(e.touches){const tm=ev=>mv(ev);const te=()=>{document.removeEventListener('touchmove',tm);};document.addEventListener('touchmove',tm,{passive:false});document.addEventListener('touchend',te,{once:true});}}
+function addNode(id){const key=id+'_'+Math.floor(Math.random()*99);ICONS[key]=ICONS[id];NAMES[key]=NAMES[id];nodes.push({id:key,x:40+Math.random()*300,y:40+Math.random()*250});drawNodes();log('âž• block added: <b>'+NAMES[id]+'</b>','info');}
+function addRandom(){const pool=['mail','crm','filter','gpt'];addNode(pool[Math.floor(Math.random()*pool.length)]);}
+function resetSim(){nodes.forEach(n=>{const el=document.getElementById('n_'+n.id);if(el)el.className='node';const st=document.getElementById('st_'+n.id);if(st)st.textContent='';});document.getElementById('progBar').style.width='0';log('â†» loom reset','warn');}
+function exportFlow(){const j=JSON.stringify(nodes.map(n=>({block:NAMES[n.id]||n.id,x:n.x|0,y:n.y|0})),null,1);if(navigator.clipboard)navigator.clipboard.writeText(j).catch(()=>{});log('â¤“ flow exported ('+nodes.length+' blocks) — copied to clipboard','ok');toast('Flow JSON copied âœ…');}
+const TPLS=[[{id:'trigger',x:20,y:150},{id:'scrape',x:220,y:80},{id:'gpt',x:420,y:150},{id:'crm',x:620,y:150}],[{id:'trigger',x:20,y:150},{id:'gpt',x:240,y:100},{id:'gpt_7',x:460,y:150}],[{id:'trigger',x:20,y:150},{id:'gpt',x:240,y:80},{id:'filter',x:240,y:230},{id:'tg',x:470,y:150}]];
+['CRM Push','GPT Enrich','Filter / Branch'].forEach((nm,i)=>{NAMES[['crm','gpt_7','filter'][i]]=nm;ICONS[['crm','gpt_7','filter'][i]]=['ðŸ’¼','ðŸ§ ','ðŸ§©'][i];});
+function loadTpl(i){nodes=JSON.parse(JSON.stringify(TPLS[i]));drawNodes();log('ðŸ“¦ pattern loaded: <b>'+['Lead machine','Content factory','Support autopilot'][i]+'</b>','ok');toast('Pattern loaded ðŸ“¦');}
+async function runSim(){if(running)return toast('Already running”¦');running=true;resetSim();const spd=+document.getElementById('rSpd').value,fail=+document.getElementById('rFail').value;log('▶ weave started · speed '+spd+'Ã— · snag-rate '+fail+'%','info');const times=[];for(let i=0;i<nodes.length;i++){const n=nodes[i];const el=document.getElementById('n_'+n.id),st=document.getElementById('st_'+n.id);el.classList.add('run');st.textContent='â³ weaving”¦';st.style.color='#ff8a5c';log('→ '+(NAMES[n.id]||n.id)+'”¦');await new Promise(r=>setTimeout(r,900/spd));const t=(.3+Math.random()*1.4);times.push(t);if(Math.random()*100<fail){el.classList.remove('run');el.classList.add('fail');st.textContent='âŒ snag — rethreading”¦';st.style.color='#fa5252';log('âœ– '+(NAMES[n.id]||n.id)+' snagged, rethread”¦','err');await new Promise(r=>setTimeout(r,700/spd));el.classList.remove('fail');el.classList.add('done');st.textContent='âœ… done ('+t.toFixed(1)+'s, fixed)';st.style.color='#0fa968';log('â†» '+(NAMES[n.id]||n.id)+' recovered','warn');}else{el.classList.remove('run');el.classList.add('done');st.textContent='âœ… done ('+t.toFixed(1)+'s)';st.style.color='#0fa968';log('✓ '+(NAMES[n.id]||n.id)+' ok · '+t.toFixed(2)+'s','ok');}document.getElementById('progBar').style.width=((i+1)/nodes.length*100)+'%';}const total=times.reduce((a,b)=>a+b,0);document.getElementById('lastRun').textContent=total.toFixed(1)+'s';document.getElementById('avgStep').textContent=(total/times.length).toFixed(2)+'s';document.getElementById('kTasks').textContent=(8412+Math.floor(Math.random()*300)).toLocaleString();log('<b>âœ” fabric finished in '+total.toFixed(1)+'s · '+nodes.length+' threads · 0 dropped</b>','ok');drawChart(times);toast('Weave finished in '+total.toFixed(1)+'s âœ…');running=false;}
+function drawChart(times){const c=document.getElementById('chart'),x=c.getContext('2d');x.clearRect(0,0,400,180);x.fillStyle='#22201c';x.fillRect(0,0,400,180);x.fillStyle='rgba(124,108,240,.12)';x.fillRect(0,0,400,180);const max=Math.max(...times,1);times.forEach((t,i)=>{const w=400/times.length,h=(t/max)*130;const bx=i*(400/times.length)+8;x.fillStyle=i===times.length-1?'#ff8a5c':'#7c6cf0';x.beginPath();x.roundRect?x.roundRect(bx,165-h,400/times.length-16,h,6):x.rect(bx,165-h,400/times.length-16,h);x.fill();x.fillStyle='#fff';x.font='10px sans-serif';x.fillText(t.toFixed(1)+'s',bx+4,160-h);});x.fillStyle='#ffffff88';x.font='11px sans-serif';x.fillText('â± seconds per thread — live weave',10,16);}
+drawNodes();drawChart([.8,1.2,.6,1.5,.9]);
+log('ðŸ§µ loom ready — press <b>Run</b> to weave','info');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

@@ -1,0 +1,572 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apricot — macOS Web Clone</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+:root{
+  --ink:#2b2118;
+  --peach:#ffb59e;
+  --cream:#fff8f1
+}
+body{
+  font-family:-apple-system,'SF Rounded','Nunito',system-ui,sans-serif;
+  background:#1a0f0a;
+  color:var(--ink);
+  overflow:hidden;
+  height:100vh
+}
+/* niche loader: dotted progress */
+#preloader{
+  position:fixed;
+  inset:0;
+  background:#140c08;
+  z-index:500;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  align-items:center;
+  justify-content:center;
+  transition:opacity .5s;
+  color:#fff
+}
+#preloader.done{
+  opacity:0;
+  visibility:hidden
+}
+#preloader .lg{
+  font-size:56px
+}
+#preloader .track{
+  width:200px;
+  height:6px;
+  background:#ffffff22;
+  border-radius:99px;
+  overflow:hidden
+}
+#preloader .track i{
+  display:block;
+  height:100%;
+  width:30%;
+  background:linear-gradient(90deg,#ffb59e,#ffd166);
+  border-radius:99px;
+  animation:slide 1.1s infinite
+}
+@keyframes slide{
+  from{
+  transform:translateX(-100%)
+}
+to{
+  transform:translateX(700%)
+}
+}
+#preloader small{
+  letter-spacing:3px;
+  color:#ffffff88;
+  font-size:11px
+}
+#wall{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg,#ff9e7d 0%,#ffb59e 30%,#ffd6a5 55%,#7fb6a4 100%);
+  z-index:0
+}
+#wall::before{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:58%;
+  width:1100px;
+  height:420px;
+  transform:translateX(-50%);
+  background:radial-gradient(ellipse,#8a5a44 0%,transparent 70%);
+  opacity:.35;
+  filter:blur(20px)
+}
+#wall::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/seed/apricotwall/1400/900') center/cover;
+  opacity:.25;
+  mix-blend-mode:luminosity
+}
+#sun{
+  position:fixed;
+  left:50%;
+  top:34%;
+  width:180px;
+  height:180px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,#fff8 0%,#fff2 60%,transparent 70%);
+  z-index:1
+}
+/* menubar */
+#menu{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:30px;
+  background:#fff8f1dd;
+  backdrop-filter:blur(20px);
+  z-index:120;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:0 16px;
+  font-size:12.5px;
+  font-weight:600
+}
+#menu .mut{
+  opacity:.6;
+  font-weight:400
+}
+#clock{
+  margin-left:auto
+}
+/* windows */
+.win{
+  position:fixed;
+  z-index:40;
+  background:#fff8f1f5;
+  border-radius:16px;
+  box-shadow:0 30px 80px #3a1c0e66;
+  overflow:hidden;
+  border:1px solid #fff;
+  min-width:320px;
+  backdrop-filter:blur(20px)
+}
+.win.hide{
+  display:none
+}
+.win.min{
+  transform:scale(.92) translateY(20px);
+  opacity:0;
+  pointer-events:none
+}
+.wbar{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:11px 14px;
+  background:#ffffff88;
+  font-size:13px;
+  font-weight:700;
+  cursor:grab
+}
+.lights{
+  display:flex;
+  gap:7px
+}
+.lights i{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  display:block;
+  cursor:pointer
+}
+.lights .r{
+  background:#ff5f57
+}
+.lights .y{
+  background:#febc2e
+}
+.lights .g{
+  background:#28c840
+}
+.wbody{
+  padding:18px;
+  font-size:13.5px;
+  max-height:400px;
+  overflow:auto
+}
+.frow{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  background:#fff;
+  border-radius:12px;
+  padding:10px;
+  margin-bottom:8px;
+  box-shadow:0 2px 8px #3a1c0e11
+}
+.frow img{
+  width:44px;
+  height:44px;
+  border-radius:10px;
+  object-fit:cover
+}
+.frow small{
+  display:block;
+  opacity:.55
+}
+.term{
+  background:#2b2118;
+  color:#ffd6a5;
+  border-radius:12px;
+  padding:16px;
+  font-family:ui-monospace,monospace;
+  font-size:12.5px;
+  line-height:1.8;
+  min-height:170px
+}
+/* dock */
+#dock{
+  position:fixed;
+  bottom:12px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:130;
+  display:flex;
+  gap:6px;
+  align-items:flex-end;
+  background:#fff8f155;
+  border:1px solid #ffffff88;
+  padding:10px 14px;
+  border-radius:24px;
+  backdrop-filter:blur(24px);
+  box-shadow:0 20px 50px #3a1c0e44
+}
+.app{
+  width:52px;
+  height:52px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  font-size:27px;
+  cursor:pointer;
+  background:#fff;
+  box-shadow:0 4px 14px #3a1c0e22;
+  transition:transform .15s;
+  border:1px solid #00000008
+}
+.app:hover{
+  transform:scale(1.25) translateY(-8px)
+}
+.app small{
+  position:absolute
+}
+/* spotlight */
+#spot{
+  position:fixed;
+  top:60px;
+  left:50%;
+  transform:translateX(-50%) scale(.96);
+  width:min(600px,92vw);
+  background:#fff8f1f8;
+  border-radius:18px;
+  z-index:200;
+  padding:8px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  box-shadow:0 40px 100px #3a1c0e55
+}
+#spot.open{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateX(-50%) scale(1)
+}
+#spot input{
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  font-size:17px;
+  padding:14px 16px;
+  font-family:inherit
+}
+.srow{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:11px 12px;
+  border-radius:12px;
+  cursor:pointer
+}
+.srow:hover{
+  background:#ffb59e33
+}
+.srow .e{
+  font-size:24px
+}
+/* launchpad grid inside about */
+.launch{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:12px
+}
+.launch div{
+  background:#fff;
+  border-radius:12px;
+  padding:12px;
+  text-align:center;
+  font-size:12px
+}
+/* signin */
+#signin{
+  position:fixed;
+  inset:0;
+  background:#2b211866;
+  backdrop-filter:blur(8px);
+  z-index:300;
+  display:none;
+  align-items:center;
+  justify-content:center
+}
+#signin.open{
+  display:flex
+}
+.scard{
+  width:min(380px,92vw);
+  background:var(--cream);
+  border-radius:22px;
+  padding:34px 30px;
+  text-align:center
+}
+.scard input{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  border:1.5px solid #e8d5c3;
+  outline:0;
+  font-family:inherit
+}
+#toast{
+  position:fixed;
+  top:44px;
+  right:16px;
+  background:#2b2118;
+  color:#fff;
+  padding:12px 20px;
+  border-radius:14px;
+  z-index:400;
+  font-size:13px;
+  transform:translateX(120%);
+  transition:.3s
+}
+#toast.show{
+  transform:none
+}
+.hint{
+  position:fixed;
+  bottom:14px;
+  left:16px;
+  z-index:5;
+  font-size:12px;
+  background:#fff8f155;
+  padding:9px 15px;
+  border-radius:99px;
+  backdrop-filter:blur(10px)
+}
+.reveal{
+  opacity:0;
+  transform:translateY(18px);
+  transition:.6s
+}
+.reveal.vis{
+  opacity:1;
+  transform:none
+}
+@media(max-width:700px){
+  #menu .hideM{
+  display:none
+}
+.win{
+  min-width:0;
+  width:92vw!important;
+  left:4vw!important
+}
+}
+/* apricot extras: dock glow, menu divider, spot kbd */
+.spot-kbd {
+  font-size: 11px;
+  opacity: .5;
+}
+.dock-glow {
+  box-shadow: 0 0 24px #ffb59e88;
+}
+.menu-div {
+  width: 1px;
+  height: 16px;
+  background: #0002;
+}
+.hint-b {
+  font-weight: 800;
+}
+.wall-credit {
+  display: none;
+}
+</style>
+</head>
+<body>
+<div id="preloader"><div class="lg">🍑</div><div class="track"><i></i></div><small>APRICOT OS · LOADING</small></div>
+<div id="wall"></div><div id="sun"></div>
+<div id="menu"><b>🍑</b><span>Finder</span><span class="hideM mut">File</span><span class="hideM mut">Edit</span><span class="hideM mut">View</span><span class="hideM mut">Hire — $55/hr</span><span id="clock"></span><span id="wclock" style="opacity:.6"></span><span>🔋</span><span style="cursor:pointer" onclick="toggleSpot()">🔍</span><span style="cursor:pointer" onclick="toggleDark()">◐</span></div>
+<div class="win" id="w-finder" style="top:80px;left:6%;width:430px">
+<div class="wbar" data-drag="w-finder"><span class="lights"><i class="r" onclick="closeWin('finder')"></i><i class="y" onclick="minWin('finder')"></i><i class="g" onclick="toast('Zoomed ✓')"></i></span> 📁 Finder — Portfolio</div>
+<div class="wbody"><input placeholder="Search files…" oninput="filterFiles(this.value)" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #e8d5c3;margin-bottom:12px;outline:0;font-family:inherit"><div id="flist"></div></div>
+</div>
+<div class="win hide" id="w-about" style="top:100px;left:38%;width:400px">
+<div class="wbar" data-drag="w-about"><span class="lights"><i class="r" onclick="closeWin('about')"></i><i class="y" onclick="minWin('about')"></i><i class="g"></i></span> 🍑 About This Mac — Lena</div>
+<div class="wbody"><div style="display:flex;gap:12px;align-items:center"><img src="https://picsum.photos/seed/lenaface/120/120" style="width:60px;height:60px;border-radius:50%;object-fit:cover"><div><b>Lena Hart</b><br><small style="opacity:.6">macOS-style web · Swift · 7 yrs</small></div></div><div class="launch"><div>🎨<br>Design</div><div>💻<br>Code</div><div>🚀<br>Ship</div><div>⭐<br>5.0★</div></div><p style="margin-top:12px;opacity:.7">Top Rated Plus · 120+ launches · I build buttery product sites. Press ⌘K for Spotlight.</p></div>
+</div>
+<div class="win hide" id="w-pics" style="top:120px;left:12%;width:440px">
+<div class="wbar" data-drag="w-pics"><span class="lights"><i class="r" onclick="closeWin('pics')"></i><i class="y" onclick="minWin('pics')"></i><i class="g"></i></span> 🌅 Photos — Recent work</div>
+<div class="wbody"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><img src="https://picsum.photos/seed/ap1/200/200" style="width:100%;border-radius:10px"><img src="https://picsum.photos/seed/ap2/200/200" style="width:100%;border-radius:10px"><img src="https://picsum.photos/seed/ap3/200/200" style="width:100%;border-radius:10px"></div><p style="opacity:.65;margin-top:10px">Fintech · clinic · travel — drag me by the title bar.</p></div>
+</div>
+<div class="win hide" id="w-term" style="top:140px;left:30%;width:440px">
+<div class="wbar" data-drag="w-term"><span class="lights"><i class="r" onclick="closeWin('term')"></i><i class="y" onclick="minWin('term')"></i><i class="g"></i></span> ⌨️ Terminal — hire.sh</div>
+<div class="wbody"><div class="term">$ whoami<br>→ lena — product engineer<br>$ upwork --rating<br>→ 5.0★ (120 jobs)<br>$ hire --now<br>→ <span style="color:#7CFC00">available · $55/hr · replies in 2h</span><br>$ <span style="animation:blink 1s infinite">▊</span></div>
+<style>@keyframes blink{
+  50%{
+  opacity:0
+}
+}
+/* apricot extras: dock glow, menu divider, spot kbd */
+.spot-kbd {
+  font-size: 11px;
+  opacity: .5;
+}
+.dock-glow {
+  box-shadow: 0 0 24px #ffb59e88;
+}
+.menu-div {
+  width: 1px;
+  height: 16px;
+  background: #0002;
+}
+.hint-b {
+  font-weight: 800;
+}
+.wall-credit {
+  display: none;
+}
+</style>
+<button onclick="openSign()" style="margin-top:12px;background:#2b2118;color:#fff;border:0;padding:11px 24px;border-radius:99px;cursor:pointer;font-weight:700">Hire Lena →</button></div>
+</div>
+<div id="spot"><input id="spotIn" placeholder="🔍 Spotlight — try 'photo', 'terminal', 'sign in'…" oninput="spotSearch(this.value)"><div id="sres"></div></div>
+<footer id="dock">
+<div class="app" onclick="openWin('finder')">📁</div>
+<div class="app" onclick="openWin('pics')">🌅</div>
+<div class="app" onclick="openWin('term')">⌨️</div>
+<div class="app" onclick="openWin('about')">🍑</div>
+<div class="app" onclick="toggleSpot()">🔍</div>
+<div class="app" onclick="openSign()">✉️</div>
+<div class="app" onclick="toast('Trash is empty ✓')">🗑️</div>
+</footer>
+<div class="hint">💡 Double-click dock to open · <b>⌘K / Ctrl+K</b> Spotlight · drag windows</div>
+<div id="toast"></div>
+<div id="signin"><div class="scard"><div style="font-size:44px">🍑</div><h3>Sign in</h3><p style="opacity:.6;font-size:13px">Projects & proposals</p><input placeholder="Email"><input type="password" placeholder="Password"><button onclick="closeSign()" style="width:100%;margin-top:12px;background:#2b2118;color:#fff;border:0;padding:13px;border-radius:12px;font-weight:800;cursor:pointer">Continue →</button><p style="font-size:12px;opacity:.6;margin-top:10px;cursor:pointer" onclick="closeSign()">Cancel</p></div></div>
+<script>
+let z=50;
+addEventListener('load',()=>setTimeout(()=>preloader.classList.add('done'),1200));
+setTimeout(()=>preloader.classList.add('done'),2600);
+const clock=document.getElementById('clock'),wclock=document.getElementById('wclock');
+function tick(){const d=new Date(),p=n=>String(n).padStart(2,'0');const s=`${d.toLocaleString('en',{weekday:'short'})} ${p(d.getHours())}:${p(d.getMinutes())}`;clock.textContent=s;wclock.textContent=`${p(d.getHours())}:${p(d.getMinutes())}`;}
+setInterval(tick,5000);tick();
+const files=[['Invoice Q3.pdf','82 KB · finance','inv1'],['Design.fig','12 MB · ui kit','dsg2'],['Launch plan.md','4 KB · roadmap','pln3'],['Photo export.zip','240 MB','pho4'],['Contract.docx','30 KB','ctr5']];
+const flist=document.getElementById('flist');
+function renderFiles(f){flist.innerHTML=f.map(x=>`<div class="frow reveal vis"><img src="https://picsum.photos/seed/${x[2]}/80/80" alt=""><div><b>${x[0]}</b><small>${x[1]}</small></div><span style="margin-left:auto;opacity:.4">›</span></div>`).join('');}
+renderFiles(files);
+function filterFiles(q){renderFiles(files.filter(x=>x[0].toLowerCase().includes(q.toLowerCase())));}
+function openWin(id){const w=document.getElementById('w-'+id);w.classList.remove('hide','min');w.style.zIndex=++z;}
+function closeWin(id){document.getElementById('w-'+id).classList.add('hide');}
+function minWin(id){const w=document.getElementById('w-'+id);w.classList.add('min');setTimeout(()=>w.classList.add('hide'),350);}
+/* dock magnification */
+document.querySelectorAll('#dock .app').forEach(a=>{
+a.addEventListener('mousemove',e=>{const r=a.getBoundingClientRect();const d=Math.abs(e.clientX-(r.left+r.width/2))/(r.width/2);const s=Math.max(1,1.35-d*.35);a.style.transform=`scale(${s}) translateY(${(s-1)*-14}px)`;});
+a.addEventListener('mouseleave',()=>a.style.transform='');
+});
+/* spotlight */
+const spot=document.getElementById('spot'),spotIn=document.getElementById('spotIn'),sres=document.getElementById('sres');
+const apps=[['📁','Finder files','browse portfolio work'],['🌅','Photos','recent screenshots'],['⌨️','Terminal','hire.sh commands'],['🍑','About This Mac','lena profile'],['✉️','Sign in','proposals and contact']];
+function toggleSpot(force){const open=force!==undefined?force:!spot.classList.contains('open');spot.classList.toggle('open',open);if(open){spotIn.value='';spotSearch('');setTimeout(()=>spotIn.focus(),60);}}
+function spotSearch(q){sres.innerHTML=apps.filter(a=>(a[1]+a[2]).toLowerCase().includes(q.toLowerCase())).map(a=>`<div class="srow" onclick="goSpot('${a[1]}')"><span class="e">${a[0]}</span><div><b>${a[1]}</b><br><small style="opacity:.6">${a[2]}</small></div></div>`).join('')||'<div class="srow">No results</div>';}
+spotSearch('');
+function goSpot(n){toggleSpot(false);if(n.includes('Terminal'))openWin('term');else if(n.includes('About'))openWin('about');else if(n.includes('Photo'))openWin('pics');else if(n.includes('Sign'))openSign();else openWin('finder');}
+document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();toggleSpot();}if(e.key==='Escape'){toggleSpot(false);closeSign();}});
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2200);}
+function openSign(){signin.classList.add('open');}function closeSign(){signin.classList.remove('open');}
+signin.addEventListener('click',e=>{if(e.target.id==='signin')closeSign();});
+function toggleDark(){document.body.style.filter=document.body.style.filter?'':'sepia(.15) brightness(.94)';}
+/* draggable */
+document.querySelectorAll('[data-drag]').forEach(bar=>{
+const win=document.getElementById(bar.dataset.drag);let sx,sy,ox,oy,d=false;
+bar.addEventListener('pointerdown',e=>{if(e.target.tagName==='I')return;d=true;sx=e.clientX;sy=e.clientY;const r=win.getBoundingClientRect();ox=r.left;oy=r.top;win.style.left=ox+'px';win.style.top=oy+'px';win.style.zIndex=++z;bar.setPointerCapture(e.pointerId);});
+bar.addEventListener('pointermove',e=>{if(!d)return;win.style.left=(ox+e.clientX-sx)+'px';win.style.top=Math.max(34,oy+e.clientY-sy)+'px';});
+bar.addEventListener('pointerup',()=>d=false);
+});
+</script>
+<!-- apricot notes
+  - dock icons magnify on mousemove
+  - spotlight: Ctrl/Win+K
+  - windows draggable via titlebar
+  - wallpaper: CSS peach gradient + photo blend
+  - loader: dotted progress, no bars
+-->
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>
+

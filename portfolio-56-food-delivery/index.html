@@ -1,0 +1,734 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verde — Farm-to-Door Delivery</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+:root{
+  --green:#1d7a38;
+  --deep:#0e3d1f;
+  --cream:#faf5e9;
+  --lime:#d9f99d;
+  --ink:#1c2b1f;
+  --mut:#6b7a6d;
+  --card:#fff;
+  --r:22px
+}
+body{
+  font-family:Georgia,'Fraunces',serif;
+  background:var(--cream);
+  color:var(--ink)
+}
+body p,body button,body input,body small,body span,body a{
+  font-family:Inter,system-ui,-apple-system,sans-serif
+}
+::selection{
+  background:var(--green);
+  color:#fff
+}
+/* niche loader: sprout */
+#loader{
+  position:fixed;
+  inset:0;
+  background:var(--deep);
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:center;
+  justify-content:center;
+  transition:opacity .5s
+}
+#loader.off{
+  opacity:0;
+  visibility:hidden
+}
+#loader .sprout{
+  font-size:52px;
+  animation:sway 1s ease-in-out infinite alternate
+}
+@keyframes sway{
+  from{
+  transform:rotate(-10deg) scale(1)
+}
+to{
+  transform:rotate(10deg) scale(1.12)
+}
+}
+#loader small{
+  color:#d9f99d;
+  letter-spacing:4px;
+  font-size:11px
+}
+#loader .bar{
+  width:120px;
+  height:3px;
+  background:#ffffff22;
+  border-radius:99px;
+  overflow:hidden
+}
+#loader .bar i{
+  display:block;
+  height:100%;
+  width:40%;
+  background:var(--lime);
+  border-radius:99px;
+  animation:slide 1s infinite
+}
+@keyframes slide{
+  from{
+  transform:translateX(-120%)
+}
+to{
+  transform:translateX(320%)
+}
+}
+.top{
+  position:sticky;
+  top:0;
+  z-index:60;
+  background:#faf5e9ee;
+  backdrop-filter:blur(12px);
+  border-bottom:2px solid var(--deep)
+}
+.tin{
+  max-width:1180px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:14px 22px
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  font-size:20px;
+  font-family:Georgia,serif
+}
+.logo .leaf{
+  background:var(--green);
+  color:#fff;
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  font-size:20px
+}
+.tin a{
+  color:var(--ink);
+  text-decoration:none;
+  font-size:14px;
+  opacity:.75
+}
+.tin a:hover{
+  opacity:1
+}
+.tin .sp{
+  flex:1
+}
+.cartbtn{
+  background:var(--deep);
+  color:#fff;
+  border:0;
+  padding:11px 22px;
+  border-radius:99px;
+  font-weight:700;
+  cursor:pointer;
+  font-size:14px
+}
+.cartbtn:hover{
+  background:var(--green)
+}
+.hero{
+  max-width:1180px;
+  margin:auto;
+  padding:56px 22px 20px;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:44px;
+  align-items:center
+}
+.eyebrow{
+  display:inline-block;
+  background:var(--lime);
+  border:2px solid var(--deep);
+  padding:7px 16px;
+  border-radius:99px;
+  font-size:12.5px;
+  font-weight:800;
+  letter-spacing:.5px
+}
+h1{
+  font-size:clamp(38px,5.4vw,66px);
+  line-height:1.02;
+  letter-spacing:-1px;
+  margin:16px 0 12px
+}
+h1 em{
+  color:var(--green);
+  font-style:italic
+}
+.hero p{
+  color:var(--mut);
+  font-size:16.5px;
+  line-height:1.65
+}
+.searchrow{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+  background:#fff;
+  border:2px solid var(--deep);
+  border-radius:99px;
+  padding:6px 6px 6px 20px;
+  align-items:center;
+  box-shadow:4px 4px 0 var(--deep)
+}
+.searchrow input{
+  flex:1;
+  border:0;
+  outline:0;
+  font-size:15px;
+  background:transparent
+}
+.searchrow button{
+  background:var(--green);
+  color:#fff;
+  border:0;
+  padding:12px 26px;
+  border-radius:99px;
+  font-weight:800;
+  cursor:pointer
+}
+.trust{
+  display:flex;
+  gap:22px;
+  margin-top:20px;
+  font-size:13.5px
+}
+.trust b{
+  font-size:19px;
+  font-family:Georgia,serif
+}
+/* phone */
+.phoneCol{
+  display:flex;
+  justify-content:center
+}
+.phone{
+  width:290px;
+  height:600px;
+  background:var(--deep);
+  border-radius:52px;
+  padding:12px;
+  box-shadow:10px 10px 0 #1d7a3833;
+  position:relative;
+  transform:rotate(2deg)
+}
+.screen{
+  background:#fffdf6;
+  border-radius:42px;
+  overflow:hidden;
+  height:100%;
+  position:relative;
+  display:flex;
+  flex-direction:column
+}
+.scrHead{
+  background:var(--green);
+  color:#fff;
+  padding:44px 16px 14px;
+  font-size:13px
+}
+.scrHead b{
+  font-size:19px;
+  font-family:Georgia,serif
+}
+.scrBody{
+  padding:12px;
+  flex:1;
+  overflow:hidden
+}
+.mini{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  background:#fff;
+  border:1.5px solid #e5ddc8;
+  border-radius:14px;
+  padding:8px;
+  margin-bottom:8px
+}
+.mini img{
+  width:44px;
+  height:44px;
+  border-radius:10px;
+  object-fit:cover
+}
+.mini button{
+  margin-left:auto;
+  background:var(--deep);
+  color:#fff;
+  border:0;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  cursor:pointer;
+  font-weight:800
+}
+.scrFoot{
+  padding:12px;
+  border-top:1px solid #eee;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:800
+}
+.scrFoot button{
+  background:var(--green);
+  color:#fff;
+  border:0;
+  padding:10px 20px;
+  border-radius:99px;
+  cursor:pointer
+}
+/* marquee */
+.strip{
+  background:var(--deep);
+  color:var(--lime);
+  overflow:hidden;
+  white-space:nowrap;
+  padding:13px 0;
+  margin:34px 0;
+  font-size:13.5px;
+  letter-spacing:1px;
+  font-weight:700
+}
+.strip span{
+  margin:0 22px
+}
+section{
+  max-width:1180px;
+  margin:auto;
+  padding:36px 22px
+}
+h2{
+  font-size:clamp(26px,3.4vw,38px);
+  letter-spacing:-.5px
+}
+.sub{
+  color:var(--mut);
+  margin:8px 0 22px;
+  font-size:15px
+}
+.chips{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px
+}
+.chip{
+  border:2px solid var(--deep);
+  background:#fff;
+  padding:9px 20px;
+  border-radius:99px;
+  cursor:pointer;
+  font-size:13.5px;
+  font-weight:700
+}
+.chip.on{
+  background:var(--deep);
+  color:#fff
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:18px
+}
+.card{
+  background:var(--card);
+  border:2px solid var(--deep);
+  border-radius:var(--r);
+  overflow:hidden;
+  transition:.25s;
+  box-shadow:4px 4px 0 #0e3d1f22
+}
+.card:hover{
+  transform:translate(-2px,-4px);
+  box-shadow:7px 7px 0 var(--deep)
+}
+.card img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-bottom:2px solid var(--deep)
+}
+.pad{
+  padding:16px
+}
+.pad b{
+  font-family:Georgia,serif;
+  font-size:17px
+}
+.pad p{
+  color:var(--mut);
+  font-size:13px;
+  margin:4px 0 10px
+}
+.price-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between
+}
+.price{
+  font-weight:900;
+  font-size:18px
+}
+.add{
+  background:var(--green);
+  color:#fff;
+  border:0;
+  padding:9px 18px;
+  border-radius:99px;
+  font-weight:800;
+  cursor:pointer
+}
+.add:hover{
+  background:var(--deep)
+}
+/* how */
+.how{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px
+}
+.how div{
+  background:#fff;
+  border:2px solid var(--deep);
+  border-radius:18px;
+  padding:24px 20px
+}
+.how .n{
+  font-family:Georgia,serif;
+  font-size:34px;
+  color:var(--green)
+}
+/* reviews */
+.revGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px
+}
+/* partner */
+.partner{
+  background:var(--deep);
+  border-radius:28px;
+  color:#fff;
+  padding:48px 30px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+  align-items:center;
+  margin:20px auto;
+  max-width:1136px
+}
+.partner h2{
+  color:var(--lime)
+}
+.partner input{
+  width:100%;
+  padding:13px 16px;
+  border-radius:12px;
+  border:0;
+  outline:0;
+  margin-top:10px;
+  font-size:14px
+}
+.partner .go{
+  background:var(--lime);
+  color:var(--deep);
+  border:0;
+  padding:13px;
+  border-radius:12px;
+  font-weight:900;
+  width:100%;
+  margin-top:10px;
+  cursor:pointer
+}
+/* drawer */
+#drawer{
+  position:fixed;
+  top:0;
+  right:-380px;
+  width:min(360px,92vw);
+  height:100%;
+  background:#fffdf6;
+  border-left:2px solid var(--deep);
+  z-index:120;
+  transition:.35s;
+  display:flex;
+  flex-direction:column;
+  box-shadow:-20px 0 60px #0003
+}
+#drawer.open{
+  right:0
+}
+#drawer header{
+  padding:20px;
+  border-bottom:2px solid var(--deep);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:900
+}
+#cartItems{
+  flex:1;
+  overflow:auto;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:12px
+}
+.citem{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  background:#fff;
+  border:1.5px solid #e5ddc8;
+  border-radius:14px;
+  padding:10px
+}
+.citem img{
+  width:48px;
+  height:48px;
+  border-radius:10px;
+  object-fit:cover
+}
+.qty{
+  margin-left:auto;
+  display:flex;
+  gap:8px;
+  align-items:center
+}
+.qty button{
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  border:1.5px solid var(--deep);
+  background:#fff;
+  cursor:pointer;
+  font-weight:800
+}
+#drawer footer{
+  padding:18px;
+  border-top:2px solid var(--deep)
+}
+#drawer footer button{
+  width:100%;
+  background:var(--green);
+  color:#fff;
+  border:0;
+  padding:14px;
+  border-radius:14px;
+  font-weight:900;
+  cursor:pointer;
+  font-size:15px
+}
+#toast{
+  position:fixed;
+  bottom:26px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--deep);
+  color:#fff;
+  padding:13px 26px;
+  border-radius:99px;
+  z-index:200;
+  transition:.3s;
+  font-size:14px
+}
+footer.end{
+  text-align:center;
+  color:var(--mut);
+  font-size:13px;
+  padding:34px
+}
+.rv{
+  opacity:0;
+  transform:translateY(24px);
+  transition:.7s
+}
+.rv.vis{
+  opacity:1;
+  transform:none
+}
+@media(max-width:900px){
+  .hero{
+  grid-template-columns:1fr;
+  text-align:center
+}
+.searchrow{
+  flex-direction:column;
+  border-radius:22px
+}
+.partner{
+  grid-template-columns:1fr
+}
+.phone{
+  transform:none
+}
+}
+</style>
+</head>
+<body>
+<div id="loader"><div class="sprout">🌱</div><div class="bar"><i></i></div><small>VERDE · FARM FRESH</small></div>
+<div class="top"><div class="tin">
+<div class="logo"><span class="leaf">🌿</span>Verde</div>
+<a href="#menu">Menu</a><a href="#how">How it works</a><a href="#rev">Reviews</a><a href="#partner">Partner</a>
+<span class="sp"></span>
+<button class="cartbtn" onclick="toggleCart(true)">🧺 Cart · <span id="cartN">0</span> · <span id="cartMini">$0.00</span></button>
+</div></div>
+<header class="hero">
+<div>
+<span class="eyebrow">🚜 From 40 local farms · 25 min avg</span>
+<h1>Real food,<br><em>delivered rooted.</em></h1>
+<p>I'm <b>Verde</b> — a delivery landing + live ordering app built for restaurants. Search the menu, tap add, check out in one tap. This demo cart actually works.</p>
+<div class="searchrow"><span>🔍</span><input id="heroSearch" placeholder="Try 'pizza', 'sushi', 'burger'…" oninput="filterMenu(this.value)"><button onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Find food</button></div>
+<div class="trust"><div><b>4.9★</b><br>12k ratings</div><div><b>25 min</b><br>avg delivery</div><div><b>40+</b><br>farm partners</div><div><b>$0</b><br>fee first order</div></div>
+</div>
+<div class="phoneCol"><div class="phone"><div class="screen">
+<div class="scrHead">📍 Maple St 12 ▾<br><b>What craving today?</b></div>
+<div class="scrBody" id="phoneList"></div>
+<div class="scrFoot"><span id="cartN2">0</span> items · <span id="phoneTotal">$0.00</span><button onclick="toggleCart(true)">View →</button></div>
+</div></div></div>
+</header>
+<div class="strip"><span>🥑 FARM FRESH</span>·<span>🛵 25-MIN DELIVERY</span>·<span>🌱 CARBON-NEUTRAL</span>·<span>🍕 WOOD-FIRED</span>·<span>🍣 DAY-BOAT FISH</span>·<span>🥑 FARM FRESH</span>·<span>🛵 25-MIN DELIVERY</span></div>
+<section id="menu">
+<h2 class="rv">Today's harvest menu</h2>
+<p class="sub rv">Filter by craving — everything cooked to order.</p>
+<div class="chips rv" id="menuFilters"></div>
+<div class="chips rv" style="margin-top:-8px">
+<span class="chip" onclick="setCat('All',this)">All</span>
+<span class="chip" onclick="setCat('Pizza',this)">Pizza</span>
+<span class="chip" onclick="setCat('Sushi',this)">Sushi</span>
+<span class="chip" onclick="setCat('Burger',this)">Burger</span>
+<span class="chip" onclick="setCat('Dessert',this)">Dessert</span>
+</div>
+<div class="grid" id="menuGrid"></div>
+</section>
+<section id="how">
+<h2 class="rv">Farm → door in 3 steps</h2>
+<p class="sub rv">No accounts, no phone calls, no waiting on hold.</p>
+<div class="how">
+<div class="rv"><div class="n">01</div><b>Pick your craving</b><p style="color:var(--mut);font-size:14px;margin-top:6px">Live menu with photos, filters and instant search.</p></div>
+<div class="rv"><div class="n">02</div><b>One-tap checkout</b><p style="color:var(--mut);font-size:14px;margin-top:6px">Cart drawer slides in, total updates live, order in seconds.</p></div>
+<div class="rv"><div class="n">03</div><b>Track the scooter</b><p style="color:var(--mut);font-size:14px;margin-top:6px">SMS updates + 25-minute promise or dessert is free.</p></div>
+<div class="rv"><div class="n">04</div><b>For restaurants</b><p style="color:var(--mut);font-size:14px;margin-top:6px">This exact landing doubled partner orders. Clone it for you.</p></div>
+</div>
+</section>
+<section id="rev">
+<h2 class="rv">Neighbors say it best</h2>
+<p class="sub rv">12,400 verified delivery reviews.</p>
+<div class="revGrid" id="revGrid"></div>
+</section>
+<div class="partner rv" id="partner">
+<div><h2>Own a restaurant? Let's 2× your orders.</h2><p style="opacity:.8;margin-top:10px;font-size:14.5px">I build this Verde stack for food brands: landing + ordering app + driver SMS. $45/hr, live in 2 weeks.</p></div>
+<div><input id="pEmail" placeholder="you@restaurant.com"><button class="go" onclick="partner()">Apply as partner →</button><p id="pMsg" style="margin-top:10px;font-size:13.5px;color:var(--lime)"></p></div>
+</div>
+<footer class="end">© 2026 Verde Foods · Grown, not built · <a href="#" onclick="toggleCart(true);return false" style="color:var(--green)">Open cart</a></footer>
+<aside id="drawer">
+<header><span>🧺 Your basket · <span id="cartTotal">$0.00</span></span><button onclick="toggleCart(false)" style="border:0;background:none;font-size:20px;cursor:pointer">✕</button></header>
+<div id="cartItems"></div>
+<footer><button onclick="checkout()">Checkout →</button><p id="coMsg" style="font-size:13px;margin-top:8px;color:var(--green)"></p></footer>
+</aside>
+<div id="toast"></div>
+<script>
+addEventListener('load',()=>setTimeout(()=>loader.classList.add('off'),900));
+setTimeout(()=>loader.classList.add('off'),2600);
+let FOODS=[{n:'Wood Pizza',p:12.9,c:'Pizza',s:'verde1',d:'San Marzano · basil'},{n:'Truffle Burger',p:10.5,c:'Burger',s:'verde2',d:'Double smash · cheddar'},{n:'Salmon Set',p:18.9,c:'Sushi',s:'verde3',d:'12 pc · day-boat'},{n:'Green Bowl',p:9.9,c:'Pizza',s:'verde4',d:'Kale · avocado · seeds'},{n:'Berry Tart',p:6.5,c:'Dessert',s:'verde5',d:'Farm berries · custard'},{n:'Choco Fondant',p:7.2,c:'Dessert',s:'verde6',d:'70% dark · sea salt'},{n:'Classic Smash',p:8.9,c:'Burger',s:'verde7',d:'House sauce · pickles'},{n:'Dragon Roll',p:14.5,c:'Sushi',s:'verde8',d:'Eel · mango · tobiko'}];
+let cart={},cat='All',q='';
+function money(v){return '$'+v.toFixed(2);}
+function filtered(){return FOODS.filter(f=>(cat==='All'||f.c===cat)&&(f.n.toLowerCase().includes(q.toLowerCase())));}
+function renderMenu(){const list=filtered();document.getElementById('menuGrid').innerHTML=list.length?list.map(f=>`<div class="card rv vis"><img loading="lazy" src="https://picsum.photos/seed/${f.s}/600/300" alt="${f.n}"><div class="pad"><b>${f.n}</b><p>${f.d} · ${f.c}</p><div class="price-row"><span class="price">${money(f.p)}</span><button class="add" onclick="add('${f.n}')">+ Add</button></div></div></div>`).join(''):'<p style="color:var(--mut)">No dishes found.</p>';renderPhone();}
+function renderPhone(){const box=document.getElementById('phoneList');box.innerHTML=FOODS.slice(0,4).map(f=>`<div class="mini"><img src="https://picsum.photos/seed/${f.s}/100/100"><div><b style="font-size:12px">${f.n}</b><br><small style="color:var(--mut)">${money(f.p)}</small></div><button onclick="add('${f.n}')">+</button></div>`).join('');}
+function renderFilters(){const cats=['All','Pizza','Sushi','Burger','Dessert'];document.getElementById('menuFilters').innerHTML=cats.map(c=>`<span class="chip ${c===cat?'on':''}" onclick="setCat('${c}',null)">${c}</span>`).join('');}
+function setCat(c,el){cat=c;q='';document.getElementById('heroSearch').value='';if(el){document.querySelectorAll('.chips .chip').forEach(x=>x.classList.remove('on'));el.classList.add('on');}renderFilters();renderMenu();}
+function filterMenu(v){q=v;renderMenu();}
+function add(n){cart[n]=(cart[n]||0)+1;renderCart();toast(n+' added ✓');}
+function chg(n,d){cart[n]=(cart[n]||0)+d;if(cart[n]<=0)delete cart[n];renderCart();}
+function cartCount(){return Object.values(cart).reduce((a,b)=>a+b,0);}
+function cartSum(){return Object.entries(cart).reduce((s,[n,k])=>{const f=FOODS.find(x=>x.n===n);return s+f.p*k;},0);}
+function renderCart(){const n=cartCount(),sum=cartSum();document.getElementById('cartN').textContent=n;document.getElementById('cartN2').textContent=n;document.getElementById('cartMini').textContent=money(sum);document.getElementById('cartTotal').textContent=money(sum);const pt=document.getElementById('phoneTotal');if(pt)pt.textContent=money(sum);const box=document.getElementById('cartItems');box.innerHTML=n?Object.entries(cart).map(([name,k])=>{const f=FOODS.find(x=>x.n===name);return `<div class="citem"><img src="https://picsum.photos/seed/${f.s}/100/100"><div><b style="font-size:13px">${name}</b><br><small style="color:var(--mut)">${money(f.p)}</small></div><div class="qty"><button onclick="chg('${name}',-1)">−</button><b>${k}</b><button onclick="chg('${name}',1)">+</button></div></div>`;}).join(''):'<p style="color:var(--mut)">Cart is empty. Add something tasty 🍕</p>';}
+function toggleCart(o){document.getElementById('drawer').classList.toggle('open',o);}
+function checkout(){if(!cartCount()){document.getElementById('coMsg').textContent='Cart is empty.';return;}document.getElementById('coMsg').textContent='✓ Order placed! Arriving in ~25 min 🛵';cart={};setTimeout(renderCart,800);renderCart();}
+function partner(){const e=document.getElementById('pEmail').value;document.getElementById('pMsg').textContent=e.includes('@')?'✓ Application received. We will call you!':'Enter a valid email.';}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.transform='translateX(-50%) translateY(0)';clearTimeout(t._x);t._x=setTimeout(()=>t.style.transform='translateX(-50%) translateY(80px)',2000);}
+function renderRev(){const r=[['Jess P.','revfood1','Fastest delivery in town. Burger arrived still crispy!'],['Omar K.','revfood2','The app + landing combo doubled my restaurant orders.'],['Lena W.','revfood3','Checkout is one tap. Tracking is oddly addictive.']];document.getElementById('revGrid').innerHTML=r.map(x=>`<div class="card rv vis"><div class="pad"><img src="https://picsum.photos/seed/${x[1]}/100/100" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:0"> <b>${x[0]}</b><p>★★★★★<br>${x[2]}</p></div></div>`).join('');}
+renderFilters();renderMenu();renderCart();renderRev();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+addEventListener('keydown',e=>{if(e.key==='Escape')toggleCart(false);});
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

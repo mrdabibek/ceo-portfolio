@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusQuant — High-Frequency Algorithmic Trading & Yield Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05070a;
+      --panel: #0a0e14;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(0, 240, 255, 0.35);
+      --green: #00f59b;
+      --green-glow: rgba(0, 245, 155, 0.25);
+      --red: #ff3b69;
+      --red-glow: rgba(255, 59, 105, 0.25);
+      --cyan: #00f0ff;
+      --gold: #ffbe3b;
+      --text: #e1e7f0;
+      --text-muted: #64748b;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 18px 24px;
+    }
+
+    /* Top Strip */
+    .top-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--cyan), #7928ca);
+      border-radius: 8px;
+      display: grid; place-items: center;
+      font-size: 18px;
+      color: #fff;
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.3);
+    }
+    .brand-name {
+      font-family: var(--sans);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+
+    .ticker-bar {
+      display: flex;
+      gap: 20px;
+      font-size: 12px;
+      background: var(--panel);
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .ticker-item strong { color: #fff; margin-right: 6px; }
+    .pos { color: var(--green); }
+    .neg { color: var(--red); }
+
+    /* Grid Layout */
+    .quant-grid {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 1100px) { .quant-grid { grid-template-columns: 1fr; } }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-family: var(--sans);
+      font-weight: 700;
+    }
+
+    #chartCanvas {
+      width: 100%;
+      height: 380px;
+      display: block;
+      background: #070a0f;
+    }
+
+    /* Orderbook */
+    .orderbook-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+    .orderbook-table th {
+      color: var(--text-muted);
+      padding: 8px 12px;
+      text-align: right;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+    }
+    .orderbook-table th:first-child { text-align: left; }
+    .orderbook-table td {
+      padding: 6px 12px;
+      text-align: right;
+      position: relative;
+    }
+    .orderbook-table td:first-child { text-align: left; }
+    .depth-bar {
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      opacity: 0.18;
+    }
+    .depth-bid { background: var(--green); }
+    .depth-ask { background: var(--red); }
+
+    /* Strategy Stats Grid */
+    .strategy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .stat-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--border-focus);
+      transform: translateY(-2px);
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .stat-val {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    /* Execution Controls */
+    .controls-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media(max-width: 800px) { .controls-row { grid-template-columns: 1fr; } }
+
+    .btn-exec {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: none;
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-buy {
+      background: var(--green);
+      color: #05070a;
+      box-shadow: 0 0 20px var(--green-glow);
+    }
+    .btn-buy:hover { transform: translateY(-2px); box-shadow: 0 0 30px var(--green-glow); }
+    .btn-sell {
+      background: var(--red);
+      color: #fff;
+      box-shadow: 0 0 20px var(--red-glow);
+    }
+    .btn-sell:hover { transform: translateY(-2px); box-shadow: 0 0 30px var(--red-glow); }
+
+    /* Floating Return Badge */
+    .floating-hub-badge {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      background: rgba(10, 14, 20, 0.9);
+      border: 1px solid var(--cyan);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(0, 240, 255, 0.3);
+      border-radius: 999px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-size: 13px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .floating-hub-badge:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 15px 40px rgba(0, 240, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-strip">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div>
+          <div class="brand-name">NexusQuant v4.2</div>
+          <div style="font-size: 10px; color: var(--cyan);">ULTRA-LOW LATENCY ARBITRAGE & DEFI ENGINE</div>
+        </div>
+      </div>
+
+      <div class="ticker-bar">
+        <div class="ticker-item"><strong>BTC/USDT</strong> <span class="pos" id="btcPrice">$94,820.50 (+3.8%)</span></div>
+        <div class="ticker-item"><strong>ETH/USDT</strong> <span class="pos">$3,480.20 (+4.2%)</span></div>
+        <div class="ticker-item"><strong>SOL/USDT</strong> <span class="pos">$214.80 (+6.1%)</span></div>
+        <div class="ticker-item"><strong>EXEC LATENCY:</strong> <span class="pos">420 μs</span></div>
+      </div>
+    </div>
+
+    <!-- Strategy Stats -->
+    <div class="strategy-grid">
+      <div class="stat-card">
+        <div class="stat-label">Annualized Return (APY)</div>
+        <div class="stat-val pos">+248.6%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Sharpe Ratio</div>
+        <div class="stat-val" style="color: var(--cyan);">3.84</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Algorithmic Win Rate</div>
+        <div class="stat-val">84.2%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Volume Arbitraged</div>
+        <div class="stat-val" style="color: var(--gold);">$148.9M</div>
+      </div>
+    </div>
+
+    <!-- Main Chart & Orderbook -->
+    <div class="quant-grid">
+      <div class="panel">
+        <div class="panel-header">
+          <div>BTC/USDT — Real-Time 60 FPS Candlestick & EMA 20/50 Channel</div>
+          <div style="color: var(--cyan);">LIVE WEBSOCKET STREAM</div>
+        </div>
+        <canvas id="chartCanvas"></canvas>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div>Level 2 Orderbook</div>
+          <div style="color: var(--text-muted); font-size: 11px;">MATCHED ENGINE</div>
+        </div>
+        <table class="orderbook-table" id="orderbookTable">
+          <thead>
+            <tr><th>PRICE (USDT)</th><th>SIZE</th><th>TOTAL</th></tr>
+          </thead>
+          <tbody id="orderbookBody">
+            <!-- Filled dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Order Actions -->
+    <div class="controls-row">
+      <button class="btn-exec btn-buy" onclick="executeTrade('BUY')">⚡ INSTANT BUY (PAPER TRADE) — 0.25 BTC</button>
+      <button class="btn-exec btn-sell" onclick="executeTrade('SELL')">⚡ INSTANT SELL (PAPER TRADE) — 0.25 BTC</button>
+    </div>
+  </div>
+
+  <a href="../index.html" class="floating-hub-badge">
+    ◈ 66+ Projects Master Hub
+  </a>
+
+  <script>
+    // Web Audio Synthesizer for Trading Clicks
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playAudioTone(freq, dur) {
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + dur);
+      } catch(e) {}
+    }
+
+    function executeTrade(side) {
+      if (side === 'BUY') {
+        playAudioTone(880, 0.08);
+        setTimeout(() => playAudioTone(1100, 0.1), 80);
+        alert("✅ ALGO BUY ORDER FILLED: 0.25 BTC @ market price. Execution: 380 μs.");
+      } else {
+        playAudioTone(440, 0.08);
+        setTimeout(() => playAudioTone(330, 0.1), 80);
+        alert("🔻 ALGO SELL ORDER FILLED: 0.25 BTC @ market price. Execution: 410 μs.");
+      }
+    }
+
+    // Candlestick Chart Engine
+    const canvas = document.getElementById('chartCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    function resize() {
+      w = canvas.width = canvas.parentElement.clientWidth;
+      h = canvas.height = 380;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let candles = [];
+    let currentPrice = 94820;
+
+    for (let i = 0; i < 40; i++) {
+      const open = currentPrice + (Math.random() - 0.48) * 80;
+      const close = open + (Math.random() - 0.48) * 120;
+      const high = Math.max(open, close) + Math.random() * 50;
+      const low = Math.min(open, close) - Math.random() * 50;
+      candles.push({ open, close, high, low });
+      currentPrice = close;
+    }
+
+    function updateCandles() {
+      const last = candles[candles.length - 1];
+      const change = (Math.random() - 0.48) * 35;
+      last.close += change;
+      last.high = Math.max(last.high, last.close);
+      last.low = Math.min(last.low, last.close);
+      currentPrice = last.close;
+
+      const pEl = document.getElementById('btcPrice');
+      if (pEl) pEl.textContent = `$${currentPrice.toFixed(2)} (+3.8%)`;
+    }
+    setInterval(updateCandles, 300);
+
+    function drawChart() {
+      ctx.fillStyle = '#070a0f';
+      ctx.fillRect(0, 0, w, h);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+      for (let y = 30; y < h; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      }
+
+      // Compute range
+      let minP = Infinity, maxP = -Infinity;
+      candles.forEach(c => {
+        minP = Math.min(minP, c.low);
+        maxP = Math.max(maxP, c.high);
+      });
+      const range = maxP - minP || 1;
+
+      const candleW = Math.max(6, (w - 60) / candles.length - 4);
+
+      candles.forEach((c, i) => {
+        const x = 20 + i * (candleW + 4);
+        const yOpen = h - 20 - ((c.open - minP) / range) * (h - 60);
+        const yClose = h - 20 - ((c.close - minP) / range) * (h - 60);
+        const yHigh = h - 20 - ((c.high - minP) / range) * (h - 60);
+        const yLow = h - 20 - ((c.low - minP) / range) * (h - 60);
+
+        const isUp = c.close >= c.open;
+        const color = isUp ? '#00f59b' : '#ff3b69';
+
+        // Wick
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(x + candleW / 2, yHigh);
+        ctx.lineTo(x + candleW / 2, yLow);
+        ctx.stroke();
+
+        // Body
+        ctx.fillStyle = color;
+        ctx.fillRect(x, Math.min(yOpen, yClose), candleW, Math.max(2, Math.abs(yClose - yOpen)));
+      });
+
+      requestAnimationFrame(drawChart);
+    }
+    drawChart();
+
+    // Orderbook Simulation
+    const obBody = document.getElementById('orderbookBody');
+    function updateOrderbook() {
+      let html = '';
+      // Asks
+      for (let i = 4; i >= 1; i--) {
+        const p = (currentPrice + i * 12.5).toFixed(2);
+        const s = (Math.random() * 2.2 + 0.1).toFixed(3);
+        const total = (p * s / 1000).toFixed(1) + 'K';
+        const depth = Math.floor(Math.random() * 70 + 20);
+        html += `
+          <tr>
+            <td class="neg">${p}</td>
+            <td>${s}</td>
+            <td>${total} <div class="depth-bar depth-ask" style="width: ${depth}%;"></div></td>
+          </tr>
+        `;
+      }
+      // Spread
+      html += `<tr style="background: rgba(255,255,255,0.02);"><td colspan="3" style="text-align:center; color: var(--gold); padding: 4px;">SPREAD: 0.01 USDT</td></tr>`;
+      // Bids
+      for (let i = 1; i <= 5; i++) {
+        const p = (currentPrice - i * 12.5).toFixed(2);
+        const s = (Math.random() * 2.5 + 0.2).toFixed(3);
+        const total = (p * s / 1000).toFixed(1) + 'K';
+        const depth = Math.floor(Math.random() * 70 + 20);
+        html += `
+          <tr>
+            <td class="pos">${p}</td>
+            <td>${s}</td>
+            <td>${total} <div class="depth-bar depth-bid" style="width: ${depth}%;"></div></td>
+          </tr>
+        `;
+      }
+      obBody.innerHTML = html;
+    }
+    setInterval(updateOrderbook, 600);
+    updateOrderbook();
+
+    if (window.self !== window.top) {
+      const b = document.querySelector('.floating-hub-badge');
+      if (b) b.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

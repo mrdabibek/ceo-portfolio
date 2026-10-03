@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Bound Page — Independent Bookstore</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Karla:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box }
+:root {
+--bg:#f4ecdd;
+--bg2:#eaddc4;
+--ink:#3a2a1c;
+--mut:#8a755c;
+--brn:#7a4a21;
+--brn2:#a06a35;
+--green:#3f5a36;
+--line:#d9c8ab
+}
+body { background:var(--bg); color:var(--ink); font-family:Karla,sans-serif }
+h1,h2,h3,.serif { font-family:'Libre Baskerville',serif }
+.wrap { max-width:1180px; margin:auto; padding:0 24px }
+/* header */
+.topbar {
+background:var(--ink);
+color:#e8d9bd;
+text-align:center;
+font-size:12px;
+letter-spacing:2px;
+padding:9px
+}
+header {
+position:sticky;
+top:0;
+z-index:60;
+background:rgba(244,236,221,.94);
+backdrop-filter:blur(10px);
+border-bottom:2px solid var(--ink)
+}
+.hd {
+max-width:1240px;
+margin:auto;
+display:flex;
+align-items:center;
+gap:20px;
+padding:14px 24px
+}
+.brand {
+font-family:'Libre Baskerville',serif;
+font-size:21px;
+font-weight:700;
+white-space:nowrap
+}
+.brand em { color:var(--brn); font-style:normal }
+.search {
+flex:1;
+display:flex;
+background:#fff;
+border:2px solid var(--ink);
+border-radius:99px;
+overflow:hidden;
+max-width:520px
+}
+.search input {
+flex:1;
+border:none;
+padding:11px 20px;
+font-family:Karla;
+font-size:14px;
+background:none;
+outline:none;
+color:var(--ink)
+}
+.search button {
+background:var(--ink);
+color:#fff;
+border:none;
+padding:0 24px;
+cursor:pointer;
+font-size:16px
+}
+.hacts {
+display:flex;
+gap:10px;
+align-items:center;
+margin-left:auto
+}
+.listb {
+background:var(--green);
+color:#fff;
+border:none;
+padding:11px 20px;
+cursor:pointer;
+border-radius:99px;
+font-weight:700;
+font-size:13px
+}
+.listb:hover { filter:brightness(1.15) }
+/* hero */
+.hero {
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:30px;
+align-items:center;
+padding:54px 24px;
+max-width:1240px;
+margin:auto
+}
+.hero h1 { font-size:clamp(36px,5vw,62px); line-height:1.12 }
+.hero h1 i { color:var(--brn) }
+.hero p { color:var(--mut); margin:16px 0 22px; line-height:1.75 }
+.btn {
+padding:13px 28px;
+cursor:pointer;
+font-weight:700;
+font-size:14px;
+border-radius:99px;
+font-family:Karla;
+border:2px solid var(--ink)
+}
+.btn.b { background:var(--ink); color:#fff }
+.btn.b:hover { background:var(--brn); border-color:var(--brn) }
+.btn.o { background:none; color:var(--ink) }
+.btn.o:hover { background:var(--ink); color:#fff }
+.shelf {
+background:var(--ink);
+border-radius:18px;
+padding:36px 30px;
+color:#e8d9bd;
+position:relative;
+overflow:hidden
+}
+.shelf .row {
+display:flex;
+gap:8px;
+align-items:flex-end;
+justify-content:center;
+margin:10px 0
+}
+.book {
+width:44px;
+border-radius:3px 6px 6px 3px;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+padding-bottom:8px;
+font-size:18px;
+box-shadow:2px 0 0 rgba(0,0,0,.3)
+}
+.shelf .plank {
+height:10px;
+background:var(--brn2);
+border-radius:3px;
+box-shadow:0 6px 12px rgba(0,0,0,.4)
+}
+.shelf small { letter-spacing:3px; font-size:10px; opacity:.7 }
+/* toolbar */
+.toolbar {
+background:#fff;
+border:2px solid var(--ink);
+border-radius:16px;
+padding:18px 20px;
+margin:10px 0 26px;
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+align-items:center
+}
+.toolbar select {
+background:var(--bg);
+border:1px solid var(--line);
+padding:10px 14px;
+border-radius:8px;
+font-family:Karla;
+font-size:13px;
+color:var(--ink)
+}
+.chips { display:flex; gap:8px; flex-wrap:wrap }
+.chip {
+border:1px solid var(--line);
+background:var(--bg);
+padding:9px 18px;
+border-radius:99px;
+cursor:pointer;
+font-size:13px;
+font-weight:500
+}
+.chip.on { background:var(--ink); color:#fff; border-color:var(--ink) }
+#res { margin-left:auto; font-size:13px; color:var(--mut) }
+/* grid */
+section { padding:40px 0 60px }
+.st h2 { font-size:clamp(28px,3.6vw,44px); margin-bottom:4px }
+.st p { color:var(--mut); margin-bottom:24px }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(215px,1fr)); gap:18px }
+.card {
+background:#fff;
+border:2px solid var(--ink);
+border-radius:14px;
+padding:22px 18px;
+text-align:center;
+transition:.3s;
+position:relative;
+display:flex;
+flex-direction:column
+}
+.card:hover { transform:translateY(-6px); box-shadow:6px 6px 0 var(--ink) }
+.card .cov {
+font-size:64px;
+background:var(--bg);
+border-radius:10px;
+padding:20px 10px
+}
+.card h3 { font-size:17px; margin:12px 0 2px; line-height:1.35 }
+.card .au {
+font-style:italic;
+color:var(--mut);
+font-size:13px;
+font-family:'Libre Baskerville',serif
+}
+.card .stars {
+color:var(--brn2);
+font-size:13px;
+margin:8px 0 2px;
+letter-spacing:1px
+}
+.card .pr { font-weight:700; font-size:18px; margin:6px 0 12px }
+.card .pr s { color:var(--mut); font-weight:400; font-size:13px }
+.card button {
+margin-top:auto;
+background:var(--ink);
+color:#fff;
+border:none;
+padding:11px;
+border-radius:9px;
+cursor:pointer;
+font-weight:700
+}
+.card button:hover { background:var(--green) }
+.card button.added { background:var(--green) }
+.pick {
+position:absolute;
+top:10px;
+left:10px;
+background:var(--green);
+color:#fff;
+font-size:10px;
+font-weight:700;
+padding:4px 10px;
+border-radius:99px;
+letter-spacing:1px
+}
+/* staff */
+.staff {
+background:var(--ink);
+color:#e8d9bd;
+border-radius:20px;
+padding:50px 40px;
+margin-top:50px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+align-items:center
+}
+.staff h2 { font-size:clamp(26px,3.4vw,40px); margin-bottom:14px }
+.staff h2 i { color:#d9a85e }
+.staff p { opacity:.8; line-height:1.8; margin-bottom:14px }
+.staff .quote {
+background:#2c2013;
+border-radius:12px;
+padding:22px;
+font-family:'Libre Baskerville',serif;
+font-style:italic;
+line-height:1.7
+}
+.staff .quote b {
+display:block;
+margin-top:10px;
+font-family:Karla;
+font-style:normal;
+font-size:12px;
+letter-spacing:2px;
+color:#d9a85e
+}
+/* events */
+.events {
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:18px;
+margin-top:26px
+}
+.ev {
+background:#fff;
+border:2px solid var(--ink);
+border-radius:14px;
+padding:26px
+}
+.ev .dt {
+background:var(--brn);
+color:#fff;
+display:inline-block;
+padding:6px 14px;
+border-radius:8px;
+font-weight:700;
+font-size:13px;
+margin-bottom:12px
+}
+.ev h3 { font-size:19px; margin-bottom:8px }
+.ev p {
+color:var(--mut);
+font-size:14px;
+line-height:1.7;
+margin-bottom:14px
+}
+.ev button {
+background:none;
+border:2px solid var(--ink);
+border-radius:99px;
+padding:9px 20px;
+cursor:pointer;
+font-weight:700;
+font-size:13px
+}
+.ev button:hover { background:var(--ink); color:#fff }
+/* club */
+.club {
+background:var(--green);
+color:#fff;
+border-radius:20px;
+padding:50px 34px;
+text-align:center;
+margin-top:50px
+}
+.club h2 { font-size:clamp(26px,3.4vw,42px) }
+.club p {
+opacity:.85;
+margin:12px auto 22px;
+max-width:520px;
+line-height:1.7
+}
+.club form {
+display:flex;
+gap:10px;
+justify-content:center;
+flex-wrap:wrap
+}
+.club input {
+padding:13px 20px;
+border-radius:99px;
+border:none;
+width:min(320px,85%);
+font-family:Karla
+}
+.club button {
+background:#10220f;
+color:#fff;
+border:none;
+border-radius:99px;
+padding:13px 30px;
+font-weight:700;
+cursor:pointer
+}
+/* faq */
+.faq { max-width:740px; margin:50px auto 0 }
+.faq h2 { text-align:center; font-size:32px; margin-bottom:18px }
+.qa {
+background:#fff;
+border:2px solid var(--ink);
+border-radius:12px;
+margin-bottom:10px
+}
+.qa button {
+width:100%;
+background:none;
+border:none;
+padding:16px 20px;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
+font-weight:700;
+font-size:15px;
+color:var(--ink);
+text-align:left
+}
+.qa p {
+display:none;
+padding:0 20px 18px;
+color:var(--mut);
+font-size:14px;
+line-height:1.75
+}
+.qa p.open { display:block }
+/* footer */
+footer {
+background:var(--ink);
+color:#cbbd9d;
+padding:46px 24px;
+text-align:center;
+font-size:13px;
+margin-top:60px
+}
+/* drawer + modal */
+#drawer {
+position:fixed;
+top:0;
+right:-400px;
+width:min(380px,94vw);
+height:100%;
+background:var(--bg);
+border-left:2px solid var(--ink);
+z-index:100;
+transition:.35s;
+padding:26px;
+display:flex;
+flex-direction:column
+}
+#drawer.open { right:0 }
+.ritem {
+display:flex;
+gap:12px;
+align-items:center;
+border-bottom:1px solid var(--line);
+padding:12px 0;
+font-size:14px
+}
+.ritem .cov { font-size:34px }
+.ritem small { color:var(--mut) }
+.ritem button {
+margin-left:auto;
+background:none;
+border:none;
+cursor:pointer;
+font-size:16px
+}
+#overlay {
+position:fixed;
+inset:0;
+background:rgba(58,42,28,.55);
+display:none;
+z-index:90
+}
+#overlay.show { display:block }
+#modal {
+position:fixed;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+z-index:101;
+padding:20px
+}
+#modal.show { display:flex }
+.mbox {
+background:var(--bg);
+border:2px solid var(--ink);
+border-radius:16px;
+max-width:540px;
+width:100%;
+padding:38px;
+position:relative;
+box-shadow:8px 8px 0 var(--ink)
+}
+.mbox .cov { font-size:90px; text-align:center }
+.mbox h3 { font-size:26px; text-align:center; margin:10px 0 2px }
+.mbox .au {
+text-align:center;
+font-style:italic;
+color:var(--mut);
+font-family:'Libre Baskerville',serif
+}
+.mbox p {
+color:#5c4c38;
+line-height:1.8;
+margin:14px 0;
+font-size:14.5px
+}
+.x {
+position:absolute;
+top:12px;
+right:16px;
+background:none;
+border:none;
+font-size:22px;
+cursor:pointer;
+color:var(--ink)
+}
+#toast {
+position:fixed;
+bottom:26px;
+left:50%;
+transform:translateX(-50%) translateY(80px);
+background:var(--ink);
+color:#fff;
+padding:13px 28px;
+border-radius:99px;
+transition:.3s;
+z-index:120;
+font-size:14px
+}
+#toast.show { transform:translateX(-50%) }
+@media(max-width:900px) { .hero { grid-template-columns:1fr }
+.staff { grid-template-columns:1fr; padding:36px 24px }
+.hd nav { display:none }
+.search { max-width:none }
+}
+</style>
+</head>
+<body>
+<div class="topbar">📚 INDEPENDENT SINCE 1998 · FREE WRAPPING · 10% OFF FOR BOOK CLUB MEMBERS</div>
+<header>
+<div class="hd">
+<div class="brand">The Bound <em>Page</em>
+</div>
+<div class="search">
+<input id="q" placeholder="Search title, author, ISBN…" oninput="render()">
+<button onclick="render()">🔍</button>
+</div>
+<div class="hacts">
+<button class="listb" onclick="toggleList(true)">Reading List (<b id="count" style="display:inline">0</b>)</button>
+</div>
+</div>
+</header>
+<div class="hero">
+<div>
+<h1>Find your next <i>obsession.</i>
+</h1>
+<p>27,000 titles on oak shelves, staff who actually read, and coffee that never goes cold. Search the shelves below — reserve online, collect in store.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<button class="btn b" onclick="scrollToId('shelves')">BROWSE SHELVES</button>
+<button class="btn o" onclick="scrollToId('events')">EVENTS &amp; CLUBS</button>
+</div>
+<p style="font-size:13px;margin-top:18px">★★★★★ 4.9 · 3,200 reviews · "The city's living room" — City Paper</p>
+</div>
+<div class="shelf">
+<small>THIS WEEK'S WINDOW DISPLAY</small>
+<div class="row">
+<div class="book" style="height:120px;background:#7a4a21">🌙</div>
+<div class="book" style="height:150px;background:#3f5a36">🌲</div>
+<div class="book" style="height:110px;background:#a06a35">🔥</div>
+<div class="book" style="height:160px;background:#5a3a6a">✨</div>
+<div class="book" style="height:125px;background:#8a2a2a">❤️</div>
+<div class="book" style="height:145px;background:#2a5a7a">🌊</div>
+</div>
+<div class="plank">
+</div>
+<p style="margin-top:16px;font-family:'Libre Baskerville',serif;font-style:italic">"A bookstore is proof that humans can still sit still."</p>
+</div>
+</div>
+<section id="shelves">
+<div class="wrap">
+<div class="st">
+<h2 class="serif">The Shelves</h2>
+<p>Live search across our full inventory · updated hourly</p>
+</div>
+<div class="toolbar">
+<div class="chips" id="chips">
+</div>
+<select id="sort" onchange="render()">
+<option value="pop">Sort: Most loved</option>
+<option value="lo">Price: low → high</option>
+<option value="hi">Price: high → low</option>
+<option value="rate">Top rated</option>
+</select>
+<span id="res">
+</span>
+</div>
+<div class="grid" id="grid">
+</div>
+<div class="staff">
+<div>
+<h2>Margaret's pick <i>of the month</i>
+</h2>
+<p>Margaret has run our fiction floor for 19 years and has never once recommended a bad book. Her February choice sold out twice.</p>
+<button class="btn b" style="background:#d9a85e;border-color:#d9a85e;color:#3a2a1c" onclick="addByName('The Salt Road')">RESERVE — $18</button>
+</div>
+<div class="quote">"I finished The Salt Road at 2am standing in my kitchen because I couldn't sit down for the ending."<b>— MARGARET H., FICTION LEAD</b>
+</div>
+</div>
+<div id="events" class="st" style="margin-top:56px">
+<h2 class="serif">Events &amp; Clubs</h2>
+<p>All free · tea provided · bring a friend</p>
+</div>
+<div class="events">
+<div class="ev">
+<span class="dt">FRI · 7 PM</span>
+<h3 class="serif">Silent Reading Party</h3>
+<p>One hour of shared silence with 40 strangers and bottomless tea. Books optional — we lend.</p>
+<button onclick="rsvp(this)">RSVP FREE</button>
+</div>
+<div class="ev">
+<span class="dt">SAT · 11 AM</span>
+<h3 class="serif">Kids' Story Hour</h3>
+<p>Dragons, pirates &amp; pancakes. Ages 3–8 with grumpy-teen helpers included.</p>
+<button onclick="rsvp(this)">RSVP FREE</button>
+</div>
+<div class="ev">
+<span class="dt">WED · 6:30 PM</span>
+<h3 class="serif">Sci-Fi Book Club</h3>
+<p>This month: <i>The Salt Road</i>. Spoilers mandatory after page 50.</p>
+<button onclick="rsvp(this)">RSVP FREE</button>
+</div>
+</div>
+<div class="club">
+<h2 class="serif">The Bound Page Club — 10% off, forever</h2>
+<p>One email a month: staff picks, signed-stock alerts, first dibs on event seats. No spam, unsubscribe anytime.</p>
+<form onsubmit="event.preventDefault();toast('Welcome to the club — check your inbox');this.reset()">
+<input required type="email" placeholder="you@example.com">
+<button type="submit">JOIN FREE</button>
+</form>
+</div>
+<div class="faq">
+<h2 class="serif">Good questions</h2>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Can I reserve online and pay in store? <span>+</span>
+</button>
+<p>Yes — reserve anything below, we hold it for 5 days behind the counter. Pay by card, cash or book-token.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Do you buy second-hand books? <span>+</span>
+</button>
+<p>Every Tuesday: bring up to 20 books, get store credit (40% of cover) or cash (25%). No textbooks or encyclopedias.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Can you order a book you don't stock? <span>+</span>
+</button>
+<p>Any in-print English title within 3–5 working days, no deposit needed. Out-of-print? Our rare-book desk hunts for free.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Is the café open to non-readers? <span>+</span>
+</button>
+<p>Everyone is welcome, though we suspect you'll leave with a book. Oat flat white is the house legend.</p>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<div class="brand serif" style="color:#e8d9bd">The Bound Page</div>
+<p>14 Oak Lane · Open daily 9–9 · tea &amp; dogs welcome · © 2026</p>
+</footer>
+<div id="overlay" onclick="closeAll()">
+</div>
+<aside id="drawer">
+<h3 class="serif" style="font-size:24px">Your Reading List</h3>
+<p style="color:var(--mut);font-size:13px">Reserve online · collect in store.</p>
+<div id="ritems" style="flex:1;overflow:auto;margin-top:10px">
+</div>
+<div id="rtotal" style="font-weight:700;font-size:20px;margin:14px 0">
+</div>
+<button class="btn b" style="width:100%" onclick="checkout()">RESERVE ALL</button>
+<button class="btn o" style="width:100%;margin-top:8px" onclick="toggleList(false)">KEEP BROWSING</button>
+</aside>
+<div id="modal">
+<div class="mbox">
+<button class="x" onclick="closeAll()">✕</button>
+<div class="cov" id="mCov">📖</div>
+<h3 class="serif" id="mN">
+</h3>
+<div class="au" id="mA">
+</div>
+<p id="mD">
+</p>
+<div style="text-align:center;font-weight:700;font-size:22px" id="mP">
+</div>
+<button class="btn b" id="mAdd" style="width:100%;margin-top:14px">ADD TO LIST</button>
+</div>
+</div>
+<div id="toast">
+</div>
+<script>
+const BOOKS=[
+{
+c:'fiction',t:'The Salt Road',a:'Amara Diallo',p:18,e:'🏜️',r:4.9,s:'A caravan crossing that becomes a story about everything we carry. Our bestselling debut of the year.',pick:1}
+, {
+c:'fiction',t:'Winter Count',a:'Elias Brandt',p:22,e:'❄️',r:4.7,s:'Three brothers, one fjord, a secret kept for forty winters. Slow-burn literary suspense.'}
+, {
+c:'scifi',t:'Orbital Bloom',a:'June Park',p:16,e:'🚀',r:4.8,s:'A botanist on a dying station grows the first flower in zero gravity. Hopeful, strange, beautiful.',pick:1}
+, {
+c:'scifi',t:'The Ninth Tide',a:'R. Okafor',p:19,e:'🌊',r:4.6,s:'Ocean planets, tide-locked cities and a cartographer who maps the impossible.'}
+, {
+c:'mystery',t:'Murder at Juniper Hall',a:'C. Ashworth',p:14,e:'🔍',r:4.5,s:'Classic country-house whodunit with a very modern detective. Page-turner.'}
+, {
+c:'mystery',t:'The Last Alibi',a:'Dana Cole',p:15,e:'🕯️',r:4.7,s:'A defence lawyer realises her client is innocent — of this one. Twisty courtroom noir.',pick:1}
+, {
+c:'kids',t:'Bramble the Brave',a:'Pip Halloway',p:9,e:'🦔',r:4.9,s:'A hedgehog afraid of the dark befriends the moon. Ages 3–7, read-aloud gold.'}
+, {
+c:'kids',t:'Captain Noodle & the Sky Whales',a:'S. Ferreira',p:11,e:'🐳',r:4.8,s:'Pirate-noodle adventures above the clouds. Full-colour illustrations on every page.'}
+, {
+c:'history',t:'Bread & Empire',a:'Prof. L. Marsh',p:28,e:'🍞',r:4.6,s:'How grain built (and broke) five empires. Surprisingly unputdownable.'}
+, {
+c:'history',t:'The Mapmakers',a:'Ingrid Sol',p:32,e:'🗺️',r:4.8,s:'500 years of maps that lied beautifully. 200 illustrations, coffee-table essential.',pick:1}
+, {
+c:'poetry',t:'Small Hours',a:'Nadia Rahman',p:12,e:'🌙',r:4.7,s:'Sixty poems for insomnia, grief and 4am hope. Keep by the bed.'}
+, {
+c:'poetry',t:'Field Notes',a:'T. Abernathy',p:13,e:'🌾',r:4.5,s:'Nature poems from twenty years walking the same valley. Quiet and devastating.'}
+]; const CATS=[['all','All shelves'],['fiction','Fiction'],['scifi','Sci-Fi'],['mystery','Mystery'],['kids','Kids'],['history','History'],['poetry','Poetry']];
+let cat='all',list=JSON.parse(localStorage.getItem('bp_list')||'[]'),curB=null; const grid=document.getElementById('grid'),ch=document.getElementById('chips'); CATS.forEach(([v,l],i)=>{
+const b=document.createElement('button');b.className='chip'+(i?'':' on');b.textContent=l;b.onclick=()=>{
+cat=v;[...ch.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');render()}
+;ch.appendChild(b)}
+); function render(){
+const q=(document.getElementById('q').value||'').toLowerCase(),s=document.getElementById('sort').value;let r=BOOKS.filter(b=>(cat==='all'||b.c===cat)&&(b.t.toLowerCase().includes(q)||b.a.toLowerCase().includes(q)));if(s==='lo')r.sort((a,b)=>a.p-b.p);if(s==='hi')r.sort((a,b)=>b.p-a.p);if(s==='rate')r.sort((a,b)=>b.r-a.r);if(s==='pop')r.sort((a,b)=>b.r-a.r);
+grid.innerHTML=r.length?'':'<p style="color:var(--mut)">No books found — ask us, we love a hunt.</p>';r.forEach(b=>{
+const d=document.createElement('div');d.className='card';const inL=list.some(x=>x.t===b.t);d.innerHTML=(b.pick?'<span class="pick">STAFF PICK</span>':'')+`<div class="cov">${b.e}</div><h3 class="serif">${b.t}</h3><div class="au">${b.a}</div><div class="stars">${'★'.repeat(Math.round(b.r))} ${b.r}</div><div class="pr">$${b.p}</div><button class="${inL?'added':''}">${inL?'✓ IN YOUR LIST':'ADD TO LIST'}</button>`;d.querySelector('.cov').onclick=()=>openB(b);d.querySelector('h3').onclick=()=>openB(b);d.querySelector('button').onclick=ev=>{
+ev.stopPropagation();toggle(b)}
+;grid.appendChild(d)}
+);document.getElementById('res').textContent=r.length+' titles'}
+function toggle(b){
+const i=list.findIndex(x=>x.t===b.t);if(i>=0){
+list.splice(i,1);toast('Removed from list')}
+else{
+list.push(b);toast('"'+b.t+'" reserved')}
+localStorage.setItem('bp_list',JSON.stringify(list));upd();render()}
+function addByName(t){
+const b=BOOKS.find(x=>x.t===t);if(b&&!list.some(x=>x.t===t)){
+list.push(b);localStorage.setItem('bp_list',JSON.stringify(list));upd();render();toast('Reserved — see you at the counter')}
+}
+function openB(b){
+curB=b;mCov.textContent=b.e;mN.textContent=b.t;mA.textContent='by '+b.a+' · ★ '+b.r;mD.textContent=b.s;mP.textContent='$'+b.p;mAdd.textContent=list.some(x=>x.t===b.t)?'✓ IN YOUR LIST':'ADD TO LIST';modal.classList.add('show');overlay.classList.add('show')}
+mAdd.onclick=()=>{
+toggle(curB);closeAll()}
+; function upd(){
+count.textContent=list.length;const w=ritems;w.innerHTML=list.length?'':'<p style="color:var(--mut)">Empty — the shelves await.</p>';list.forEach((b,i)=>{
+const d=document.createElement('div');d.className='ritem';d.innerHTML=`<span class="cov">${b.e}</span><span><b>${b.t}</b><br><small>${b.a} · $${b.p}</small></span><button onclick="rm(${i})">✕</button>`;w.appendChild(d)}
+);rtotal.textContent=list.length?'Total: $'+list.reduce((s,b)=>s+b.p,0):''}
+function rm(i){
+list.splice(i,1);localStorage.setItem('bp_list',JSON.stringify(list));upd();render()}
+function toggleList(o){
+drawer.classList.toggle('open',o);overlay.classList.toggle('show',o)}
+function closeAll(){
+modal.classList.remove('show');drawer.classList.remove('open');overlay.classList.remove('show')}
+function checkout(){
+if(!list.length)return toast('List is empty');toast('Reserved! Collect within 5 days');list=[];localStorage.setItem('bp_list','[]');upd();render();closeAll()}
+function rsvp(b){
+b.textContent='✓ SEAT SAVED';b.disabled=true;toast('Seat saved — see you there')}
+function toast(m){
+const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2400)}
+function scrollToId(i){
+document.getElementById(i).scrollIntoView({
+behavior:'smooth'}
+)}
+render();upd();
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

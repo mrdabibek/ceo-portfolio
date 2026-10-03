@@ -1,0 +1,20 @@
+{
+  "name": "CEO Portfolio Hub — 66 Enterprise & Creative Digital Products",
+  "short_name": "CEO Portfolio",
+  "description": "Production portfolio: Fullstack SaaS, iOS & Android Apps, Godot 3D Games, Autonomous AI Pipelines & Dashboards.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07070d",
+  "theme_color": "#8b5cf6",
+  "orientation": "any",
+  "categories": ["business", "developer", "productivity"],
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

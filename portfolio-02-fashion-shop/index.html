@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VELVET &amp; CO — Fashion Boutique</title>
+<meta name="description" content="VELVET & CO — capsule collections, perfect tailoring, sustainable fabric.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* {
+margin:0;
+padding:0;
+box-sizing:border-box
+}
+:root {
+--ink:#111;
+--mut:#8a8a8a;
+--line:#e9e6e0;
+--paper:#faf8f5;
+--accent:#111
+}
+html {
+scroll-behavior:smooth
+}
+body {
+font-family:'Inter',sans-serif;
+color:var(--ink);
+background:#fff;
+line-height:1.6
+}
+h1,h2,h3,.serif {
+font-family:'Playfair Display',serif;
+font-weight:700
+}
+/* top strip */
+.strip {
+background:#111;
+color:#fff;
+text-align:center;
+font-size:11.5px;
+letter-spacing:2.5px;
+padding:10px;
+text-transform:uppercase
+}
+/* masthead */
+.mast {
+border-bottom:1px solid var(--line)
+}
+.mast-in {
+max-width:1280px;
+margin:0 auto;
+padding:22px 32px;
+display:grid;
+grid-template-columns:1fr auto 1fr;
+align-items:center;
+gap:20px
+}
+.mast nav {
+display:flex;
+gap:24px
+}
+.mast nav a {
+color:var(--ink);
+text-decoration:none;
+font-size:13px;
+letter-spacing:1.5px;
+text-transform:uppercase;
+font-weight:500
+}
+.mast nav a:hover {
+text-decoration:underline;
+text-underline-offset:5px
+}
+.brand {
+text-align:center;
+font-size:30px;
+letter-spacing:6px;
+text-decoration:none;
+color:var(--ink)
+}
+.brand small {
+display:block;
+font-family:'Inter';
+font-size:10px;
+letter-spacing:5px;
+color:var(--mut);
+margin-top:2px
+}
+.mast-r {
+display:flex;
+gap:10px;
+justify-content:flex-end;
+align-items:center
+}
+.icon-btn {
+background:none;
+border:1px solid var(--line);
+border-radius:99px;
+padding:9px 18px;
+cursor:pointer;
+font-size:13px;
+font-family:inherit;
+letter-spacing:1px;
+transition:.2s
+}
+.icon-btn:hover {
+background:#111;
+color:#fff;
+border-color:#111
+}
+#cartCount {
+background:#111;
+color:#fff;
+border-radius:99px;
+font-size:11px;
+padding:1px 8px;
+margin-left:6px
+}
+.icon-btn:hover #cartCount {
+background:#fff;
+color:#111
+}
+/* HERO editorial: oversized type + 2 images */
+.hero {
+max-width:1280px;
+margin:0 auto;
+padding:56px 32px 20px;
+display:grid;
+grid-template-columns:1.1fr .9fr;
+gap:48px;
+align-items:end
+}
+.kicker {
+font-size:12px;
+letter-spacing:4px;
+text-transform:uppercase;
+color:var(--mut);
+margin-bottom:18px
+}
+.hero h1 {
+font-size:clamp(52px,7.5vw,108px);
+line-height:.98;
+letter-spacing:-2px
+}
+.hero h1 em {
+font-style:italic;
+font-weight:500
+}
+.hero p {
+color:var(--mut);
+max-width:420px;
+margin:22px 0 28px;
+font-size:16px
+}
+.hero-cta {
+display:flex;
+gap:12px;
+flex-wrap:wrap
+}
+.btn {
+display:inline-block;
+padding:15px 34px;
+font-size:13px;
+letter-spacing:2px;
+text-transform:uppercase;
+font-weight:600;
+cursor:pointer;
+border:1px solid #111;
+text-decoration:none;
+transition:.25s;
+font-family:inherit
+}
+.btn-s {
+background:#111;
+color:#fff
+}
+.btn-s:hover {
+background:#fff;
+color:#111
+}
+.btn-o {
+background:#fff;
+color:#111
+}
+.btn-o:hover {
+background:#111;
+color:#fff
+}
+.hero-imgs {
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:14px
+}
+.hero-imgs img {
+width:100%;
+object-fit:cover;
+display:block
+}
+.hero-imgs .a {
+height:520px
+}
+.hero-imgs .b {
+height:520px
+}
+.cap {
+font-size:11px;
+letter-spacing:2px;
+text-transform:uppercase;
+color:var(--mut);
+margin-top:8px
+}
+/* marquee */
+.mq {
+border-top:1px solid var(--line);
+border-bottom:1px solid var(--line);
+overflow:hidden;
+white-space:nowrap;
+padding:14px 0;
+margin:48px 0 0;
+background:var(--paper)
+}
+.mq-in {
+display:inline-block;
+animation:mq 26s linear infinite;
+font-family:'Playfair Display';
+font-size:20px;
+font-style:italic
+}
+@keyframes mq {
+to {
+transform:translateX(-50%)
+}
+
+}
+/* shop */
+.shop {
+max-width:1280px;
+margin:0 auto;
+padding:72px 32px
+}
+.shop-head {
+display:flex;
+justify-content:space-between;
+align-items:flex-end;
+gap:20px;
+flex-wrap:wrap;
+margin-bottom:8px
+}
+.shop-head h2 {
+font-size:clamp(34px,4vw,54px);
+letter-spacing:-1px
+}
+.filters {
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin:26px 0 30px
+}
+.filters button {
+border:1px solid var(--line);
+background:#fff;
+padding:10px 22px;
+border-radius:99px;
+font-size:12px;
+letter-spacing:2px;
+text-transform:uppercase;
+cursor:pointer;
+font-family:inherit;
+transition:.2s
+}
+.filters button.on,.filters button:hover {
+background:#111;
+color:#fff;
+border-color:#111
+}
+.grid {
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:26px 20px
+}
+.p {
+position:relative
+}
+.p .imgw {
+overflow:hidden;
+background:var(--paper);
+position:relative
+}
+.p img {
+width:100%;
+height:420px;
+object-fit:cover;
+display:block;
+transition:transform .8s cubic-bezier(.2,.7,.3,1)
+}
+.p:hover img {
+transform:scale(1.06)
+}
+.p .quick {
+position:absolute;
+left:12px;
+right:12px;
+bottom:12px;
+background:rgba(255,255,255,.95);
+border:1px solid var(--line);
+padding:12px;
+font-size:12px;
+letter-spacing:2px;
+text-transform:uppercase;
+cursor:pointer;
+opacity:0;
+transform:translateY(10px);
+transition:.3s;
+font-family:inherit;
+font-weight:600
+}
+.p:hover .quick {
+opacity:1;
+transform:none
+}
+.p h3 {
+font-size:19px;
+margin:14px 0 2px
+}
+.p .cat {
+font-size:11px;
+letter-spacing:2px;
+text-transform:uppercase;
+color:var(--mut)
+}
+.p .pr {
+font-weight:600;
+margin-top:4px
+}
+/* editorial split */
+.ed {
+max-width:1280px;
+margin:0 auto;
+padding:40px 32px 80px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:0;
+border-top:1px solid var(--line)
+}
+.ed img {
+width:100%;
+height:560px;
+object-fit:cover
+}
+.ed-t {
+background:var(--paper);
+padding:70px 60px;
+display:flex;
+flex-direction:column;
+justify-content:center
+}
+.ed-t h2 {
+font-size:clamp(30px,3.6vw,48px);
+line-height:1.05;
+margin:14px 0 16px
+}
+.ed-t p {
+color:var(--mut);
+margin-bottom:26px
+}
+.stats {
+display:flex;
+gap:36px;
+margin-top:28px
+}
+.stats b {
+font-size:28px;
+font-family:'Playfair Display';
+display:block
+}
+/* atelier */
+.at {
+max-width:1280px;
+margin:0 auto;
+padding:0 32px 80px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px
+}
+.at div {
+border-top:2px solid #111;
+padding-top:18px
+}
+.at h3 {
+font-size:22px;
+margin-bottom:8px
+}
+.at p {
+color:var(--mut);
+font-size:14.5px
+}
+/* reviews */
+.rev {
+border-top:1px solid var(--line);
+background:var(--paper)
+}
+.rev-in {
+max-width:1280px;
+margin:0 auto;
+padding:72px 32px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:32px
+}
+.rev blockquote {
+font-family:'Playfair Display';
+font-size:21px;
+font-style:italic;
+line-height:1.5
+}
+.rev cite {
+display:block;
+margin-top:14px;
+font-family:'Inter';
+font-style:normal;
+font-size:12px;
+letter-spacing:2px;
+text-transform:uppercase;
+color:var(--mut)
+}
+/* newsletter */
+.news {
+max-width:1280px;
+margin:0 auto;
+padding:80px 32px;
+text-align:center
+}
+.news h2 {
+font-size:clamp(34px,4.5vw,58px)
+}
+.news p {
+color:var(--mut);
+margin:12px 0 24px
+}
+.news form {
+display:flex;
+max-width:480px;
+margin:0 auto;
+border:1px solid #111
+}
+.news input {
+flex:1;
+padding:15px 18px;
+border:0;
+outline:0;
+font-family:inherit;
+font-size:14px
+}
+.news button {
+background:#111;
+color:#fff;
+border:0;
+padding:0 30px;
+letter-spacing:2px;
+font-size:12px;
+cursor:pointer;
+text-transform:uppercase
+}
+footer {
+border-top:1px solid var(--line);
+padding:30px 32px;
+display:flex;
+justify-content:space-between;
+gap:14px;
+flex-wrap:wrap;
+max-width:1280px;
+margin:0 auto;
+color:var(--mut);
+font-size:13px
+}
+/* cart drawer */
+.drawer {
+position:fixed;
+top:0;
+right:-420px;
+width:min(400px,92vw);
+height:100%;
+background:#fff;
+z-index:120;
+transition:right .4s cubic-bezier(.2,.7,.3,1);
+display:flex;
+flex-direction:column;
+border-left:1px solid var(--line)
+}
+.drawer.open {
+right:0
+}
+.drawer-h {
+padding:22px;
+border-bottom:1px solid var(--line);
+display:flex;
+justify-content:space-between;
+align-items:center
+}
+.drawer-h b {
+font-family:'Playfair Display';
+font-size:22px
+}
+.drawer-b {
+flex:1;
+overflow:auto;
+padding:20px 22px;
+display:flex;
+flex-direction:column;
+gap:16px
+}
+.ci {
+display:grid;
+grid-template-columns:70px 1fr auto;
+gap:12px;
+align-items:center
+}
+.ci img {
+width:70px;
+height:84px;
+object-fit:cover
+}
+.ci small {
+color:var(--mut)
+}
+.ci button {
+background:none;
+border:1px solid var(--line);
+border-radius:50%;
+width:26px;
+height:26px;
+cursor:pointer
+}
+.drawer-f {
+padding:22px;
+border-top:1px solid var(--line)
+}
+.scrim {
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.4);
+z-index:110;
+opacity:0;
+visibility:hidden;
+transition:.3s
+}
+.scrim.open {
+opacity:1;
+visibility:visible
+}
+/* checkout auth modal — only at checkout */
+.overlay {
+position:fixed;
+inset:0;
+z-index:130;
+background:rgba(0,0,0,.55);
+display:flex;
+align-items:center;
+justify-content:center;
+opacity:0;
+visibility:hidden;
+transition:.3s;
+padding:20px
+}
+.overlay.open {
+opacity:1;
+visibility:visible
+}
+.modal {
+background:#fff;
+width:min(420px,94vw);
+padding:38px 34px;
+position:relative
+}
+.m-x {
+position:absolute;
+top:10px;
+right:14px;
+background:none;
+border:0;
+font-size:24px;
+cursor:pointer
+}
+.field {
+margin-bottom:12px
+}
+.field input {
+width:100%;
+padding:13px 15px;
+border:1px solid var(--line);
+font-family:inherit;
+font-size:14px;
+outline:0
+}
+.field input:focus {
+border-color:#111
+}
+.ok {
+text-align:center;
+display:none;
+padding:14px 0
+}
+.rv {
+opacity:0;
+transform:translateY(28px);
+transition:.8s
+}
+.rv.in {
+opacity:1;
+transform:none
+}
+#toTop {
+position:fixed;
+right:20px;
+bottom:20px;
+width:44px;
+height:44px;
+border-radius:50%;
+border:1px solid #111;
+background:#fff;
+cursor:pointer;
+display:none
+}
+@media(max-width:1000px) {
+.hero {
+grid-template-columns:1fr
+}
+.grid {
+grid-template-columns:1fr 1fr
+}
+.ed {
+grid-template-columns:1fr
+}
+.ed img {
+height:380px
+}
+.at {
+grid-template-columns:1fr
+}
+.rev-in {
+grid-template-columns:1fr
+}
+.mast-in {
+grid-template-columns:1fr;
+text-align:center
+}
+.mast nav,.mast-r {
+justify-content:center
+}
+
+}
+@media(max-width:560px) {
+.grid {
+grid-template-columns:1fr
+}
+.hero-imgs .a,.hero-imgs .b {
+height:340px
+}
+
+}
+</style>
+</head>
+<body>
+<div class="strip">Complimentary shipping on orders over $150 — New Season SS26</div>
+<div class="mast"><div class="mast-in">
+<nav><a href="#shop">Shop</a><a href="#atelier">Atelier</a><a href="#reviews">Clients</a></nav>
+<a class="brand serif" href="#">VELVET &amp; CO<small>MAISON DE COUTURE</small></a>
+<div class="mast-r"><button class="icon-btn" onclick="toggleCart(true)">Bag <span id="cartCount">0</span></button></div>
+</div></div>
+<div class="hero">
+<div>
+<div class="kicker">Spring — Summer 2026 · Lookbook N°14</div>
+<h1>Wear <em>confidence,</em> own every room.</h1>
+<p>Capsule collections cut in-house, sewn from traceable mills in Porto and Kyoto. Twelve silhouettes. Zero compromise.</p>
+<div class="hero-cta"><a href="#shop" class="btn btn-s">Shop the collection</a><a href="#atelier" class="btn btn-o">Our atelier</a></div>
+<div class="stats"><div><b data-v="14">0</b><small style="color:var(--mut)">Years of craft</small></div><div><b data-v="32">0</b><small style="color:var(--mut)">Master tailors</small></div><div><b data-v="98">0</b><small style="color:var(--mut)">% natural fibre</small></div></div>
+</div>
+<div class="hero-imgs">
+<div><img class="a" src="https://picsum.photos/seed/fashionhero/700/900" alt="Editorial look"><div class="cap">Look 01 — Ivory trench</div></div>
+<div><img class="b" src="https://picsum.photos/seed/fashionmodel/500/900" alt="Model portrait"><div class="cap">Look 07 — Noir dress</div></div>
+</div>
+</div>
+<div class="mq"><div class="mq-in" id="mq">Capsule collections &nbsp;·&nbsp; Perfect tailoring &nbsp;·&nbsp; Sustainable fabric &nbsp;·&nbsp; Global delivery &nbsp;·&nbsp; Capsule collections &nbsp;·&nbsp; Perfect tailoring &nbsp;·&nbsp; Sustainable fabric &nbsp;·&nbsp; Global delivery &nbsp;·&nbsp;</div></div>
+<div class="shop" id="shop">
+<div class="shop-head"><div><div class="kicker">The catalogue</div><h2>Shop by silhouette</h2></div>
+<div style="color:var(--mut);font-size:14px" id="resCount"></div></div>
+<div class="filters" id="filters">
+<button class="on" data-f="all">All</button><button data-f="dresses">Dresses</button><button data-f="outer">Outerwear</button><button data-f="tailoring">Tailoring</button><button data-f="silk">Silk</button>
+</div>
+<div class="grid" id="grid"></div>
+</div>
+<div class="ed">
+<img src="https://picsum.photos/seed/fashionatelier/900/1000" alt="Atelier">
+<div class="ed-t"><div class="kicker">The atelier</div>
+<h2>Cut by hand, finished like couture.</h2>
+<p>Every VELVET &amp; CO piece passes through 14 hands before it reaches yours — from pattern drafting to hand-rolled hems. Complimentary alterations on all tailoring, forever.</p>
+<a href="#shop" class="btn btn-s" style="align-self:flex-start">Explore tailoring</a>
+<div class="stats"><div><b>14</b><small style="color:var(--mut)">Hands per garment</small></div><div><b>4.9</b><small style="color:var(--mut)">Client rating</small></div><div><b>72h</b><small style="color:var(--mut)">Express atelier</small></div></div>
+</div>
+</div>
+<div class="at" id="atelier">
+<div><h3 class="serif">01 — Capsule collections</h3><p>Twelve silhouettes per season, designed to mix across years — never landfill fashion.</p></div>
+<div><h3 class="serif">02 — Sustainable fabric</h3><p>GOTS-certified wool, peace silk and organic cotton from audited mills.</p></div>
+<div><h3 class="serif">03 — Global delivery</h3><p>Insured express shipping to 40+ countries, duties covered at checkout.</p></div>
+</div>
+<div class="rev" id="reviews"><div class="rev-in">
+<div><blockquote>"The blazer fits like it was drafted on my body. I have never kept a garment this long."</blockquote><cite>— Camille R., Paris</cite></div>
+<div><blockquote>"Fabric, stitching, packaging — everything whispers quality. Worth every penny."</blockquote><cite>— Sofia M., Milan</cite></div>
+<div><blockquote>"Ordered Tuesday, altered Friday, wore it Saturday. Flawless service."</blockquote><cite>— Amelia K., London</cite></div>
+</div></div>
+<div class="news">
+<div class="kicker">La liste</div>
+<h2 class="serif">First access to private drops.</h2>
+<p>One letter a month. No noise —atelier notes, early links, fitting invitations.</p>
+<form onsubmit="return subscribe(event)"><input id="nlEmail" type="email" required placeholder="Email address"><button>Join</button></form>
+<p id="nlOk" style="display:none;color:#166534">Welcome to the list — check your inbox.</p>
+</div>
+<footer><div>© 2026 VELVET &amp; CO · Paris — Milan — New York</div><div>Shipping · Returns · Size guide · Contact</div></footer>
+<div class="scrim" id="scrim" onclick="toggleCart(false)"></div>
+<aside class="drawer" id="drawer">
+<div class="drawer-h"><b>Shopping bag</b><button class="icon-btn" onclick="toggleCart(false)">Close</button></div>
+<div class="drawer-b" id="cartBody"></div>
+<div class="drawer-f"><div style="display:flex;justify-content:space-between;margin-bottom:14px"><span style="color:var(--mut)">Subtotal</span><b id="cartTotal">$0</b></div>
+<button class="btn btn-s" style="width:100%" onclick="openCheckout()">Checkout securely →</button></div>
+</aside>
+<div class="overlay" id="ov"><div class="modal">
+<button class="m-x" onclick="closeCheckout()">×</button>
+<h2 class="serif">Checkout</h2>
+<p style="color:var(--mut);font-size:14px;margin:6px 0 18px">Sign in to complete your order of <b id="coTotal"></b>.</p>
+<div class="field"><input type="email" placeholder="Email address"></div>
+<div class="field"><input type="password" placeholder="Password"></div>
+<button class="btn btn-s" style="width:100%" onclick="placeOrder(event)">Sign in &amp; pay →</button>
+<div class="ok" id="ok"><div style="font-size:44px">✓</div><h3 class="serif">Order confirmed</h3><p style="color:var(--mut);font-size:14px">Receipt sent to your inbox.</p></div>
+</div></div>
+<button id="toTop" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+// catalogue (filter preserved)
+const PRODUCTS=[
+{n:'Ivory Trench Coat',c:'outer',p:289,seed:'fashiondress'},
+{n:'Noir Slip Dress',c:'dresses',p:189,seed:'fashionlook'},
+{n:'Sand Double-Blazer',c:'tailoring',p:249,seed:'fashionfabric'},
+{n:'Champagne Silk Skirt',c:'silk',p:159,seed:'fashionstore'},
+{n:'Camel Wool Overcoat',c:'outer',p:329,seed:'fashionmodel'},
+{n:'Pearl Wrap Dress',c:'dresses',p:199,seed:'fashionatelier'},
+{n:'Charcoal Pinstripe Suit',c:'tailoring',p:399,seed:'fashionhero'},
+{n:'Rose Silk Blouse',c:'silk',p:139,seed:'fashionabout'}];
+let cart=[];
+function render(filter){
+const g=document.getElementById('grid');g.innerHTML='';
+const list=PRODUCTS.filter(p=>filter==='all'||p.c===filter);
+document.getElementById('resCount').textContent=list.length+' pieces';
+list.forEach((p,i)=>{const d=document.createElement('div');d.className='p rv in';
+d.innerHTML='<div class="imgw"><img loading="lazy" src="https://picsum.photos/seed/'+p.seed+'/600/760" alt="'+p.n+'"><button class="quick" onclick="add('+PRODUCTS.indexOf(p)+')">Add to bag — $'+p.p+'</button></div><div class="cat">'+p.c+'</div><h3 class="serif">'+p.n+'</h3><div class="pr">$'+p.p+'</div>';g.appendChild(d)});
+}
+document.getElementById('filters').addEventListener('click',e=>{if(e.target.tagName!=='BUTTON')return;document.querySelectorAll('#filters button').forEach(b=>b.classList.remove('on'));e.target.classList.add('on');render(e.target.dataset.f)});
+function add(i){cart.push(PRODUCTS[i]);sync();toggleCart(true)}
+function rm(i){cart.splice(i,1);sync()}
+function sync(){document.getElementById('cartCount').textContent=cart.length;
+const b=document.getElementById('cartBody');b.innerHTML=cart.length?'':'<p style="color:var(--mut)">Your bag is empty — the collection awaits.</p>';
+let t=0;cart.forEach((p,i)=>{t+=p.p;const d=document.createElement('div');d.className='ci';d.innerHTML='<img src="https://picsum.photos/seed/'+p.seed+'/140/170"><div><b>'+p.n+'</b><br><small>$'+p.p+' · '+p.c+'</small></div><button onclick="rm('+i+')">×</button>';b.appendChild(d)});
+document.getElementById('cartTotal').textContent='$'+t}
+function toggleCart(o){document.getElementById('drawer').classList.toggle('open',o);document.getElementById('scrim').classList.toggle('open',o)}
+function openCheckout(){if(!cart.length){toggleCart(true);return}document.getElementById('coTotal').textContent=document.getElementById('cartTotal').textContent;document.getElementById('ov').classList.add('open')}
+function closeCheckout(){document.getElementById('ov').classList.remove('open')}
+function placeOrder(e){const b=e.target;b.textContent='Processing…';setTimeout(()=>{document.getElementById('ok').style.display='block';b.style.display='none';cart=[];sync();setTimeout(()=>{closeCheckout();document.getElementById('ok').style.display='none';b.style.display='';b.textContent='Sign in & pay →'},2200)},900)}
+function subscribe(e){e.preventDefault();document.getElementById('nlOk').style.display='block';e.target.style.display='none';return false}
+// reveal + counters + marquee dup
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.1});
+function watchRv(){document.querySelectorAll('.rv:not(.in)').forEach(el=>io.observe(el))}
+const mq=document.getElementById('mq');mq.innerHTML+=mq.innerHTML;
+const cio=new IntersectionObserver(e=>e.forEach(x=>{if(!x.isIntersecting)return;const b=x.target,v=parseFloat(b.dataset.v);let t=0;const t2=setInterval(()=>{t+=v/30;if(t>=v){t=v;clearInterval(t2)}b.textContent=Math.round(t)},40);cio.unobserve(x.target)}),{threshold:.5});
+document.querySelectorAll('[data-v]').forEach(el=>cio.observe(el));
+render('all');
+addEventListener('scroll',()=>document.getElementById('toTop').style.display=scrollY>600?'block':'none');
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

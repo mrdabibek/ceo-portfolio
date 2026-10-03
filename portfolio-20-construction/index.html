@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IronPeak — Construction Co.</title>
+<meta name="description" content="IronPeak — industrial construction: homes, warehouses, renovations with instant estimator.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --yel:#ffc400;
+  --blk:#111214;
+  --bg:#f4f4f2;
+  --card:#ffffff;
+  --mut:#6d6e72;
+  --line:#e2e2df;
+}
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+html {
+  scroll-behavior:smooth
+}
+body {
+  background:var(--bg);
+  color:var(--blk);
+  font-family:'Barlow',sans-serif;
+  line-height:1.6;
+  overflow-x:hidden
+}
+h1,h2,h3 {
+  font-family:'Barlow Condensed',sans-serif;
+  text-transform:uppercase;
+  line-height:.95;
+  letter-spacing:.01em
+}
+::selection {
+  background:var(--yel);
+  color:#000
+}
+img {
+  display:block;
+  max-width:100%
+}
+.hazard {
+  background:repeating-linear-gradient(-45deg,var(--yel) 0 18px,var(--blk) 18px 36px);
+  color:#fff;
+  text-align:center;
+  font-family:'Barlow Condensed';
+  font-weight:700;
+  letter-spacing:.2em;
+  padding:7px;
+  font-size:12px
+}
+nav {
+  background:var(--blk);
+  color:#fff;
+  position:sticky;
+  top:0;
+  z-index:100
+}
+.nav-in {
+  max-width:1240px;
+  margin:0 auto;
+  padding:13px 24px;
+  display:flex;
+  align-items:center;
+  gap:26px
+}
+.logo {
+  font-family:'Barlow Condensed';
+  font-weight:800;
+  font-size:26px;
+  text-decoration:none;
+  color:#fff;
+  display:flex;
+  gap:10px;
+  align-items:center
+}
+.logo i {
+  background:var(--yel);
+  color:#000;
+  font-style:normal;
+  padding:2px 10px;
+  transform:skew(-8deg);
+  display:inline-block
+}
+.nlinks {
+  display:flex;
+  gap:22px;
+  margin-left:10px
+}
+.nlinks a {
+  color:#c9c9c9;
+  text-decoration:none;
+  font-weight:600;
+  font-size:13.5px;
+  letter-spacing:.08em;
+  text-transform:uppercase
+}
+.nlinks a:hover {
+  color:var(--yel)
+}
+.nav-r {
+  margin-left:auto;
+  display:flex;
+  gap:12px;
+  align-items:center
+}
+.btn {
+  border:0;
+  cursor:pointer;
+  font-family:'Barlow Condensed';
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:15px;
+  padding:13px 28px;
+  background:var(--yel);
+  color:#000;
+  transition:.2s;
+  text-decoration:none;
+  display:inline-block;
+  transform:skew(-6deg)
+}
+.btn span {
+  display:inline-block;
+  transform:skew(6deg)
+}
+.btn:hover {
+  filter:brightness(1.05);
+  transform:skew(-6deg) translateY(-2px)
+}
+.btn.dark {
+  background:#fff
+}
+.btn.ghost {
+  background:transparent;
+  color:#fff;
+  border:2px solid #333
+}
+.hero {
+  background:var(--blk);
+  color:#fff;
+  position:relative;
+  overflow:hidden
+}
+.hero-in {
+  max-width:1240px;
+  margin:0 auto;
+  padding:60px 24px 0;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:36px;
+  align-items:end
+}
+.kick {
+  display:inline-block;
+  background:var(--yel);
+  color:#000;
+  font-family:'Barlow Condensed';
+  font-weight:700;
+  letter-spacing:.14em;
+  padding:7px 16px;
+  transform:skew(-8deg);
+  font-size:13px
+}
+.hero h1 {
+  font-size:clamp(56px,7.5vw,110px);
+  font-weight:800;
+  margin:16px 0 12px
+}
+.hero h1 span {
+  color:var(--yel)
+}
+.hero p.lead {
+  color:#b9b9bb;
+  max-width:460px;
+  font-size:16.5px
+}
+.hero-cta {
+  display:flex;
+  gap:12px;
+  margin:24px 0 30px;
+  flex-wrap:wrap
+}
+.lic {
+  display:flex;
+  gap:22px;
+  font-family:'Barlow Condensed';
+  font-size:15px;
+  letter-spacing:.1em;
+  color:#8e8e90;
+  padding-bottom:34px;
+  flex-wrap:wrap
+}
+.lic b {
+  color:var(--yel);
+  font-size:22px;
+  display:block
+}
+.est {
+  background:#fff;
+  color:var(--blk);
+  border-radius:6px 6px 0 0;
+  padding:28px;
+  border-top:8px solid var(--yel)
+}
+.est h3 {
+  font-size:24px;
+  margin-bottom:4px
+}
+.est small {
+  color:var(--mut)
+}
+.est-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin:16px 0
+}
+.field label {
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--mut);
+  display:block;
+  margin-bottom:6px
+}
+.field select,.field input {
+  width:100%;
+  border:2px solid var(--blk);
+  border-radius:4px;
+  padding:12px;
+  font-family:inherit;
+  font-weight:600
+}
+.est-out {
+  background:var(--blk);
+  color:#fff;
+  border-radius:4px;
+  padding:16px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px
+}
+.est-out b {
+  font-family:'Barlow Condensed';
+  font-size:34px;
+  color:var(--yel)
+}
+.hero-img {
+  max-width:1240px;
+  margin:0 auto;
+  padding:0 24px 40px;
+  background:var(--blk)
+}
+.hero-img div {
+  position:relative;
+  border-radius:6px;
+  overflow:hidden
+}
+.hero-img img {
+  width:100%;
+  height:380px;
+  object-fit:cover
+}
+.hero-img figcaption {
+  position:absolute;
+  bottom:14px;
+  left:14px;
+  background:var(--yel);
+  color:#000;
+  font-family:'Barlow Condensed';
+  font-weight:700;
+  padding:8px 16px;
+  letter-spacing:.1em
+}
+section {
+  max-width:1240px;
+  margin:0 auto;
+  padding:66px 24px
+}
+.sec-k {
+  font-family:'Barlow Condensed';
+  font-weight:700;
+  letter-spacing:.3em;
+  color:#8a6d00;
+  font-size:13px
+}
+.sec-h {
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:16px;
+  margin:8px 0 26px;
+  flex-wrap:wrap
+}
+.sec-h h2 {
+  font-size:clamp(38px,4.6vw,64px)
+}
+.sec-h p {
+  color:var(--mut);
+  max-width:440px
+}
+.serv {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px
+}
+.svc {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-top:6px solid var(--blk);
+  padding:0;
+  overflow:hidden;
+  transition:.25s
+}
+.svc:hover {
+  border-top-color:var(--yel);
+  transform:translateY(-5px)
+}
+.svc img {
+  width:100%;
+  height:220px;
+  object-fit:cover
+}
+.svc-body {
+  padding:22px
+}
+.svc-body .no {
+  font-family:'Barlow Condensed';
+  color:#b89b00;
+  font-weight:700;
+  letter-spacing:.2em
+}
+.svc-body h3 {
+  font-size:26px;
+  margin:6px 0
+}
+.svc-body p {
+  color:var(--mut);
+  font-size:14.5px
+}
+.nums {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+  background:var(--blk);
+  color:#fff;
+  margin-top:18px
+}
+.nums div {
+  padding:28px 20px;
+  text-align:center;
+  border-right:1px solid #26262a
+}
+.nums div:last-child {
+  border-right:0
+}
+.nums b {
+  font-family:'Barlow Condensed';
+  font-size:46px;
+  color:var(--yel);
+  display:block
+}
+.steps {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px
+}
+.step {
+  background:var(--blk);
+  color:#fff;
+  border-radius:6px;
+  padding:26px
+}
+.step b {
+  font-family:'Barlow Condensed';
+  font-size:40px;
+  color:var(--yel)
+}
+.step h3 {
+  font-size:21px;
+  margin:8px 0
+}
+.step p {
+  color:#a7a7ab;
+  font-size:13.5px
+}
+.split {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:28px;
+  align-items:center
+}
+.split img {
+  width:100%;
+  height:420px;
+  object-fit:cover;
+  border:6px solid var(--blk)
+}
+ul.hard {
+  list-style:none;
+  margin:18px 0;
+  display:grid;
+  gap:10px
+}
+ul.hard li {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  font-weight:600
+}
+ul.hard i {
+  width:30px;
+  height:30px;
+  background:var(--yel);
+  display:grid;
+  place-items:center;
+  font-style:normal;
+  font-weight:800;
+  flex-shrink:0
+}
+.gal {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px
+}
+.gal img {
+  width:100%;
+  height:210px;
+  object-fit:cover;
+  border:3px solid var(--blk)
+}
+.revs {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px
+}
+.rev {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-left:8px solid var(--yel);
+  padding:24px
+}
+.rev p {
+  font-size:14.5px
+}
+.rev div {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-top:12px
+}
+.rev img {
+  width:46px;
+  height:46px;
+  object-fit:cover;
+  border:2px solid var(--blk)
+}
+.faq {
+  max-width:760px;
+  display:grid;
+  gap:10px
+}
+.faq details {
+  background:#fff;
+  border:2px solid var(--blk);
+  padding:14px 20px
+}
+.faq summary {
+  cursor:pointer;
+  font-family:'Barlow Condensed';
+  font-size:19px;
+  letter-spacing:.03em
+}
+.faq p {
+  color:var(--mut);
+  font-size:14px;
+  margin-top:6px
+}
+.cta {
+  background:var(--yel);
+  border:3px solid var(--blk);
+  padding:50px;
+  text-align:center;
+  box-shadow:10px 10px 0 var(--blk)
+}
+.cta h2 {
+  font-size:clamp(38px,5vw,68px)
+}
+footer {
+  background:var(--blk);
+  color:#a7a7ab
+}
+.f-in {
+  max-width:1240px;
+  margin:0 auto;
+  padding:40px 24px 24px;
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1fr;
+  gap:24px
+}
+.f-in h4 {
+  font-family:'Barlow Condensed';
+  color:var(--yel);
+  letter-spacing:.2em;
+  margin-bottom:12px
+}
+.f-in a {
+  display:block;
+  color:#a7a7ab;
+  text-decoration:none;
+  font-size:14px;
+  margin:6px 0
+}
+.f-base {
+  max-width:1240px;
+  margin:0 auto;
+  padding:16px 24px;
+  border-top:1px solid #26262a;
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  flex-wrap:wrap;
+  gap:8px
+}
+.rv {
+  opacity:0;
+  transform:translateY(24px);
+  transition:.65s
+}
+.rv.on {
+  opacity:1;
+  transform:none
+}
+#toast {
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--blk);
+  color:var(--yel);
+  padding:13px 26px;
+  font-weight:700;
+  transition:.35s;
+  opacity:0;
+  z-index:300;
+  border:2px solid var(--yel)
+}
+#toast.show {
+  transform:translateX(-50%);
+  opacity:1
+}
+@media(max-width:940px) {
+.hero-in,.split {
+  grid-template-columns:1fr
+}
+.serv,.steps,.revs {
+  grid-template-columns:1fr
+}
+.nums {
+  grid-template-columns:1fr 1fr
+}
+.nums div {
+  border-bottom:1px solid #26262a
+}
+.gal {
+  grid-template-columns:repeat(2,1fr)
+}
+.nlinks {
+  display:none
+}
+.f-in {
+  grid-template-columns:1fr 1fr
+}
+}
+</style>
+</head>
+<body>
+<div class="hazard">LICENSED · INSURED · 15-YEAR WARRANTY — FREE QUOTE IN 24H</div>
+<nav><div class="nav-in">
+<a class="logo" href="#"><i>IP</i>IRONPEAK</a>
+<div class="nlinks"><a href="#services">Services</a><a href="#estimator">Estimator</a><a href="#work">Sites</a><a href="#faq">FAQ</a></div>
+<div class="nav-r"><span style="color:#8e8e90;font-weight:600">☎ +998 90 000 00 00</span><a href="#estimator" class="btn"><span>Get quote →</span></a></div>
+</div></nav>
+<header class="hero"><div class="hero-in">
+<div>
+<span class="kick">★ 18 YEARS ON SITE</span>
+<h1>We build<br><span>like it matters.</span></h1>
+<p class="lead">Homes, warehouses and full renovations. Fixed price in contract, foreman on WhatsApp daily.</p>
+<div class="hero-cta"><a href="#estimator" class="btn"><span>Estimate my project</span></a><a href="#work" class="btn ghost"><span>See sites ↓</span></a></div>
+<div class="lic"><div><b>240+</b>OBJECTS DONE</div><div><b>15 YR</b>WARRANTY</div><div><b>0 ₸</b>HIDDEN FEES</div></div>
+</div>
+<div class="est rv" id="estimator">
+<h3>▚ Instant estimator</h3><small>Move the sliders — price updates live. No email needed.</small>
+<div class="est-grid">
+<div class="field"><label>Project type</label><select id="tSel" onchange="est()"><option value="450">Home build — $450/m²</option><option value="280">Renovation — $280/m²</option><option value="320">Warehouse — $320/m²</option><option value="180">Facade / roof — $180/m²</option></select></div>
+<div class="field"><label>Finish level</label><select id="fSel" onchange="est()"><option value="1">Standard ×1.0</option><option value="1.25">Comfort ×1.25</option><option value="1.5">Premium ×1.5</option></select></div>
+<div class="field"><label>Area: <b id="aLab">120 m²</b></label><input type="range" id="aRg" min="30" max="500" value="120" oninput="est()"></div>
+<div class="field"><label>Months to start</label><select id="uSel" onchange="est()"><option value="0">Now — 0% rush</option><option value="0.1">In 1 month +10%</option><option value="-0.05">Flexible −5%</option></select></div>
+</div>
+<div class="est-out"><div><small style="color:#8e8e90">ROUGH ESTIMATE</small><br><b id="estOut">$54,000</b></div><small id="estBr" style="color:#b9b9bb;max-width:220px">Home build · 120 m² · Standard</small><a href="#cta" class="btn"><span>Fix price →</span></a></div>
+</div>
+</div><div class="hero-img"><div><img src="https://picsum.photos/seed/iron-hero/1200/500" alt="Site" loading="eager"><figcaption>SITE N°47 — WAREHOUSE 2 400 M² · DELIVERED 12 DAYS EARLY</figcaption></div></div></header>
+<section id="services">
+<div class="sec-k">/// WHAT WE DO</div>
+<div class="sec-h"><h2>Heavy work,<br>clean paperwork.</h2><p>One contract, one foreman, daily photo reports.</p></div>
+<div class="serv">
+<article class="svc rv"><img src="https://picsum.photos/seed/iron-1/700/450" alt="Homes" loading="lazy"><div class="svc-body"><span class="no">01 / HOMES</span><h3>Turnkey houses</h3><p>Foundation to keys in 6–9 months. Brick, frame, SIP.</p></div></article>
+<article class="svc rv"><img src="https://picsum.photos/seed/iron-2/700/450" alt="Warehouses" loading="lazy"><div class="svc-body"><span class="no">02 / INDUSTRIAL</span><h3>Warehouses</h3><p>Steel frame, sandwich panels, floors for forklifts.</p></div></article>
+<article class="svc rv"><img src="https://picsum.photos/seed/iron-3/700/450" alt="Reno" loading="lazy"><div class="svc-body"><span class="no">03 / RENOVATION</span><h3>Renovations</h3><p>Flats, offices, facades. Dust-controlled, on schedule.</p></div></article>
+</div>
+<div class="nums rv"><div><b data-n="240">0</b><small>OBJECTS DELIVERED</small></div><div><b data-n="18">0</b><small>YEARS ON SITE</small></div><div><b data-n="96">0</b><small>% ON-TIME HANDOVER</small></div><div><b data-n="15">0</b><small>YEAR WARRANTY</small></div></div>
+</section>
+<section style="padding-top:0">
+<div class="sec-k">/// PROCESS</div>
+<div class="sec-h"><h2>From pit to keys.</h2></div>
+<div class="steps">
+<div class="step rv"><b>01</b><h3>Survey + quote</h3><p>Engineer visit, soil + measures, fixed quote in 24h.</p></div>
+<div class="step rv"><b>02</b><h3>Contract</h3><p>Price, dates and penalties on paper. No surprises.</p></div>
+<div class="step rv"><b>03</b><h3>Build</h3><p>Foreman chat, weekly drone + photo diary.</p></div>
+<div class="step rv"><b>04</b><h3>Handover</h3><p>Snag list, 15-year warranty, service visits.</p></div>
+</div>
+</section>
+<section style="padding-top:0"><div class="split">
+<div class="rv"><div class="sec-k">/// WHY IRONPEAK</div><h2 style="font-size:clamp(36px,4vw,60px);margin:8px 0">Penalty if we're late.</h2><p style="color:var(--mut)">0.1% of contract per day, written in. That's why 96% finish early.</p><ul class="hard"><li><i>✓</i> Own crews — no random subcontractors</li><li><i>✓</i> Materials at wholesale + receipts</li><li><i>✓</i> Engineer supervision, not just foreman</li></ul><a href="#estimator" class="btn"><span>Run estimator ↑</span></a></div>
+<div class="rv"><img src="https://picsum.photos/seed/iron-split/800/700" alt="Crew" loading="lazy"></div>
+</div></section>
+<section id="work" style="padding-top:0">
+<div class="sec-k">/// SITES</div>
+<div class="sec-h"><h2>Fresh concrete.</h2></div>
+<div class="gal rv">
+<img src="https://picsum.photos/seed/iron-g1/600/450" alt="g1" loading="lazy">
+<img src="https://picsum.photos/seed/iron-g2/600/450" alt="g2" loading="lazy">
+<img src="https://picsum.photos/seed/iron-g3/600/450" alt="g3" loading="lazy">
+<img src="https://picsum.photos/seed/iron-g4/600/450" alt="g4" loading="lazy">
+</div>
+<div class="revs" style="margin-top:18px">
+<div class="rev rv"><p>"Warehouse handed 12 days early. Floor flatness passed laser test first try."</p><div><img src="https://picsum.photos/seed/iron-u1/200/200" alt="u" loading="lazy"><span><b>Otabek N.</b><br><small style="color:var(--mut)">Logistics client</small></span></div></div>
+<div class="rev rv"><p>"Fixed price held to the som. Daily photos meant zero site visits."</p><div><img src="https://picsum.photos/seed/iron-u2/200/200" alt="u" loading="lazy"><span><b>Elena V.</b><br><small style="color:var(--mut)">House 180 m²</small></span></div></div>
+<div class="rev rv"><p>"Renovated office floor while we worked. No dust, no drama."</p><div><img src="https://picsum.photos/seed/iron-u3/200/200" alt="u" loading="lazy"><span><b>Jasur K.</b><br><small style="color:var(--mut)">Office 400 m²</small></span></div></div>
+</div>
+</section>
+<section id="faq" style="padding-top:0">
+<div class="sec-k">/// FAQ</div>
+<div class="sec-h"><h2>Straight answers.</h2></div>
+<div class="faq rv">
+<details open><summary>Do I need an account to estimate?</summary><p>No — estimator above is free and anonymous. Account only for signed clients' site diary.</p></details>
+<details><summary>Is the estimate final?</summary><p>Within ±10% until survey. After engineer visit we fix price in contract.</p></details>
+<details><summary>Who buys materials?</summary><p>We do — wholesale + receipts in your chat. Or you buy from our spec, your call.</p></details>
+</div>
+</section>
+<section id="cta" style="padding-top:0"><div class="cta rv">
+<h2>Need it built this year?</h2>
+<p style="font-weight:600">2 survey slots left this week. Engineer visit free inside the city.</p>
+<form onsubmit="return sub(event)" style="display:flex;gap:10px;max-width:460px;margin:18px auto 0;flex-wrap:wrap"><input id="nl" placeholder="Phone: +998 ..." required style="flex:1;padding:13px 18px;border:3px solid #111;min-width:200px"><button class="btn dark"><span>Call me →</span></button></form>
+</div></section>
+<footer><div class="f-in">
+<div><a class="logo" href="#"><i>IP</i><span style="color:#fff">IRONPEAK</span></a><p style="font-size:14px;margin-top:10px;max-width:260px">Yard: 44 Industrial Rd. Office Mon–Sat 09–18.</p></div>
+<div><h4>Build</h4><a href="#services">Houses</a><a href="#services">Warehouses</a><a href="#services">Renovations</a></div>
+<div><h4>Company</h4><a href="#">Licenses</a><a href="#">Careers</a><a href="#">Press</a></div>
+<div><h4>Contacts</h4><a href="#">+998 90 000 00 00</a><a href="#">Privacy</a><a href="#">Offer</a></div>
+</div><div class="f-base"><span>© 2026 IronPeak · Picsum photos · Lic. № 12345</span><span>Safety first · PPE on every site</span></div></footer>
+<div id="toast"></div>
+<script>
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}})},{threshold:.12});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+function est(){var rate=parseFloat(document.getElementById('tSel').value);var f=parseFloat(document.getElementById('fSel').value);var a=parseInt(document.getElementById('aRg').value);var u=parseFloat(document.getElementById('uSel').value);document.getElementById('aLab').textContent=a+' m²';var total=Math.round(rate*f*a*(1+u));document.getElementById('estOut').textContent='$'+total.toLocaleString();var tn=document.getElementById('tSel').selectedOptions[0].text.split('—')[0].trim();var fn=document.getElementById('fSel').selectedOptions[0].text.split(' ')[0];document.getElementById('estBr').textContent=tn+' · '+a+' m² · '+fn}
+est();
+var cio=new IntersectionObserver(function(e){e.forEach(function(x){if(!x.isIntersecting)return;var el=x.target;cio.unobserve(el);var t=parseFloat(el.dataset.n),st=null;function fr(ts){if(!st)st=ts;var p=Math.min((ts-st)/1400,1);el.textContent=Math.round(t*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(fr)}requestAnimationFrame(fr)})},{threshold:.5});
+document.querySelectorAll('[data-n]').forEach(function(el){cio.observe(el)});
+function sub(e){e.preventDefault();var t=document.getElementById('toast');t.textContent='Noted: '+document.getElementById('nl').value+' — foreman calls in 24h (demo)';t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2600);document.getElementById('nl').value='';return false}
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

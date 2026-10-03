@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BURGERLAB — Build Your Beast</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box
+}
+:root{
+--red:#e63900;
+--yl:#ffc300;
+--bg:#140800;
+--card:#221006;
+--line:#3d2110;
+--txt:#fff7ef;
+--mut:#c9a68a
+}
+html{
+scroll-behavior:smooth
+}
+body{
+background:var(--bg);
+color:var(--txt);
+font-family:Inter,sans-serif;
+overflow-x:hidden
+}
+::selection{
+background:var(--yl);
+color:#000
+}
+#preloader{
+position:fixed;
+inset:0;
+z-index:300;
+background:#0d0500;
+display:flex;
+flex-direction:column;
+gap:12px;
+align-items:center;
+justify-content:center;
+transition:.5s
+}
+#preloader.done{
+opacity:0;
+visibility:hidden
+}
+#preloader .bg{
+font-family:'Archivo Black';
+font-size:44px
+}
+#preloader .bg span{
+color:var(--red)
+}
+#preloader .bar{
+width:230px;
+height:6px;
+background:#2a1508;
+border-radius:99px;
+overflow:hidden
+}
+#preloader .bar i{
+display:block;
+height:100%;
+width:40%;
+background:var(--yl);
+animation:ld 1s infinite
+}
+@keyframes ld{
+0%{
+transform:translateX(-100%)
+}
+100%{
+transform:translateX(400%)
+}
+}
+/* brutal nav */
+nav{
+position:sticky;
+top:0;
+z-index:100;
+display:flex;
+align-items:center;
+gap:20px;
+padding:14px 5%;
+background:#0d0500;
+border-bottom:4px solid var(--red)
+}
+.logo{
+font-family:'Archivo Black';
+font-size:24px;
+letter-spacing:1px
+}
+.logo span{
+color:var(--red)
+}
+.nlinks{
+display:flex;
+gap:20px
+}
+.nlinks a{
+color:var(--mut);
+text-decoration:none;
+font-weight:800;
+font-size:12.5px;
+letter-spacing:1px
+}
+.nlinks a:hover{
+color:var(--yl)
+}
+.hbtns{
+margin-left:auto;
+display:flex;
+gap:10px
+}
+.hbtn{
+border:2px solid var(--red);
+background:none;
+color:#fff;
+font-weight:800;
+padding:10px 20px;
+border-radius:99px;
+cursor:pointer;
+font-size:12.5px
+}
+.hbtn.solid{
+background:var(--red)
+}
+.cartpill{
+background:var(--yl);
+border:0;
+color:#000;
+font-weight:800;
+padding:10px 20px;
+border-radius:99px;
+cursor:pointer;
+font-size:12.5px
+}
+/* hero constructor-first */
+.hero{
+max-width:1180px;
+margin:auto;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:34px;
+padding:46px 5% 20px;
+align-items:start
+}
+.kick{
+display:inline-block;
+background:var(--yl);
+color:#000;
+font-weight:800;
+font-size:12px;
+padding:8px 16px;
+transform:rotate(-2deg)
+}
+h1{
+font-family:'Archivo Black';
+font-size:clamp(44px,6vw,76px);
+line-height:.95;
+margin:14px 0
+}
+h1 .r{
+color:var(--red)
+}
+h1 .y{
+background:var(--yl);
+color:#000;
+padding:0 12px;
+display:inline-block;
+transform:rotate(-1deg)
+}
+.sub{
+color:var(--mut);
+line-height:1.7;
+font-size:14.5px;
+max-width:460px
+}
+/* KEPT: constructor */
+.lab{
+background:var(--card);
+border:3px solid var(--red);
+border-radius:24px;
+padding:28px;
+margin-top:22px;
+box-shadow:8px 8px 0 var(--red)
+}
+.lab h3{
+font-family:'Archivo Black';
+font-size:20px
+}
+.step{
+margin-top:18px
+}
+.step p{
+font-weight:800;
+font-size:12px;
+letter-spacing:2px;
+color:var(--yl);
+margin-bottom:10px
+}
+.chips{
+display:flex;
+gap:8px;
+flex-wrap:wrap
+}
+.chips button{
+background:#160b03;
+border:2px solid var(--line);
+color:#fff;
+font-weight:700;
+padding:10px 16px;
+border-radius:12px;
+cursor:pointer;
+font-size:13px
+}
+.chips button.on{
+background:var(--red);
+border-color:var(--red)
+}
+.chips button small{
+opacity:.7
+}
+.bprev{
+background:#0d0500;
+border:2px dashed var(--line);
+border-radius:18px;
+padding:24px;
+text-align:center;
+margin-top:18px
+}
+.stack{
+font-size:34px;
+line-height:1.15;
+filter:drop-shadow(0 6px 0 rgba(0,0,0,.4))
+}
+.bprev .pr{
+font-family:'Archivo Black';
+font-size:34px;
+color:var(--yl);
+margin-top:10px
+}
+.bprev .kcal{
+color:var(--mut);
+font-size:12.5px
+}
+.labbtns{
+display:flex;
+gap:10px;
+margin-top:16px
+}
+.labbtns button{
+flex:1;
+padding:15px;
+border-radius:14px;
+font-weight:800;
+cursor:pointer;
+font-size:14px;
+border:0
+}
+.add{
+background:var(--yl)
+}
+.buy{
+background:var(--red);
+color:#fff
+}
+/* hero visual */
+.hvis{
+position:sticky;
+top:110px
+}
+.hvis img{
+width:100%;
+height:420px;
+object-fit:cover;
+border-radius:24px;
+border:3px solid var(--yl);
+transform:rotate(1.5deg)
+}
+.hstats{
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:10px;
+margin-top:16px
+}
+.hstats div{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:14px;
+padding:14px;
+text-align:center
+}
+.hstats b{
+font-family:'Archivo Black';
+font-size:20px;
+color:var(--yl)
+}
+.hstats small{
+color:var(--mut);
+font-size:11.5px
+}
+/* marquee */
+.mq{
+background:var(--yl);
+color:#000;
+font-family:'Archivo Black';
+padding:12px 0;
+overflow:hidden;
+white-space:nowrap;
+font-size:18px
+}
+.mq div{
+display:inline-block;
+animation:mq 16s linear infinite
+}
+@keyframes mq{
+to{
+transform:translateX(-50%)
+}
+}
+/* sections */
+section{
+max-width:1180px;
+margin:auto;
+padding:64px 5%
+}
+.eyebrow{
+color:var(--yl);
+font-weight:800;
+letter-spacing:3px;
+font-size:12px
+}
+h2{
+font-family:'Archivo Black';
+font-size:clamp(28px,4vw,44px);
+margin:8px 0
+}
+.lead{
+color:var(--mut);
+font-size:14.5px
+}
+/* menu */
+.mgrid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+gap:18px;
+margin-top:28px
+}
+.mcard{
+background:var(--card);
+border:2px solid var(--line);
+border-radius:20px;
+overflow:hidden;
+transition:.25s
+}
+.mcard:hover{
+border-color:var(--yl);
+transform:translateY(-5px) rotate(-.5deg)
+}
+.mcard img{
+width:100%;
+height:180px;
+object-fit:cover
+}
+.mcard .in{
+padding:20px
+}
+.mcard h3{
+font-family:'Archivo Black';
+font-size:17px
+}
+.mcard p{
+color:var(--mut);
+font-size:13px;
+margin:6px 0
+}
+.mcard .pr{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:12px
+}
+.mcard .pr b{
+font-size:20px;
+color:var(--yl)
+}
+.mcard .pr button{
+background:var(--red);
+border:0;
+color:#fff;
+font-weight:800;
+padding:10px 20px;
+border-radius:99px;
+cursor:pointer
+}
+/* combo */
+.combo{
+background:var(--yl);
+color:#000;
+border-radius:26px;
+padding:44px 6%;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:30px;
+margin-top:16px;
+align-items:center;
+transform:rotate(-.5deg)
+}
+.combo h2{
+color:#000
+}
+.combo img{
+width:100%;
+height:300px;
+object-fit:cover;
+border-radius:18px;
+border:3px solid #000
+}
+.combo button{
+background:#000;
+color:var(--yl);
+border:0;
+font-weight:800;
+padding:15px 32px;
+border-radius:99px;
+cursor:pointer;
+font-size:14px;
+margin-top:16px
+}
+/* delivery */
+.steps3{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:14px;
+margin-top:28px
+}
+.st3{
+background:var(--card);
+border:2px dashed var(--line);
+border-radius:18px;
+padding:26px;
+text-align:center
+}
+.st3 b{
+font-family:'Archivo Black';
+font-size:18px;
+color:var(--yl)
+}
+.st3 p{
+color:var(--mut);
+font-size:13.5px;
+margin-top:8px
+}
+/* reviews */
+.revs{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:16px;
+margin-top:28px
+}
+.rev{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:18px;
+padding:24px
+}
+.rev p{
+font-size:14px;
+line-height:1.7
+}
+.rev b{
+display:block;
+margin-top:10px;
+font-size:13px;
+color:var(--yl)
+}
+footer{
+background:#0d0500;
+border-top:4px solid var(--red);
+padding:32px 5%;
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+color:var(--mut);
+font-size:13px
+}
+/* drawer + auth */
+#drawer{
+position:fixed;
+top:0;
+right:-380px;
+width:min(370px,93%);
+height:100%;
+background:#1c0d04;
+z-index:200;
+padding:28px;
+transition:.4s;
+border-left:4px solid var(--red);
+overflow:auto
+}
+#drawer.open{
+right:0
+}
+#drawer h3{
+font-family:'Archivo Black';
+font-size:24px
+}
+.citem{
+display:flex;
+justify-content:space-between;
+border-bottom:1px dashed var(--line);
+padding:11px 0;
+font-size:14px
+}
+.checkout{
+width:100%;
+background:var(--yl);
+border:0;
+border-radius:99px;
+padding:15px;
+font-weight:800;
+cursor:pointer;
+margin-top:14px;
+font-size:15px
+}
+#auth{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.65);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:210;
+padding:20px
+}
+#auth.open{
+display:flex
+}
+.abox{
+background:#221006;
+border:2px solid var(--red);
+border-radius:22px;
+padding:36px;
+width:min(400px,100%)
+}
+.abox h3{
+font-family:'Archivo Black';
+font-size:24px
+}
+.tabs{
+display:flex;
+background:#0d0500;
+border-radius:99px;
+padding:4px;
+margin:16px 0
+}
+.tabs button{
+flex:1;
+border:0;
+background:none;
+padding:10px;
+border-radius:99px;
+cursor:pointer;
+font-weight:800;
+color:#fff
+}
+.tabs button.on{
+background:var(--red)
+}
+.abox input{
+width:100%;
+padding:13px 16px;
+margin:7px 0;
+border:1px solid var(--line);
+border-radius:12px;
+background:#0d0500;
+color:#fff;
+outline:none
+}
+.abox .go{
+width:100%;
+background:var(--yl);
+border:0;
+padding:14px;
+border-radius:99px;
+font-weight:800;
+cursor:pointer;
+margin-top:10px
+}
+.reveal{
+opacity:0;
+transform:translateY(24px);
+transition:.6s
+}
+.reveal.vis{
+opacity:1;
+transform:none
+}
+@media(max-width:900px){
+.hero,.combo{
+grid-template-columns:1fr
+}
+.hvis{
+position:static
+}
+.nlinks{
+display:none
+}
+}
+</style>
+</head>
+<body>
+<div id="preloader"><div class="bg">BURGER<span>LAB</span></div><div class="bar"><i></i></div></div>
+<nav>
+<div class="logo">BURGER<span>LAB</span> 🍔</div>
+<div class="nlinks"><a href="#lab">CONSTRUCTOR</a><a href="#menu">MENU</a><a href="#combo">COMBO</a><a href="#go">DELIVERY</a></div>
+<div class="hbtns"><button class="hbtn" onclick="openAuth()">Log in</button><button class="cartpill" onclick="toggleDrawer(true)">🧺 <span id="cnt">0</span> · $<span id="hTotal">0</span></button></div>
+</nav>
+<header class="hero" id="lab">
+<div>
+<span class="kick">★ 4.9 · 28 MIN AVG DELIVERY · HALAL</span>
+<h1>BUILD YOUR <span class="r">BEAST.</span><br><span class="y">WE STACK IT.</span></h1>
+<p class="sub">The kept legend: pick bun, patty, cheese chaos and sauce. Price + kcal update live. Then we smash it on the grill in 7 minutes.</p>
+<div class="lab">
+<h3>🔬 BURGER CONSTRUCTOR <span style="color:var(--yl);font-size:13px">· KEPT</span></h3>
+<div class="step"><p>1 · BUN</p><div class="chips" id="cBun"><button class="on" data-p="2" data-k="220">Brioche <small>+$2</small></button><button data-p="2.5" data-k="250">Potato <small>+$2.5</small></button><button data-p="3" data-k="180">Black <small>+$3</small></button></div></div>
+<div class="step"><p>2 · PATTY</p><div class="chips" id="cPatty"><button class="on" data-p="5" data-k="450">Beef smash <small>+$5</small></button><button data-p="4.5" data-k="380">Chicken <small>+$4.5</small></button><button data-p="4" data-k="300">Veggie <small>+$4</small></button><button data-p="7" data-k="600">Double <small>+$7</small></button></div></div>
+<div class="step"><p>3 · CHEESE CHAOS</p><div class="chips" id="cCheese"><button data-p="0" data-k="0" class="on">Nope</button><button data-p="1.5" data-k="120">Cheddar <small>+$1.5</small></button><button data-p="2" data-k="150">Double <small>+$2</small></button><button data-p="2.5" data-k="180">Lava <small>+$2.5</small></button></div></div>
+<div class="step"><p>4 · SAUCE</p><div class="chips" id="cSauce"><button class="on" data-p="0" data-k="60">Lab secret</button><button data-p=".5" data-k="90">Spicy 🌶</button><button data-p=".5" data-k="80">Garlic 🧄</button><button data-p="1" data-k="110">Truffle <small>+$1</small></button></div></div>
+<div class="bprev"><div class="stack" id="stack">🍞<br>🥩<br>🧀<br>🍞</div><div class="pr">$<span id="bprice">8.5</span></div><div class="kcal"><span id="bkcal">790</span> kcal · <span id="bname">Brioche + Beef smash</span></div></div>
+<div class="labbtns"><button class="add" onclick="addCustom()">+ ADD TO BASKET</button><button class="buy" onclick="addCustom(true)">BUY NOW →</button></div>
+</div>
+</div>
+<div class="hvis">
+<img src="https://picsum.photos/seed/burgerhero/600/500" alt="">
+<div class="hstats"><div><b>7 min</b><br><small>on grill</small></div><div><b>28 min</b><br><small>delivery</small></div><div><b>480 g</b><br><small>max beast</small></div></div>
+</div>
+</header>
+<div class="mq"><div>&nbsp;🍔 SMASH · STACK · SAUCE · REPEAT · 🍔 SMASH · STACK · SAUCE · REPEAT · 🍔 SMASH · STACK · SAUCE · REPEAT ·&nbsp;</div></div>
+<section id="menu">
+<p class="eyebrow">HOUSE LEGENDS</p>
+<h2>Or steal our recipes</h2>
+<div class="mgrid" id="mgrid"></div>
+<div class="combo" id="combo">
+<div><h2>STUDENT COMBO — $9.9</h2><p style="font-weight:700">Cheese beast + fries + cola. Weekdays 12:00–16:00 with student ID. The queue is worth it.</p><button onclick="combo()">GRAB COMBO 🍟</button></div>
+<img src="https://picsum.photos/seed/burgercombo/600/400" alt="">
+</div>
+</section>
+<section id="go">
+<p class="eyebrow">HOW IT FLIES</p>
+<h2>Hot in 28 minutes or fries free</h2>
+<div class="steps3" id="goSteps">
+<div class="st3"><b>01 · YOU STACK</b><p>Constructor or house legend — 60 seconds.</p></div>
+<div class="st3"><b>02 · WE SMASH</b><p>7 minutes on 280° steel. Cheese lava included.</p></div>
+<div class="st3"><b>03 · RIDER FLIES</b><p>Thermo-box, 28 min avg. Late = free fries.</p></div>
+</div>
+<div class="revs">
+<div class="rev"><p>"Double + lava cheese should be illegal. Ordered twice this week."</p><b>Sardor M. ★★★★★</b></div>
+<div class="rev"><p>"Constructor is genius — black bun + truffle is my personality now."</p><b>Kamilla A. ★★★★★</b></div>
+<div class="rev"><p>"Arrived in 22 min, still sizzling. Fries survived the ride."</p><b>Timur D. ★★★★★</b></div>
+</div>
+</section>
+<footer><span>© 2026 Burgerlab · smash since 2020</span><span>12:00–02:00 · +998 90 555 66 77 · halal 💯</span></footer>
+<div id="drawer"><h3>YOUR TRAY 🍔</h3><div id="cart" style="margin-top:14px"></div><p style="margin-top:14px;font-family:'Archivo Black';font-size:24px">TOTAL: $<span id="total">0</span></p><button class="checkout" onclick="this.textContent='✓ ON THE GRILL — 28 MIN'">FIRE MY ORDER 🔥</button></div>
+<div id="auth" onclick="if(event.target==this)this.classList.remove('open')"><div class="abox"><h3>LAB PASS 🍔</h3><p style="color:var(--mut);font-size:13.5px">Every 6th burger free.</p><div class="tabs"><button class="on" id="t1" onclick="tab(1)">Login</button><button id="t2" onclick="tab(2)">Register</button></div><div id="f1"><input placeholder="Email"><input type="password" placeholder="Password"><button class="go" onclick="ok(this)">Login →</button></div><div id="f2" style="display:none"><input placeholder="Full name"><input placeholder="Email"><input type="password" placeholder="Create password"><button class="go" onclick="ok(this)">Join lab →</button></div></div></div>
+<script>
+addEventListener('load',()=>setTimeout(()=>document.getElementById('preloader').classList.add('done'),700));
+function tab(n){t1.classList.toggle('on',n==1);t2.classList.toggle('on',n==2);f1.style.display=n==1?'block':'none';f2.style.display=n==2?'block':'none'}
+function openAuth(){document.getElementById('auth').classList.add('open')}
+function ok(b){b.textContent='✓ Welcome to the lab!';setTimeout(()=>document.getElementById('auth').classList.remove('open'),900)}
+// KEPT constructor logic
+function sel(id){const b=document.querySelector('#'+id+' button.on');return{p:+b.dataset.p,k:+b.dataset.k,t:b.textContent.split(' +')[0].trim()}}
+function upd(){const b=sel('cBun'),p=sel('cPatty'),c=sel('cCheese'),s=sel('cSauce');const pr=(b.p+p.p+c.p+s.p+1.5).toFixed(1);document.getElementById('bprice').textContent=pr;document.getElementById('bkcal').textContent=b.k+p.k+c.k+s.k+180;document.getElementById('bname').textContent=b.t+' + '+p.t+(c.t==='Nope'?'':' + '+c.t);document.getElementById('stack').innerHTML='🍞<br>'+(p.t.includes('Chicken')?'🍗':p.t.includes('Veggie')?'🥬':'🥩')+'<br>'+(c.t==='Nope'?'🥓':'🧀')+'<br>🍞'}
+document.querySelectorAll('.chips').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{[...g.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');upd()}));
+upd();
+let cart=[];
+const MENU=[{n:'Lab Classic',p:7.9,d:'Beef smash · cheddar · secret'},{n:'Lava Double',p:11.5,d:'Double patty · lava cheese'},{n:'Fire Chicken',p:8.2,d:'Crispy · spicy · garlic'},{n:'Truffle Black',p:10.9,d:'Black bun · truffle · rocket'},{n:'Veggie Garden',p:6.9,d:'Grill veg · vegan mayo'},{n:'Midnight Beast',p:13.5,d:'Triple · onion jam · fries inside'}];
+const mg=document.getElementById('mgrid');
+MENU.forEach((m,i)=>{mg.innerHTML+='<div class="mcard reveal vis"><img loading="lazy" src="https://picsum.photos/seed/burg'+i+'/400/300"><div class="in"><h3>'+m.n.toUpperCase()+'</h3><p>'+m.d+'</p><div class="pr"><b>$'+m.p+'</b><button onclick="addMenu('+i+')">ADD +</button></div></div></div>'});
+function addMenu(i){cart.push(MENU[i]);draw()}
+function addCustom(now){const b=sel('cBun'),p=sel('cPatty');cart.push({n:'Custom: '+b.t+' + '+p.t,p:+document.getElementById('bprice').textContent});draw();if(now)toggleDrawer(true)}
+function combo(){cart.push({n:'Student combo',p:9.9});draw();toggleDrawer(true)}
+function draw(){document.getElementById('cnt').textContent=cart.length;let s=0;const b=document.getElementById('cart');b.innerHTML=cart.length?'':'<p style="color:var(--mut)">Empty tray. Fix that. 🍔</p>';cart.forEach((c,i)=>{s+=c.p;b.innerHTML+='<div class="citem"><span>'+c.n+'</span><span>$'+c.p+' <a href="#" onclick="cart.splice('+i+',1);draw();return false" style="color:var(--yl)">✕</a></span></div>'});s=Math.round(s*10)/10;document.getElementById('total').textContent=s;document.getElementById('hTotal').textContent=s}
+function toggleDrawer(o){document.getElementById('drawer').classList.toggle('open',o)}
+const io=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('vis')),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

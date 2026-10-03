@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.log
+logs/
+screenshots/
+*.pid
+queue/
+.wina_lock
+daemon.pid

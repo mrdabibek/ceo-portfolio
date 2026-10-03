@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KICKLAB — Build Your Heat</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box }
+:root {
+--bg:#0c0c12;
+--card:#15151f;
+--neon:#c6ff3e;
+--pink:#ff3ec6;
+--cyan:#3ee6ff;
+--txt:#f2f2f5;
+--mut:#8b8b9e
+}
+body {
+background:var(--bg);
+color:var(--txt);
+font-family:'Space Grotesk',sans-serif;
+overflow-x:hidden
+}
+h1,h2,.blk { font-family:'Archivo Black',sans-serif; text-transform:uppercase; line-height:.95 }
+.wrap { max-width:1200px; margin:auto; padding:0 22px }
+/* ticker */
+.tick {
+background:var(--neon);
+color:#000;
+overflow:hidden;
+white-space:nowrap;
+padding:9px 0;
+font-weight:700;
+font-size:13px;
+letter-spacing:2px
+}
+.tick span { display:inline-block; animation:mq 20s linear infinite }
+@keyframes mq { to { transform:translateX(-50%) }
+}
+/* header */
+header {
+position:sticky;
+top:0;
+z-index:60;
+background:rgba(12,12,18,.9);
+backdrop-filter:blur(12px);
+border-bottom:1px solid #26263a
+}
+.hd {
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:15px 22px;
+max-width:1280px;
+margin:auto
+}
+.logo { font-family:'Archivo Black'; font-size:22px }
+.logo em { color:var(--neon); font-style:normal }
+nav { display:flex; gap:24px }
+nav a {
+color:var(--txt);
+text-decoration:none;
+font-size:13px;
+font-weight:700;
+letter-spacing:1px;
+opacity:.7
+}
+nav a:hover { opacity:1; color:var(--neon) }
+.cartb {
+background:var(--neon);
+border:none;
+color:#000;
+font-weight:700;
+padding:11px 22px;
+cursor:pointer;
+font-family:'Space Grotesk';
+font-size:13px;
+letter-spacing:1px
+}
+.cartb:hover { background:#fff }
+/* hero */
+.hero {
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+align-items:center;
+padding:56px 22px 30px;
+max-width:1280px;
+margin:auto
+}
+.hero h1 { font-size:clamp(46px,7vw,96px) }
+.hero h1 .o { color:transparent; -webkit-text-stroke:2px var(--neon) }
+.hero h1 .p { color:var(--pink) }
+.hero p {
+color:var(--mut);
+margin:18px 0 24px;
+max-width:440px;
+line-height:1.7
+}
+.hrow { display:flex; gap:12px; flex-wrap:wrap }
+.btn {
+padding:14px 30px;
+font-weight:700;
+cursor:pointer;
+font-size:14px;
+letter-spacing:1px;
+border:none;
+font-family:'Space Grotesk'
+}
+.btn.n { background:var(--neon); color:#000 }
+.btn.n:hover { background:#fff }
+.btn.g { background:none; border:2px solid #333; color:var(--txt) }
+.btn.g:hover { border-color:var(--neon); color:var(--neon) }
+.shoebox {
+position:relative;
+background:radial-gradient(circle at 50% 60%,#23233a,#0c0c12 70%);
+border:2px solid #26263a;
+border-radius:22px;
+min-height:420px;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden
+}
+.shoe {
+font-size:190px;
+filter:drop-shadow(0 24px 40px rgba(198,255,62,.25));
+transition:.4s;
+z-index:2
+}
+.shoebox .ring {
+position:absolute;
+width:340px;
+height:340px;
+border:2px dashed #333;
+border-radius:50%;
+animation:spin 24s linear infinite
+}
+@keyframes spin { to { transform:rotate(360deg) }
+}
+.tagchip {
+position:absolute;
+background:var(--pink);
+color:#000;
+font-weight:700;
+font-size:12px;
+padding:8px 16px;
+transform:rotate(-8deg);
+top:26px;
+left:26px;
+z-index:3
+}
+.hstats { display:flex; gap:36px; margin-top:30px }
+.hstats b {
+font-family:'Archivo Black';
+font-size:26px;
+color:var(--neon);
+display:block
+}
+.hstats span { font-size:11px; letter-spacing:2px; color:var(--mut) }
+/* configurator */
+section { padding:70px 0 }
+.st h2 { font-size:clamp(30px,4.5vw,54px); margin-bottom:6px }
+.st p { color:var(--mut); margin-bottom:30px }
+.st .n { color:var(--neon) }
+.conf { display:grid; grid-template-columns:1.1fr 1fr; gap:22px }
+.stage {
+background:var(--card);
+border:2px solid #26263a;
+border-radius:20px;
+min-height:480px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+position:relative;
+padding:30px;
+overflow:hidden
+}
+#bigShoe { font-size:170px; transition:.35s; line-height:1 }
+#cwName { font-family:'Archivo Black'; font-size:22px; margin-top:14px }
+#cwPrice { color:var(--neon); font-size:20px; font-weight:700 }
+.glow {
+position:absolute;
+width:500px;
+height:500px;
+border-radius:50%;
+filter:blur(120px);
+opacity:.25;
+z-index:0;
+transition:.4s
+}
+.opts {
+background:var(--card);
+border:2px solid #26263a;
+border-radius:20px;
+padding:30px
+}
+.opts h3 {
+font-size:13px;
+letter-spacing:3px;
+color:var(--mut);
+margin:20px 0 12px
+}
+.opts h3:first-child { margin-top:0 }
+.swatches { display:flex; gap:10px; flex-wrap:wrap }
+.sw {
+width:52px;
+height:52px;
+border-radius:12px;
+cursor:pointer;
+border:3px solid transparent;
+transition:.2s
+}
+.sw.on { border-color:#fff; transform:scale(1.12) }
+.laces { display:flex; gap:10px; flex-wrap:wrap }
+.lace {
+padding:10px 18px;
+border:2px solid #333;
+background:none;
+color:var(--txt);
+cursor:pointer;
+border-radius:99px;
+font-weight:700;
+font-size:13px
+}
+.lace.on { border-color:var(--cyan); color:var(--cyan) }
+.sizes { display:grid; grid-template-columns:repeat(5,1fr); gap:8px }
+.size {
+background:#0c0c12;
+border:2px solid #333;
+color:var(--txt);
+padding:12px 0;
+cursor:pointer;
+font-weight:700;
+border-radius:10px
+}
+.size.on { background:var(--neon); color:#000; border-color:var(--neon) }
+.size.out { opacity:.3; text-decoration:line-through; cursor:not-allowed }
+.qtyrow { display:flex; gap:10px; margin-top:24px }
+.qtyrow .btn { flex:1 }
+/* drops */
+.drops { display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:18px }
+.drop {
+background:var(--card);
+border:2px solid #26263a;
+border-radius:18px;
+padding:26px 20px;
+text-align:center;
+transition:.3s;
+position:relative;
+overflow:hidden
+}
+.drop:hover { transform:translateY(-6px) rotate(-.5deg); border-color:var(--neon) }
+.drop .s { font-size:80px }
+.drop h3 { font-family:'Archivo Black'; font-size:17px; margin:12px 0 4px }
+.drop small { color:var(--mut); font-size:12px; letter-spacing:1px }
+.drop .pr {
+font-weight:700;
+color:var(--neon);
+font-size:19px;
+margin:10px 0
+}
+.drop button {
+width:100%;
+background:#0c0c12;
+border:2px solid #333;
+color:var(--txt);
+padding:11px;
+cursor:pointer;
+font-weight:700;
+border-radius:10px
+}
+.drop button:hover { background:var(--neon); color:#000; border-color:var(--neon) }
+.hot {
+position:absolute;
+top:12px;
+right:-30px;
+background:var(--pink);
+color:#000;
+font-size:11px;
+font-weight:700;
+padding:4px 34px;
+transform:rotate(35deg)
+}
+/* lookbook marquee */
+.look {
+display:flex;
+gap:16px;
+overflow-x:auto;
+padding:10px 22px 30px;
+scroll-snap-type:x mandatory
+}
+.look div {
+min-width:220px;
+background:var(--card);
+border:2px solid #26263a;
+border-radius:16px;
+padding:40px 20px;
+text-align:center;
+font-size:64px;
+scroll-snap-align:start
+}
+.look div p {
+font-size:12px;
+color:var(--mut);
+margin-top:12px;
+letter-spacing:1px
+}
+/* raffle */
+.raffle {
+background:linear-gradient(120deg,#1a0f24,#0c0c12);
+border:2px solid var(--pink);
+border-radius:20px;
+margin:0 22px;
+padding:50px 30px;
+text-align:center;
+max-width:1156px
+}
+.raffle h2 { font-size:clamp(28px,4vw,50px) }
+.raffle h2 span { color:var(--pink) }
+#count2 {
+display:flex;
+gap:12px;
+justify-content:center;
+margin:24px 0
+}
+#count2 div {
+background:#000;
+border:1px solid #444;
+border-radius:12px;
+padding:12px 18px;
+min-width:78px
+}
+#count2 b {
+font-family:'Archivo Black';
+font-size:28px;
+color:var(--pink);
+display:block
+}
+#count2 span { font-size:10px; letter-spacing:2px; color:var(--mut) }
+.raffle form {
+display:flex;
+gap:10px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:8px
+}
+.raffle input {
+background:#000;
+border:2px solid #444;
+color:#fff;
+padding:13px 18px;
+width:min(320px,85%);
+border-radius:10px
+}
+/* reviews */
+.revs { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px }
+.rev {
+background:var(--card);
+border:2px solid #26263a;
+border-radius:16px;
+padding:24px
+}
+.rev .stars { color:var(--neon); letter-spacing:2px }
+.rev p {
+color:#c9c9d6;
+margin:12px 0;
+line-height:1.65;
+font-size:14px
+}
+.rev b { font-size:12px; letter-spacing:2px; color:var(--mut) }
+/* faq */
+.faq { max-width:760px; margin:40px auto 0 }
+.qa {
+border:2px solid #26263a;
+border-radius:12px;
+margin-bottom:10px;
+background:var(--card)
+}
+.qa button {
+width:100%;
+background:none;
+border:none;
+color:var(--txt);
+padding:16px 20px;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
+font-weight:700;
+text-align:left;
+font-size:15px
+}
+.qa p {
+display:none;
+padding:0 20px 18px;
+color:var(--mut);
+font-size:14px;
+line-height:1.7
+}
+.qa p.open { display:block }
+/* footer */
+footer {
+border-top:1px solid #26263a;
+padding:44px 22px;
+text-align:center;
+color:var(--mut);
+font-size:13px
+}
+footer .logo { margin-bottom:10px }
+/* drawer */
+#drawer {
+position:fixed;
+top:0;
+right:-400px;
+width:min(380px,94vw);
+height:100%;
+background:#101018;
+border-left:2px solid var(--neon);
+z-index:100;
+transition:.35s;
+padding:26px;
+display:flex;
+flex-direction:column
+}
+#drawer.open { right:0 }
+.citem {
+display:flex;
+gap:12px;
+align-items:center;
+border-bottom:1px solid #26263a;
+padding:12px 0;
+font-size:14px
+}
+.citem .s { font-size:38px }
+.citem small { color:var(--mut) }
+.citem button {
+margin-left:auto;
+background:none;
+border:none;
+color:var(--pink);
+cursor:pointer;
+font-size:16px
+}
+#ctotal {
+margin:16px 0;
+font-family:'Archivo Black';
+font-size:22px;
+color:var(--neon)
+}
+#overlay {
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.7);
+display:none;
+z-index:90
+}
+#overlay.show { display:block }
+#toast {
+position:fixed;
+bottom:26px;
+left:50%;
+transform:translateX(-50%) translateY(80px);
+background:var(--neon);
+color:#000;
+padding:13px 28px;
+font-weight:700;
+transition:.3s;
+z-index:120;
+border-radius:10px
+}
+#toast.show { transform:translateX(-50%) }
+@media(max-width:900px) { .hero,.conf { grid-template-columns:1fr }
+nav { display:none }
+.shoe { font-size:130px }
+#bigShoe { font-size:120px }
+}
+</style>
+</head>
+<body>
+<div class="tick">
+<span>&nbsp;★ FREE EXPRESS SHIPPING OVER $150 ★ NEW DROP EVERY FRIDAY ★ 30-DAY SWEAT TEST RETURNS ★ FREE EXPRESS SHIPPING OVER $150 ★ NEW DROP EVERY FRIDAY ★ 30-DAY SWEAT TEST RETURNS&nbsp;</span>
+</div>
+<header>
+<div class="hd">
+<div class="logo">KICK<em>LAB</em>
+</div>
+<nav>
+<a href="#lab">THE LAB</a>
+<a href="#drops">DROPS</a>
+<a href="#look">LOOKBOOK</a>
+<a href="#raffle">RAFFLE</a>
+</nav>
+<button class="cartb" onclick="toggleCart(true)">CART (<b id="count" style="display:inline">0</b>)</button>
+</div>
+</header>
+<div class="hero">
+<div>
+<h1>BUILD<br>
+<span class="o">YOUR</span>
+<br>
+<span class="p">HEAT.</span>
+</h1>
+<p>Pick a silhouette. Slam a colorway. Lace it your way. Every pair is assembled to order in 72 hours — no warehouses, no deadstock, no boring.</p>
+<div class="hrow">
+<button class="btn n" onclick="scrollToId('lab')">START BUILDING ↓</button>
+<button class="btn g" onclick="scrollToId('drops')">SHOP DROPS</button>
+</div>
+<div class="hstats">
+<div>
+<b>48K</b>
+<span>BUILDS SHIPPED</span>
+</div>
+<div>
+<b>4.9★</b>
+<span>AVG RATING</span>
+</div>
+<div>
+<b>72H</b>
+<span>BUILD TIME</span>
+</div>
+</div>
+</div>
+<div class="shoebox">
+<div class="ring">
+</div>
+<div class="shoe">👟</div>
+<div class="tagchip">DROP 07 — LIVE</div>
+</div>
+</div>
+<section id="lab">
+<div class="wrap">
+<div class="st">
+<h2>THE <span class="n">LAB</span> — CONFIGURATOR</h2>
+<p>Live preview · 120+ combos · free redraws before we build</p>
+</div>
+<div class="conf">
+<div class="stage">
+<div class="glow" id="glow">
+</div>
+<div id="bigShoe">👟</div>
+<div id="cwName">STREET RUNNER — VOLT</div>
+<div id="cwPrice">$189</div>
+<p style="color:var(--mut);font-size:13px;margin-top:8px" id="laceLine">Volt laces · Size US 9</p>
+</div>
+<div class="opts">
+<h3>01 — SILHOUETTE</h3>
+<div class="swatches" id="models">
+</div>
+<h3>02 — COLORWAY</h3>
+<div class="swatches" id="colors">
+</div>
+<h3>03 — LACES</h3>
+<div class="laces" id="laces">
+</div>
+<h3>04 — SIZE (US)</h3>
+<div class="sizes" id="sizes">
+</div>
+<div class="qtyrow">
+<button class="btn n" onclick="addBuild()">ADD BUILD — <span id="btnPrice">$189</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="drops">
+<div class="wrap">
+<div class="st">
+<h2>LATEST <span class="n">DROPS</span>
+</h2>
+<p>Ready to ship · limited runs · when gone, gone</p>
+</div>
+<div class="drops" id="dropsGrid">
+</div>
+</div>
+</section>
+<section id="look">
+<div class="wrap">
+<div class="st">
+<h2>ON <span style="color:var(--pink)">FEET</span>
+</h2>
+<p>Tag @kicklab to get featured</p>
+</div>
+</div>
+<div class="look">
+<div>🤸<p>@maya.jpg — Volt Runner</p>
+</div>
+<div>🛹<p>@sk8dad — Asphalt Low</p>
+</div>
+<div>🏀<p>@hoops.t — Court Blaze</p>
+</div>
+<div>🎤<p>@mcflow — Stage Pink</p>
+</div>
+<div>🚴<p>@fixed.g — Night Shift</p>
+</div>
+<div>🕺<p>@groove — Retro Wave</p>
+</div>
+</div>
+</section>
+<div class="raffle" id="raffle">
+<p style="letter-spacing:3px;font-size:12px;color:var(--pink)">GOLDEN TICKET RAFFLE</p>
+<h2>WIN THE <span>1-OF-50</span> NEON GRAIL</h2>
+<div id="count2">
+<div>
+<b id="dd">02</b>
+<span>DAYS</span>
+</div>
+<div>
+<b id="dh">11</b>
+<span>HRS</span>
+</div>
+<div>
+<b id="dm">45</b>
+<span>MIN</span>
+</div>
+<div>
+<b id="ds">30</b>
+<span>SEC</span>
+</div>
+</div>
+<form onsubmit="event.preventDefault();toast('Raffle entry locked — good luck!');this.reset()">
+<input required type="email" placeholder="Email for raffle entry">
+<button class="btn n" type="submit">ENTER FREE</button>
+</form>
+</div>
+<section>
+<div class="wrap">
+<div class="st">
+<h2>RATED BY THE <span class="n">STREETS</span>
+</h2>
+</div>
+<div class="revs">
+<div class="rev">
+<div class="stars">★★★★★</div>
+<p>"Built mine Tuesday, hooping in them Friday. The configurator preview was exactly what showed up."</p>
+<b>— DRE, CHICAGO</b>
+</div>
+<div class="rev">
+<div class="stars">★★★★★</div>
+<p>"Third pair. Sizing is true, the volt colorway glows under streetlights. Unreal."</p>
+<b>— MAYA, LONDON</b>
+</div>
+<div class="rev">
+<div class="stars">★★★★☆</div>
+<p>"Took 4 days not 3, but support threw in free laces. Quality is legit premium."</p>
+<b>— KENJI, OSAKA</b>
+</div>
+</div>
+<div class="faq">
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">How does 72-hour build work? <span>+</span>
+</button>
+<p>We stock components, not finished pairs. Your combo is assembled, QC-checked and shipped within 72 hours of ordering.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">What if my size doesn't fit? <span>+</span>
+</button>
+<p>30-day sweat-test returns: wear them, ball in them, and still return for a free size swap or refund.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Are drops ever restocked? <span>+</span>
+</button>
+<p>Never. Each drop is a numbered run. Missed out? The Lab can build you something close — or join the raffle.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Do you ship internationally? <span>+</span>
+</button>
+<p>Yes — 40+ countries, express, free over $150. Duties calculated at checkout, no surprises.</p>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<div class="logo">KICK<em style="color:var(--neon);font-style:normal">LAB</em>
+</div>
+<p>Downtown LA · @kicklab everywhere · © 2026 Kicklab</p>
+</footer>
+<div id="overlay" onclick="toggleCart(false)">
+</div>
+<aside id="drawer">
+<h2 style="font-size:22px">YOUR STASH</h2>
+<p style="color:var(--mut);font-size:13px">Free express shipping over $150.</p>
+<div id="citems" style="flex:1;overflow:auto;margin-top:10px">
+</div>
+<div id="ctotal">$0</div>
+<button class="btn n" style="width:100%" onclick="checkout()">CHECKOUT →</button>
+<button class="btn g" style="width:100%;margin-top:8px" onclick="toggleCart(false)">KEEP BROWSING</button>
+</aside>
+<div id="toast">
+</div>
+<script>
+const MODELS=[
+{
+e:'👟',n:'STREET RUNNER',p:189}
+,{
+e:'🥾',n:'ASPHALT HIGH',p:219}
+,{
+e:'👞',n:'COURT BLAZE',p:175}
+,{
+e:'🥿',n:'RETRO WAVE',p:159}
+]; const COLORS=[
+{
+n:'VOLT',c:'#c6ff3e',glow:'#c6ff3e'}
+,{
+n:'HOT PINK',c:'#ff3ec6',glow:'#ff3ec6'}
+,{
+n:'CYBER CYAN',c:'#3ee6ff',glow:'#3ee6ff'}
+,{
+n:'LAVA',c:'#ff5a3e',glow:'#ff5a3e'}
+,{
+n:'GHOST WHITE',c:'#e8e8f0',glow:'#8888aa'}
+,{
+n:'STEALTH',c:'#2a2a3a',glow:'#444466'}
+]; const LACES=['Volt','Pink','Cyan','Black','White','Reflective']; let sel={
+m:0,c:0,l:0,size:9}
+; let cart=[]; const DROPS=[
+{
+e:'👟',n:'VOLT RUNNER 07',s:'320 pairs',p:189,hot:true}
+,{
+e:'🥾',n:'ASPHALT HIGH OG',s:'500 pairs',p:219}
+,{
+e:'👞',n:'COURT BLAZE PINK',s:'210 pairs',p:199,hot:true}
+,{
+e:'🥿',n:'RETRO WAVE CREAM',s:'400 pairs',p:159}
+,{
+e:'👟',n:'NIGHT SHIFT STEALTH',s:'150 pairs',p:229,hot:true}
+,{
+e:'🥾',n:'LAVA TRAIL HIGH',s:'275 pairs',p:239}
+,{
+e:'👞',n:'CYBER COURT',s:'330 pairs',p:185}
+,{
+e:'👟',n:'GHOST PROTOCOL',s:'600 pairs',p:169}
+]; const mg=document.getElementById('models'),cg=document.getElementById('colors'),lg=document.getElementById('laces'),sg=document.getElementById('sizes'); MODELS.forEach((m,i)=>{
+const d=document.createElement('div');d.className='sw'+(i?'':' on');d.style.cssText=`width:64px;height:64px;font-size:32px;background:#0c0c12;display:flex;align-items:center;justify-content:center;border-radius:12px`;d.textContent=m.e;d.title=m.n;d.onclick=()=>{
+sel.m=i;[...mg.children].forEach(x=>x.classList.remove('on'));d.classList.add('on');upd()}
+;mg.appendChild(d)}
+); COLORS.forEach((c,i)=>{
+const d=document.createElement('div');d.className='sw'+(i?'':' on');d.style.background=c.c;d.title=c.n;d.onclick=()=>{
+sel.c=i;[...cg.children].forEach(x=>x.classList.remove('on'));d.classList.add('on');upd()}
+;cg.appendChild(d)}
+); LACES.forEach((l,i)=>{
+const b=document.createElement('button');b.className='lace'+(i?'':' on');b.textContent=l;b.onclick=()=>{
+sel.l=i;[...lg.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');upd()}
+;lg.appendChild(b)}
+); [7,8,9,10,11,12,13,14,15,16].forEach(s=>{
+const b=document.createElement('button');b.className='size'+(s===9?' on':'')+([12].includes(s)?' out':'');b.textContent='US '+s;if(s!==12)b.onclick=()=>{
+sel.size=s;[...sg.querySelectorAll('.size')].forEach(x=>x.classList.remove('on'));b.classList.add('on');upd()}
+;sg.appendChild(b)}
+); function upd(){
+const m=MODELS[sel.m],c=COLORS[sel.c];document.getElementById('bigShoe').textContent=m.e;document.getElementById('bigShoe').style.filter=`drop-shadow(0 18px 34px ${c.glow})`;document.getElementById('glow').style.background=c.glow;document.getElementById('cwName').textContent=m.n+' — '+c.n;document.getElementById('cwPrice').textContent='$'+m.p;document.getElementById('btnPrice').textContent='$'+m.p;document.getElementById('laceLine').textContent=LACES[sel.l]+' laces · Size US '+sel.size}
+function buildName(){
+return MODELS[sel.m].n+' / '+COLORS[sel.c].n+' / '+LACES[sel.l]+' / US '+sel.size}
+function addBuild(){
+cart.push({
+n:buildName(),e:MODELS[sel.m].e,p:MODELS[sel.m].p}
+);upd2();toast('Build added to stash')}
+function addDrop(i){
+cart.push({
+n:DROPS[i].n,e:DROPS[i].e,p:DROPS[i].p}
+);upd2();toast(DROPS[i].n+' added')}
+function upd2(){
+document.getElementById('count').textContent=cart.length;const w=document.getElementById('citems');w.innerHTML=cart.length?'':'<p style="color:var(--mut)">Stash is empty. Build something.</p>';cart.forEach((p,i)=>{
+const d=document.createElement('div');d.className='citem';d.innerHTML=`<span class="s">${p.e}</span><span>${p.n}<br><small>$${p.p}</small></span><button onclick="rm(${i})">✕</button>`;w.appendChild(d)}
+);document.getElementById('ctotal').textContent='$'+cart.reduce((s,p)=>s+p.p,0)}
+function rm(i){
+cart.splice(i,1);upd2()}
+function toggleCart(o){
+document.getElementById('drawer').classList.toggle('open',o);document.getElementById('overlay').classList.toggle('show',o)}
+function checkout(){
+if(!cart.length)return toast('Stash is empty');toast('Order locked in — check email for tracking');cart=[];upd2();toggleCart(false)}
+function toast(m){
+const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2400)}
+function scrollToId(i){
+document.getElementById(i).scrollIntoView({
+behavior:'smooth'}
+)}
+const dg=document.getElementById('dropsGrid');DROPS.forEach((d,i)=>{
+const el=document.createElement('div');el.className='drop';el.innerHTML=(d.hot?'<span class="hot">HOT</span>':'')+`<div class="s">${d.e}</div><h3>${d.n}</h3><small>${d.s} · NUMBERED RUN</small><div class="pr">$${d.p}</div><button onclick="addDrop(${i})">ADD TO STASH</button>`;dg.appendChild(el)}
+); let t=2*86400+11*3600+45*60+30;setInterval(()=>{
+t=Math.max(0,t-1);dd.textContent=String(Math.floor(t/86400)).padStart(2,'0');dh.textContent=String(Math.floor(t%86400/3600)).padStart(2,'0');dm.textContent=String(Math.floor(t%3600/60)).padStart(2,'0');ds.textContent=String(t%60).padStart(2,'0')}
+,1000); upd();upd2();
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GreenRoot — Charity Foundation</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box
+}
+:root{
+--gr:#1d6b3c;
+--gr2:#2f9e5f;
+--lime:#d9f2c4;
+--bg:#faf8f2;
+--ink:#17251c;
+--mut:#67766c;
+--card:#ffffff;
+--line:#e5e0d3
+}
+html{
+scroll-behavior:smooth
+}
+body{
+background:var(--bg);
+color:var(--ink);
+font-family:Inter,sans-serif;
+overflow-x:hidden
+}
+::selection{
+background:var(--gr);
+color:#fff
+}
+#preloader{
+position:fixed;
+inset:0;
+z-index:300;
+background:var(--bg);
+display:flex;
+flex-direction:column;
+gap:14px;
+align-items:center;
+justify-content:center;
+transition:.5s
+}
+#preloader.done{
+opacity:0;
+visibility:hidden
+}
+#preloader .lf{
+width:56px;
+height:56px;
+border-radius:50%;
+background:var(--gr);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+animation:gr 1.2s infinite alternate
+}
+@keyframes gr{
+to{
+transform:scale(1.12)
+}
+}
+#preloader b{
+font-family:Fraunces,serif;
+font-size:26px
+}
+#preloader small{
+letter-spacing:3px;
+font-size:11px;
+color:var(--mut)
+}
+/* masthead */
+.mast{
+border-bottom:1px solid var(--line);
+background:var(--bg)
+}
+.topbar{
+display:flex;
+justify-content:space-between;
+padding:10px 5%;
+font-size:12.5px;
+color:var(--mut)
+}
+.topbar a{
+color:var(--gr);
+font-weight:700;
+text-decoration:none
+}
+.masthead{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:18px 5%;
+gap:20px
+}
+.logo{
+font-family:Fraunces,serif;
+font-weight:900;
+font-size:30px
+}
+.logo span{
+color:var(--gr)
+}
+.mnav{
+display:flex;
+gap:26px
+}
+.mnav a{
+color:var(--ink);
+text-decoration:none;
+font-size:14px;
+font-weight:600
+}
+.mnav a:hover{
+color:var(--gr)
+}
+.donate-btn{
+background:var(--gr);
+color:#fff;
+border:0;
+padding:14px 30px;
+border-radius:99px;
+font-weight:700;
+font-size:14px;
+cursor:pointer
+}
+.donate-btn:hover{
+background:#14522d
+}
+/* hero editorial */
+.hero{
+display:grid;
+grid-template-columns:1.05fr .95fr;
+gap:40px;
+padding:50px 5% 30px;
+max-width:1240px;
+margin:auto;
+align-items:center
+}
+.kicker{
+font-size:12px;
+letter-spacing:3px;
+color:var(--gr);
+font-weight:800
+}
+h1{
+font-family:Fraunces,serif;
+font-weight:900;
+font-size:clamp(40px,5.5vw,68px);
+line-height:1.02;
+margin:14px 0
+}
+h1 em{
+font-style:italic;
+color:var(--gr)
+}
+.sub{
+color:var(--mut);
+line-height:1.75;
+font-size:15.5px;
+max-width:500px
+}
+.cta{
+display:flex;
+gap:12px;
+margin-top:24px;
+flex-wrap:wrap
+}
+.btn-g{
+background:var(--gr);
+color:#fff;
+border:0;
+padding:15px 32px;
+border-radius:99px;
+font-weight:700;
+cursor:pointer;
+font-size:14px
+}
+.btn-o{
+background:transparent;
+border:1px solid var(--ink);
+padding:15px 32px;
+border-radius:99px;
+font-weight:700;
+cursor:pointer;
+font-size:14px
+}
+.proof{
+display:flex;
+gap:26px;
+margin-top:26px
+}
+.proof b{
+font-family:Fraunces,serif;
+font-size:24px;
+display:block
+}
+.proof small{
+color:var(--mut);
+font-size:12.5px
+}
+.himg{
+position:relative
+}
+.himg img{
+width:100%;
+height:480px;
+object-fit:cover;
+border-radius:200px 200px 24px 24px;
+border:1px solid var(--line)
+}
+.hcard{
+position:absolute;
+bottom:24px;
+left:-24px;
+background:#fff;
+border:1px solid var(--line);
+border-radius:18px;
+padding:18px 22px;
+box-shadow:0 20px 50px #1d6b3c22;
+max-width:280px
+}
+.hcard .pbar{
+height:8px;
+background:#eee;
+border-radius:99px;
+overflow:hidden;
+margin:10px 0
+}
+.hcard .pbar i{
+display:block;
+height:100%;
+width:72%;
+background:var(--gr)
+}
+.hcard b{
+font-family:Fraunces,serif;
+font-size:20px
+}
+/* impact band */
+.band{
+background:var(--ink);
+color:#f2efe4;
+margin:30px 0 0
+}
+.band .in{
+max-width:1240px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:20px;
+padding:40px 5%;
+text-align:center
+}
+.band b{
+font-family:Fraunces,serif;
+font-size:38px;
+color:var(--lime)
+}
+.band small{
+color:#b9c6bb;
+font-size:13px
+}
+/* sections */
+section{
+padding:70px 5%;
+max-width:1240px;
+margin:auto
+}
+.eyebrow{
+color:var(--gr);
+font-weight:800;
+font-size:12px;
+letter-spacing:3px
+}
+h2{
+font-family:Fraunces,serif;
+font-size:clamp(28px,4vw,44px);
+margin:10px 0
+}
+.lead{
+color:var(--mut);
+line-height:1.7;
+max-width:620px;
+font-size:15px
+}
+/* programs */
+.progs{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-top:32px
+}
+.prog{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:22px;
+overflow:hidden
+}
+.prog img{
+width:100%;
+height:200px;
+object-fit:cover
+}
+.prog .in{
+padding:24px
+}
+.prog .tag{
+font-size:11px;
+letter-spacing:2px;
+font-weight:800;
+color:var(--gr);
+background:var(--lime);
+display:inline-block;
+padding:6px 12px;
+border-radius:99px
+}
+.prog h3{
+font-family:Fraunces,serif;
+font-size:22px;
+margin:12px 0 8px
+}
+.prog p{
+color:var(--mut);
+font-size:14px;
+line-height:1.7
+}
+.prog .goal{
+margin-top:14px;
+font-size:13px;
+color:var(--mut)
+}
+.prog .bar{
+height:8px;
+background:#eee;
+border-radius:99px;
+overflow:hidden;
+margin:8px 0
+}
+.prog .bar i{
+display:block;
+height:100%;
+background:var(--gr2)
+}
+.prog button{
+margin-top:12px;
+width:100%;
+background:transparent;
+border:1px solid var(--gr);
+color:var(--gr);
+padding:12px;
+border-radius:99px;
+font-weight:700;
+cursor:pointer
+}
+.prog button:hover{
+background:var(--gr);
+color:#fff
+}
+/* stories editorial */
+.stories{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:26px;
+margin-top:32px
+}
+.story{
+display:grid;
+grid-template-columns:180px 1fr;
+gap:18px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:20px;
+overflow:hidden
+}
+.story img{
+width:100%;
+height:100%;
+min-height:200px;
+object-fit:cover
+}
+.story .in{
+padding:24px
+}
+.story blockquote{
+font-family:Fraunces,serif;
+font-size:19px;
+line-height:1.5;
+font-style:italic
+}
+.story small{
+color:var(--mut);
+font-size:13px
+}
+/* donate widget */
+.donate{
+background:var(--lime);
+border-radius:28px;
+padding:50px 6%;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:36px;
+margin-top:10px;
+align-items:center
+}
+.donate h2{
+margin-top:0
+}
+.amts{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin:18px 0
+}
+.amts button{
+border:2px solid var(--gr);
+background:#fff;
+color:var(--gr);
+font-weight:800;
+font-size:17px;
+padding:14px;
+border-radius:14px;
+cursor:pointer
+}
+.amts button.on{
+background:var(--gr);
+color:#fff
+}
+.donate input[type=text],.donate input[type=number]{
+width:100%;
+padding:14px 18px;
+border-radius:14px;
+border:1px solid #b9cfae;
+background:#fff;
+outline:none;
+font-size:15px
+}
+.give{
+width:100%;
+margin-top:14px;
+background:var(--gr);
+color:#fff;
+border:0;
+padding:17px;
+border-radius:14px;
+font-weight:800;
+font-size:16px;
+cursor:pointer
+}
+.trans{
+background:#fff;
+border-radius:18px;
+padding:26px;
+border:1px solid #cfe3bd
+}
+.trans li{
+font-size:13.5px;
+list-style:none;
+padding:10px 0;
+border-bottom:1px dashed #cfd8c8;
+display:flex;
+justify-content:space-between
+}
+/* team + faq */
+.team{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:16px;
+margin-top:30px
+}
+.tm{
+text-align:center
+}
+.tm img{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid var(--lime)
+}
+.tm b{
+display:block;
+margin-top:10px;
+font-size:14px
+}
+.tm small{
+color:var(--mut)
+}
+.faq{
+margin-top:26px;
+display:grid;
+gap:10px
+}
+.faq details{
+background:#fff;
+border:1px solid var(--line);
+border-radius:14px;
+padding:16px 20px
+}
+.faq summary{
+cursor:pointer;
+font-weight:700
+}
+.faq p{
+color:var(--mut);
+font-size:14px;
+margin-top:8px
+}
+footer{
+background:var(--ink);
+color:#cfd6cd;
+padding:40px 5%;
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:12px;
+font-size:13px;
+margin-top:40px
+}
+/* auth modal */
+#auth{
+position:fixed;
+inset:0;
+background:rgba(20,30,22,.55);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:200;
+padding:20px
+}
+#auth.open{
+display:flex
+}
+.abox{
+background:#fff;
+border-radius:22px;
+padding:36px;
+width:min(400px,100%)
+}
+.abox h3{
+font-family:Fraunces,serif;
+font-size:26px
+}
+.tabs{
+display:flex;
+background:#eef0e6;
+border-radius:99px;
+padding:4px;
+margin:16px 0
+}
+.tabs button{
+flex:1;
+border:0;
+background:none;
+padding:10px;
+border-radius:99px;
+cursor:pointer;
+font-weight:700
+}
+.tabs button.on{
+background:var(--gr);
+color:#fff
+}
+.abox input{
+width:100%;
+padding:13px 16px;
+margin:7px 0;
+border:1px solid #d5d9cb;
+border-radius:12px;
+outline:none
+}
+.abox .go{
+width:100%;
+background:var(--gr);
+color:#fff;
+border:0;
+padding:14px;
+border-radius:12px;
+font-weight:800;
+cursor:pointer;
+margin-top:10px
+}
+.reveal{
+opacity:0;
+transform:translateY(26px);
+transition:.6s
+}
+.reveal.vis{
+opacity:1;
+transform:none
+}
+@media(max-width:880px){
+.hero,.stories,.donate{
+grid-template-columns:1fr
+}
+.mnav{
+display:none
+}
+.hcard{
+left:12px
+}
+}
+</style>
+</head>
+<body>
+<div id="preloader"><div class="lf">🌱</div><b>GreenRoot</b><small>PLANTING HOPE</small></div>
+<div class="mast">
+<div class="topbar"><span>📍 Tashkent · Istanbul · Berlin &nbsp; · &nbsp; Reg. NGO № 8841</span><span><a href="#" onclick="openAuth();return false">Donor login</a> &nbsp; · &nbsp; EN / UZ / RU</span></div>
+<div class="masthead">
+<div class="logo">🌿 Green<span>Root</span></div>
+<div class="mnav"><a href="#programs">Programs</a><a href="#stories">Stories</a><a href="#give">Donate</a><a href="#team">Team</a><a href="#faq">Reports</a></div>
+<button class="donate-btn" onclick="document.getElementById('give').scrollIntoView()">Donate ♥</button>
+</div>
+</div>
+<header class="hero">
+<div>
+<p class="kicker">EST. 2016 — 48,000 LIVES TOUCHED</p>
+<h1>Small roots grow <em>tall forests.</em></h1>
+<p class="sub">We build wells, plant orchards and fund girls' schooling across Central Asia. 92¢ of every $1 goes straight to the field — audited, published, open.</p>
+<div class="cta"><button class="btn-g" onclick="document.getElementById('give').scrollIntoView()">Donate now ♥</button><button class="btn-o" onclick="document.getElementById('programs').scrollIntoView()">Our programs</button></div>
+<div class="proof"><div><b>128</b><small>wells built</small></div><div><b>9.4K</b><small>girls in school</small></div><div><b>310K</b><small>trees planted</small></div></div>
+</div>
+<div class="himg">
+<img src="https://picsum.photos/seed/greenhero/700/800" alt="">
+<div class="hcard"><small style="color:var(--gr);font-weight:800;letter-spacing:2px">MARCH GOAL</small><b>$38,204 / $52,000</b><div class="pbar"><i></i></div><small style="color:var(--mut)">1,204 donors · 9 days left</small></div>
+</div>
+</header>
+<div class="band"><div class="in">
+<div><b data-n="48000">0</b><small>lives touched</small></div>
+<div><b data-n="128">0</b><small>wells built</small></div>
+<div><b data-n="92">0</b><small>% to the field</small></div>
+<div><b data-n="310">0</b><small>K trees planted</small></div>
+</div></div>
+<section id="programs">
+<p class="eyebrow">WHERE MONEY GOES</p>
+<h2>Three programs, one promise</h2>
+<p class="lead">Every program page shows live budgets. Click any card to see the ledger.</p>
+<div class="progs">
+<div class="prog reveal"><img src="https://picsum.photos/seed/green1/500/350" alt=""><div class="in"><span class="tag">WATER</span><h3>Clean wells</h3><p>Drilling + filters + 5-year maintenance in 40 villages.</p><div class="goal">$21,400 of $30,000</div><div class="bar"><i style="width:71%"></i></div><button onclick="giveTo('Clean wells')">Fund this ♥</button></div></div>
+<div class="prog reveal"><img src="https://picsum.photos/seed/green2/500/350" alt=""><div class="in"><span class="tag">SCHOOL</span><h3>Girls' scholarships</h3><p>Full tuition + books + mentorship for 400 students.</p><div class="goal">$12,800 of $15,000</div><div class="bar"><i style="width:85%"></i></div><button onclick="giveTo('Scholarships')">Fund this ♥</button></div></div>
+<div class="prog reveal"><img src="https://picsum.photos/seed/green3/500/350" alt=""><div class="in"><span class="tag">FOREST</span><h3>Village orchards</h3><p>Apricot + almond orchards that pay families for decades.</p><div class="goal">$4,004 of $7,000</div><div class="bar"><i style="width:57%"></i></div><button onclick="giveTo('Orchards')">Fund this ♥</button></div></div>
+</div>
+</section>
+<section id="stories">
+<p class="eyebrow">FIELD NOTES</p>
+<h2>Letters from the villages</h2>
+<div class="stories">
+<div class="story reveal"><img src="https://picsum.photos/seed/greenp1/300/400" alt=""><div class="in"><blockquote>"Our girls walk 20 minutes now, not 4 hours, for water."</blockquote><br><small>— Mohira, Nukus · well № 117</small></div></div>
+<div class="story reveal"><img src="https://picsum.photos/seed/greenp2/300/400" alt=""><div class="in"><blockquote>"My orchard paid for my daughter's first university year."</blockquote><br><small>— Otabek, Fergana · orchard № 88</small></div></div>
+</div>
+<div class="donate" id="give">
+<div>
+<h2>Give in 30 seconds</h2>
+<p class="lead">Monthly gifts plant 12× more. Cancel anytime, receipt by email.</p>
+<div class="amts" id="amts"><button class="on" data-v="10">$10</button><button data-v="25">$25</button><button data-v="50">$50</button><button data-v="100">$100</button><button data-v="250">$250</button><button data-v="custom">✎</button></div>
+<input type="number" id="amt" value="25" min="1">
+<input type="text" id="dname" placeholder="Your name (shown on wall)" style="margin-top:10px">
+<button class="give" onclick="donate()">Donate $<span id="amtEcho">25</span> ♥</button>
+<p style="font-size:12.5px;color:#4c6b52;margin-top:10px">🔒 Secure · <a href="#" onclick="openAuth();return false" style="color:var(--gr)">log in</a> to track your impact</p>
+</div>
+<div class="trans">
+<h3 style="font-family:Fraunces,serif">Live donor wall</h3>
+<p style="font-size:13px;color:var(--mut)">Updates with every gift.</p>
+<ul id="wall"><li><span>♥ Anonymous — Scholarships</span><b>$50</b></li><li><span>♥ Jasur — Clean wells</span><b>$25</b></li><li><span>♥ Elena — Orchards</span><b>$100</b></li></ul>
+<div style="margin-top:16px;background:var(--gr);color:#fff;border-radius:12px;padding:16px;text-align:center"><b style="font-family:Fraunces,serif;font-size:22px" id="raised">$38,204</b><br><small>raised of $52,000 goal</small></div>
+</div>
+</div>
+</section>
+<section id="team">
+<p class="eyebrow">THE TEAM</p>
+<h2>Field-first, office-second</h2>
+<div class="team">
+<div class="tm reveal"><img src="https://picsum.photos/seed/grteam1/200/200" alt=""><b>Nilufar Karimova</b><small>Founder</small></div>
+<div class="tm reveal"><img src="https://picsum.photos/seed/grteam2/200/200" alt=""><b>Daniel Osei</b><small>Water engineer</small></div>
+<div class="tm reveal"><img src="https://picsum.photos/seed/grteam3/200/200" alt=""><b>Madina Yusupova</b><small>Education lead</small></div>
+<div class="tm reveal"><img src="https://picsum.photos/seed/grteam4/200/200" alt=""><b>Timur Aliyev</b><small>Finance · open books</small></div>
+<div class="tm reveal"><img src="https://picsum.photos/seed/grteam5/200/200" alt=""><b>Aiko Tanaka</b><small>Volunteers</small></div>
+</div>
+<div class="faq" id="faq">
+<details><summary>Where can I see financial reports?</summary><p>Annual audits + monthly ledgers are published on the Reports page. 92% field ratio verified by GrantWell 2025.</p></details>
+<details><summary>Is my donation tax-deductible?</summary><p>Yes in UZ, TR and DE. Receipts are emailed instantly with the deductible ID.</p></details>
+<details><summary>Can I volunteer in the field?</summary><p>Spring and autumn cohorts — 2 weeks, food + stay covered. Apply via the volunteer form.</p></details>
+</div>
+</section>
+<footer><span>© 2026 GreenRoot Foundation · NGO № 8841</span><span>Audited by GrantWell · 92% to field</span></footer>
+<div id="auth" onclick="if(event.target==this)this.classList.remove('open')"><div class="abox"><h3>Donor login ♥</h3><p style="color:var(--mut);font-size:13.5px">Track wells, receipts and trees you planted.</p><div class="tabs"><button class="on" id="t1" onclick="tab(1)">Login</button><button id="t2" onclick="tab(2)">Register</button></div><div id="f1"><input placeholder="Email"><input type="password" placeholder="Password"><button class="go" onclick="ok(this)">Login →</button></div><div id="f2" style="display:none"><input placeholder="Full name"><input placeholder="Email"><input type="password" placeholder="Create password"><button class="go" onclick="ok(this)">Create account ♥</button></div></div></div>
+<script>
+addEventListener('load',()=>setTimeout(()=>document.getElementById('preloader').classList.add('done'),800));
+function tab(n){t1.classList.toggle('on',n==1);t2.classList.toggle('on',n==2);f1.style.display=n==1?'block':'none';f2.style.display=n==2?'block':'none'}
+function openAuth(){document.getElementById('auth').classList.add('open')}
+function ok(b){b.textContent='♥ Welcome back!';setTimeout(()=>document.getElementById('auth').classList.remove('open'),900)}
+let raised=38204;
+document.querySelectorAll('#amts button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#amts button').forEach(x=>x.classList.remove('on'));b.classList.add('on');if(b.dataset.v!=='custom'){document.getElementById('amt').value=b.dataset.v;document.getElementById('amtEcho').textContent=b.dataset.v}});
+document.getElementById('amt').oninput=function(){document.getElementById('amtEcho').textContent=this.value||0};
+function giveTo(p){document.getElementById('give').scrollIntoView();setTimeout(()=>alert('Selected: '+p+' — pick an amount below ♥'),400)}
+function donate(){const v=+document.getElementById('amt').value||0;if(v<1){alert('Enter an amount first.');return}const n=document.getElementById('dname').value||'Anonymous';raised+=v;document.getElementById('raised').textContent='$'+raised.toLocaleString();const li=document.createElement('li');li.innerHTML='<span>♥ '+n+'</span><b>$'+v+'</b>';document.getElementById('wall').prepend(li);alert('Rahmat, '+n+'! $'+v+' received. Receipt sent. 🌳')}
+// counters
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('vis');x.target.querySelectorAll&&0}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const cio=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){const el=en.target,N=+el.dataset.n;let s=0;const st=N/60;const t=setInterval(()=>{s+=st;if(s>=N){s=N;clearInterval(t)}el.textContent=N>=1000?(s/1000).toFixed(1)+'K':Math.round(s)+(N===92?'%':'')},25);cio.unobserve(el)}}),{threshold:.4});
+document.querySelectorAll('[data-n]').forEach(el=>cio.observe(el));
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

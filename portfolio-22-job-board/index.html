@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hireline — Job Board</title>
+<meta name="description" content="Hireline — minimal job board: 1 200+ remote and local roles with one-click apply.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#ffffff;
+  --ink:#101418;
+  --mut:#68727e;
+  --line:#e9edf2;
+  --card:#f7f9fb;
+  --grn:#0e9f6e;
+  --blue:#1a56db;
+}
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+html {
+  scroll-behavior:smooth
+}
+body {
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  line-height:1.6;
+  overflow-x:hidden
+}
+.serif {
+  font-family:'Lora',serif;
+  font-style:italic
+}
+::selection {
+  background:var(--ink);
+  color:#fff
+}
+img {
+  display:block;
+  max-width:100%
+}
+nav {
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)
+}
+.nav-in {
+  max-width:1120px;
+  margin:0 auto;
+  padding:13px 24px;
+  display:flex;
+  align-items:center;
+  gap:22px
+}
+.logo {
+  font-weight:800;
+  font-size:20px;
+  text-decoration:none;
+  color:var(--ink);
+  display:flex;
+  gap:9px;
+  align-items:center
+}
+.logo i {
+  width:32px;
+  height:32px;
+  border-radius:9px;
+  background:var(--ink);
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-style:normal;
+  font-size:17px
+}
+.nlinks {
+  display:flex;
+  gap:20px
+}
+.nlinks a {
+  color:var(--mut);
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600
+}
+.nlinks a:hover {
+  color:var(--ink)
+}
+.nav-r {
+  margin-left:auto;
+  display:flex;
+  gap:10px
+}
+.btn {
+  border:0;
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--ink);
+  color:#fff;
+  transition:.2s;
+  text-decoration:none;
+  display:inline-block;
+  font-family:inherit
+}
+.btn:hover {
+  transform:translateY(-2px)
+}
+.btn.ghost {
+  background:#fff;
+  border:1px solid var(--line);
+  color:var(--ink)
+}
+.btn.grn {
+  background:var(--grn)
+}
+.hero {
+  max-width:1120px;
+  margin:0 auto;
+  padding:60px 24px 26px;
+  text-align:center
+}
+.hero h1 {
+  font-size:clamp(40px,5.6vw,68px);
+  letter-spacing:-.02em;
+  line-height:1.05
+}
+.hero h1 .serif {
+  font-weight:500
+}
+.hero p.lead {
+  color:var(--mut);
+  max-width:520px;
+  margin:14px auto 0
+}
+.search {
+  max-width:760px;
+  margin:26px auto 0;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:0 24px 60px -30px rgba(0,0,0,.25);
+  padding:10px;
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr auto;
+  gap:8px
+}
+.search input,.search select {
+  border:0;
+  background:var(--card);
+  border-radius:10px;
+  padding:14px;
+  font-family:inherit;
+  font-size:14px;
+  outline:none;
+  width:100%
+}
+.search button {
+  background:var(--ink);
+  color:#fff;
+  border:0;
+  border-radius:10px;
+  padding:14px 26px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:inherit
+}
+.quick {
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  margin-top:14px;
+  flex-wrap:wrap;
+  font-size:13px;
+  color:var(--mut)
+}
+.quick button {
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:99px;
+  padding:7px 16px;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:600;
+  color:var(--mut)
+}
+.quick button:hover {
+  border-color:var(--ink);
+  color:var(--ink)
+}
+.stats {
+  display:flex;
+  gap:26px;
+  justify-content:center;
+  margin-top:20px;
+  color:var(--mut);
+  font-size:13.5px;
+  flex-wrap:wrap
+}
+.stats b {
+  color:var(--ink)
+}
+.jobs {
+  max-width:1120px;
+  margin:0 auto;
+  padding:20px 24px 60px
+}
+.bar {
+  position:sticky;
+  top:61px;
+  z-index:50;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:10px;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-bottom:16px
+}
+.bar .f {
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:99px;
+  padding:9px 18px;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  color:var(--mut)
+}
+.bar .f.on {
+  background:var(--ink);
+  color:#fff;
+  border-color:var(--ink)
+}
+.bar span.n {
+  margin-left:auto;
+  font-size:13px;
+  color:var(--mut)
+}
+.job {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:22px;
+  display:grid;
+  grid-template-columns:56px 1fr auto;
+  gap:16px;
+  align-items:center;
+  margin-bottom:12px;
+  transition:.2s
+}
+.job:hover {
+  border-color:var(--ink);
+  transform:translateY(-2px);
+  box-shadow:0 18px 40px -24px rgba(0,0,0,.3)
+}
+.job img {
+  width:56px;
+  height:56px;
+  border-radius:14px;
+  object-fit:cover;
+  border:1px solid var(--line)
+}
+.job h3 {
+  font-size:17px
+}
+.job .co {
+  color:var(--mut);
+  font-size:13.5px
+}
+.tags {
+  display:flex;
+  gap:8px;
+  margin-top:8px;
+  flex-wrap:wrap
+}
+.tags span {
+  font-size:11.5px;
+  font-weight:700;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:99px;
+  padding:4px 12px;
+  color:var(--mut)
+}
+.tags span.hot {
+  background:#e7f7ef;
+  border-color:#bfe6d2;
+  color:var(--grn)
+}
+.job-r {
+  text-align:right
+}
+.job-r b {
+  font-size:16px;
+  display:block
+}
+.job-r small {
+  color:var(--mut);
+  font-size:12.5px
+}
+.apply {
+  margin-top:10px;
+  background:var(--ink);
+  color:#fff;
+  border:0;
+  border-radius:9px;
+  padding:10px 22px;
+  font-family:inherit;
+  font-weight:700;
+  cursor:pointer
+}
+.apply:hover {
+  background:var(--grn)
+}
+.apply.done {
+  background:var(--grn)
+}
+.feat {
+  background:var(--ink);
+  color:#fff;
+  border-radius:18px;
+  padding:8px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:26px 0
+}
+.feat div:first-child {
+  padding:36px
+}
+.feat h2 {
+  font-size:clamp(28px,3.4vw,44px);
+  letter-spacing:-.02em
+}
+.feat p {
+  color:#aeb6c2;
+  margin:12px 0 20px
+}
+.feat img {
+  width:100%;
+  height:100%;
+  min-height:320px;
+  object-fit:cover;
+  border-radius:12px
+}
+.grid3 {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px
+}
+.co-card {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:24px;
+  text-align:center
+}
+.co-card img {
+  width:60px;
+  height:60px;
+  border-radius:16px;
+  object-fit:cover;
+  margin:0 auto 12px;
+  border:1px solid var(--line)
+}
+.co-card h3 {
+  font-size:17px
+}
+.co-card small {
+  color:var(--mut)
+}
+.gal {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px
+}
+.gal img {
+  width:100%;
+  height:190px;
+  object-fit:cover;
+  border-radius:14px;
+  border:1px solid var(--line)
+}
+section.b {
+  max-width:1120px;
+  margin:0 auto;
+  padding:10px 24px 60px
+}
+.sec-h {
+  text-align:center;
+  max-width:600px;
+  margin:0 auto 26px
+}
+.sec-h h2 {
+  font-size:clamp(30px,3.6vw,46px);
+  letter-spacing:-.02em
+}
+.sec-h p {
+  color:var(--mut)
+}
+.steps {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px
+}
+.step {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:26px
+}
+.step b {
+  font-size:13px;
+  letter-spacing:.16em;
+  color:var(--grn)
+}
+.step h3 {
+  margin:8px 0;
+  font-size:19px
+}
+.step p {
+  color:var(--mut);
+  font-size:14px
+}
+.faq {
+  max-width:720px;
+  margin:26px auto 0;
+  display:grid;
+  gap:10px
+}
+.faq details {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:15px 20px
+}
+.faq summary {
+  cursor:pointer;
+  font-weight:700
+}
+.faq p {
+  color:var(--mut);
+  font-size:14px;
+  margin-top:8px
+}
+.cta {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:50px;
+  text-align:center
+}
+.cta h2 {
+  font-size:clamp(28px,3.6vw,44px)
+}
+.cta p {
+  color:var(--mut);
+  margin:10px 0 20px
+}
+footer {
+  border-top:1px solid var(--line)
+}
+.f-in {
+  max-width:1120px;
+  margin:0 auto;
+  padding:34px 24px;
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1fr;
+  gap:24px
+}
+.f-in h4 {
+  font-size:11px;
+  letter-spacing:.2em;
+  color:var(--mut);
+  margin-bottom:12px
+}
+.f-in a {
+  display:block;
+  color:var(--mut);
+  text-decoration:none;
+  font-size:14px;
+  margin:6px 0
+}
+.f-base {
+  max-width:1120px;
+  margin:0 auto;
+  padding:16px 24px;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  color:var(--mut);
+  font-size:13px;
+  flex-wrap:wrap;
+  gap:8px
+}
+.rv {
+  opacity:0;
+  transform:translateY(22px);
+  transition:.6s
+}
+.rv.on {
+  opacity:1;
+  transform:none
+}
+#toast {
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--ink);
+  color:#fff;
+  padding:13px 26px;
+  border-radius:99px;
+  font-size:14px;
+  transition:.35s;
+  opacity:0;
+  z-index:300
+}
+#toast.show {
+  transform:translateX(-50%);
+  opacity:1
+}
+@media(max-width:940px) {
+.search {
+  grid-template-columns:1fr 1fr
+}
+.search button {
+  grid-column:1/-1
+}
+.job {
+  grid-template-columns:48px 1fr
+}
+.job-r {
+  grid-column:1/-1;
+  text-align:left;
+  display:flex;
+  gap:12px;
+  align-items:center
+}
+.feat,.grid3,.steps {
+  grid-template-columns:1fr
+}
+.gal {
+  grid-template-columns:repeat(2,1fr)
+}
+.nlinks {
+  display:none
+}
+.f-in {
+  grid-template-columns:1fr 1fr
+}
+}
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+<a class="logo" href="#"><i>H</i>Hireline</a>
+<div class="nlinks"><a href="#jobs">Jobs</a><a href="#companies">Companies</a><a href="#how">How it works</a><a href="#faq">FAQ</a></div>
+<div class="nav-r"><a href="#jobs" class="btn ghost">Sign in</a><a href="#cta" class="btn">Post a job · $49</a></div>
+</div></nav>
+<header class="hero">
+<h1>Work you'll <span class="serif">actually like.</span></h1>
+<p class="lead">1 200+ hand-screened roles. Salary upfront, remote-first, replies within 5 days.</p>
+<div class="search">
+<input id="q" placeholder="🔍 Role, skill, company…" oninput="render()">
+<select id="loc" onchange="render()"><option value="">📍 Anywhere</option><option>Remote</option><option>Tashkent</option><option>Dubai</option><option>Berlin</option></select>
+<select id="typ" onchange="render()"><option value="">🕒 Any type</option><option>Full-time</option><option>Contract</option><option>Part-time</option></select>
+<button onclick="render()">Search</button>
+</div>
+<div class="quick"><span>Popular:</span><button onclick="qSet('designer')">designer</button><button onclick="qSet('frontend')">frontend</button><button onclick="qSet('support')">support</button><button onclick="qSet('manager')">manager</button></div>
+<div class="stats"><span><b>1 200+</b> open roles</span><span><b>340</b> remote today</span><span><b>92%</b> reply rate</span></div>
+</header>
+<div class="jobs" id="jobs">
+<div class="bar" id="bar"><button class="f on" data-f="" onclick="cat('',this)">All</button><button class="f" data-f="dev" onclick="cat('dev',this)">💻 Dev</button><button class="f" data-f="design" onclick="cat('design',this)">🎨 Design</button><button class="f" data-f="ops" onclick="cat('ops',this)">⚙️ Ops</button><span class="n" id="cnt"></span></div>
+<div id="list"></div>
+<div class="feat rv">
+<div><span style="background:var(--grn);border-radius:99px;padding:6px 16px;font-size:12px;font-weight:700">FOR EMPLOYERS</span><h2 style="margin-top:14px">Hire in days, not months.</h2><p>Screened applicants, salary benchmarks, one-click scheduling. First post $49.</p><a href="#cta" class="btn grn">Post a job →</a></div>
+<img src="https://picsum.photos/seed/hire-team/800/600" alt="Team" loading="lazy">
+</div>
+</div>
+<section class="b" id="companies">
+<div class="sec-h rv"><h2>Teams hiring now</h2><p>Verified logos, real headcount, salary bands public.</p></div>
+<div class="grid3">
+<div class="co-card rv"><img src="https://picsum.photos/seed/hire-c1/200/200" alt="c" loading="lazy"><h3>Northloop</h3><small>AI · 40 people · 6 open</small></div>
+<div class="co-card rv"><img src="https://picsum.photos/seed/hire-c2/200/200" alt="c" loading="lazy"><h3>Beamline</h3><small>Logistics · 120 people · 9 open</small></div>
+<div class="co-card rv"><img src="https://picsum.photos/seed/hire-c3/200/200" alt="c" loading="lazy"><h3>Fig & Co</h3><small>Retail · 25 people · 3 open</small></div>
+</div>
+<div class="gal rv" style="margin-top:16px">
+<img src="https://picsum.photos/seed/hire-g1/600/450" alt="g1" loading="lazy">
+<img src="https://picsum.photos/seed/hire-g2/600/450" alt="g2" loading="lazy">
+<img src="https://picsum.photos/seed/hire-g3/600/450" alt="g3" loading="lazy">
+<img src="https://picsum.photos/seed/hire-g4/600/450" alt="g4" loading="lazy">
+</div>
+</section>
+<section class="b" id="how" style="padding-top:0">
+<div class="sec-h rv"><h2>One-click apply</h2></div>
+<div class="steps">
+<div class="step rv"><b>STEP 01</b><h3>Filter honestly</h3><p>Salary, location, type — every card shows pay upfront. No "competitive".</p></div>
+<div class="step rv"><b>STEP 02</b><h3>Apply in 30 sec</h3><p>Profile once, one click per role. No cover-letter theatre.</p></div>
+<div class="step rv"><b>STEP 03</b><h3>Hear back fast</h3><p>Employers commit to 5-day replies or the post auto-pauses.</p></div>
+</div>
+<div class="faq rv" id="faq">
+<details open><summary>Do I need an account?</summary><p>Browsing and filtering are fully open. Free account only when you hit Apply.</p></details>
+<details><summary>Are salaries real?</summary><p>Yes — posts without a band are rejected. Ranges verified quarterly.</p></details>
+<details><summary>I'm an employer — how fast?</summary><p>Post in 6 minutes, first applicants typically within 24 hours.</p></details>
+</div>
+</section>
+<section class="b" id="cta" style="padding-top:0"><div class="cta rv">
+<h2>Get Monday's top 10 roles.</h2>
+<p>One short email, unsubscribe anytime. 24 000 subscribers.</p>
+<form onsubmit="return sub(event)" style="display:flex;gap:10px;max-width:440px;margin:0 auto"><input id="nl" placeholder="you@mail.com" required style="flex:1;padding:13px 18px;border-radius:10px;border:1px solid var(--line)"><button class="btn">Subscribe →</button></form>
+</div></section>
+<footer><div class="f-in">
+<div><a class="logo" href="#"><i>H</i>Hireline</a><p style="color:var(--mut);font-size:14px;margin-top:10px;max-width:260px">Hand-screened jobs since 2021. Replies in 5 days or less.</p></div>
+<div><h4>Seekers</h4><a href="#jobs">Browse jobs</a><a href="#">Salary guide</a><a href="#">Resume tips</a></div>
+<div><h4>Employers</h4><a href="#cta">Post a job</a><a href="#">Pricing</a><a href="#">Talent search</a></div>
+<div><h4>Company</h4><a href="#">About</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+</div><div class="f-base"><span>© 2026 Hireline · Picsum photos</span><span>Salary upfront, always</span></div></footer>
+<div id="toast"></div>
+<script>
+var JOBS=[
+{t:'Senior Frontend Engineer',c:'Northloop',loc:'Remote',typ:'Full-time',cat:'dev',s:'$4–6k',img:'https://picsum.photos/seed/hj-1/200/200',hot:1},
+{t:'Product Designer (SaaS)',c:'Beamline',loc:'Tashkent',typ:'Full-time',cat:'design',s:'$2.5–3.5k',img:'https://picsum.photos/seed/hj-2/200/200',hot:1},
+{t:'Support Lead, EN/RU',c:'Fig & Co',loc:'Remote',typ:'Full-time',cat:'ops',s:'$1.8–2.4k',img:'https://picsum.photos/seed/hj-3/200/200'},
+{t:'Backend Go Developer',c:'Pulsepay',loc:'Dubai',typ:'Contract',cat:'dev',s:'$5–7k',img:'https://picsum.photos/seed/hj-4/200/200'},
+{t:'Brand Illustrator',c:'Prism Studio',loc:'Berlin',typ:'Part-time',cat:'design',s:'$30/hr',img:'https://picsum.photos/seed/hj-5/200/200'},
+{t:'Ops Manager, Fleet',c:'NorthBeam',loc:'Tashkent',typ:'Full-time',cat:'ops',s:'$2–2.8k',img:'https://picsum.photos/seed/hj-6/200/200',hot:1},
+{t:'Junior QA Engineer',c:'Testline',loc:'Remote',typ:'Full-time',cat:'dev',s:'$1.2–1.8k',img:'https://picsum.photos/seed/hj-7/200/200'},
+{t:'Motion Designer',c:'Kanso Media',loc:'Remote',typ:'Contract',cat:'design',s:'$25/hr',img:'https://picsum.photos/seed/hj-8/200/200'}];
+var curCat='';
+function cat(f,btn){curCat=f;document.querySelectorAll('#bar .f').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');render()}
+function qSet(v){document.getElementById('q').value=v;render()}
+function render(){var q=document.getElementById('q').value.toLowerCase(),l=document.getElementById('loc').value,t=document.getElementById('typ').value;var out=JOBS.filter(function(j){return (!curCat||j.cat===curCat)&&(!q||(j.t+' '+j.c).toLowerCase().includes(q))&&(!l||j.loc===l)&&(!t||j.typ===t)});document.getElementById('cnt').textContent=out.length+' roles found';var el=document.getElementById('list');el.innerHTML=out.length?out.map(function(j,i){return '<article class="job rv on"><img src="'+j.img+'" alt="logo" loading="lazy"><div><h3>'+j.t+'</h3><div class="co">'+j.c+' · '+j.loc+' · '+j.typ+'</div><div class="tags">'+(j.hot?'<span class="hot">● HOT</span>':'')+'<span>'+j.cat+'</span><span>reply ≤ 5 days</span></div></div><div class="job-r"><b>'+j.s+'</b><small>per month</small><br><button class="apply" onclick="apply(this)">Apply →</button></div></article>'}).join(''):'<div style="text-align:center;color:var(--mut);padding:40px">No roles match — try clearing filters.</div>'}
+render();
+function apply(b){if(b.classList.contains('done'))return;b.classList.add('done');b.textContent='✓ Applied';toast('Applied (demo) — sign up to track status')}
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}})},{threshold:.12});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+function sub(e){e.preventDefault();toast('Subscribed: '+document.getElementById('nl').value+' (demo)');document.getElementById('nl').value='';return false}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2600)}
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

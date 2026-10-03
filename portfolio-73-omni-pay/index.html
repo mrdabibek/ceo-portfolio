@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniPay Global — Multi-Rail Cross-Border FinTech & Treasury Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a0e;
+      --surface: #0e141b;
+      --card: rgba(16, 23, 32, 0.75);
+      --card-border: rgba(0, 229, 153, 0.2);
+      --emerald: #00e599;
+      --emerald-glow: rgba(0, 229, 153, 0.35);
+      --cyan: #38bdf8;
+      --gold: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Ambient Currency Particle Matrix */
+    #ambientCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 28px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Top Nav */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 32px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--emerald), #0284c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 0 20px var(--emerald-glow);
+    }
+    .brand-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .settlement-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 229, 153, 0.1);
+      border: 1px solid rgba(0, 229, 153, 0.3);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--emerald);
+    }
+    .pulse-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.8); }
+    }
+
+    /* Live FinTech Telemetry */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 900px) {
+      .telemetry-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 18px 22px;
+      backdrop-filter: blur(14px);
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: var(--card-border); }
+    .stat-label {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .stat-val {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+      font-family: var(--font-mono);
+    }
+    .stat-val span {
+      font-size: 13px;
+      color: var(--emerald);
+      font-weight: 500;
+    }
+
+    /* Main Engine Section */
+    .engine-grid {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 28px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 1040px) {
+      .engine-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Routing Simulator Card */
+    .routing-card {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 30px;
+      position: relative;
+    }
+    .routing-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .routing-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .currency-input-row {
+      display: flex;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 4px;
+    }
+    .amount-input {
+      flex: 1;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      padding: 10px 16px;
+      outline: none;
+    }
+    .currency-select {
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      border-radius: 8px;
+      padding: 0 16px;
+      cursor: pointer;
+      outline: none;
+    }
+    .currency-select option {
+      background: #0e141b;
+      color: #fff;
+    }
+
+    /* Rail Selection Cards */
+    .rails-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .rail-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 14px 12px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .rail-btn:hover, .rail-btn.active {
+      background: rgba(0, 229, 153, 0.08);
+      border-color: var(--emerald);
+      box-shadow: 0 0 15px rgba(0, 229, 153, 0.15);
+    }
+    .rail-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .rail-time {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--emerald);
+    }
+
+    /* Calculation Receipt Box */
+    .receipt-box {
+      background: rgba(7, 10, 14, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: var(--text-muted);
+    }
+    .receipt-row.total {
+      margin-bottom: 0;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .receipt-row.total span:last-child {
+      color: var(--emerald);
+      font-size: 16px;
+    }
+
+    .btn-transfer {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--emerald), #0ea5e9);
+      border: none;
+      border-radius: 12px;
+      color: #070a0e;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 0 25px var(--emerald-glow);
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+    .btn-transfer:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px var(--emerald-glow);
+    }
+
+    /* Right Column: Holographic Metal Card & Ledger */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* 3D Titanium Card */
+    .card-wrap {
+      perspective: 1000px;
+    }
+    .titanium-card {
+      width: 100%;
+      height: 240px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #090d16 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out;
+    }
+    .card-sheen {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent 40%, rgba(0, 229, 153, 0.15) 50%, transparent 60%);
+      pointer-events: none;
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .card-chip {
+      width: 44px;
+      height: 32px;
+      background: linear-gradient(135deg, #ffd700, #b8860b);
+      border-radius: 6px;
+      border: 1px solid rgba(0,0,0,0.2);
+    }
+    .card-tier {
+      font-size: 11px;
+      font-weight: 800;
+      color: #94a3b8;
+      letter-spacing: 1.5px;
+      font-family: var(--font-mono);
+    }
+    .card-number {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      letter-spacing: 3px;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      position: relative;
+      z-index: 1;
+    }
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      position: relative;
+      z-index: 1;
+    }
+    .holder-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .holder-title {
+      font-size: 9px;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+    }
+    .card-brand-logo {
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--emerald);
+      letter-spacing: -0.5px;
+    }
+
+    /* Live Cryptographic Ledger */
+    .ledger-box {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .ledger-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .ledger-title {
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ledger-stream {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow: hidden;
+    }
+    .tx-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      border-left: 2px solid var(--emerald);
+    }
+    .tx-route { color: #fff; font-weight: 600; }
+    .tx-hash { color: #64748b; font-size: 10px; }
+    .tx-amount { color: var(--emerald); font-weight: 700; }
+
+    /* Unified Floating Hub Badge */
+    .ceo-hub-floating-badge {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      background: rgba(14, 20, 27, 0.85);
+      border: 1px solid rgba(0, 229, 153, 0.4);
+      color: #fff;
+      padding: 9px 18px;
+      border-radius: 9999px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 229, 153, 0.25);
+      text-decoration: none;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(14px);
+    }
+    .ceo-hub-floating-badge:hover {
+      transform: translateY(-2px);
+      border-color: var(--emerald);
+      box-shadow: 0 14px 40px rgba(0, 229, 153, 0.4);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="ambientCanvas"></canvas>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="brand-icon">💳</div>
+        <div>
+          <div class="brand-title">OmniPay Global</div>
+          <div class="brand-sub">Multi-Rail FinTech Core & Treasury Engine</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="settlement-badge">
+          <span class="pulse-dot"></span>
+          <span>FEDNOW & SEPA INSTANT ACTIVE</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Telemetry -->
+    <div class="telemetry-grid">
+      <div class="stat-card">
+        <div class="stat-label"><span>24h Settled Volume</span> <span>▲ 28.4%</span></div>
+        <div class="stat-val">$148.6 <span>M</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label"><span>Median Settlement</span> <span>Real-Time</span></div>
+        <div class="stat-val">340 <span>ms</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label"><span>FX Slippage Guard</span> <span>Optimal</span></div>
+        <div class="stat-val">&lt; 0.02 <span>%</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label"><span>Multi-Rail Nodes</span> <span>182 Jurisdictions</span></div>
+        <div class="stat-val">42 <span>Rails</span></div>
+      </div>
+    </div>
+
+    <!-- Engine Workspace -->
+    <div class="engine-grid">
+      <!-- Routing Simulator -->
+      <div class="routing-card">
+        <div class="routing-title">⚡ Multi-Rail Liquidity & Routing Simulator</div>
+        <div class="routing-sub">Simulate institutional liquidity routing across sovereign banking rails and cryptographic networks.</div>
+
+        <div class="form-group">
+          <label class="form-label">Transfer Amount & Currency</label>
+          <div class="currency-input-row">
+            <input type="number" class="amount-input" id="transferAmount" value="50000" oninput="calculateRouting()">
+            <select class="currency-select" id="currencySelect" onchange="calculateRouting()">
+              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (€)</option>
+              <option value="GBP">GBP (£)</option>
+              <option value="SGD">SGD (S$)</option>
+              <option value="AED">AED (د.إ)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Select Settlement Rail Architecture</label>
+          <div class="rails-grid">
+            <div class="rail-btn active" onclick="selectRail(this, 'fednow')">
+              <div class="rail-name">FedNow / RTP</div>
+              <div class="rail-time">320ms · 99.99% SLA</div>
+            </div>
+            <div class="rail-btn" onclick="selectRail(this, 'sepa')">
+              <div class="rail-name">SEPA Instant</div>
+              <div class="rail-time">1.2s · Zero Wire Fee</div>
+            </div>
+            <div class="rail-btn" onclick="selectRail(this, 'solana')">
+              <div class="rail-name">Solana Pay L2</div>
+              <div class="rail-time">400ms · $0.001 Fee</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Receipt -->
+        <div class="receipt-box">
+          <div class="receipt-row">
+            <span>Interbank Base Rate:</span>
+            <span id="rateLabel">1 USD = 0.924 EUR</span>
+          </div>
+          <div class="receipt-row">
+            <span>Routing Network Fee:</span>
+            <span id="feeLabel">$4.50 (Waived)</span>
+          </div>
+          <div class="receipt-row">
+            <span>Liquidity Slippage:</span>
+            <span style="color: var(--emerald)">0.00% (Guaranteed)</span>
+          </div>
+          <div class="receipt-row total">
+            <span>Net Delivered Amount:</span>
+            <span id="deliveredLabel">$49,995.50</span>
+          </div>
+        </div>
+
+        <button class="btn-transfer" onclick="executeSimulatedTransfer()">⚡ Execute Instant Settlement</button>
+      </div>
+
+      <!-- Right Column: 3D Titanium Card & Cryptographic Ledger -->
+      <div class="right-col">
+        <div class="card-wrap">
+          <div class="titanium-card" id="cardElement">
+            <div class="card-sheen"></div>
+            <div class="card-top">
+              <div class="card-chip"></div>
+              <div class="card-tier">TITANIUM CORPORATE</div>
+            </div>
+            <div class="card-number" id="cardNum">4820 •••• •••• 9104</div>
+            <div class="card-bottom">
+              <div>
+                <div class="holder-name">CHIEF EXECUTIVE OFFICER</div>
+                <div class="holder-title">TREASURY ACC #9042-88</div>
+              </div>
+              <div class="card-brand-logo">OMNIPAY</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ledger -->
+        <div class="ledger-box">
+          <div class="ledger-header">
+            <span class="ledger-title">◈ REAL-TIME SETTLEMENT STREAM</span>
+            <span style="color: var(--emerald); font-size: 10px;">LIVE</span>
+          </div>
+          <div class="ledger-stream" id="ledgerStream">
+            <div class="tx-item">
+              <div>
+                <div class="tx-route">NYC (JPMorgan) ➔ LON (Barclays)</div>
+                <div class="tx-hash">0x7f8a...4b12 · FedNow</div>
+              </div>
+              <div class="tx-amount">+$120,000.00</div>
+            </div>
+            <div class="tx-item">
+              <div>
+                <div class="tx-route">FRA (Deutsche) ➔ SGP (DBS)</div>
+                <div class="tx-hash">0x3c99...e891 · SEPA Instant</div>
+              </div>
+              <div class="tx-amount">+€85,450.00</div>
+            </div>
+            <div class="tx-item">
+              <div>
+                <div class="tx-route">DXB (Emirates) ➔ TYO (MUFG)</div>
+                <div class="tx-hash">0x11ab...604f · Solana L2</div>
+              </div>
+              <div class="tx-amount">+$340,000.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unified Hub Floating Badge -->
+  <a href="../index.html" class="ceo-hub-floating-badge" title="Return to CEO Master Portfolio Hub">
+    <span style="color:#00e599;font-size:14px">◈</span> Portfolio Hub
+    <span style="font-size:10px;background:rgba(0,229,153,0.18);border:1px solid rgba(0,229,153,0.3);color:#00e599;padding:1px 6px;border-radius:99px;">FINTECH·PRO</span>
+  </a>
+
+  <script>
+    // Audio Synthesizer
+    let audioCtx = null;
+    function playFinTechAudio(type='ding') {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        const now = audioCtx.currentTime;
+
+        if (type === 'ding') {
+          o.frequency.setValueAtTime(987.77, now); // B5
+          o.frequency.exponentialRampToValueAtTime(1318.51, now + 0.08); // E6
+          g.gain.setValueAtTime(0.05, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+          o.connect(g);
+          g.connect(audioCtx.destination);
+          o.start(now);
+          o.stop(now + 0.3);
+        } else {
+          o.frequency.setValueAtTime(523.25, now);
+          g.gain.setValueAtTime(0.03, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+          o.connect(g);
+          g.connect(audioCtx.destination);
+          o.start(now);
+          o.stop(now + 0.05);
+        }
+      } catch(e) {}
+    }
+
+    // 3D Card Parallax Mouse Effect
+    const card = document.getElementById('cardElement');
+    window.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / rect.width;
+      const dy = (e.clientY - cy) / rect.height;
+      card.style.transform = `perspective(1000px) rotateY(${dx * 18}deg) rotateX(${-dy * 18}deg)`;
+    });
+
+    let activeRail = 'fednow';
+
+    function selectRail(btn, rail) {
+      playFinTechAudio('tick');
+      document.querySelectorAll('.rail-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeRail = rail;
+      calculateRouting();
+    }
+
+    function calculateRouting() {
+      const amt = parseFloat(document.getElementById('transferAmount').value) || 0;
+      const cur = document.getElementById('currencySelect').value;
+
+      let fee = 4.50;
+      if (activeRail === 'solana') fee = 0.02;
+      else if (activeRail === 'sepa') fee = 0.00;
+
+      const net = Math.max(0, amt - fee);
+      const symbol = cur === 'EUR' ? '€' : (cur === 'GBP' ? '£' : '$');
+
+      document.getElementById('feeLabel').textContent = `${symbol}${fee.toFixed(2)}`;
+      document.getElementById('deliveredLabel').textContent = `${symbol}${net.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    }
+
+    function executeSimulatedTransfer() {
+      playFinTechAudio('ding');
+      const amt = parseFloat(document.getElementById('transferAmount').value) || 0;
+      const cur = document.getElementById('currencySelect').value;
+      const symbol = cur === 'EUR' ? '€' : (cur === 'GBP' ? '£' : '$');
+
+      const stream = document.getElementById('ledgerStream');
+      const div = document.createElement('div');
+      div.className = 'tx-item';
+      const hash = '0x' + Math.random().toString(16).substr(2, 8) + '...' + Math.random().toString(16).substr(2, 4);
+      div.innerHTML = `
+        <div>
+          <div class="tx-route">Treasury HQ ➔ Liquidity Vault</div>
+          <div class="tx-hash">${hash} · ${activeRail.toUpperCase()}</div>
+        </div>
+        <div class="tx-amount">+${symbol}${amt.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+      `;
+      stream.insertBefore(div, stream.firstChild);
+
+      alert(`⚡ OmniPay Rail Settled: ${symbol}${amt.toLocaleString('en-US')} routed via ${activeRail.toUpperCase()} with sub-second finality.`);
+    }
+
+    // Ambient Flowing Matrix Canvas
+    const canvas = document.getElementById('ambientCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [];
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      particles = [];
+      for (let i = 0; i < 70; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 2 + 0.5,
+          speed: Math.random() * 0.4 + 0.2,
+          alpha: Math.random() * 0.5 + 0.1
+        });
+      }
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function renderCanvas() {
+      ctx.clearRect(0, 0, w, h);
+      particles.forEach(p => {
+        p.y -= p.speed;
+        if (p.y < 0) p.y = h;
+        ctx.fillStyle = `rgba(0, 229, 153, ${p.alpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(renderCanvas);
+    }
+    renderCanvas();
+
+    if (window.self !== window.top) {
+      const b = document.querySelector('.ceo-hub-floating-badge');
+      if (b) b.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

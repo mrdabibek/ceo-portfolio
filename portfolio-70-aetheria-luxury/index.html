@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aetheria — Autonomous Megayachts & Supersonic Aviation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --card-bg: rgba(18, 18, 22, 0.75);
+      --card-border: rgba(212, 175, 55, 0.22);
+      --gold: #d4af37;
+      --gold-light: #f7e096;
+      --gold-glow: rgba(212, 175, 55, 0.35);
+      --text: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Montserrat', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Ambient Ocean Starlight Canvas */
+    #ambientCanvas {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 30px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Luxury Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+      margin-bottom: 40px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-crest {
+      font-size: 26px;
+      color: var(--gold);
+      text-shadow: 0 0 20px var(--gold-glow);
+    }
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      letter-spacing: 4px;
+      font-weight: 600;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    .brand-sub {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #09090b;
+      padding: 12px 26px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 25px var(--gold-glow);
+      transition: all 0.3s;
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px var(--gold-glow);
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto 50px;
+    }
+    .hero-badge {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 6px 18px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 999px;
+      background: rgba(212, 175, 55, 0.06);
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(38px, 5vw, 64px);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .hero p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* Fleet Showcase */
+    .fleet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 28px;
+      margin-bottom: 50px;
+    }
+    .fleet-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      transition: all 0.35s ease;
+      position: relative;
+    }
+    .fleet-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(212, 175, 55, 0.5);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 30px var(--gold-glow);
+    }
+    .fleet-img-wrap {
+      height: 240px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fleet-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .fleet-card:hover .fleet-img {
+      transform: scale(1.05);
+    }
+    .fleet-badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: rgba(9, 9, 11, 0.85);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+    }
+    .fleet-content {
+      padding: 24px;
+    }
+    .fleet-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .fleet-specs {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--gold);
+      margin-bottom: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .fleet-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .fleet-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .fleet-price {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--gold-light);
+    }
+    .fleet-price span { font-size: 12px; font-family: var(--font-sans); color: var(--text-muted); }
+
+    /* Interactive Voyage Estimator */
+    .calculator-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 36px;
+      backdrop-filter: blur(20px);
+      margin-bottom: 50px;
+    }
+    .calc-title {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      color: #fff;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .calc-sub {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+
+    .calc-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .calc-group label {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .calc-select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      outline: none;
+    }
+    .calc-select option { background: #121216; color: #fff; }
+
+    .calc-result-strip {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 14px;
+      padding: 20px;
+      flex-wrap: wrap;
+      gap: 16px;
+      text-align: center;
+    }
+    .res-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 4px; }
+    .res-val { font-family: var(--font-serif); font-size: 28px; font-weight: 700; color: var(--gold-light); }
+
+    /* Floating Return Badge */
+    .floating-hub-badge {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      background: rgba(9, 9, 11, 0.9);
+      border: 1px solid var(--gold);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px var(--gold-glow);
+      border-radius: 999px;
+      padding: 10px 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-size: 13px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .floating-hub-badge:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 15px 40px var(--gold-glow);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="ambientCanvas"></canvas>
+
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="brand-crest">⚜️</div>
+        <div>
+          <div class="brand-title">AETHERIA</div>
+          <div class="brand-sub">Autonomous Megayachts & Mach 2.2 Aviation</div>
+        </div>
+      </div>
+      <button class="btn-gold" onclick="openConcierge()">Reserve Charter</button>
+    </header>
+
+    <div class="hero">
+      <div class="hero-badge">Curated Private Expeditions</div>
+      <h1>Beyond Horizon. <em>Unrivaled</em> Sanctuary.</h1>
+      <p>Architected for sovereigns and visionary leaders. Experience zero-emission nuclear-electric hybrid megayachts paired with supersonic private aviation.</p>
+    </div>
+
+    <!-- Fleet Grid -->
+    <div class="fleet-grid">
+      <div class="fleet-card">
+        <div class="fleet-img-wrap">
+          <img src="https://images.unsplash.com/photo-1569263979104-865ab7cd8d17?q=80&w=900&auto=format&fit=crop" class="fleet-img" alt="Solaria 110M Megayacht">
+          <div class="fleet-badge">FLAGSHIP MEGAYACHT</div>
+        </div>
+        <div class="fleet-content">
+          <div class="fleet-title">Solaria 110M Oceanic</div>
+          <div class="fleet-specs">110M / 360FT • 18 KNOTS • 24 GUESTS</div>
+          <div class="fleet-desc">Equipped with a glass-bottom infinity pool, certified touch-and-go helipad, and 3-person private research submarine.</div>
+          <div class="fleet-footer">
+            <div class="fleet-price">$780,000 <span>/ week + APA</span></div>
+            <button class="btn-gold" style="padding: 8px 18px; font-size: 11px;" onclick="bookFleet('Solaria 110M')">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="fleet-card">
+        <div class="fleet-img-wrap">
+          <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=900&auto=format&fit=crop" class="fleet-img" alt="Aetheria Mach 2.2 Supersonic Jet">
+          <div class="fleet-badge">SUPERSONIC PRIVATE JET</div>
+        </div>
+        <div class="fleet-content">
+          <div class="fleet-title">Aetheria Mach 2.2 Apex</div>
+          <div class="fleet-specs">MACH 2.2 (2,300 KM/H) • 5,400 NM RANGE</div>
+          <div class="fleet-desc">London to New York in 2 hours 45 minutes. Ultra-quiet sonic boom mitigation and circadian dynamic lighting suite.</div>
+          <div class="fleet-footer">
+            <div class="fleet-price">$24,500 <span>/ flight hour</span></div>
+            <button class="btn-gold" style="padding: 8px 18px; font-size: 11px;" onclick="bookFleet('Mach 2.2 Apex')">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="fleet-card">
+        <div class="fleet-img-wrap">
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=900&auto=format&fit=crop" class="fleet-img" alt="Private Island Sanctuary">
+          <div class="fleet-badge">OFF-GRID ATOLL</div>
+        </div>
+        <div class="fleet-content">
+          <div class="fleet-title">Motu Tetiaroa Sanctuary</div>
+          <div class="fleet-specs">PRIVATE ATOLL • FRENCH POLYNESIA</div>
+          <div class="fleet-desc">100% solar and deep-seawater cooled private compound with deepwater yacht berth and private runway.</div>
+          <div class="fleet-footer">
+            <div class="fleet-price">$120,000 <span>/ night (All-inclusive)</span></div>
+            <button class="btn-gold" style="padding: 8px 18px; font-size: 11px;" onclick="bookFleet('Motu Tetiaroa')">Inquire</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voyage Route & Flight Time Calculator -->
+    <div class="calculator-box">
+      <div class="calc-title">Bespoke Voyage Route & Charter Estimator</div>
+      <div class="calc-sub">Select your departure hub and destination to calculate autonomous transit telemetry.</div>
+
+      <div class="calc-inputs">
+        <div class="calc-group">
+          <label>Origin Hub</label>
+          <select id="originSelect" class="calc-select" onchange="updateTrip()">
+            <option value="monaco">Monaco (Port Hercule)</option>
+            <option value="dubai">Dubai (D-Marin Port)</option>
+            <option value="stbarts">St. Barths (Gustavia)</option>
+            <option value="london">London (Farnborough)</option>
+          </select>
+        </div>
+
+        <div class="calc-group">
+          <label>Destination</label>
+          <select id="destSelect" class="calc-select" onchange="updateTrip()">
+            <option value="dubai">Dubai (D-Marin Port)</option>
+            <option value="monaco">Monaco (Port Hercule)</option>
+            <option value="maldives">Maldives (Baa Atoll)</option>
+            <option value="tokyo">Tokyo (Haneda VIP)</option>
+          </select>
+        </div>
+
+        <div class="calc-group">
+          <label>Vessel / Aircraft</label>
+          <select id="vesselSelect" class="calc-select" onchange="updateTrip()">
+            <option value="jet">Mach 2.2 Supersonic Jet</option>
+            <option value="yacht">Solaria 110M Megayacht</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="calc-result-strip">
+        <div>
+          <div class="res-label">Nautical Distance</div>
+          <div class="res-val" id="resDist">3,140 NM</div>
+        </div>
+        <div>
+          <div class="res-label">Estimated Transit Time</div>
+          <div class="res-val" id="resTime">2h 45m</div>
+        </div>
+        <div>
+          <div class="res-label">Curated Charter Estimate</div>
+          <div class="res-val" id="resCost">$68,500</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a href="../index.html" class="floating-hub-badge">
+    ◈ 66+ Projects Master Hub
+  </a>
+
+  <script>
+    // Ambient Star Waves Canvas
+    const canvas = document.getElementById('ambientCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, stars = [];
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      stars = [];
+      for(let i=0; i<80; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.5 + 0.5,
+          alpha: Math.random(),
+          speed: Math.random() * 0.01 + 0.005
+        });
+      }
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function renderCanvas() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#09090b';
+      ctx.fillRect(0, 0, w, h);
+
+      stars.forEach(s => {
+        s.alpha += s.speed;
+        const a = (Math.sin(s.alpha) + 1) / 2 * 0.7 + 0.1;
+        ctx.fillStyle = `rgba(212, 175, 55, ${a})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(renderCanvas);
+    }
+    renderCanvas();
+
+    function updateTrip() {
+      const v = document.getElementById('vesselSelect').value;
+      if (v === 'jet') {
+        document.getElementById('resDist').textContent = '3,140 NM';
+        document.getElementById('resTime').textContent = '2h 45m';
+        document.getElementById('resCost').textContent = '$68,500';
+      } else {
+        document.getElementById('resDist').textContent = '3,820 NM';
+        document.getElementById('resTime').textContent = '8 Days 14h';
+        document.getElementById('resCost').textContent = '$780,000';
+      }
+    }
+
+    function bookFleet(name) {
+      alert(`⚜️ Aetheria Private Concierge: Your inquiry for "${name}" has been recorded. Our Sovereign Relations team will reach out via encrypted channel.`);
+    }
+
+    function openConcierge() {
+      alert("⚜️ Aetheria Bespoke Charter: Concierge desk is open 24/7 for tailored voyages.");
+    }
+
+    if (window.self !== window.top) {
+      const b = document.querySelector('.floating-hub-badge');
+      if (b) b.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

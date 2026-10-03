@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LedgerLine — Terminal Finance Dashboard</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+:root{
+--bg:#060807;
+--panel:#0b0e0c;
+--panel2:#101412;
+--line:#1c2420;
+--grn:#00ff88;
+--grn-dim:#00b35e;
+--red:#ff4d5e;
+--amber:#ffb224;
+--txt:#d7ffe8;
+--mut:#7fa892;
+--mono:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+}
+body{
+font-family:var(--mono);
+background:var(--bg);
+color:var(--txt);
+font-size:13px;
+line-height:1.5;
+}
+a{
+color:inherit;
+text-decoration:none;
+}
+.app{
+display:flex;
+min-height:100vh;
+}
+/* ---- left terminal sidebar ---- */
+.side{
+width:236px;
+flex-shrink:0;
+background:var(--panel);
+border-right:1px solid var(--line);
+display:flex;
+flex-direction:column;
+position:sticky;
+top:0;
+height:100vh;
+}
+.brand{
+padding:18px;
+border-bottom:1px solid var(--line);
+display:flex;
+align-items:center;
+gap:10px;
+}
+.dot{
+width:11px;
+height:11px;
+border-radius:50%;
+}
+.dot.r{background:#ff5f57;}
+.dot.y{background:#febc2e;}
+.dot.g{background:#28c840;}
+.brand b{
+font-size:14px;
+letter-spacing:1px;
+}
+.brand small{
+display:block;
+color:var(--mut);
+font-size:10px;
+letter-spacing:2px;
+}
+.ticker{
+padding:14px 18px;
+border-bottom:1px solid var(--line);
+}
+.ticker h4{
+font-size:10px;
+letter-spacing:2px;
+color:var(--mut);
+margin-bottom:10px;
+}
+.trow{
+display:flex;
+justify-content:space-between;
+padding:6px 0;
+border-bottom:1px dashed #152019;
+font-size:12px;
+}
+.trow:last-child{
+border-bottom:0;
+}
+.up{color:var(--grn);}
+.dn{color:var(--red);}
+.nav{
+padding:12px;
+display:flex;
+flex-direction:column;
+gap:4px;
+}
+.nav button{
+background:transparent;
+border:1px solid transparent;
+color:var(--mut);
+font-family:var(--mono);
+font-size:12px;
+text-align:left;
+padding:9px 12px;
+border-radius:8px;
+cursor:pointer;
+display:flex;
+gap:10px;
+align-items:center;
+}
+.nav button.on,
+.nav button:hover{
+background:#0f1a13;
+border-color:var(--line);
+color:var(--grn);
+}
+.term-mini{
+margin-top:auto;
+margin:12px;
+background:#000;
+border:1px solid var(--line);
+border-radius:10px;
+padding:12px;
+font-size:11px;
+min-height:150px;
+}
+.term-mini .p{color:var(--grn);}
+.term-mini .m{color:var(--mut);}
+/* ---- main ---- */
+.main{
+flex:1;
+min-width:0;
+}
+.top{
+display:flex;
+align-items:center;
+gap:14px;
+padding:14px 24px;
+border-bottom:1px solid var(--line);
+background:#080b09;
+position:sticky;
+top:0;
+z-index:5;
+}
+.search{
+flex:1;
+max-width:420px;
+display:flex;
+align-items:center;
+gap:8px;
+background:#000;
+border:1px solid var(--line);
+border-radius:8px;
+padding:8px 12px;
+color:var(--mut);
+}
+.search input{
+flex:1;
+background:transparent;
+border:0;
+outline:0;
+color:var(--txt);
+font-family:var(--mono);
+font-size:12px;
+}
+.sess{
+font-size:11px;
+color:var(--mut);
+border:1px solid var(--line);
+padding:7px 12px;
+border-radius:99px;
+background:#000;
+}
+.btn{
+background:var(--grn);
+border:0;
+color:#03130a;
+font-family:var(--mono);
+font-weight:700;
+font-size:12px;
+padding:9px 16px;
+border-radius:8px;
+cursor:pointer;
+}
+.btn.ghost{
+background:transparent;
+color:var(--grn);
+border:1px solid var(--grn-dim);
+}
+.wrap{
+padding:24px;
+display:flex;
+flex-direction:column;
+gap:18px;
+max-width:1180px;
+}
+.crumb{
+color:var(--mut);
+font-size:11px;
+}
+.crumb b{color:var(--grn);}
+h1{
+font-size:24px;
+letter-spacing:-.5px;
+}
+.sub{
+color:var(--mut);
+font-size:12px;
+}
+.kpis{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+}
+.kpi{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:12px;
+padding:16px;
+position:relative;
+overflow:hidden;
+}
+.kpi::before{
+content:"";
+position:absolute;
+left:0;
+top:0;
+bottom:0;
+width:3px;
+background:var(--grn);
+opacity:.8;
+}
+.kpi.red::before{background:var(--red);}
+.kpi.amber::before{background:var(--amber);}
+.kpi span{
+font-size:10px;
+letter-spacing:2px;
+color:var(--mut);
+}
+.kpi strong{
+display:block;
+font-size:22px;
+margin:6px 0 2px;
+}
+.kpi em{
+font-style:normal;
+font-size:11px;
+}
+.grid2{
+display:grid;
+grid-template-columns:1.7fr 1fr;
+gap:14px;
+}
+.card{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:12px;
+padding:18px;
+}
+.card h3{
+font-size:12px;
+letter-spacing:2px;
+color:var(--mut);
+margin-bottom:4px;
+}
+.card h3 i{
+font-style:normal;
+color:var(--grn);
+}
+.tf{
+display:flex;
+gap:6px;
+margin:12px 0;
+}
+.tf button{
+background:#000;
+border:1px solid var(--line);
+color:var(--mut);
+font-family:var(--mono);
+font-size:11px;
+padding:6px 12px;
+border-radius:6px;
+cursor:pointer;
+}
+.tf button.on{
+color:#03130a;
+background:var(--grn);
+border-color:var(--grn);
+font-weight:700;
+}
+canvas#chart{
+width:100%;
+height:240px;
+background:#000;
+border:1px solid var(--line);
+border-radius:8px;
+display:block;
+}
+.legend{
+display:flex;
+gap:16px;
+margin-top:10px;
+font-size:11px;
+color:var(--mut);
+}
+.legend b{color:var(--txt);}
+.alloc{display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.arow{display:grid;grid-template-columns:90px 1fr 46px;gap:10px;align-items:center;font-size:11px;}
+.abar{height:8px;background:#000;border:1px solid var(--line);border-radius:99px;overflow:hidden;}
+.abar i{display:block;height:100%;background:var(--grn);}
+.abar.o i{background:var(--amber);}
+.abar.r i{background:var(--red);}
+.abar.b i{background:#4da3ff;}
+table{
+width:100%;
+border-collapse:collapse;
+font-size:12px;
+margin-top:10px;
+}
+th{
+text-align:left;
+color:var(--mut);
+font-weight:400;
+font-size:10px;
+letter-spacing:1.5px;
+padding:8px;
+border-bottom:1px solid var(--line);
+}
+td{
+padding:9px 8px;
+border-bottom:1px solid #101715;
+}
+tr:hover td{background:#0d1310;}
+.pill{
+font-size:10px;
+padding:3px 9px;
+border-radius:99px;
+border:1px solid;
+}
+.pill.g{color:var(--grn);border-color:var(--grn-dim);}
+.pill.r{color:var(--red);border-color:var(--red);}
+.pill.a{color:var(--amber);border-color:var(--amber);}
+.log{
+background:#000;
+border:1px solid var(--line);
+border-radius:8px;
+padding:12px;
+font-size:11px;
+height:170px;
+overflow:auto;
+margin-top:10px;
+}
+.log div{padding:2px 0;border-bottom:1px dotted #0f1a13;}
+.foot{
+color:var(--mut);
+font-size:11px;
+text-align:center;
+padding:18px;
+}
+@media(max-width:1000px){
+.kpis{grid-template-columns:1fr 1fr;}
+.grid2{grid-template-columns:1fr;}
+.side{display:none;}
+}
+@media(max-width:560px){
+.kpis{grid-template-columns:1fr;}
+.wrap{padding:14px;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="brand">
+<div style="display:flex;gap:6px">
+<span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+</div>
+<div><b>LEDGERLINE</b><small>FINANCE TERMINAL</small></div>
+</div>
+<div class="ticker">
+<h4>// LIVE MARKET</h4>
+<div class="trow"><span>AAPL</span><b class="up">232.4 ▲</b></div>
+<div class="trow"><span>BTC</span><b class="up">97.2k ▲</b></div>
+<div class="trow"><span>ETH</span><b class="dn">3.41k ▼</b></div>
+<div class="trow"><span>EUR/USD</span><b class="up">1.084 ▲</b></div>
+<div class="trow"><span>GOLD</span><b class="up">2.91k ▲</b></div>
+</div>
+<nav class="nav">
+<button class="on">▚ Overview</button>
+<button>◈ Portfolio</button>
+<button>⬣ Transactions</button>
+<button>◍ Budgets</button>
+<button>⬔ Reports</button>
+<button>⚙ Settings</button>
+</nav>
+<div class="term-mini" id="miniLog">
+<div class="p">$ ledger sync --live</div>
+<div class="m">connected · latency 41ms</div>
+<div class="p">$ risk scan portfolio…</div>
+<div class="m">exposure OK · 0 flags</div>
+</div>
+</aside>
+<div class="main">
+<div class="top">
+<div class="search">⌕ <input id="q" placeholder="search symbol, txn, account…  ( / )"></div>
+<span class="sess">● session: Q3 · USD</span>
+<button class="btn ghost" onclick="exportCSV()">Export</button>
+<button class="btn" onclick="addTxn()">+ Record</button>
+</div>
+<div class="wrap">
+<div class="crumb">root / <b>overview</b> / q3-2026</div>
+<div>
+<h1>$284,390.12 <span style="font-size:12px;color:var(--grn)">▲ +12.4%</span></h1>
+<p class="sub">Total net worth · updated <span id="clock">—</span> · terminal build v2.6</p>
+</div>
+<div class="kpis">
+<div class="kpi"><span>INVESTED</span><strong>$196,200</strong><em class="up">▲ +8.1% this qtr</em></div>
+<div class="kpi"><span>CASH</span><strong>$42,810</strong><em class="up">▲ +2.0% apy 4.1%</em></div>
+<div class="kpi amber"><span>BURN / MO</span><strong>$9,340</strong><em style="color:var(--amber)">● -3% vs target</em></div>
+<div class="kpi red"><span>AT RISK</span><strong>$4,120</strong><em class="dn">▼ 2 positions</em></div>
+</div>
+<div class="grid2">
+<div class="card">
+<h3><i>▚</i> PORTFOLIO PERFORMANCE</h3>
+<p class="sub">candlestick · simulated feed</p>
+<div class="tf" id="tf">
+<button data-n="30" class="on">1M</button>
+<button data-n="60">3M</button>
+<button data-n="120">1Y</button>
+<button data-n="240">ALL</button>
+</div>
+<canvas id="chart" width="640" height="240"></canvas>
+<div class="legend"><span><b style="color:var(--grn)">━</b> equity</span><span><b style="color:var(--amber)">━</b> benchmark</span><span id="chg">Δ +18.2%</span></div>
+</div>
+<div class="card">
+<h3><i>◍</i> ALLOCATION</h3>
+<p class="sub">by asset class</p>
+<div class="alloc">
+<div class="arow"><span>Stocks 52%</span><div class="abar"><i style="width:52%"></i></div><b>$148k</b></div>
+<div class="arow"><span>Bonds 18%</span><div class="abar b"><i style="width:18%"></i></div><b>$51k</b></div>
+<div class="arow"><span>Crypto 14%</span><div class="abar o"><i style="width:14%"></i></div><b>$39k</b></div>
+<div class="arow"><span>Cash 11%</span><div class="abar"><i style="width:11%;background:#7fa892"></i></div><b>$31k</b></div>
+<div class="arow"><span>Alt 5%</span><div class="abar r"><i style="width:5%"></i></div><b>$14k</b></div>
+</div>
+<div class="log" id="feed"></div>
+</div>
+</div>
+<div class="card">
+<h3><i>⬣</i> TRANSACTIONS <span id="count" style="color:var(--grn)"></span></h3>
+<p class="sub">filterable ledger — type in search to filter</p>
+<table>
+<thead><tr><th>ID</th><th>DATE</th><th>DESC</th><th>CAT</th><th>AMOUNT</th><th>STATUS</th></tr></thead>
+<tbody id="rows"></tbody>
+</table>
+</div>
+<div class="foot">ledgerline · FINRA-style demo data · no real funds move · press <b>/</b> to search</div>
+</div>
+</div>
+</div>
+<script>
+var txns=[
+["TX-9012","Oct 01","Salary — Acme Corp","Income",+5200,"done"],
+["TX-9011","Sep 30","Vanguard VTI buy","Invest",-1200,"done"],
+["TX-9010","Sep 29","Whole Foods","Food",-86.4,"done"],
+["TX-9009","Sep 28","BTC buy 0.02","Crypto",-1340,"pending"],
+["TX-9008","Sep 27","Rent — Oct","Housing",-1800,"done"],
+["TX-9007","Sep 26","Dividend AAPL","Income",+212.5,"done"],
+["TX-9006","Sep 25","Uber ×3","Travel",-54.2,"flagged"],
+["TX-9005","Sep 24","ETH sell 0.4","Crypto",+1360,"done"]
+];
+var feed=document.getElementById('feed');
+function log(m){var d=document.createElement('div');d.textContent='['+new Date().toLocaleTimeString()+'] '+m;feed.prepend(d);}
+function renderRows(f){
+f=(f||'').toLowerCase();
+var tb=document.getElementById('rows');tb.innerHTML='';
+var n=0;
+txns.forEach(function(t){
+if(f&&t.join(' ').toLowerCase().indexOf(f)<0)return;
+n++;
+var c=t[4]>0?'var(--grn)':'inherit';
+var p=t[5]==='done'?'g':(t[5]==='pending'?'a':'r');
+tb.innerHTML+='<tr><td>'+t[0]+'</td><td>'+t[1]+'</td><td>'+t[2]+'</td><td>'+t[3]+'</td><td style="color:'+c+'">'+(t[4]>0?'+':'')+t[4].toLocaleString()+'</td><td><span class="pill '+p+'">'+t[5]+'</span></td></tr>';
+});
+document.getElementById('count')='· '+n+' rows';
+}
+renderRows('');
+document.getElementById('q').addEventListener('input',function(e){renderRows(e.target.value);});
+document.addEventListener('keydown',function(e){if(e.key==='/'){e.preventDefault();document.getElementById('q').focus();}});
+function addTxn(){
+var d=prompt('Description:','Bonus — freelance');if(!d)return;
+var a=parseFloat(prompt('Amount (neg=spend):','350'));if(isNaN(a))return;
+txns.unshift(['TX-'+(9000+Math.floor(Math.random()*900)),'Oct 02',d,a>0?'Income':'Misc',a,'pending']);
+renderRows(document.getElementById('q').value);log('recorded: '+d+' '+a);
+}
+function exportCSV(){
+var s='id,date,desc,cat,amount,status\n'+txns.map(function(r){return r.join(',');}).join('\n');
+var b=new Blob([s],{type:'text/csv'});var u=URL.createObjectURL(b);
+var a=document.createElement('a');a.href=u;a.download='ledger.csv';a.click();log('exported ledger.csv');
+}
+/* chart */
+var cv=document.getElementById('chart'),ctx=cv.getContext('2d'),N=30,seed=100;
+function series(n,vol,drift){
+var out=[],v=seed;
+for(var i=0;i<n;i++){v+= (Math.random()-0.48)*vol+drift;out.push(v);}
+return out;
+}
+function draw(){
+var W=cv.width=cv.offsetWidth*2,H=cv.height=480;
+ctx.clearRect(0,0,W,H);
+var eq=series(N,6,1.1),bm=series(N,4,0.55);
+function rng(a){return [Math.min.apply(0,a),Math.max.apply(0,a)];}
+var m=rng(eq.concat(bm)),mn=m[0]*0.97,mx=m[1]*1.03;
+function X(i){return 20+i*(W-40)/(N-1);}
+function Y(v){return H-30-(v-mn)/(mx-mn)*(H-70);}
+ctx.strokeStyle='#151d19';ctx.lineWidth=1;
+for(var g=0;g<5;g++){var y=30+g*(H-70)/4;ctx.beginPath();ctx.moveTo(20,y);ctx.lineTo(W-20,y);ctx.stroke();}
+/* candles */
+var cw=Math.max(3,(W-40)/N*0.42);
+for(var i=0;i<N;i+=2){
+var o=eq[i],c=eq[Math.min(i+1,N-1)];
+ctx.fillStyle=c>=o?'#00ff88':'#ff4d5e';
+var y1=Y(Math.max(o,c)),y2=Y(Math.min(o,c));
+ctx.fillRect(X(i)-cw/2,y1,cw,Math.max(3,y2-y1));
+ctx.strokeStyle=ctx.fillStyle;ctx.beginPath();ctx.moveTo(X(i),Y(o)-12);ctx.lineTo(X(i),Y(o)+12);ctx.stroke();
+}
+function line(s,col){
+ctx.strokeStyle=col;ctx.lineWidth=3;ctx.beginPath();
+s.forEach(function(v,i){i?ctx.lineTo(X(i),Y(v)):ctx.moveTo(X(0),Y(v));});ctx.stroke();
+}
+line(bm,'#ffb224');line(eq,'#00ff88');
+var ch=((eq[N-1]-eq[0])/eq[0]*100).toFixed(1);
+document.getElementById('chg').textContent='Δ '+(ch>0?'+':'')+ch+'%';
+}
+document.getElementById('tf').addEventListener('click',function(e){
+if(e.target.tagName!=='BUTTON')return;
+var b=[].slice.call(this.children);b.forEach(function(x){x.classList.remove('on');});
+e.target.classList.add('on');N=+e.target.dataset.n;seed=100;draw();log('timeframe → '+e.target.textContent);
+});
+draw();window.addEventListener('resize',draw);
+['sync prices OK','rebalancer idle','dividend posted +$212','risk: drawdown 1.2%'].forEach(log);
+setInterval(function(){document.getElementById('clock').textContent=new Date().toLocaleTimeString();},1000);
+setInterval(function(){
+var s=['AAPL','BTC','ETH','TSLA','NVDA'][Math.floor(Math.random()*5)];
+log(s+' tick '+(Math.random()>0.5?'▲':'▼')+' '+(Math.random()*3).toFixed(2)+'%');
+if(feed.children.length>30)feed.removeChild(feed.lastChild);
+},6000);
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

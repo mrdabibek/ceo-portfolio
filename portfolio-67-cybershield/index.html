@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CyberShield — AI-Powered Zero-Trust SOC & Cloud Defense</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #06090e;
+      --card-bg: rgba(13, 19, 30, 0.75);
+      --card-border: rgba(0, 240, 255, 0.15);
+      --card-hover: rgba(0, 240, 255, 0.35);
+      --cyan: #00f0ff;
+      --cyan-glow: rgba(0, 240, 255, 0.35);
+      --red: #ff3366;
+      --red-glow: rgba(255, 51, 102, 0.4);
+      --green: #00ff88;
+      --green-glow: rgba(0, 255, 136, 0.3);
+      --purple: #9d4edd;
+      --text: #e2e8f0;
+      --text-muted: #64748b;
+      --mono: 'Fira Code', monospace;
+      --sans: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Ambient Cyber Grid Background */
+    .cyber-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: 
+        radial-gradient(circle at 15% 20%, rgba(0, 240, 255, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(255, 51, 102, 0.05) 0%, transparent 40%),
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Top Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-logo {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #00f0ff, #9d4edd);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .brand-sub {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .soc-status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 255, 136, 0.08);
+      border: 1px solid rgba(0, 255, 136, 0.25);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--green);
+    }
+    .status-pulse {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: var(--mono);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan), #00a8ff);
+      color: #06090e;
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px var(--cyan-glow);
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.05);
+      color: #cbd5e1;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--cyan);
+      color: #fff;
+    }
+
+    /* Telemetry KPI Strip */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s;
+    }
+    .kpi-card:hover {
+      border-color: var(--card-hover);
+      transform: translateY(-2px);
+    }
+    .kpi-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    }
+    .kpi-title {
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .kpi-val {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+      font-family: var(--mono);
+    }
+    .kpi-sub {
+      font-size: 12px;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .text-green { color: var(--green); }
+    .text-red { color: var(--red); }
+    .text-cyan { color: var(--cyan); }
+
+    /* Main Dashboard Grid */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 1024px) {
+      .dashboard-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Live Threat Map Pane */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title-icon {
+      color: var(--cyan);
+    }
+
+    #threatCanvas {
+      width: 100%;
+      height: 380px;
+      display: block;
+      background: #04070c;
+    }
+
+    /* Live Terminal & Logs */
+    .terminal-body {
+      padding: 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      height: 380px;
+      overflow-y: auto;
+      background: rgba(4, 7, 12, 0.85);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .log-line {
+      display: flex;
+      gap: 10px;
+      line-height: 1.4;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateX(-5px); } to { opacity: 1; transform: translateX(0); } }
+    .log-time { color: var(--text-muted); }
+    .log-badge {
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 10px;
+    }
+    .badge-crit { background: rgba(255, 51, 102, 0.2); color: var(--red); border: 1px solid rgba(255, 51, 102, 0.4); }
+    .badge-warn { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .badge-info { background: rgba(0, 240, 255, 0.15); color: var(--cyan); border: 1px solid rgba(0, 240, 255, 0.3); }
+
+    /* Policy Control Toggles */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .policy-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      transition: all 0.2s;
+    }
+    .policy-item:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(0, 240, 255, 0.2);
+    }
+    .policy-info h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+    .policy-info p { font-size: 12px; color: var(--text-muted); }
+
+    /* Modern Switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; cursor: pointer; inset: 0;
+      background-color: rgba(255,255,255,0.15);
+      transition: .3s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute; content: "";
+      height: 18px; width: 18px;
+      left: 3px; bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider { background-color: var(--cyan); box-shadow: 0 0 12px var(--cyan-glow); }
+    input:checked + .slider:before { transform: translateX(20px); background-color: #06090e; }
+
+    /* Floating Return Badge */
+    .floating-hub-badge {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      background: rgba(13, 19, 30, 0.9);
+      border: 1px solid var(--cyan);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px var(--cyan-glow);
+      border-radius: 999px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 13px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .floating-hub-badge:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 15px 40px var(--cyan-glow);
+    }
+  </style>
+</head>
+<body>
+  <div class="cyber-bg"></div>
+
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">🛡️</div>
+        <div>
+          <div class="brand-title">CyberShield SOC</div>
+          <div class="brand-sub">Zero-Trust Cloud Defense Engine</div>
+        </div>
+      </div>
+      <div class="soc-status-badge">
+        <div class="status-pulse"></div>
+        <span>SOC STATUS: LEVEL 1 SECURE</span>
+      </div>
+      <div class="top-actions">
+        <button class="btn btn-secondary" onclick="simulateAttack()">🚨 Simulate DDoS</button>
+        <button class="btn btn-primary" onclick="triggerPurge()">⚡ Lockdown All Nodes</button>
+      </div>
+    </header>
+
+    <!-- KPI Metrics -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-title">Global Threats Mitigated</div>
+        <div class="kpi-val" id="threatCount">1,482,903</div>
+        <div class="kpi-sub text-green">↑ 18.4% vs last hour</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Inspection Latency</div>
+        <div class="kpi-val">0.34 ms</div>
+        <div class="kpi-sub text-cyan">⚡ Cloudflare Edge Zero-Copy</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Active Protected Nodes</div>
+        <div class="kpi-val">34,180</div>
+        <div class="kpi-sub text-green">● 100% Healthy Mesh</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">AI Anomaly Confidence</div>
+        <div class="kpi-val">99.98%</div>
+        <div class="kpi-sub text-cyan">Neural Heuristics v4.2</div>
+      </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="dashboard-layout">
+      <!-- Live WebGL Threat Map -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="card-title-icon">🌐</span> Global Real-Time Attack Telemetry & Interceptor Map
+          </div>
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--cyan);">
+            LIVE PACKET STREAM: 42.8 GBPS
+          </div>
+        </div>
+        <canvas id="threatCanvas"></canvas>
+      </div>
+
+      <!-- Real-Time SOC Audit Log -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="card-title-icon">📟</span> SOC Incident Response Stream
+          </div>
+          <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px;" onclick="clearLogs()">Clear</button>
+        </div>
+        <div class="terminal-body" id="terminalLogs">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Zero-Trust Policy Matrix -->
+    <div class="card" style="margin-bottom: 40px;">
+      <div class="card-header">
+        <div class="card-title">
+          <span class="card-title-icon">⚙️</span> Zero-Trust Adaptive Security Policies
+        </div>
+        <span style="font-family: var(--mono); font-size: 12px; color: var(--text-muted);">Runtime Enforcement</span>
+      </div>
+      <div style="padding: 20px;">
+        <div class="controls-grid">
+          <div class="policy-item">
+            <div class="policy-info">
+              <h4>Geo-IP Blackhole Route</h4>
+              <p>Instantly drop traffic from sanctioned high-risk regions.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" checked onchange="toggleSound()">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="policy-item">
+            <div class="policy-info">
+              <h4>Quantum-Resistant Encryption</h4>
+              <p>Force Kyber-768 post-quantum key exchange.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" checked onchange="toggleSound()">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="policy-item">
+            <div class="policy-info">
+              <h4>Biometric Passkey Enforcement</h4>
+              <p>Require WebAuthn FIDO2 hardware keys on all cloud endpoints.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" checked onchange="toggleSound()">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="policy-item">
+            <div class="policy-info">
+              <h4>AI Behavioral Rate-Limiting</h4>
+              <p>Detect and isolate bot credential-stuffing patterns in 12ms.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" checked onchange="toggleSound()">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a href="../index.html" class="floating-hub-badge">
+    ◈ 66+ Projects Master Hub
+  </a>
+
+  <script>
+    // Web Audio Tactical Feedback
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function beep(freq, duration, type='sine') {
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+    function toggleSound() { beep(700, 0.05, 'triangle'); }
+
+    // Threat Map Canvas
+    const canvas = document.getElementById('threatCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    function resize() {
+      w = canvas.width = canvas.parentElement.clientWidth;
+      h = canvas.height = 380;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Nodes (world hubs)
+    const nodes = [
+      { name: "US-East (Virginia)", x: 0.28, y: 0.38 },
+      { name: "US-West (Oregon)", x: 0.18, y: 0.36 },
+      { name: "EU-West (Frankfurt)", x: 0.52, y: 0.32 },
+      { name: "EU-North (Stockholm)", x: 0.55, y: 0.24 },
+      { name: "AP-East (Tokyo)", x: 0.84, y: 0.40 },
+      { name: "AP-South (Singapore)", x: 0.76, y: 0.58 },
+      { name: "SA-East (São Paulo)", x: 0.36, y: 0.72 },
+      { name: "ME-Central (Dubai)", x: 0.62, y: 0.46 }
+    ];
+
+    let attackBeams = [];
+
+    function spawnAttack() {
+      const srcIdx = Math.floor(Math.random() * nodes.length);
+      let dstIdx = Math.floor(Math.random() * nodes.length);
+      while(dstIdx === srcIdx) dstIdx = Math.floor(Math.random() * nodes.length);
+
+      const isMitigated = Math.random() > 0.15;
+      attackBeams.push({
+        src: nodes[srcIdx],
+        dst: nodes[dstIdx],
+        progress: 0,
+        speed: 0.015 + Math.random() * 0.02,
+        color: isMitigated ? '#00f0ff' : '#ff3366',
+        mitigated: isMitigated
+      });
+
+      if (!isMitigated) {
+        beep(240, 0.12, 'sawtooth');
+      }
+    }
+
+    setInterval(spawnAttack, 450);
+
+    function renderMap() {
+      ctx.fillStyle = '#04070c';
+      ctx.fillRect(0, 0, w, h);
+
+      // Grid Lines
+      ctx.strokeStyle = 'rgba(0, 240, 255, 0.04)';
+      ctx.lineWidth = 1;
+      for(let x = 0; x < w; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      }
+      for(let y = 0; y < h; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      }
+
+      // Draw Beams
+      for (let i = attackBeams.length - 1; i >= 0; i--) {
+        const b = attackBeams[i];
+        b.progress += b.speed;
+
+        const x1 = b.src.x * w;
+        const y1 = b.src.y * h;
+        const x2 = b.dst.x * w;
+        const y2 = b.dst.y * h;
+
+        const curX = x1 + (x2 - x1) * b.progress;
+        const curY = y1 + (y2 - y1) * b.progress;
+
+        // Path line
+        ctx.strokeStyle = b.color === '#00f0ff' ? 'rgba(0, 240, 255, 0.18)' : 'rgba(255, 51, 102, 0.25)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(curX, curY);
+        ctx.stroke();
+
+        // Projectile Head
+        ctx.fillStyle = b.color;
+        ctx.shadowColor = b.color;
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.arc(curX, curY, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        if (b.progress >= 1) {
+          attackBeams.splice(i, 1);
+        }
+      }
+
+      // Draw Nodes
+      nodes.forEach(n => {
+        const nx = n.x * w;
+        const ny = n.y * h;
+
+        ctx.fillStyle = 'rgba(0, 240, 255, 0.15)';
+        ctx.beginPath();
+        ctx.arc(nx, ny, 12, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#00f0ff';
+        ctx.shadowColor = '#00f0ff';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(nx, ny, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        ctx.fillStyle = 'rgba(226, 232, 240, 0.7)';
+        ctx.font = '10px Fira Code';
+        ctx.fillText(n.name, nx + 10, ny + 3);
+      });
+
+      requestAnimationFrame(renderMap);
+    }
+    renderMap();
+
+    // Log Stream Simulation
+    const terminal = document.getElementById('terminalLogs');
+    const logPool = [
+      { badge: 'crit', text: 'DDoS SYN-Flood blocked: 4.8M pps targeting Edge VIP' },
+      { badge: 'info', text: 'TLS 1.3 session re-keyed with Kyber-768 quantum proof' },
+      { badge: 'warn', text: 'Anomalous credential spray detected from AS13335 (Mitigated)' },
+      { badge: 'info', text: 'Zero-Trust mTLS token verified for user @principal_dev' },
+      { badge: 'crit', text: 'SQL Injection payload stripped on /api/v2/checkout' },
+      { badge: 'info', text: 'BGP Anycast routing converged in 1.4ms across 340 PoPs' },
+      { badge: 'warn', text: 'WAF Rule #8192 triggered: Suspicious User-Agent headers' }
+    ];
+
+    function addLog() {
+      const now = new Date().toTimeString().split(' ')[0] + '.' + Math.floor(Math.random()*900+100);
+      const sample = logPool[Math.floor(Math.random() * logPool.length)];
+      
+      const el = document.createElement('div');
+      el.className = 'log-line';
+      el.innerHTML = `
+        <span class="log-time">[${now}]</span>
+        <span class="log-badge badge-${sample.badge}">${sample.badge.toUpperCase()}</span>
+        <span>${sample.text}</span>
+      `;
+
+      terminal.insertBefore(el, terminal.firstChild);
+      if (terminal.children.length > 30) {
+        terminal.removeChild(terminal.lastChild);
+      }
+
+      // Increment threat counter
+      const tc = document.getElementById('threatCount');
+      if (tc) {
+        let val = parseInt(tc.textContent.replace(/,/g, '')) + 1;
+        tc.textContent = val.toLocaleString();
+      }
+    }
+
+    setInterval(addLog, 1400);
+
+    function clearLogs() {
+      terminal.innerHTML = '';
+      beep(400, 0.05);
+    }
+
+    function simulateAttack() {
+      beep(880, 0.1, 'sawtooth');
+      setTimeout(() => beep(440, 0.15, 'sawtooth'), 120);
+      for(let i=0; i<15; i++) {
+        setTimeout(spawnAttack, i * 60);
+      }
+    }
+
+    function triggerPurge() {
+      beep(1200, 0.2, 'sine');
+      alert("🚨 Zero-Trust Lockdown Command Dispatched across 34,180 Nodes! Ingress strictly limited to authorized hardware tokens.");
+    }
+
+    // Auto-hide return badge if inside iframe
+    if (window.self !== window.top) {
+      const b = document.querySelector('.floating-hub-badge');
+      if (b) b.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

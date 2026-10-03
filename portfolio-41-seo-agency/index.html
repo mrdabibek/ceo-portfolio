@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RankUp — SEO Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box }
+:root {
+--bg:#fbfdfb;
+--ink:#12291c;
+--mut:#5c7a67;
+--grn:#16a34a;
+--grn2:#0b6e32;
+--light:#e2f5e9;
+--line:#d7e8dc;
+--amber:#d97706;
+--red:#dc2626
+}
+body { background:var(--bg); color:var(--ink); font-family:'Plus Jakarta Sans',sans-serif }
+.wrap { max-width:1140px; margin:auto; padding:0 22px }
+/* header */
+header {
+position:sticky;
+top:0;
+z-index:60;
+background:#fff;
+border-bottom:1px solid var(--line)
+}
+.hd {
+max-width:1200px;
+margin:auto;
+display:flex;
+align-items:center;
+gap:18px;
+padding:14px 22px
+}
+.logo { font-weight:800; font-size:21px }
+.logo em { color:var(--grn); font-style:normal }
+nav { display:flex; gap:22px }
+nav a {
+color:var(--ink);
+text-decoration:none;
+font-size:13.5px;
+font-weight:600;
+opacity:.65
+}
+nav a:hover { opacity:1; color:var(--grn) }
+.hacts { margin-left:auto }
+.btn {
+padding:12px 26px;
+border-radius:12px;
+font-weight:700;
+cursor:pointer;
+font-size:14px;
+font-family:inherit;
+border:none
+}
+.btn.g { background:var(--grn); color:#fff }
+.btn.g:hover { background:var(--grn2) }
+.btn.o { background:#fff; border:2px solid var(--line); color:var(--ink) }
+.btn.o:hover { border-color:var(--grn) }
+/* hero */
+.hero {
+display:grid;
+grid-template-columns:1.05fr 1fr;
+gap:26px;
+align-items:center;
+padding:52px 0 30px
+}
+.hero h1 { font-size:clamp(34px,4.6vw,56px); line-height:1.07; font-weight:800 }
+.hero h1 .gr { color:var(--grn) }
+.hero p { color:var(--mut); margin:16px 0 22px; line-height:1.75 }
+.proof {
+display:flex;
+gap:24px;
+margin-top:24px;
+flex-wrap:wrap
+}
+.proof b { font-size:22px; display:block }
+.proof span { font-size:11.5px; color:var(--mut); letter-spacing:1px }
+/* audit card */
+.audit {
+background:#fff;
+border:2px solid var(--ink);
+border-radius:22px;
+padding:34px;
+box-shadow:8px 8px 0 var(--ink)
+}
+.audit h2 { font-size:22px }
+.audit>p { color:var(--mut); font-size:13.5px; margin:6px 0 18px }
+.audit .urlrow { display:flex; gap:10px }
+.audit input {
+flex:1;
+border:2px solid var(--line);
+border-radius:12px;
+padding:13px 16px;
+font-family:inherit;
+font-size:14px;
+min-width:0
+}
+.audit input:focus { outline:none; border-color:var(--grn) }
+.audit button { white-space:nowrap }
+#scan { margin-top:20px; display:none }
+.srow {
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:12px;
+font-size:13.5px;
+font-weight:600
+}
+.srow .bar {
+flex:1;
+height:10px;
+background:var(--line);
+border-radius:99px;
+overflow:hidden
+}
+.srow .bar i {
+display:block;
+height:100%;
+width:0;
+background:var(--grn);
+border-radius:99px;
+transition:width .3s
+}
+.scorebig {
+display:flex;
+gap:18px;
+align-items:center;
+background:var(--light);
+border-radius:14px;
+padding:18px;
+margin-top:14px
+}
+#scoreNum { font-size:52px; font-weight:800; color:var(--grn2) }
+.scorebig small { color:var(--mut); font-size:12.5px; line-height:1.6 }
+/* logos */
+.logos {
+display:flex;
+gap:26px;
+opacity:.4;
+font-weight:700;
+font-size:13px;
+letter-spacing:1px;
+padding:26px 0;
+border-top:1px solid var(--line);
+border-bottom:1px solid var(--line);
+flex-wrap:wrap;
+justify-content:center
+}
+/* sections */
+section { padding:60px 0 }
+.st h2 { font-size:clamp(28px,3.8vw,46px); font-weight:800 }
+.st h2 .gr { color:var(--grn) }
+.st p { color:var(--mut); margin:10px 0 30px }
+/* services */
+.srvs { display:grid; grid-template-columns:repeat(3,1fr); gap:16px }
+.srv {
+background:#fff;
+border:1px solid var(--line);
+border-radius:18px;
+padding:30px 26px
+}
+.srv span { font-size:34px }
+.srv h3 { font-size:18px; margin:12px 0 8px }
+.srv p { color:var(--mut); font-size:14px; line-height:1.7 }
+.srv .from {
+color:var(--grn2);
+font-weight:800;
+margin-top:12px;
+font-size:14px
+}
+/* results */
+.results {
+background:#12291c;
+color:#e6f4ea;
+border-radius:24px;
+padding:52px 44px
+}
+.results h2 { font-size:clamp(26px,3.4vw,40px); color:#fff }
+.results>p { opacity:.65; margin:10px 0 30px }
+.cases { display:grid; grid-template-columns:repeat(3,1fr); gap:16px }
+.case {
+background:#ffffff0d;
+border:1px solid #ffffff22;
+border-radius:18px;
+padding:28px 24px
+}
+.case .k { font-size:12px; letter-spacing:2px; opacity:.6 }
+.case .big {
+font-size:46px;
+font-weight:800;
+color:#4ade80;
+margin:8px 0
+}
+.case p { font-size:13.5px; opacity:.75; line-height:1.65 }
+.chart {
+margin-top:28px;
+background:#ffffff0d;
+border:1px solid #ffffff22;
+border-radius:18px;
+padding:26px
+}
+.bars {
+display:flex;
+gap:10px;
+align-items:flex-end;
+height:150px;
+margin-top:16px
+}
+.bars div {
+flex:1;
+background:linear-gradient(180deg,#4ade80,#16a34a);
+border-radius:6px 6px 0 0;
+position:relative;
+min-height:14px
+}
+.bars div.old { background:#ffffff22 }
+.bars span {
+font-size:10.5px;
+opacity:.6;
+display:block;
+text-align:center;
+margin-top:6px
+}
+/* process */
+.steps {
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:0;
+background:#fff;
+border:1px solid var(--line);
+border-radius:18px;
+overflow:hidden
+}
+.steps div { padding:28px 24px; border-left:1px solid var(--line) }
+.steps div:first-child { border:none }
+.steps b {
+background:var(--grn);
+color:#fff;
+width:34px;
+height:34px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom:12px;
+font-size:14px
+}
+.steps h3 { font-size:15.5px; margin-bottom:8px }
+.steps p { color:var(--mut); font-size:13.5px; line-height:1.7 }
+/* pricing */
+.plans { display:grid; grid-template-columns:repeat(3,1fr); gap:16px }
+.plan {
+background:#fff;
+border:2px solid var(--line);
+border-radius:20px;
+padding:34px 28px
+}
+.plan.hot { border-color:var(--grn); box-shadow:0 20px 50px rgba(22,163,74,.15) }
+.plan .tag {
+background:var(--grn);
+color:#fff;
+font-size:11px;
+font-weight:700;
+padding:5px 14px;
+border-radius:99px
+}
+.plan h3 { font-size:19px; margin:12px 0 2px }
+.plan .price { font-size:40px; font-weight:800; margin:8px 0 }
+.plan .price small { font-size:13px; color:var(--mut); font-weight:400 }
+.plan ul { list-style:none; margin:16px 0 22px }
+.plan li { padding:8px 0; font-size:13.5px; border-bottom:1px dashed var(--line) }
+.plan button { width:100% }
+/* reviews */
+.revs {
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:16px;
+margin-top:30px
+}
+.rev {
+background:#fff;
+border:1px solid var(--line);
+border-radius:16px;
+padding:26px
+}
+.rev .stars { color:var(--grn) }
+.rev p {
+font-size:14px;
+line-height:1.7;
+margin:10px 0;
+color:#2c4636
+}
+.rev b { font-size:12px; color:var(--mut) }
+/* contact */
+.contact {
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:30px;
+background:#fff;
+border:2px solid var(--ink);
+border-radius:24px;
+padding:48px 40px;
+margin-top:44px;
+box-shadow:8px 8px 0 var(--ink)
+}
+.contact h2 { font-size:clamp(26px,3.2vw,38px) }
+.contact p { color:var(--mut); margin:12px 0 20px; line-height:1.7 }
+.contact ul { list-style:none }
+.contact li { padding:9px 0; font-size:14.5px; border-bottom:1px dashed var(--line) }
+.cform input,.cform select,.cform textarea {
+width:100%;
+border:2px solid var(--line);
+border-radius:10px;
+padding:12px 16px;
+font-family:inherit;
+font-size:14px;
+margin-bottom:12px
+}
+.cform button { width:100% }
+/* faq */
+.faq { max-width:740px; margin:48px auto 0 }
+.qa {
+background:#fff;
+border:1px solid var(--line);
+border-radius:12px;
+margin-bottom:10px
+}
+.qa button {
+width:100%;
+background:none;
+border:none;
+padding:16px 20px;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
+font-weight:700;
+font-size:15px;
+text-align:left
+}
+.qa p {
+display:none;
+padding:0 20px 18px;
+color:var(--mut);
+font-size:14px;
+line-height:1.75
+}
+.qa p.open { display:block }
+/* footer */
+footer {
+padding:38px 22px;
+text-align:center;
+color:var(--mut);
+font-size:13px;
+border-top:1px solid var(--line);
+margin-top:56px
+}
+#toast {
+position:fixed;
+bottom:26px;
+left:50%;
+transform:translateX(-50%) translateY(80px);
+background:var(--ink);
+color:#fff;
+padding:13px 28px;
+border-radius:12px;
+transition:.3s;
+z-index:120;
+font-size:14px
+}
+#toast.show { transform:translateX(-50%) }
+@media(max-width:900px) { .hero,.contact { grid-template-columns:1fr }
+.srvs,.cases,.plans { grid-template-columns:1fr }
+.steps { grid-template-columns:repeat(2,1fr) }
+nav { display:none }
+}
+</style>
+</head>
+<body>
+<header>
+<div class="hd">
+<div class="logo">Rank<em>Up</em> 📈</div>
+<nav>
+<a href="#audit">Free Audit</a>
+<a href="#services">Services</a>
+<a href="#results">Results</a>
+<a href="#pricing">Pricing</a>
+</nav>
+<div class="hacts">
+<button class="btn g" onclick="scrollToId('contact')">GET PROPOSAL →</button>
+</div>
+</div>
+</header>
+<div class="wrap">
+<div class="hero">
+<div>
+<h1>We turn Google into your <span class="gr">best salesperson.</span>
+</h1>
+<p>No jargon, no 40-page PDFs. Technical fixes in week one, content that ranks in month two, and a traffic graph you'll want to screenshot.</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<button class="btn g" onclick="scrollToId('audit')">RUN FREE AUDIT ↓</button>
+<button class="btn o" onclick="scrollToId('results')">SEE RESULTS</button>
+</div>
+<div class="proof">
+<div>
+<b>320+</b>
+<span>SITES RANKED</span>
+</div>
+<div>
+<b>+412%</b>
+<span>AVG TRAFFIC LIFT</span>
+</div>
+<div>
+<b>11 yrs</b>
+<span>IN BUSINESS</span>
+</div>
+</div>
+</div>
+<div class="audit" id="audit">
+<h2>⚡ Free instant SEO audit</h2>
+<p>Enter any URL — we check speed, meta, headings &amp; mobile in seconds.</p>
+<div class="urlrow">
+<input id="au" placeholder="yoursite.com">
+<button class="btn g" onclick="runAudit()">SCAN →</button>
+</div>
+<div id="scan">
+<div class="srow">
+<span style="width:130px">⚡ Speed</span>
+<div class="bar">
+<i id="b1">
+</i>
+</div>
+<b id="v1">0</b>
+</div>
+<div class="srow">
+<span style="width:130px">🏷️ Meta &amp; titles</span>
+<div class="bar">
+<i id="b2">
+</i>
+</div>
+<b id="v2">0</b>
+</div>
+<div class="srow">
+<span style="width:130px">📱 Mobile UX</span>
+<div class="bar">
+<i id="b3">
+</i>
+</div>
+<b id="v3">0</b>
+</div>
+<div class="srow">
+<span style="width:130px">🔗 Authority</span>
+<div class="bar">
+<i id="b4">
+</i>
+</div>
+<b id="v4">0</b>
+</div>
+<div class="scorebig">
+<div id="scoreNum">0</div>
+<div>
+<b id="verdict">Scanning…</b>
+<br>
+<small id="cta">Our full audit covers 214 checkpoints — this is the 10-second version. Leave email for the full report.</small>
+</div>
+</div>
+<div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+<input id="ae" type="email" placeholder="Email for full 214-point report" style="flex:1">
+<button class="btn g" onclick="fullReport()">SEND REPORT</button>
+</div>
+</div>
+</div>
+</div>
+<div class="logos">
+<span>FINTECHLY</span>
+<span>BLOOM&CO</span>
+<span>MEDIBOOK</span>
+<span>PULSEFIT</span>
+<span>KIDDO</span>
+<span>ORBITPAY</span>
+</div>
+</div>
+<section>
+<div class="wrap">
+<div class="st">
+<h2>SEO that <span class="gr">pays for itself.</span>
+</h2>
+<p>Pick a lane or combine — every plan starts with the technical fix sprint</p>
+</div>
+<div class="srvs">
+<div class="srv">
+<span>🔧</span>
+<h3>Technical SEO</h3>
+<p>Speed, Core Web Vitals, indexation, schema. The unglamorous work that unlocks everything else.</p>
+<div class="from">from $900 one-time</div>
+</div>
+<div class="srv">
+<span>✍️</span>
+<h3>Content Engine</h3>
+<p>Keyword map + 8 articles/month written for humans first, algorithms second. You approve everything.</p>
+<div class="from">from $1,400/mo</div>
+</div>
+<div class="srv">
+<span>🔗</span>
+<h3>Digital PR &amp; Links</h3>
+<p>Real press mentions and niche edits — no PBNs, no spam, ever. Average DR 58.</p>
+<div class="from">from $1,100/mo</div>
+</div>
+<div class="srv">
+<span>📍</span>
+<h3>Local SEO</h3>
+<p>Maps pack domination: profile, reviews engine, citations. For businesses with a door.</p>
+<div class="from">from $600/mo</div>
+</div>
+<div class="srv">
+<span>🛒</span>
+<h3>E-commerce SEO</h3>
+<p>Facets, feeds and category pages that turn search into your cheapest sales channel.</p>
+<div class="from">from $1,600/mo</div>
+</div>
+<div class="srv">
+<span>📊</span>
+<h3>Analytics &amp; CRO</h3>
+<p>Dashboards you actually open, plus A/B tests that turn traffic into revenue.</p>
+<div class="from">from $800/mo</div>
+</div>
+</div>
+</div>
+</section>
+<section style="padding-top:0">
+<div class="wrap">
+<div class="results" id="results">
+<h2>Graphs our clients screenshot. 📈</h2>
+<p>Real accounts, 12-month view. Names shared on call under NDA.</p>
+<div class="cases">
+<div class="case">
+<div class="k">SAAS · B2B</div>
+<div class="big">+412%</div>
+<p>Organic signups in 9 months. Technical rebuild + 60 articles. CAC down 63%.</p>
+</div>
+<div class="case">
+<div class="k">E-COMMERCE · FASHION</div>
+<div class="big">+287%</div>
+<p>Revenue from organic in 12 months. Category pages + digital PR.</p>
+</div>
+<div class="case">
+<div class="k">LOCAL · DENTAL CHAIN</div>
+<div class="big">#1 Maps</div>
+<p>14 locations in the 3-pack within 5 months. 3.1× calls.</p>
+</div>
+</div>
+<div class="chart">
+<b style="font-size:14px">SAMPLE: ORGANIC SESSIONS, MONTH 1–8 (BEFORE → WITH US)</b>
+<div class="bars">
+<div class="old" style="height:12%">
+</div>
+<div class="old" style="height:18%">
+</div>
+<div class="old" style="height:15%">
+</div>
+<div style="height:34%">
+</div>
+<div style="height:52%">
+</div>
+<div style="height:68%">
+</div>
+<div style="height:86%">
+</div>
+<div style="height:100%">
+</div>
+</div>
+<span>FIRST 3 BARS — BEFORE · REST — WITH RANKUP</span>
+</div>
+</div>
+<div class="steps" style="margin-top:44px">
+<div>
+<b>1</b>
+<h3>Fix sprint (week 1–2)</h3>
+<p>Speed, errors, quick wins. Most clients see movement before month one ends.</p>
+</div>
+<div>
+<b>2</b>
+<h3>Map (week 3)</h3>
+<p>Keyword universe + content calendar approved by you, no surprises.</p>
+</div>
+<div>
+<b>3</b>
+<h3>Publish (ongoing)</h3>
+<p>Content + links shipped weekly. Report lands every Monday, 5 minutes to read.</p>
+</div>
+<div>
+<b>4</b>
+<h3>Compound (month 4+)</h3>
+<p>Double down on what ranks. Cut what doesn't. Growth snowballs.</p>
+</div>
+</div>
+<div class="st" style="margin-top:54px" id="pricing">
+<h2>Simple <span class="gr">pricing.</span>
+</h2>
+<p>No lock-in beyond 3 months · you own all content &amp; links · cancel with 30 days</p>
+</div>
+<div class="plans">
+<div class="plan">
+<h3>Starter</h3>
+<p style="color:var(--mut);font-size:13px">For local businesses &amp; new sites.</p>
+<div class="price">$600<small>/mo</small>
+</div>
+<ul>
+<li>✓ Technical audit + fixes</li>
+<li>✓ 4 articles / month</li>
+<li>✓ Google Business setup</li>
+<li>✓ Monthly report call</li>
+</ul>
+<button class="btn o" onclick="pick('Starter')">CHOOSE STARTER</button>
+</div>
+<div class="plan hot">
+<span class="tag">MOST POPULAR</span>
+<h3>Growth</h3>
+<p style="color:var(--mut);font-size:13px">For companies that want search as a channel.</p>
+<div class="price">$1,400<small>/mo</small>
+</div>
+<ul>
+<li>✓ Everything in Starter</li>
+<li>✓ 8 articles / month</li>
+<li>✓ 6 quality links / month</li>
+<li>✓ CRO + analytics setup</li>
+<li>✓ Slack access, weekly updates</li>
+</ul>
+<button class="btn g" onclick="pick('Growth')">CHOOSE GROWTH</button>
+</div>
+<div class="plan">
+<h3>Scale</h3>
+<p style="color:var(--mut);font-size:13px">For teams competing nationally.</p>
+<div class="price">$2,800<small>/mo</small>
+</div>
+<ul>
+<li>✓ Everything in Growth</li>
+<li>✓ 16 articles / month</li>
+<li>✓ Digital PR campaigns</li>
+<li>✓ Dedicated strategist</li>
+<li>✓ Quarterly exec workshops</li>
+</ul>
+<button class="btn o" onclick="pick('Scale')">CHOOSE SCALE</button>
+</div>
+</div>
+<div class="revs">
+<div class="rev">
+<div class="stars">★★★★★</div>
+<p>"Monday reports are 5 minutes and always honest — including the month traffic dipped. Then it tripled."</p>
+<b>— DANIEL R., SAAS CEO</b>
+</div>
+<div class="rev">
+<div class="stars">★★★★★</div>
+<p>"Organic is now 61% of our revenue. We paused ads entirely last quarter."</p>
+<b>— LOLA M., E-COMMERCE FOUNDER</b>
+</div>
+<div class="rev">
+<div class="stars">★★★★★</div>
+<p>"Three agencies failed our 14 clinics. RankUp had all of them in the Maps pack in 5 months."</p>
+<b>— DR. S. AZIMOV</b>
+</div>
+</div>
+<div class="contact" id="contact">
+<div>
+<h2>Get a proposal in 48 hours.</h2>
+<p>We audit your site first, then quote only if we can genuinely move the needle. If not, we say so — free.</p>
+<ul>
+<li>✉️ hello@rankup.agency</li>
+<li>📞 +1 (415) 555-0177</li>
+<li>⭐ 4.9 · 120 reviews on Clutch</li>
+</ul>
+</div>
+<div class="cform">
+<input id="cn" placeholder="Your name">
+<input id="ce" type="email" placeholder="Work email">
+<input id="cw" placeholder="Website URL">
+<select id="cs">
+<option>Starter — $600/mo</option>
+<option>Growth — $1,400/mo</option>
+<option>Scale — $2,800/mo</option>
+<option>Not sure yet</option>
+</select>
+<button class="btn g" onclick="send()">GET MY PROPOSAL →</button>
+</div>
+</div>
+<div class="faq">
+<h2 style="text-align:center;margin-bottom:16px">Straight answers</h2>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">How fast will I see results? <span>+</span>
+</button>
+<p>Technical wins: weeks. Rankings movement: 2–3 months. Compounding traffic: 4–6 months. Anyone promising page one in 30 days is selling something.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Do you guarantee rankings? <span>+</span>
+</button>
+<p>No — and you should run from anyone who does. We guarantee output, transparency and effort; our 94% retention rate is the real promise.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">What do you need from us? <span>+</span>
+</button>
+<p>One 60-minute kickoff, CMS access, and 30 minutes a month to approve content. We handle everything else.</p>
+</div>
+<div class="qa">
+<button onclick="this.nextElementSibling.classList.toggle('open')">Can I cancel anytime? <span>+</span>
+</button>
+<p>After the initial 3 months, yes — 30 days notice. All content, links and logins stay yours forever.</p>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<b style="color:var(--ink)">RankUp 📈</b>
+<p>White-hat SEO only · © 2026 · hello@rankup.agency</p>
+</footer>
+<div id="toast">
+</div>
+<script>
+function runAudit(){
+const u=document.getElementById('au').value.trim();if(!u)return toast('Enter a website URL first');const s=document.getElementById('scan');s.style.display='block';s.scrollIntoView({
+behavior:'smooth',block:'center'}
+); const T=[58+Math.floor(Math.random()*30),45+Math.floor(Math.random()*40),60+Math.floor(Math.random()*35),40+Math.floor(Math.random()*40)]; const B=[b1,b2,b3,b4],V=[v1,v2,v3,v4];let p=0;const iv=setInterval(()=>{
+p+=4;let done=true;T.forEach((t,i)=>{
+const c=Math.min(t,p);B[i].style.width=c+'%';V[i].textContent=c;if(c<t)done=false}
+);if(done){
+clearInterval(iv);const avg=Math.round(T.reduce((a,b)=>a+b,0)/4);let n=0;const nv=setInterval(()=>{
+n+=2;if(n>=avg){
+n=avg;clearInterval(nv)}
+scoreNum.textContent=n}
+,20);verdict.textContent=avg>=75?'Strong foundation — let\'s scale it.':avg>=50?'Decent, with clear quick wins.':'Needs work — good news: upside is huge.';cta.textContent='Full 214-point report for '+u+' is ready. Leave your email and we send it with a fix plan.'}
+}
+,60)}
+function fullReport(){
+if(!ae.value||!ae.value.includes('@'))return toast('Enter a valid email');toast('Full report sent to '+ae.value);ae.value=''}
+function pick(s){
+cs.value=s;scrollToId('contact');toast(s+' selected — get your proposal below')}
+function send(){
+if(!cn.value||!ce.value)return toast('Please add name and email');toast('Proposal on its way — within 48 hours');cn.value=ce.value=cw.value=''}
+function toast(m){
+const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2600)}
+function scrollToId(i){
+document.getElementById(i).scrollIntoView({
+behavior:'smooth'}
+)}
+</script>
+<!-- Global Portfolio Hub Floating Navigation Badge -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(12, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 21, 10, 0.95);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+
+</body>
+</html>

@@ -1315,6 +1315,27 @@ section {
 .cmp td:first-child {
   color: var(--text-dim);
 }
+/* Playground helper bits */
+.ptip {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.pchecks {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.pchecks li {
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 8px 18px;
+  font-size: 13px;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.02);
+}
 /* Hero trust row */
 .trust {
   margin-top: 26px;

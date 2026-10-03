@@ -24,4 +24,5 @@ desktop.ini
 .wrangler/
 
 bot_config.json
+*.apk
 

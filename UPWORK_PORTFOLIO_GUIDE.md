@@ -8,12 +8,12 @@ Ushbu fayldagi matnlarni to'g'ridan-to'g'ri Upwork profilingizga ko'chirib (Ctrl
 Profilingizning eng yuqori qismiga (birinchi 3-4 qatoriga) qo'ying:
 
 ```text
-🚀 Fullstack Software Architect & Lead Product Engineer | 74+ Production Builds Shipped
+🚀 Fullstack Software Architect & Lead Product Engineer | 75+ Production Builds Shipped
 
 Looking for an enterprise-level engineer who writes scalable, zero-technical-debt code?
-I have architected and deployed 74+ full-scale web platforms, SaaS ecosystems, high-frequency fintech engines, and Telegram Mini Apps.
+I have architected and deployed 75+ full-scale web platforms, SaaS ecosystems, high-frequency fintech engines, and Telegram Mini Apps.
 
-🌐 Live Interactive 3D Portfolio Hub (74+ Builds & Device Simulator):
+🌐 Live Interactive 3D Portfolio Hub (75+ Builds & Device Simulator):
 https://mrdabibek.github.io/ceo-portfolio/
 
 💎 Flagship Agency Studio ($10K Tier):
@@ -103,6 +103,18 @@ Developed a high-performance 3D endless runner game optimized for Telegram Mini 
 
 ---
 
+### 🔹 7-LOYIHA: Cluix Car Racer (AAA 3D Game & Le Mans Hypercar Showcase)
+* **Project Title:** `Cluix Car Racer — AAA Hypercar Le Mans 3D & Mobile APK`
+* **Role:** Lead Game Developer & 3D WebGL Architect
+* **Skills:** `Godot Engine`, `Three.js`, `3D WebGL`, `Game Development`, `Android APK`, `Web Audio API`
+* **Project URL:** `https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-74-cluix-racer/index.html`
+* **Overview / Description:**
+```text
+Engineered an Awwwards-tier 3D motorsport web showcase and Godot mobile game. Features real-time Three.js WebGL car configurator with 15 hypercars (BMW M3 GTR, Lamborghini Countach, McLaren W1), procedural audio synthesis engine, dynamic camera scrollytelling, and an instant APK/QR download vault.
+```
+
+---
+
 ## 3. PROPOSALS (COVER LETTER) SHABLONI (Upworkda ish yutish uchun)
 
 Mijoz ish e'lon qilganda ushbu qisqa va kuchli matndan foydalaning:
@@ -110,10 +122,11 @@ Mijoz ish e'lon qilganda ushbu qisqa va kuchli matndan foydalaning:
 ```text
 Hi! I reviewed your project requirements and can deliver this cleanly and on schedule.
 
-I have already architected and shipped over 74+ production-grade digital products with this exact architecture. You can test my live interactive builds directly in the browser:
+I have already architected and shipped over 75+ production-grade digital products with this exact architecture. You can test my live interactive builds directly in the browser:
 
-🌐 Live Interactive 3D Portfolio Hub: https://potentially-sunday-pmid-yet.trycloudflare.com
-💎 Flagship Studio: https://potentially-sunday-pmid-yet.trycloudflare.com/flagship/index.html
+🌐 Live Interactive 3D Portfolio Hub: https://mrdabibek.github.io/ceo-portfolio/
+💎 Flagship Studio: https://mrdabibek.github.io/ceo-portfolio/flagship/index.html
+🏎️ Cluix Car Racer 3D: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-74-cluix-racer/index.html
 
 I guarantee zero technical debt, modular components, and 30-day post-launch support. Let's connect and discuss your roadmap!
 ```

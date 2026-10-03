@@ -537,7 +537,7 @@ border-bottom:1px solid var(--ink)
 <body>
 <div class="tick"><b>● BREAKING</b><div class="lane"><span>Metro Line 3 reopens with 2-minute headways &nbsp;·&nbsp; Meridian Index closes at record 4,812 &nbsp;·&nbsp; Free downtown Wi-Fi goes live &nbsp;·&nbsp; Finals set: Meridian FC vs Harbor Utd — 80,000 tickets gone in 9 minutes &nbsp;·&nbsp; Metro Line 3 reopens with 2-minute headways &nbsp;·&nbsp; Meridian Index closes at record 4,812 &nbsp;·&nbsp; Free downtown Wi-Fi goes live &nbsp;·&nbsp; Finals set: Meridian FC vs Harbor Utd</span></div></div>
 <div class="mast">
-<div class="date"><span id="dleft">Friday Edition</span><span>Vol. CXII · Nº 248</span><span id="dright">$2.50 · meridian.daily</span></div>
+<div class="date"><span id="dleft">Friday Edition</span><span>Vol. CXII · Nº 248</span><a href="../index.html" class="nav-hub-pill" style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;background:rgba(20,16,8,0.08);border:1px solid rgba(20,16,8,0.3);color:var(--ink);font-size:11px;font-weight:700;text-decoration:none;" target="_top">← 80+ Projects Hub</a><span id="dright">$2.50 · meridian.daily</span></div>
 <h1 class="head">The Daily <span>Meridian</span></h1>
 <div class="sub">ALL THE NEWS THAT CROSSES THE RIVER · SINCE 1911</div>
 </div>
@@ -552,7 +552,7 @@ border-bottom:1px solid var(--ink)
 <div class="strip"><h4 class="ui">📊 MARKETS &amp; WEATHER — <span id="clock2">LIVE DESK</span></h4>
 <div class="row"><span>MDX <b>4,812.44 <span class="up">▲ +1.2%</span></b></span><span>S&P <b>6,102 <span class="up">▲ +0.4%</span></b></span><span>BTC <b>$97,410 <span class="up">▲ +2.1%</span></b></span><span>Gold <b>$2,901 <span class="dn">▼ −0.3%</span></b></span><span>Weather <b>☀ 21° · air good</b></span></div></div>
 <div class="opwrap"><h4 class="ui">✒ OPINION &amp; LETTERS</h4><div class="opinion" id="opinion"></div></div>
-<footer>© 2026 The Daily Meridian · Printed on 100% recycled pixels · <a href="../index.html" style="color:inherit">66 Projects Hub</a></footer>
+<footer>© 2026 The Daily Meridian · Printed on 100% recycled pixels · <a href="../index.html" style="color:inherit">80+ Projects Hub</a></footer>
 </div>
 <div id="reader"><div class="sheet">
 <div class="kicker ui" id="rK"></div>
@@ -601,48 +601,61 @@ function toast(m){const t=document.getElementById('toast');t.textContent=m;t.cla
 function tick(){const d=new Date();clock.textContent=d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})+' · '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
 setInterval(tick,1000);tick();render();
 </script>
+
+<!-- CEO Master Hub Badge & Live API Runtime -->
 <style>
-
-.ceo-hub-floating-badge{
-position:fixed;
-bottom:22px;
-right:22px;
-z-index:99999;
-background:rgba(12,12,20,.88);
-backdrop-filter:blur(14px);
-border:1px solid rgba(233,196,106,.4);
-color:#f4f2ea!important;
-text-decoration:none!important;
-padding:8px 16px;
-border-radius:9999px;
-font-family:Inter,system-ui,sans-serif;
-font-size:12px;
-font-weight:700;
-display:inline-flex;
-align-items:center;
-gap:8px;
-box-shadow:0 10px 30px rgba(0,0,0,.8)
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
-
-.ceo-hub-floating-badge:hover{
-transform:translateY(-2px);
-border-color:#e9c46a;
-color:#fff!important
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
 }
-
-@media(max-width:640px){
-.ceo-hub-floating-badge{
-bottom:12px;
-right:12px;
-padding:6px 12px;
-font-size:11px
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
 }
-
-}
-
 </style>
-<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
-<a href="../index.html" class="ceo-hub-floating-badge">◈ 66 Projects Hub <span style="font-size:10px;background:rgba(233,196,106,.18);border:1px solid rgba(233,196,106,.3);color:#e9c46a;padding:1px 6px;border-radius:99px">CEO·LAB</span></a>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
 <script src="../api-runtime.js"></script>
 </body>
 </html>
+
+

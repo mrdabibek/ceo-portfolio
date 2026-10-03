@@ -34,3 +34,7 @@ build/
 dist/
 *.spec
 salom.txt
+
+*.db
+*.sqlite
+*.sqlite3

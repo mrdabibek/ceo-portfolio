@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Everline Goods Ã¢â‚¬â€ Shop Admin</title>
+<title>Everline Goods — Shop Admin</title>
 <style>
 * {
   margin:0;
@@ -437,13 +437,38 @@ footer {
 }
 @media(max-width:1000px) { .cols{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.side{display:none}.look-grid{grid-template-columns:1fr 1fr}.rev-grid,.story,.values{grid-template-columns:1fr}; }
 </style>
+
+<style>
+.nav-hub-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: rgba(233, 196, 106, 0.12);
+  border: 1px solid rgba(233, 196, 106, 0.35);
+  color: #e9c46a !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none !important;
+  margin-left: 10px;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+}
+.nav-hub-pill:hover {
+  background: rgba(233, 196, 106, 0.25);
+  transform: translateY(-1px);
+}
+</style>
+
 </head>
 <body>
 <div class="top">
-<div class="logo">Everline<em>EST. 2016</em></div>
+<div class="logo">Everline<em>EST. 2016</em></div> <a href="../index.html" class="nav-hub-pill" target="_top">← 80+ Projects Hub</a>
 <div class="links"><a href="#">Storefront</a><a href="#">Orders</a><a href="#">Customers</a><a href="#">Ledger</a></div>
 <button class="btn light" style="margin-left:auto" onclick="alert('Store preview opened (demo)')">View store</button>
-<button class="btn" style="background:#4ade80;color:#0d1f14" onclick="addP()">Ã¯Â¼â€¹ Add product</button>
+<button class="btn" style="background:#4ade80;color:#0d1f14" onclick="addP()">＋ Add product</button>
 </div>
 <div class="app">
 <aside class="side">
@@ -455,25 +480,25 @@ footer {
 <div class="cat">Textiles <span>2</span></div>
 </div>
 <h4>CHANNELS</h4>
-<div class="cat">Ã¢â€”Â Online <span>$12.4k</span></div>
-<div class="cat">Ã¢â€”Â Flagship <span>$8.1k</span></div>
-<div class="cat">Ã¢â€”Â Wholesale <span>$3.9k</span></div>
-<div class="note">Ã°Å¸â€™Â¡ <b>Slow goods for fast lives.</b><br>Low stock on No. 04 Ã¢â‚¬â€ reorder by Friday to hold the autumn set.</div>
+<div class="cat">●  Online <span>$12.4k</span></div>
+<div class="cat">●  Flagship <span>$8.1k</span></div>
+<div class="cat">●  Wholesale <span>$3.9k</span></div>
+<div class="note">💡 <b>Slow goods for fast lives.</b><br>Low stock on No. 04 — reorder by Friday to hold the autumn set.</div>
 </aside>
 <div class="main">
-<span class="eyebrow">Ã°Å¸Å’Â¿ AUTUMN DROP Ã‚Â· NO. 04Ã¢â‚¬â€œ24 LIVE</span>
+<span class="eyebrow">🌐¿ AUTUMN DROP  · NO. 04—œ24 LIVE</span>
 <h1>Good evening, <em>Everline.</em></h1>
-<p class="sub">Thursday Ã‚Â· stock edits update revenue instantly Ã‚Â· nothing needs saving.</p>
+<p class="sub">Thursday  · stock edits update revenue instantly  · nothing needs saving.</p>
 <div class="stats">
-<div class="st"><small>REVENUE Ã‚Â· OCT</small><b>$<span id="rev">24,410</span></b><em>Ã¢â€“Â² +9.4% vs Sep</em></div>
-<div class="st"><small>ORDERS</small><b>486</b><em>Ã¢â€“Â² +41 this week</em></div>
-<div class="st"><small>AVG. BASKET</small><b>$50.2</b><em>Ã¢â€“Â² +$2.1</em></div>
+<div class="st"><small>REVENUE  · OCT</small><b>$<span id="rev">24,410</span></b><em>▲ +9.4% vs Sep</em></div>
+<div class="st"><small>ORDERS</small><b>486</b><em>▲ +41 this week</em></div>
+<div class="st"><small>AVG. BASKET</small><b>$50.2</b><em>▲ +$2.1</em></div>
 <div class="st"><small>LOW STOCK</small><b id="low">2</b><em style="color:var(--red)">needs reorder</em></div>
 </div>
 <div class="cols">
 <div class="card">
 <h3>Inventory</h3>
-<p>Use Ã¢Ë†â€™ / Ã¯Â¼â€¹ to adjust stock. Revenue ticks when you sell one (Ã¢Ë†â€™).</p>
+<p>Use − / ＋ to adjust stock. Revenue ticks when you sell one (−).</p>
 <div id="prods"></div>
 </div>
 <div>
@@ -490,55 +515,55 @@ footer {
 </div>
 </div>
 <div class="story">
-<div><h3>From a flea-market stall, 2016.</h3><p>Everline started with eleven candles and a borrowed table. Nine years later we pour, throw and weave everything in-house Ã¢â‚¬â€ 40 hands, zero warehouses of plastic.</p><p>Every piece is numbered. When No. 04 sells out, the formula rests a season. Scarcity is honest here.</p></div>
-<div><h3>Numbers we like.</h3><p>Ã¢Ëœâ€¦ 4.9 from 6,200 reviews Ã‚Â· 68% repeat buyers Ã‚Â· 0 paid ads since 2021. The shop grows the slow way: gifts, then weddings, then whole hotels.</p><p>Trade program outfits 120 cafÃƒÂ©s and inns. Ask about the autumn glaze.</p></div>
+<div><h3>From a flea-market stall, 2016.</h3><p>Everline started with eleven candles and a borrowed table. Nine years later we pour, throw and weave everything in-house — 40 hands, zero warehouses of plastic.</p><p>Every piece is numbered. When No. 04 sells out, the formula rests a season. Scarcity is honest here.</p></div>
+<div><h3>Numbers we like.</h3><p>★ 4.9 from 6,200 reviews  · 68% repeat buyers  · 0 paid ads since 2021. The shop grows the slow way: gifts, then weddings, then whole hotels.</p><p>Trade program outfits 120 cafés and inns. Ask about the autumn glaze.</p></div>
 </div>
 <div class="values">
-<div class="val"><div class="e">Ã°Å¸Å½Â</div><b>Gift cards</b><p>$25Ã¢â‚¬â€œ$250, emailed in minutes. Never expires, top-uppable.</p></div>
-<div class="val"><div class="e">Ã¢â€ Â©Ã¯Â¸Â</div><b>60-day returns</b><p>Burned candle? Keep it. Anything unused comes back free.</p></div>
-<div class="val"><div class="e">Ã°Å¸Å’Â±</div><b>Carbon-neutral</b><p>Every parcel offset 2Ãƒâ€”. 12,000 trees planted so far.</p></div>
+<div class="val"><div class="e">🎁 </div><b>Gift cards</b><p>$25—œ$250, emailed in minutes. Never expires, top-uppable.</p></div>
+<div class="val"><div class="e">↩️ </div><b>60-day returns</b><p>Burned candle? Keep it. Anything unused comes back free.</p></div>
+<div class="val"><div class="e">🌐±</div><b>Carbon-neutral</b><p>Every parcel offset 2×. 12,000 trees planted so far.</p></div>
 </div>
 <div class="values">
-<div class="val"><div class="e">Ã°Å¸â€¢Â¯Ã¯Â¸Â</div><b>Poured, not pumped</b><p>Soy wax, cotton wicks, 55-hour burns. No parabens, ever.</p></div>
-<div class="val"><div class="e">Ã°Å¸ÂÂº</div><b>Fired twice</b><p>Stoneware at 1,240Ã‚Â°C. Dishwasher-brave, chip-shy.</p></div>
-<div class="val"><div class="e">Ã°Å¸Â§Âµ</div><b>Woven to last</b><p>Belgian linen, garment-dyed. Gets softer every wash.</p></div>
+<div class="val"><div class="e">🕯️</div><b>Poured, not pumped</b><p>Soy wax, cotton wicks, 55-hour burns. No parabens, ever.</p></div>
+<div class="val"><div class="e">•º</div><b>Fired twice</b><p>Stoneware at 1,240 °C. Dishwasher-brave, chip-shy.</p></div>
+<div class="val"><div class="e">🧵</div><b>Woven to last</b><p>Belgian linen, garment-dyed. Gets softer every wash.</p></div>
 </div>
 <div class="revs">
-<h3>Kind words, framed Ã¢Ëœâ€¦ 4.9</h3>
+<h3>Kind words, framed ★ 4.9</h3>
 <div class="rev-grid">
-<div class="rev">Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦<br>"The cedar candle is autumn in a jar."<br><small>Ã¢â‚¬â€ The Slow Post</small></div>
-<div class="rev">Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦<br>"Mugs that survived two toddlers."<br><small>Ã¢â‚¬â€ Priya, verified buyer</small></div>
-<div class="rev">Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦<br>"Our hotel smells like Everline now."<br><small>Ã¢â‚¬â€ H. Karim, Arslan Inn</small></div>
-<div class="rev">Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦<br>"Ordered Tuesday, lit Friday. Perfect."<br><small>Ã¢â‚¬â€ D. Osei, repeat Ãƒâ€”6</small></div>
-<div class="rev">Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦<br>"The throw gets softer every wash."<br><small>Ã¢â‚¬â€ L. Fontaine, Lyon</small></div>
-<div class="rev">Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦Ã¢Ëœâ€¦<br>"Wholesale was one email. Done."<br><small>Ã¢â‚¬â€ CafÃƒÂ© Qora, stockist</small></div>
+<div class="rev">★★★★★<br>"The cedar candle is autumn in a jar."<br><small>— The Slow Post</small></div>
+<div class="rev">★★★★★<br>"Mugs that survived two toddlers."<br><small>— Priya, verified buyer</small></div>
+<div class="rev">★★★★★<br>"Our hotel smells like Everline now."<br><small>— H. Karim, Arslan Inn</small></div>
+<div class="rev">★★★★★<br>"Ordered Tuesday, lit Friday. Perfect."<br><small>— D. Osei, repeat ×6</small></div>
+<div class="rev">★★★★★<br>"The throw gets softer every wash."<br><small>— L. Fontaine, Lyon</small></div>
+<div class="rev">★★★★★<br>"Wholesale was one email. Done."<br><small>— Café Qora, stockist</small></div>
 </div>
 </div>
 <div class="wholes">
-<div><h3>Wholesale & trade Ã¢â‚¬â€ 30% off, always honest.</h3><p>120+ stockists. Net-30 terms, free display crate on first order over $500.</p></div>
+<div><h3>Wholesale & trade — 30% off, always honest.</h3><p>120+ stockists. Net-30 terms, free display crate on first order over $500.</p></div>
 <button class="btn" onclick="alert('Trade pack requested (demo)')">Request trade pack</button>
 </div>
 <div class="look">
 <h3>Autumn lookbook</h3>
 <p>Shot in the flagship on film. Everything below is in stock today.</p>
 <div class="look-grid">
-<div class="look-item"><div class="ph" style="background:#dcfce7">Ã°Å¸â€¢Â¯Ã¯Â¸Â</div><div class="tx"><b>Cedar corner</b><br><small>No. 04 + No. 07 Ã‚Â· $66 set</small></div></div>
-<div class="look-item"><div class="ph" style="background:#e0f2fe">Ã¢Ëœâ€¢</div><div class="tx"><b>Slow mornings</b><br><small>No. 11 mug Ã‚Â· $48</small></div></div>
-<div class="look-item"><div class="ph" style="background:#fef3c7">Ã°Å¸Â§Â£</div><div class="tx"><b>Reading nook</b><br><small>No. 15 throw Ã‚Â· $120</small></div></div>
-<div class="look-item"><div class="ph" style="background:#ffe4e6">Ã°Å¸ÂÂº</div><div class="tx"><b>Single stem</b><br><small>No. 18 vase Ã‚Â· $42</small></div></div>
-<div class="look-item"><div class="ph" style="background:#dcfce7">Ã°Å¸Â¥Â£</div><div class="tx"><b>Sunday table</b><br><small>No. 12 bowl Ã‚Â· $86</small></div></div>
-<div class="look-item"><div class="ph" style="background:#fef9c3">Ã°Å¸ÂÂ¯</div><div class="tx"><b>Pantry shelf</b><br><small>No. 21 set Ã‚Â· $28</small></div></div>
-<div class="look-item"><div class="ph" style="background:#f3e8ff">Ã°Å¸â€ºâ€¹Ã¯Â¸Â</div><div class="tx"><b>Cloud sofa</b><br><small>No. 24 cushion Ã‚Â· $74</small></div></div>
-<div class="look-item"><div class="ph" style="background:#ffedd5">Ã°Å¸â€¢Â¯Ã¯Â¸Â</div><div class="tx"><b>Ember trio</b><br><small>3 votives Ã‚Â· $24</small></div></div>
-<div class="look-item"><div class="ph" style="background:#dcfce7">Ã°Å¸ÂÂµ</div><div class="tx"><b>Tea pair</b><br><small>2 cups Ã‚Â· $58</small></div></div>
-<div class="look-item"><div class="ph" style="background:#e0e7ff">Ã°Å¸â€ºÂ</div><div class="tx"><b>Bath set</b><br><small>tray + candle Ã‚Â· $64</small></div></div>
-<div class="look-item"><div class="ph" style="background:#fef3c7">Ã°Å¸Â§Âº</div><div class="tx"><b>Market basket</b><br><small>woven Ã‚Â· $46</small></div></div>
-<div class="look-item"><div class="ph" style="background:#fee2e2">Ã°Å¸Å½â‚¬</div><div class="tx"><b>Gift bundle</b><br><small>wrap included Ã‚Â· $88</small></div></div>
+<div class="look-item"><div class="ph" style="background:#dcfce7">🕯️</div><div class="tx"><b>Cedar corner</b><br><small>No. 04 + No. 07  · $66 set</small></div></div>
+<div class="look-item"><div class="ph" style="background:#e0f2fe">☕</div><div class="tx"><b>Slow mornings</b><br><small>No. 11 mug  · $48</small></div></div>
+<div class="look-item"><div class="ph" style="background:#fef3c7">🧣</div><div class="tx"><b>Reading nook</b><br><small>No. 15 throw  · $120</small></div></div>
+<div class="look-item"><div class="ph" style="background:#ffe4e6">•º</div><div class="tx"><b>Single stem</b><br><small>No. 18 vase  · $42</small></div></div>
+<div class="look-item"><div class="ph" style="background:#dcfce7">🥗</div><div class="tx"><b>Sunday table</b><br><small>No. 12 bowl  · $86</small></div></div>
+<div class="look-item"><div class="ph" style="background:#fef9c3">•¯</div><div class="tx"><b>Pantry shelf</b><br><small>No. 21 set  · $28</small></div></div>
+<div class="look-item"><div class="ph" style="background:#f3e8ff">🛋️Â</div><div class="tx"><b>Cloud sofa</b><br><small>No. 24 cushion  · $74</small></div></div>
+<div class="look-item"><div class="ph" style="background:#ffedd5">🕯️</div><div class="tx"><b>Ember trio</b><br><small>3 votives  · $24</small></div></div>
+<div class="look-item"><div class="ph" style="background:#dcfce7">•µ</div><div class="tx"><b>Tea pair</b><br><small>2 cups  · $58</small></div></div>
+<div class="look-item"><div class="ph" style="background:#e0e7ff">🛍️</div><div class="tx"><b>Bath set</b><br><small>tray + candle  · $64</small></div></div>
+<div class="look-item"><div class="ph" style="background:#fef3c7">🧺</div><div class="tx"><b>Market basket</b><br><small>woven  · $46</small></div></div>
+<div class="look-item"><div class="ph" style="background:#fee2e2">🎀</div><div class="tx"><b>Gift bundle</b><br><small>wrap included  · $88</small></div></div>
 </div>
 </div>
 <div class="ship">
 <h3>Candle & clay care</h3>
-<p>Burn the first time 2+ hours so the wax melts edge to edge Ã¢â‚¬â€ no tunnels, ever. Trim wicks to 5mm. Keep stoneware out of thermal shock.</p>
+<p>Burn the first time 2+ hours so the wax melts edge to edge — no tunnels, ever. Trim wicks to 5mm. Keep stoneware out of thermal shock.</p>
 </div>
 <div class="ship">
 <h3>Shipping & returns</h3>
@@ -546,48 +571,48 @@ footer {
 <table>
 <tr><th>ZONE</th><th>TIME</th><th>COST</th><th>NOTE</th></tr>
 <tr><td>City courier</td><td>Same day</td><td>$4</td><td>Order by 14:00</td></tr>
-<tr><td>Countrywide</td><td>2Ã¢â‚¬â€œ3 days</td><td>$6</td><td>Free over $80</td></tr>
-<tr><td>Neighboring</td><td>5Ã¢â‚¬â€œ7 days</td><td>$14</td><td>Tracked</td></tr>
-<tr><td>Worldwide</td><td>10Ã¢â‚¬â€œ14 days</td><td>$24</td><td>Duties at checkout</td></tr>
+<tr><td>Countrywide</td><td>2—œ3 days</td><td>$6</td><td>Free over $80</td></tr>
+<tr><td>Neighboring</td><td>5—œ7 days</td><td>$14</td><td>Tracked</td></tr>
+<tr><td>Worldwide</td><td>10—œ14 days</td><td>$24</td><td>Duties at checkout</td></tr>
 <tr><td>Flagship pickup</td><td>2 hours</td><td>Free</td><td>Tea while you wait</td></tr>
 <tr><td>Gift wrap add-on</td><td>same as order</td><td>Free</td><td>Wax seal included</td></tr>
 <tr><td>Trade pallets</td><td>scheduled</td><td>Quoted</td><td>Net-30 for stockists</td></tr>
 </table>
 </div>
 <div class="wholes">
-<div><h3>Gift wrap Ã¢â‚¬â€ free, always.</h3><p>Kraft box, wax seal, handwritten card. Add the note at checkout.</p></div>
+<div><h3>Gift wrap — free, always.</h3><p>Kraft box, wax seal, handwritten card. Add the note at checkout.</p></div>
 <button class="btn" onclick="alert('Gift options shown (demo)')">Wrap my order</button>
 </div>
 <div class="story">
-<div><h3>Visit the flagship</h3><p>Taraqqiyot 45, Tashkent. Open daily 10:00Ã¢â‚¬â€œ21:00. Candle-pouring workshops every Saturday Ã¢â‚¬â€ book at the counter. Dogs welcome, tea obligatory.</p></div>
-<div><h3>Trade hours</h3><p>Stockists: MonÃ¢â‚¬â€œFri 9:00Ã¢â‚¬â€œ18:00, trade@everline.co. First crate ships with a free display shelf and 20 samples. Net-30 as standard, always.</p></div>
+<div><h3>Visit the flagship</h3><p>Taraqqiyot 45, Tashkent. Open daily 10:00—œ21:00. Candle-pouring workshops every Saturday — book at the counter. Dogs welcome, tea obligatory.</p></div>
+<div><h3>Trade hours</h3><p>Stockists: Mon—œFri 9:00—œ18:00, trade@everline.co. First crate ships with a free display shelf and 20 samples. Net-30 as standard, always.</p></div>
 </div>
-<footer>Everline Goods demo Ã‚Â· crafted goods, honest numbers</footer>
+<footer>Everline Goods demo  · crafted goods, honest numbers</footer>
 </div>
 </div>
 <script>
 var prods=[
-{n:"No. 04 Ã¢â‚¬â€ Cedar candle",c:"Candles",p:34,s:14,e:"Ã°Å¸â€¢Â¯Ã¯Â¸Â",bg:"#dcfce7"},
-{n:"No. 07 Ã¢â‚¬â€ Fig candle",c:"Candles",p:32,s:3,e:"Ã°Å¸â€¢Â¯Ã¯Â¸Â",bg:"#f3e8ff"},
-{n:"No. 11 Ã¢â‚¬â€ Stoneware mug",c:"Ceramics",p:48,s:22,e:"Ã¢Ëœâ€¢",bg:"#e0f2fe"},
-{n:"No. 12 Ã¢â‚¬â€ Serving bowl",c:"Ceramics",p:86,s:9,e:"Ã°Å¸Â¥Â£",bg:"#dcfce7"},
-{n:"No. 15 Ã¢â‚¬â€ Linen throw",c:"Textiles",p:120,s:6,e:"Ã°Å¸Â§Â£",bg:"#fef3c7"},
-{n:"No. 18 Ã¢â‚¬â€ Bud vase",c:"Ceramics",p:42,s:2,e:"Ã°Å¸ÂÂº",bg:"#ffe4e6"},
-{n:"No. 21 Ã¢â‚¬â€ Beeswax set",c:"Candles",p:28,s:31,e:"Ã°Å¸ÂÂ¯",bg:"#fef9c3"},
-{n:"No. 24 Ã¢â‚¬â€ Wool cushion",c:"Textiles",p:74,s:18,e:"Ã°Å¸â€ºâ€¹Ã¯Â¸Â",bg:"#f3e8ff"}
+{n:"No. 04 — Cedar candle",c:"Candles",p:34,s:14,e:"🕯️",bg:"#dcfce7"},
+{n:"No. 07 — Fig candle",c:"Candles",p:32,s:3,e:"🕯️",bg:"#f3e8ff"},
+{n:"No. 11 — Stoneware mug",c:"Ceramics",p:48,s:22,e:"☕",bg:"#e0f2fe"},
+{n:"No. 12 — Serving bowl",c:"Ceramics",p:86,s:9,e:"🥗",bg:"#dcfce7"},
+{n:"No. 15 — Linen throw",c:"Textiles",p:120,s:6,e:"🧣",bg:"#fef3c7"},
+{n:"No. 18 — Bud vase",c:"Ceramics",p:42,s:2,e:"•º",bg:"#ffe4e6"},
+{n:"No. 21 — Beeswax set",c:"Candles",p:28,s:31,e:"•¯",bg:"#fef9c3"},
+{n:"No. 24 — Wool cushion",c:"Textiles",p:74,s:18,e:"🛋️Â",bg:"#f3e8ff"}
 ];
 var orders=[
-["#8124","A. Smith Ã¢â‚¬â€ 2 Ãƒâ€” mug","$96","p","paid"],
-["#8123","J. Doe Ã¢â‚¬â€ linen throw","$120","s","shipping"],
-["#8122","K. Lee Ã¢â‚¬â€ bud vase","$42","p","paid"],
-["#8121","R. Diaz Ã¢â‚¬â€ beeswax set","$28","c","done"]
+["#8124","A. Smith — 2 × mug","$96","p","paid"],
+["#8123","J. Doe — linen throw","$120","s","shipping"],
+["#8122","K. Lee — bud vase","$42","p","paid"],
+["#8121","R. Diaz — beeswax set","$28","c","done"]
 ];
 var rev=24410,filter="All goods";
 function renderP(){
 var w=document.getElementById('prods');w.innerHTML='';
 prods.filter(function(p){return filter==="All goods"||p.c===filter;}).forEach(function(p){
 var gi=prods.indexOf(p);
-w.innerHTML+='<div class="prod"><div class="pic" style="background:'+p.bg+'">'+p.e+'</div><div><b>'+p.n+'</b><br><small>'+p.c+' Ã‚Â· $'+p.p+' Ã‚Â· <span class="'+(p.s<=3?'low':'')+'">'+(p.s<=3?'only '+p.s+' left':p.s+' in stock')+'</span></small></div><div class="stock"><button onclick="adj('+gi+',-1)">Ã¢Ë†â€™</button><b>'+p.s+'</b><button onclick="adj('+gi+',1)">Ã¯Â¼â€¹</button></div></div>';
+w.innerHTML+='<div class="prod"><div class="pic" style="background:'+p.bg+'">'+p.e+'</div><div><b>'+p.n+'</b><br><small>'+p.c+'  · $'+p.p+'  · <span class="'+(p.s<=3?'low':'')+'">'+(p.s<=3?'only '+p.s+' left':p.s+' in stock')+'</span></small></div><div class="stock"><button onclick="adj('+gi+',-1)">−</button><b>'+p.s+'</b><button onclick="adj('+gi+',1)">＋</button></div></div>';
 });
 document.getElementById('low').textContent=prods.filter(function(p){return p.s<=3;}).length;
 }
@@ -603,7 +628,7 @@ days.forEach(function(v,i){w.innerHTML+='<div class="bar"><i style="height:'+Mat
 }
 function renderO(){
 var w=document.getElementById('orders');w.innerHTML='';
-orders.forEach(function(o){w.innerHTML+='<div class="ord"><span><b>'+o[0]+'</b> Ã‚Â· '+o[1]+'</span><span class="pill '+o[3]+'">'+o[4]+'</span></div>';});
+orders.forEach(function(o){w.innerHTML+='<div class="ord"><span><b>'+o[0]+'</b>  · '+o[1]+'</span><span class="pill '+o[3]+'">'+o[4]+'</span></div>';});
 }
 document.getElementById('cats').addEventListener('click',function(e){
 var c=e.target.closest('.cat');if(!c||c.textContent.includes('$'))return;
@@ -612,14 +637,65 @@ this.querySelectorAll('.cat').forEach(function(x){x.classList.remove('on');});
 c.classList.add('on');renderP();
 });
 function addP(){
-var n=prompt('Product name:','No. 30 Ã¢â‚¬â€ New candle');if(!n)return;
-prods.unshift({n:n,c:"Candles",p:36,s:10,e:"Ã°Å¸â€¢Â¯Ã¯Â¸Â",bg:"#dcfce7"});renderP();
+var n=prompt('Product name:','No. 30 — New candle');if(!n)return;
+prods.unshift({n:n,c:"Candles",p:36,s:10,e:"🕯️",bg:"#dcfce7"});renderP();
 }
 renderP();renderB();renderO();
 </script>
-<style>.ceo-hub-floating-badge{position:fixed;bottom:22px;right:22px;z-index:99999;background:rgba(12,12,20,.88);backdrop-filter:blur(14px);border:1px solid rgba(233,196,106,.4);color:#f4f2ea!important;text-decoration:none!important;padding:8px 16px;border-radius:9999px;font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.8)}@media(max-width:640px){.ceo-hub-floating-badge{bottom:12px;right:12px;padding:6px 12px;font-size:11px}}</style>
-<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
-<a href="../index.html" class="ceo-hub-floating-badge">Ã¢â€”Ë† 66 Projects Hub</a>
+
+<!-- CEO Master Hub Badge & Live API Runtime -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" target="_top" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
 <script src="../api-runtime.js"></script>
 </body>
 </html>
+

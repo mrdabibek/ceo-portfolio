@@ -7,6 +7,9 @@
 (function() {
   'use strict';
 
+  var BASE = (typeof window !== 'undefined' && window.BASE) || 'http://localhost:8090';
+  if (typeof window !== 'undefined') window.BASE = BASE;
+
   // Do not display DevTools inside iframe simulators
   const isInIframe = window.self !== window.top;
 
@@ -28,153 +31,51 @@
     }
   };
 
-  // REST API Route Handlers
-  async function handleMockApi(url, options = {}) {
-    const method = (options.method || 'GET').toUpperCase();
-    const startTime = performance.now();
-    let status = 200;
-    let data = {};
-
-    let body = {};
-    if (options.body) {
-      try { body = typeof options.body === 'string' ? JSON.parse(options.body) : options.body; } catch(e) {}
-    }
-
-    // Router
-    if (url.includes('/api/v1/health') || url.includes('/api/health')) {
-      data = {
-        status: 'online',
-        service: 'CEO-Core-Gateway-v2',
-        environment: 'production-edge',
-        uptime_seconds: 249820,
-        memory_usage_mb: 42.8,
-        active_connections: 1840,
-        consensus_latency: '4.2ms'
-      };
-    } else if (url.includes('/api/v1/auth/login') || url.includes('/api/auth')) {
-      const email = body.email || 'ceo@portfolio.internal';
-      const token = 'jwt_' + Math.random().toString(36).substr(2) + '.' + btoa(JSON.stringify({ role: 'admin', email })) + '.sig';
-      data = {
-        status: 'authenticated',
-        token: token,
-        expires_in: 86400,
-        user: { id: 'usr_ceo_01', name: 'Chief Architect', role: 'Enterprise Administrator' }
-      };
-      DB.set('auth_token', token);
-    } else if (url.includes('/api/v1/orders') || url.includes('/api/order') || url.includes('/api/checkout')) {
-      status = 201;
-      const orderId = 'ord_' + Math.random().toString(36).substr(2, 9).toUpperCase();
-      const newOrder = {
-        id: orderId,
-        items: body.items || body.item || 'Enterprise Digital Package',
-        amount: body.amount || body.price || 4500,
-        currency: body.currency || 'USD',
-        status: 'settled',
-        timestamp: new Date().toISOString()
-      };
-      const orders = DB.get('orders', []);
-      orders.unshift(newOrder);
-      DB.set('orders', orders);
-      data = {
-        status: 'success',
-        order_id: orderId,
-        message: 'Order verified and cryptographically settled.',
-        receipt: newOrder
-      };
-    } else if (url.includes('/api/v1/leads') || url.includes('/api/contact')) {
-      status = 201;
-      const leadId = 'lead_' + Math.random().toString(36).substr(2, 7);
-      const newLead = {
-        id: leadId,
-        name: body.name || 'Anonymous Client',
-        email: body.email || 'client@enterprise.com',
-        budget: body.budget || '$10,000+',
-        message: body.message || 'Interested in contracting fullstack architecture.',
-        created_at: new Date().toISOString()
-      };
-      const leads = DB.get('leads', []);
-      leads.unshift(newLead);
-      DB.set('leads', leads);
-      data = {
-        status: 'success',
-        lead_id: leadId,
-        message: 'Inquiry routed to Executive Relations team.'
-      };
-    } else if (url.includes('/api/v1/telemetry') || url.includes('/api/stats')) {
-      data = {
-        tps: Math.floor(Math.random() * 500 + 4200),
-        p99_latency_ms: (Math.random() * 2 + 11).toFixed(1),
-        active_nodes: 74,
-        cache_hit_ratio: '99.4%',
-        zero_day_threats_mitigated: 1482
-      };
-    } else {
-      // Default fallback JSON
-      data = {
-        status: 'success',
-        route: url,
-        method: method,
-        payload_received: body,
-        timestamp: new Date().toISOString()
-      };
-    }
-
-    const duration = Math.max(1, Math.round(performance.now() - startTime));
-
-    const logEntry = {
+  // REAL backend only — mock responses removed. Every /api/ call goes to the
+  // gateway; a minimal offline stub is returned only when the network fails.
+  function logReal(method, url, status, request, response, duration) {
+    networkLogs.unshift({
       id: Math.random().toString(36).substr(2, 6),
       method,
       url,
       status,
       duration,
       timestamp: new Date().toLocaleTimeString(),
-      request: body,
-      response: data
-    };
-    networkLogs.unshift(logEntry);
+      request: request,
+      response: response
+    });
     if (networkLogs.length > 50) networkLogs.pop();
     updateDevToolsUI();
-
-    return new Response(JSON.stringify(data), {
-      status: status,
-      headers: { 'Content-Type': 'application/json', 'X-Powered-By': 'CEO-Edge-Runtime' }
-    });
   }
 
-  // Intercept Global Fetch
+  // Pass-through fetch: real responses logged, offline fallback stub on failure
   const originalFetch = window.fetch;
   window.fetch = async function(input, init = {}) {
     const url = typeof input === 'string' ? input : (input.url || '');
-    if (url.startsWith('/api/') || url.startsWith('api/') || url.includes('/api/v1/')) {
-      // Try local network first, if 404 or fails, fallback to mock API
-      try {
-        const res = await originalFetch(input, init);
-        if (res.ok) {
-          const clone = res.clone();
-          clone.json().then(data => {
-            networkLogs.unshift({
-              id: Math.random().toString(36).substr(2, 6),
-              method: (init.method || 'GET').toUpperCase(),
-              url,
-              status: res.status,
-              duration: 12,
-              timestamp: new Date().toLocaleTimeString(),
-              request: init.body || {},
-              response: data
-            });
-            updateDevToolsUI();
-          }).catch(() => {});
-          return res;
-        }
-      } catch (e) {}
-      return handleMockApi(url, init);
+    if (!url.includes('/api/')) return originalFetch(input, init);
+    const method = ((init && init.method) || 'GET').toUpperCase();
+    const t0 = performance.now();
+    try {
+      const res = await originalFetch(input, init);
+      const dur = Math.max(1, Math.round(performance.now() - t0));
+      res.clone().json().then(data => {
+        logReal(method, url, res.status, (init && init.body) || {}, data, dur);
+      }).catch(() => {});
+      return res;
+    } catch (e) {
+      const dur = Math.max(1, Math.round(performance.now() - t0));
+      const stub = { error: 'offline', message: 'Backend unreachable — offline fallback.', url };
+      logReal(method, url, 503, (init && init.body) || {}, stub, dur);
+      return new Response(JSON.stringify(stub), {
+        status: 503,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
-    return originalFetch(input, init);
   };
 
-  // Auto trigger background telemetry request on page load
+  // Ping the REAL gateway on page load
   setTimeout(() => {
-    window.fetch('/api/v1/health');
+    window.fetch(BASE + '/api');
   }, 1000);
 
   // If in iframe, do not inject UI
@@ -476,10 +377,10 @@
       <div class="tester-form">
         <label style="color:#94a3b8;font-size:11px;">Select Live Endpoint to Dispatch:</label>
         <select id="testEndpoint" style="background:#080d14;border:1px solid #1e293b;color:#fff;padding:8px;border-radius:6px;font-family:monospace;font-size:11px;">
-          <option value="/api/v1/health">GET /api/v1/health (Cluster Telemetry)</option>
-          <option value="/api/v1/orders">POST /api/v1/orders (Place Mock Order)</option>
-          <option value="/api/v1/auth/login">POST /api/v1/auth/login (Request JWT Token)</option>
-          <option value="/api/v1/telemetry">GET /api/v1/telemetry (Sub-15ms Latency)</option>
+          <option value="GET /api">GET /api (Gateway Routes)</option>
+          <option value="GET /api/projects">GET /api/projects (Portfolio Catalog)</option>
+          <option value="GET /api/ai/prompts">GET /api/ai/prompts (AI Prompts)</option>
+          <option value="POST /api/estimate">POST /api/estimate (Project Quote)</option>
         </select>
         <button class="tester-btn" onclick="executeTestApi()">⚡ Send HTTP Request</button>
         <div id="testOutputArea" style="display:none">
@@ -492,12 +393,13 @@
 
   window.executeTestApi = async function() {
     const select = document.getElementById('testEndpoint');
-    const endpoint = select.value;
-    const isPost = endpoint.includes('orders') || endpoint.includes('login');
-    const res = await window.fetch(endpoint, {
-      method: isPost ? 'POST' : 'GET',
+    const parts = select.value.split(' ');
+    const method = parts[0];
+    const endpoint = parts.slice(1).join(' ');
+    const res = await window.fetch(BASE + endpoint, {
+      method: method,
       headers: { 'Content-Type': 'application/json' },
-      body: isPost ? JSON.stringify({ item: 'Enterprise Suite License', amount: 12500 }) : null
+      body: method === 'POST' ? JSON.stringify({ scope: 5, design: 7, integrations: 3 }) : undefined
     });
     const json = await res.json();
     document.getElementById('testOutputArea').style.display = 'block';

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -551,10 +551,35 @@ footer {
   }
 }
 </style>
+
+<style>
+.nav-hub-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: rgba(233, 196, 106, 0.12);
+  border: 1px solid rgba(233, 196, 106, 0.35);
+  color: #e9c46a !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none !important;
+  margin-left: 10px;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+}
+.nav-hub-pill:hover {
+  background: rgba(233, 196, 106, 0.25);
+  transform: translateY(-1px);
+}
+</style>
+
 </head>
 <body>
 <div id="loader"><div class="fire">&#128293;</div><div class="track"><i></i></div><small>EMBER &middot; STOKING HEARTH</small></div>
-<nav><div class="nin"><b>Ember</b><a href="#chatSec">Live demo</a><a href="#feat">Powers</a><a href="#price">Pricing</a><span class="sp"></span><button class="btn" onclick="openAuth()">Get your bot</button></div></nav>
+<nav> <a href="../index.html" class="nav-hub-pill" target="_top">← 80+ Projects Hub</a><div class="nin"><b>Ember</b><a href="#chatSec">Live demo</a><a href="#feat">Powers</a><a href="#price">Pricing</a><span class="sp"></span><button class="btn" onclick="openAuth()">Get your bot</button></div></nav>
 <header class="hero">
 <div><span class="kicker">RAG &middot; VOICE &middot; 40+ BOTS SHIPPED</span><h1>Chatbots that <em>close sales</em> while you sleep.</h1><p>I&rsquo;m <b>Noah Finn</b> &mdash; concierge bots for shops, clinics &amp; agencies. The hearth on the right <b>is</b> my portfolio: ask it about pricing, integrations or booking. Voice included &mdash; tap the mic.</p><div class="ticks"><span>Telegram + WhatsApp</span><span>Answers from your docs</span><span>Voice receptionist</span><span>+38% conversion</span></div><div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap"><button class="btn fire" onclick="document.getElementById('chatSec').scrollIntoView({behavior:'smooth'})">Talk to Ember &rarr;</button><button class="btn" style="background:#fff;color:var(--ink);border:2px solid var(--ink)" onclick="openAuth()">Book free consult</button></div></div>
 <div class="shell" id="chatSec"><div class="phone">
@@ -681,9 +706,60 @@ setTimeout(()=>typeReply('Hi! I am <b>Ember</b> — ask about <b>pricing</b>, <b
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 </script>
-<style>.ceo-hub-floating-badge{position:fixed;bottom:22px;right:22px;z-index:99999;background:rgba(12,12,20,.88);backdrop-filter:blur(14px);border:1px solid rgba(233,196,106,.4);color:#f4f2ea!important;text-decoration:none!important;padding:8px 16px;border-radius:9999px;font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.8);transition:.25s}@media(max-width:640px){.ceo-hub-floating-badge{bottom:12px;right:12px;padding:6px 12px;font-size:11px}}</style>
-<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects">&#9672; 66 Projects Hub <span style="font-size:10px;background:rgba(233,196,106,.18);border:1px solid rgba(233,196,106,.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span></a>
+
+<!-- CEO Master Hub Badge & Live API Runtime -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" target="_top" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
 <script src="../api-runtime.js"></script>
 </body>
 </html>
+

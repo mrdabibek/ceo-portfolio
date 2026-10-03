@@ -411,8 +411,7 @@
 </style>
 </head>
 <body>
-<div id="loader"><div class="car">🏎️</div><div class="track"><i></i></div><small>HEATING TIRES …</small></div>
-<header class="top"><div class="nin"><span class="lamp"></span><b>HARBOR<i style="color:var(--mag)">GP</i></b><a href="#race">Race</a><a href="#tune">Tuning</a><a href="#hire">Hire</a><span class="sp"></span><span style="font-size:12px;opacity:.6">Kai T. · $34/hr</span><button class="sbtn" onclick="hire()">HIRE</button></div></header>
+<header class="top"><div class="nin"><span class="lamp"></span><b>HARBOR<i style="color:var(--mag)">GP</i></b><a href="../index.html" class="nav-hub-pill" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.35);color:#e9c46a;font-size:11px;font-weight:700;text-decoration:none;margin-left:10px;" target="_top">← 80+ Projects Hub</a><a href="#race">Race</a><a href="#tune">Tuning</a><a href="#hire">Hire</a><span class="sp"></span><span style="font-size:12px;opacity:.6">Kai T. · $34/hr</span><button class="sbtn" onclick="hire()">HIRE</button></div></header>
 <div class="hero"><div>
 <h1>NIGHT RACING with <span>real arcade physics.</span></h1>
 <p>I'm Kai — gameplay dev. Drift, grip, boost, slipstream. This Harbor GP demo runs a pseudo-3D road renderer + bicycle-ish car model in vanilla canvas. Steer with arrows, drift corners, beat your best lap.</p>
@@ -550,5 +549,59 @@ bind('bL','l');bind('bR','r');bind('bG','up');bind('bB','dn');
 race();loop();
 document.addEventListener('DOMContentLoaded',()=>document.getElementById('loader').classList.add('done'));
 </script>
+<!-- CEO Master Hub Badge & Live API Runtime -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>
+

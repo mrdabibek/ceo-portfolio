@@ -1,0 +1,63 @@
+x-base: &base
+  image: python:3.12-slim
+  working_dir: /data
+  volumes:
+    - ./data:/data
+  env_file:
+    - path: .env
+      required: false
+  restart: unless-stopped
+
+services:
+  gateway:
+    <<: *base
+    command: ["python", "-m", "http.server", "8000", "--bind", "0.0.0.0"]
+    ports: ["8000:8000"]
+  auth:
+    <<: *base
+    command: ["python", "-m", "http.server", "8001", "--bind", "0.0.0.0"]
+    ports: ["8001:8001"]
+  users:
+    <<: *base
+    command: ["python", "-m", "http.server", "8002", "--bind", "0.0.0.0"]
+    ports: ["8002:8002"]
+  portfolio:
+    <<: *base
+    command: ["python", "-m", "http.server", "8003", "--bind", "0.0.0.0"]
+    ports: ["8003:8003"]
+  orders:
+    <<: *base
+    command: ["python", "-m", "http.server", "8004", "--bind", "0.0.0.0"]
+    ports: ["8004:8004"]
+  payments:
+    <<: *base
+    command: ["python", "-m", "http.server", "8005", "--bind", "0.0.0.0"]
+    ports: ["8005:8005"]
+  notifications:
+    <<: *base
+    command: ["python", "-m", "http.server", "8006", "--bind", "0.0.0.0"]
+    ports: ["8006:8006"]
+  search:
+    <<: *base
+    command: ["python", "-m", "http.server", "8007", "--bind", "0.0.0.0"]
+    ports: ["8007:8007"]
+  files:
+    <<: *base
+    command: ["python", "-m", "http.server", "8008", "--bind", "0.0.0.0"]
+    ports: ["8008:8008"]
+  analytics:
+    <<: *base
+    command: ["python", "-m", "http.server", "8009", "--bind", "0.0.0.0"]
+    ports: ["8009:8009"]
+  chat:
+    <<: *base
+    command: ["python", "-m", "http.server", "8010", "--bind", "0.0.0.0"]
+    ports: ["8010:8010"]
+  admin:
+    <<: *base
+    command: ["python", "-m", "http.server", "8011", "--bind", "0.0.0.0"]
+    ports: ["8011:8011"]
+  webhook:
+    <<: *base
+    command: ["python", "-m", "http.server", "8012", "--bind", "0.0.0.0"]
+    ports: ["8012:8012"]

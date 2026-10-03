@@ -50,10 +50,36 @@ text-transform:uppercase
 nav{
 display:flex;
 align-items:center;
-gap:30px;
+gap:24px;
 padding:20px 26px;
 max-width:1280px;
 margin:0 auto
+}
+.logo-wrap {
+display:flex;
+align-items:center;
+gap:14px;
+}
+.nav-hub-pill {
+display:inline-flex;
+align-items:center;
+gap:6px;
+padding:5px 12px;
+border-radius:99px;
+background:rgba(140,47,27,0.08);
+border:1px solid rgba(140,47,27,0.3);
+color:var(--acc);
+font-family:Inter,sans-serif;
+font-size:11px;
+font-weight:700;
+text-decoration:none;
+letter-spacing:1px;
+text-transform:uppercase;
+transition:all 0.2s;
+}
+.nav-hub-pill:hover {
+background:rgba(140,47,27,0.18);
+transform:translateY(-1px);
 }
 .logo{
 font-family:"Playfair Display",serif;
@@ -566,7 +592,9 @@ height:440px
 <body>
 <div class="topbar">Autumn 2026 editorial — complimentary shipping over $200</div>
 <nav>
-<div class="logo">MAISON NOIR<small>PARIS · EST. 1998</small>
+<div class="logo-wrap">
+<div class="logo">MAISON NOIR<small>PARIS · EST. 1998</small></div>
+<a href="../index.html" class="nav-hub-pill">← 80+ Projects Hub</a>
 </div>
 <div class="links">
 <a href="#shop">Collection</a>
@@ -715,5 +743,58 @@ height:440px
 </div>
 <button id="toTop" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
 <script>const PRODUCTS=[{n:'Ivory Trench Coat',c:'outer',p:289,seed:'fashiondress'},{n:'Noir Slip Dress',c:'dresses',p:189,seed:'fashionlook'},{n:'Sand Double-Blazer',c:'tailoring',p:249,seed:'fashionfabric'},{n:'Champagne Silk Skirt',c:'silk',p:159,seed:'fashionstore'},{n:'Camel Wool Overcoat',c:'outer',p:329,seed:'fashionmodel'},{n:'Pearl Wrap Dress',c:'dresses',p:199,seed:'fashionatelier'},{n:'Charcoal Pinstripe Suit',c:'tailoring',p:399,seed:'fashionhero'},{n:'Rose Silk Blouse',c:'silk',p:139,seed:'fashionabout'}];let cart=[];function render(filter){const g=document.getElementById('grid');g.innerHTML='';const list=PRODUCTS.filter(p=>filter==='all'||p.c===filter);document.getElementById('resCount').textContent=list.length+' pieces';list.forEach(p=>{const d=document.createElement('div');d.className='p rv in';d.innerHTML='<div class="imgw"><img loading="lazy" src="https://picsum.photos/seed/'+p.seed+'/600/760" alt="'+p.n+'"><button class="quick" onclick="add('+PRODUCTS.indexOf(p)+')">Add to bag — $'+p.p+'</button></div><div class="cat">'+p.c+'</div><h3 class="serif">'+p.n+'</h3><div class="pr">$'+p.p+'</div>';g.appendChild(d)})}document.getElementById('filters').addEventListener('click',e=>{if(e.target.tagName!=='BUTTON')return;document.querySelectorAll('#filters button').forEach(b=>b.classList.remove('on'));e.target.classList.add('on');render(e.target.dataset.f)});function add(i){cart.push(PRODUCTS[i]);sync();toggleCart(true)}function rm(i){cart.splice(i,1);sync()}function sync(){document.getElementById('cartCount').textContent=cart.length;const b=document.getElementById('cartBody');b.innerHTML=cart.length?'':'<p style="color:var(--mut)">Your bag is empty — the collection awaits.</p>';let t=0;cart.forEach((p,i)=>{t+=p.p;const d=document.createElement('div');d.className='ci';d.innerHTML='<img src="https://picsum.photos/seed/'+p.seed+'/140/170"><div><b>'+p.n+'</b><br><small>$'+p.p+' · '+p.c+'</small></div><button onclick="rm('+i+')">×</button>';b.appendChild(d)});document.getElementById('cartTotal').textContent='$'+t}function toggleCart(o){document.getElementById('drawer').classList.toggle('open',o);document.getElementById('scrim').classList.toggle('open',o)}function openCheckout(){if(!cart.length){toggleCart(true);return}document.getElementById('coTotal').textContent=document.getElementById('cartTotal').textContent;document.getElementById('ov').classList.add('open')}function closeCheckout(){document.getElementById('ov').classList.remove('open')}function placeOrder(e){const b=e.target;b.textContent='Processing…';setTimeout(()=>{document.getElementById('ok').style.display='block';document.getElementById('coForm').style.display='none';b.style.display='none';cart=[];sync();setTimeout(()=>{closeCheckout();document.getElementById('ok').style.display='none';document.getElementById('coForm').style.display='';b.style.display='';b.textContent='Pay now →'},2200)},900)}function subscribe(e){e.preventDefault();document.getElementById('nlOk').style.display='block';e.target.style.display='none';return false}const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.rv').forEach(el=>io.observe(el));const cio=new IntersectionObserver(e=>e.forEach(x=>{if(!x.isIntersecting)return;const b=x.target,v=parseFloat(b.dataset.v);let t=0;const t2=setInterval(()=>{t+=v/30;if(t>=v){t=v;clearInterval(t2)}b.textContent=Math.round(t)},40);cio.unobserve(x.target)}),{threshold:.5});document.querySelectorAll('[data-v]').forEach(el=>cio.observe(el));render('all');addEventListener('scroll',()=>document.getElementById('toTop').style.display=scrollY>600?'block':'none');</script>
+<!-- CEO Master Hub Badge & Live API Runtime -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" target="_top" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>

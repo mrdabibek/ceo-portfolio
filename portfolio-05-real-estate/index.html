@@ -496,12 +496,37 @@ left:12px
 }
 }
 </style>
+
+<style>
+.nav-hub-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: rgba(233, 196, 106, 0.12);
+  border: 1px solid rgba(233, 196, 106, 0.35);
+  color: #e9c46a !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none !important;
+  margin-left: 10px;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+}
+.nav-hub-pill:hover {
+  background: rgba(233, 196, 106, 0.25);
+  transform: translateY(-1px);
+}
+</style>
+
 </head>
 <body>
 <nav>
 <div class="nav-in">
 <div class="logo">Haven <em>& Co.</em>
-</div>
+</div> <a href="../index.html" class="nav-hub-pill" target="_top">← 80+ Projects Hub</a>
 <div class="links">
 <a href="#listings">Listings</a>
 <a href="#district">District</a>
@@ -703,5 +728,58 @@ left:12px
 </div>
 <button id="toTop" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
 <script>const HOMES=[{t:'Riverside Family Villa',loc:'Riverside · Maple Row 12',c:'villa',p:'$850,000',bed:'4 bd · 3 ba · 240 m²',seed:'estatevilla',hot:1},{t:'Sky Penthouse, Old Town',loc:'Old Town · Tower Gate 4',c:'penthouse',p:'$1,200,000',bed:'3 bd · 3 ba · 190 m²',seed:'estatepenthouse',hot:1},{t:'Garden Brick Loft',loc:'Old Town · Kiln Yard 8',c:'loft',p:'$420,000',bed:'2 bd · 2 ba · 120 m²',seed:'estateloft',hot:0},{t:'Hillside Glass Villa',loc:'Hillside · Pine Crest 2',c:'villa',p:'$1,450,000',bed:'5 bd · 4 ba · 340 m²',seed:'estategarden',hot:0},{t:'Harbour-View Penthouse',loc:'Riverside · Quay House 9',c:'penthouse',p:'$980,000',bed:'3 bd · 2 ba · 175 m²',seed:'estateinterior',hot:0},{t:'Artist Courtyard Loft',loc:'Hillside · Studio Mews 3',c:'loft',p:'$385,000',bed:'1 bd · 1 ba · 95 m²',seed:'estatepool',hot:0}];function render(f){const g=document.getElementById('grid');g.innerHTML='';const l=HOMES.filter(h=>f==='all'||h.c===f);document.getElementById('resCount').textContent=l.length+' homes · updated today';l.forEach(h=>{const d=document.createElement('div');d.className='listing rv in';d.innerHTML='<div class="ph"><img loading="lazy" src="https://picsum.photos/seed/'+h.seed+'/600/420"><span class="tag'+(h.hot?' hot':'')+'">'+(h.hot?'Featured':'For sale')+'</span></div><div class="b"><h3>'+h.t+'</h3><div class="loc">'+h.loc+'</div><div class="spec"><span>'+h.bed.split('·')[0]+'</span><span>'+h.bed.split('·')[1]+'</span><span>'+h.bed.split('·')[2]+'</span></div><div class="pr-row"><b>'+h.p+'</b><button class="btn btn-o btn-sm" onclick="openAgent(\''+h.t+' — '+h.p+'\')">Enquire</button></div></div>';g.appendChild(d)})}document.getElementById('filters').addEventListener('click',e=>{if(e.target.tagName!=='BUTTON')return;document.querySelectorAll('#filters button').forEach(b=>b.classList.remove('on'));e.target.classList.add('on');render(e.target.dataset.f)});function searchHomes(){const t=document.getElementById('qType').value;render(t==='Any type'?'all':t.toLowerCase());document.getElementById('listings').scrollIntoView({behavior:'smooth'})}render('all');const ov=document.getElementById('ov');function openAgent(sub){document.getElementById('agSub').textContent='About: '+sub+'. We reply within one business hour.';document.getElementById('agTitle').textContent='Talk to an agent';ov.classList.add('open')}function closeAgent(){ov.classList.remove('open')}ov.addEventListener('click',e=>{if(e.target===ov)closeAgent()});function submitAgent(e){const b=e.target;b.textContent='Sending…';setTimeout(()=>{document.getElementById('agForm').style.display='none';document.getElementById('ok').style.display='block';document.getElementById('okTxt').textContent=(document.getElementById('agName').value||'Friend')+', an agent will call you back within the hour.';setTimeout(()=>{closeAgent();setTimeout(()=>{document.getElementById('agForm').style.display='';document.getElementById('ok').style.display='none';b.textContent='Request callback →'},400)},2200)},700)}const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.rv').forEach(el=>io.observe(el));const cio=new IntersectionObserver(e=>e.forEach(x=>{if(!x.isIntersecting)return;const b=x.target,v=parseFloat(b.dataset.v);let t=0;const t2=setInterval(()=>{t+=v/30;if(t>=v){t=v;clearInterval(t2)}b.textContent=Math.round(t)+(v>=100?'+':'')},35);cio.unobserve(x.target)}),{threshold:.5});document.querySelectorAll('[data-v]').forEach(el=>cio.observe(el));addEventListener('scroll',()=>document.getElementById('toTop').style.display=scrollY>600?'block':'none');</script>
+<!-- CEO Master Hub Badge & Live API Runtime -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" target="_top" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>

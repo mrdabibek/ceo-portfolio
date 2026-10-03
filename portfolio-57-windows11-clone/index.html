@@ -579,6 +579,7 @@
 <div class="dicon" style="top:118px;left:18px" ondblclick="openWin('edge')"><span class="im">🌐</span>Portfolio</div>
 <div class="dicon" style="top:218px;left:18px" ondblclick="openWin('store')"><span class="im">🛍️</span>Services</div>
 <div class="dicon" style="top:318px;left:18px" ondblclick="openWin('about')"><span class="im">👤</span>Hire Me</div>
+<a href="../index.html" class="dicon" style="top:418px;left:18px;text-decoration:none;color:#fff;" target="_top"><span class="im" style="background:#e9c46a;color:#0b0f19;">◈</span>80+ Hub</a>
 <div id="wlayer">
 <div class="win" id="w-files" style="top:70px;left:12%;width:470px"><div class="wbar"><span>📁</span><span class="t">File Explorer — Projects</span><span class="wbtns"><button onclick="minWin('files')">–</button><button onclick="closeWin('files')">✕</button></span></div><div class="wbody">
 <div class="frow" onclick="toast('ERP Suite — WPF + SQL Server')"><span class="fi">🏢</span><span><b>ERP Suite</b><br><small style="color:var(--mut)">WPF · Entity Framework · 40 screens</small></span></div>
@@ -633,7 +634,7 @@
 <button class="ticon" onclick="openWin('edge')">🌐</button>
 <button class="ticon" onclick="openWin('store')">🛍️</button>
 <button class="ticon" onclick="openWin('set')">⚙️</button>
-<div id="tray"><span class="hide">🔊</span><span class="hide">📶</span><span class="hide">🔋 87%</span><span id="clock"></span></div>
+<div id="tray"><a href="../index.html" class="nav-hub-pill" style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:99px;background:rgba(233,196,106,0.15);border:1px solid rgba(233,196,106,0.35);color:#e9c46a;font-size:11px;font-weight:700;text-decoration:none;margin-right:8px;" target="_top">← 80+ Hub</a><span class="hide">🔊</span><span class="hide">📶</span><span class="hide">🔋 87%</span><span id="clock"></span></div>
 </div>
 <div id="toast"></div>
 <div id="ctx"><div onclick="ctxAct('refresh')">↻ Refresh</div><div onclick="ctxAct('about')">👤 Hire Me</div><div onclick="ctxAct('lock')">🔒 Lock PC</div></div>
@@ -672,5 +673,59 @@ win.addEventListener('pointerdown',()=>{win.style.zIndex=++z;});
 });
 document.addEventListener('DOMContentLoaded',()=>{document.getElementById('boot').classList.add('off');});
 </script>
+<!-- CEO Master Hub Badge & Live API Runtime -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>
+

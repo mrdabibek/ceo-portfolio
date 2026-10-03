@@ -56,7 +56,7 @@ class FullstackRequestHandler(SimpleHTTPRequestHandler):
                 "version": "3.2.0-prod",
                 "runtime": f"Python {sys.version.split()[0]} Threaded Gateway",
                 "uptime_seconds": round(time.time() - START_TIME, 1),
-                "total_projects": 74,
+                "total_projects": 80,
                 "active_threads": 8,
                 "consensus_latency_ms": 3.8
             }
@@ -71,11 +71,53 @@ class FullstackRequestHandler(SimpleHTTPRequestHandler):
             payload = {
                 "tps": 4820,
                 "p99_latency_ms": 11.2,
-                "active_edge_nodes": 74,
+                "active_edge_nodes": 80,
                 "zero_day_threats_blocked": 1492,
                 "global_settlement_volume": "$148,600,000"
             }
             self.wfile.write(json.dumps(payload, indent=2).encode('utf-8'))
+            return
+
+        # 2.1 Stars Runner Tournament & Leaderboard Endpoints
+        if self.path.startswith('/tournament') or self.path.startswith('/api/v1/tournament'):
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            payload = {
+                "status": "active",
+                "tournament_id": "stars_cup_season_4",
+                "title": "Subway Stars Grand Prix 2026",
+                "prize_pool_stars": 700,
+                "entry_fee_stars": 10,
+                "participants": 4280,
+                "ends_in_hours": 14.5
+            }
+            self.wfile.write(json.dumps(payload, indent=2).encode('utf-8'))
+            return
+
+        if self.path.startswith('/leaderboard') or self.path.startswith('/api/v1/leaderboard'):
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            payload = {
+                "tournament": "stars_cup_season_4",
+                "total_players": 4280,
+                "leaderboard": [
+                    {"rank": 1, "username": "@star_champion", "score": 38450, "prize": "300 ⭐"},
+                    {"rank": 2, "username": "@dabibek", "score": 34120, "prize": "200 ⭐"},
+                    {"rank": 3, "username": "@metro_runner", "score": 29800, "prize": "100 ⭐"},
+                    {"rank": 4, "username": "@cyber_subway", "score": 24200, "prize": "50 ⭐"},
+                    {"rank": 5, "username": "@tashkent_dash", "score": 19500, "prize": "50 ⭐"}
+                ]
+            }
+            self.wfile.write(json.dumps(payload, indent=2).encode('utf-8'))
+            return
+
+        if self.path == '/favicon.ico':
+            self.send_response(200)
+            self.send_header('Content-Type', 'image/x-icon')
+            self.end_headers()
+            self.wfile.write(b'')
             return
 
         # 3. Interactive API Docs (Swagger / OpenAPI Portal)
@@ -203,6 +245,10 @@ class FullstackRequestHandler(SimpleHTTPRequestHandler):
             return 'model/gltf-binary'
         if path.endswith('.gltf'):
             return 'model/gltf+json'
+        if path.endswith('.fbx'):
+            return 'application/octet-stream'
+        if path.endswith('.obj'):
+            return 'text/plain'
         if path.endswith('.svg'):
             return 'image/svg+xml'
         if path.endswith('.json') or path.endswith('.manifest'):

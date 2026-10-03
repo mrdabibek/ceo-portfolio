@@ -1,4 +1,7 @@
 
+var BASE = (typeof window !== 'undefined' && window.BASE) || 'http://localhost:8090';
+if (typeof window !== 'undefined') window.BASE = BASE;
+
 function getLiveBaseUrl() {
   if (location.protocol.startsWith('http')) {
     return location.origin;
@@ -256,10 +259,11 @@ const WORKS = [
 
 let wf = 'all';
 const wg = document.getElementById('wgrid');
+let liveW = WORKS.slice();
 
 function renderW() {
   wg.innerHTML = '';
-  WORKS.filter(w => wf === 'all' || w[0] === wf).forEach(w => {
+  liveW.filter(w => wf === 'all' || w[0] === wf).forEach(w => {
     wg.innerHTML += `
       <div class="wcard rv on" onclick="openW('${w[1]}')">
         <div class="wimgw">
@@ -276,6 +280,25 @@ function renderW() {
   });
 }
 renderW();
+
+// REAL backend: project list via gateway, fallback to bundled WORKS when offline/empty
+fetch(BASE + '/api/projects')
+  .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+  .then(items => {
+    const arr = Array.isArray(items) ? items : items.items;
+    if (arr && arr.length) {
+      liveW = arr.map(p => [
+        String(p.cat || 'saas').toLowerCase(),
+        p.title || p.slug,
+        p.demo ? ('Live demo: ' + p.demo) : 'Live case study — open the demo.',
+        (typeof p.price === 'number') ? ('$' + p.price.toLocaleString()) : (p.price || ''),
+        p.demo || '#',
+        p.slug || 'live'
+      ]);
+      renderW();
+    }
+  })
+  .catch(() => {});
 
 document.querySelectorAll('.filters button').forEach(b => b.onclick = () => {
   playSnd('click');
@@ -381,7 +404,8 @@ function ptab(n) {
   document.querySelectorAll('.ptabs button').forEach((b, i) => b.classList.toggle('on', i === n));
 }
 
-// Project Estimator
+// Project Estimator (REAL backend: POST BASE/api/estimate, offline fallback: local calc)
+let estT = null;
 function est() {
   const a = +document.getElementById('r1').value;
   const b = +document.getElementById('r2').value;
@@ -393,11 +417,28 @@ function est() {
   document.getElementById('r3Val').textContent = c + ' APIs';
   document.getElementById('r4Val').textContent = 'Level ' + d;
 
-  const price = 2500 + a * 650 + b * 600 + c * 400 + d * 550;
-  const weeks = Math.max(2, Math.ceil(1.5 + a * 0.35 + b * 0.35 + c * 0.25 + d * 0.2));
+  const fallback = () => {
+    const price = 2500 + a * 650 + b * 600 + c * 400 + d * 550;
+    const weeks = Math.max(2, Math.ceil(1.5 + a * 0.35 + b * 0.35 + c * 0.25 + d * 0.2));
+    document.getElementById('eprice').textContent = '$' + price.toLocaleString();
+    document.getElementById('eweek').textContent = weeks + ' weeks';
+  };
 
-  document.getElementById('eprice').textContent = '$' + price.toLocaleString();
-  document.getElementById('eweek').textContent = weeks + ' weeks';
+  clearTimeout(estT);
+  estT = setTimeout(() => {
+    fetch(BASE + '/api/estimate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ scope: a, design: b, integrations: c })
+    })
+      .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+      .then(j => {
+        if (typeof j.price === 'number') document.getElementById('eprice').textContent = '$' + j.price.toLocaleString();
+        else fallback();
+        if (typeof j.weeks === 'number') document.getElementById('eweek').textContent = j.weeks + ' weeks';
+      })
+      .catch(fallback);
+  }, 250);
 }
 
 function copyScopeSummary() {
@@ -441,8 +482,15 @@ tgt.onclick = () => {
   playSnd('gold');
   hitsEl();
   if (hits >= 10) {
-    const s = ((performance.now() - t0) / 1000).toFixed(2) + 's';
+    const secs = (performance.now() - t0) / 1000;
+    const s = secs.toFixed(2) + 's';
     document.getElementById('best').textContent = s;
+    // REAL backend: persist reflex best, ignore when offline
+    fetch(BASE + '/api/scores', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ game: 'reflex', name: 'guest', value: Math.min(10000, Math.max(1, Math.round(secs * 1000))) })
+    }).catch(() => {});
     playSnd('chime');
     hits = 0;
     streak = 0;
@@ -452,24 +500,8 @@ tgt.onclick = () => {
 };
 moveT();
 
-// NOVA AI Concierge
-function quickAsk(topic) {
-  const input = document.getElementById('cin');
-  input.value = topic;
-  send();
-}
-
-function send() {
-  const cin = document.getElementById('cin');
-  const v = cin.value.trim().toLowerCase();
-  if (!v) return;
-  playSnd('click');
-
-  const chat = document.getElementById('chat');
-  chat.innerHTML += `<div class="msg me">${cin.value}</div>`;
-  cin.value = '';
-  setTimeout(() => { chat.scrollTop = 9999; }, 50);
-
+// NOVA AI Concierge (REAL backend: POST BASE/api/ai, offline fallback: keyword replies)
+function mockReply(v) {
   let r = "I build $10K-grade digital products across SaaS, mobile, games, and AI pipelines. Share your specs and I will draft a fixed-scope roadmap within 24 hours.";
   if (v.includes('price') || v.includes('tier') || v.includes('cost')) {
     r = `Pricing Tiers:
@@ -497,15 +529,45 @@ We engineer 2D/3D browser games (Three.js/Canvas) and Godot Engine commercial bu
   } else if (v.includes('hi') || v.includes('hello')) {
     r = "Greetings! What type of product are you aiming to launch? A SaaS platform, mobile application, or high-performance game?";
   }
+  return r;
+}
 
-  chat.innerHTML += `<div class="msg bot">…</div>`;
-  const b = chat.lastChild;
+function typeInto(chat, el, text) {
   let i = 0;
   const t = setInterval(() => {
-    b.textContent = r.slice(0, ++i);
+    el.textContent = text.slice(0, ++i);
     chat.scrollTop = 9999;
-    if (i >= r.length) clearInterval(t);
+    if (i >= text.length) clearInterval(t);
   }, 16);
+}
+
+function send() {
+  const cin = document.getElementById('cin');
+  const q = cin.value.trim();
+  if (!q) return;
+  playSnd('click');
+
+  const chat = document.getElementById('chat');
+  const me = document.createElement('div');
+  me.className = 'msg me';
+  me.textContent = q;
+  chat.appendChild(me);
+  cin.value = '';
+  setTimeout(() => { chat.scrollTop = 9999; }, 50);
+
+  const b = document.createElement('div');
+  b.className = 'msg bot';
+  b.textContent = '…';
+  chat.appendChild(b);
+
+  fetch(BASE + '/api/ai', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ q })
+  })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+    .then(j => typeInto(chat, b, String(j.a || j.answer || j.reply || mockReply(q.toLowerCase()))))
+    .catch(() => typeInto(chat, b, mockReply(q.toLowerCase())));
 }
 
 // Testimonials Carousel
@@ -540,7 +602,7 @@ function goContact() {
   document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
 }
 
-// Contact Form Submit
+// Contact Form Submit (REAL backend: POST BASE/api/contact, offline fallback: local success)
 function submitF(e) {
   e.preventDefault();
   const n = document.getElementById('n').value.trim();
@@ -548,9 +610,24 @@ function submitF(e) {
   const m = document.getElementById('m').value.trim();
   if (!n || !em || !m) return false;
 
-  playSnd('gold');
-  document.getElementById('cok').style.display = 'block';
-  e.target.querySelector('button').textContent = '✓ Request Dispatched — Reply in 24h';
+  const ok = () => {
+    playSnd('gold');
+    document.getElementById('cok').style.display = 'block';
+    e.target.querySelector('button').textContent = '✓ Request Dispatched — Reply in 24h';
+  };
+
+  fetch(BASE + '/api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: n, email: em, msg: m, budget: document.getElementById('b').value })
+  })
+    .then(async r => {
+      const j = await r.json().catch(() => ({}));
+      if (j.error === 'offline') { ok(); return; } // offline stub from api-runtime
+      if (r.status === 201 || r.ok || j.id) { ok(); return; }
+      alert('Contact backend: ' + (j.error || r.status));
+    })
+    .catch(() => ok());
   return false;
 }
 

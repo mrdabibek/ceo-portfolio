@@ -448,7 +448,10 @@ grid-template-columns:1fr
 <body>
 <nav>
 <div class="nav-in">
+<div style="display:flex;align-items:center;gap:14px;">
 <div class="logo">Ember <span>&</span> Oak</div>
+<a href="../index.html" class="nav-hub-pill" style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;background:rgba(201,162,75,0.1);border:1px solid rgba(201,162,75,0.3);color:var(--gold);font-family:Inter;font-size:11.5px;font-weight:700;text-decoration:none;">← 80+ Projects Hub</a>
+</div>
 <div class="links">
 <a href="#menu">Menu</a>
 <a href="#chef">Chef</a>
@@ -590,5 +593,58 @@ grid-template-columns:1fr
 </div>
 </div>
 <script>const DISHES=[{t:'Charred Burrata, smoked honey',d:'Creamy Puglian burrata, ember-roasted grapes, basil oil.',p:'$14',c:'start',tag:'Vegetarian'},{t:'Seared Scallops, saffron broth',d:'Hokkaido scallops, fennel, house saffron stock.',p:'$21',c:'start',tag:'Signature'},{t:'Oak-Fired Ribeye, bone marrow',d:'28-day aged, smoked garlic butter, watercress.',p:'$42',c:'main',tag:'Signature'},{t:'Wild Mushroom Risotto',d:'Carnaroli rice, porcini, aged parmesan, truffle oil.',p:'$26',c:'main',tag:'Vegetarian'},{t:'Slow Lamb Shoulder, harissa',d:'Eight-hour lamb, charred aubergine, pistachio.',p:'$34',c:'main',tag:'Chef\u2019s pick'},{t:'Dark Chocolate Fondant',d:'70% Valrhona, sea salt, olive-oil ice cream.',p:'$13',c:'sweet',tag:''},{t:'Pistachio Panna Cotta',d:'Sicilian pistachio, amarena cherries.',p:'$12',c:'sweet',tag:''}];function renderMenu(f){const w=document.getElementById('dishes');w.innerHTML='';DISHES.filter(d=>f==='all'||d.c===f).forEach(d=>{const e=document.createElement('div');e.className='dish';e.innerHTML='<h3>'+d.t+(d.tag?'<span>'+d.tag+'</span>':'')+'</h3><div class="pr">'+d.p+'</div><p>'+d.d+'</p>';w.appendChild(e)})}document.getElementById('menuTabs').addEventListener('click',e=>{if(e.target.tagName!=='BUTTON')return;document.querySelectorAll('#menuTabs button').forEach(b=>b.classList.remove('on'));e.target.classList.add('on');renderMenu(e.target.dataset.f)});renderMenu('all');const ov=document.getElementById('ov');function openRes(){ov.classList.add('open')}function closeRes(){ov.classList.remove('open')}ov.addEventListener('click',e=>{if(e.target===ov)closeRes()});addEventListener('keydown',e=>{if(e.key==='Escape')closeRes()});function submitRes(e){const b=e.target;const n=document.getElementById('rName').value||'Guest';b.textContent='Checking availability…';b.style.opacity='.7';setTimeout(()=>{document.getElementById('resForm').style.display='none';document.getElementById('resSub').style.display='none';document.getElementById('ok').style.display='block';document.getElementById('okTxt').textContent=n+', your table for '+document.getElementById('rGuests').value+' is held. SMS confirmation on its way.';setTimeout(()=>{closeRes();setTimeout(()=>{document.getElementById('resForm').style.display='';document.getElementById('resSub').style.display='';document.getElementById('ok').style.display='none';b.textContent='Confirm reservation →';b.style.opacity=''},400)},2400)},800)}const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.12});document.querySelectorAll('.rv').forEach(el=>io.observe(el));addEventListener('scroll',()=>document.getElementById('toTop').style.display=scrollY>600?'block':'none');</script>
+<!-- CEO Master Hub Badge & Live API Runtime -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" target="_top" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>

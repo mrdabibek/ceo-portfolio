@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Northloop Ã¢â‚¬â€ SaaS Admin Console</title>
+<title>Northloop — SaaS Admin Console</title>
 <style>
 * {
   margin:0;
@@ -229,7 +229,7 @@ body {
   overflow:hidden;
 }
 .hero-band::after {
-  content:"Ã¢â€”Ë†";
+  content:"◈";
   position:absolute;
   right:18px;
   top:6px;
@@ -583,47 +583,48 @@ tr:hover td { background:#fafbff; }
 <body>
 <div class="app">
 <aside class="side">
-<div class="brand"><div class="mark">N</div><div><b>Northloop</b><small>acme Ã‚Â· admin console</small></div></div>
+<div class="brand"><div class="mark">N</div><div><b>Northloop</b><small>acme  · admin console</small></div></div>
 <div class="nav-cap">MANAGE</div>
-<button class="mi on">Ã¢â€”Â Customers <span class="n" id="n1">8</span></button>
-<button class="mi">Ã¢â€”Å½ Subscriptions <span class="n">312</span></button>
-<button class="mi">Ã¢â€“Â¤ Invoices <span class="n">96</span></button>
-<button class="mi">Ã¢Â¬Â£ Products <span class="n">12</span></button>
+<button class="mi on">●  Customers <span class="n" id="n1">8</span></button>
+<button class="mi">◎ Subscriptions <span class="n">312</span></button>
+<button class="mi">▦ Invoices <span class="n">96</span></button>
+<button class="mi">⬣ Products <span class="n">12</span></button>
 <div class="nav-cap">WORKSPACE</div>
-<button class="mi">Ã¢â€”Â Team</button>
-<button class="mi">Ã¢â€”Â· Audit log</button>
-<button class="mi">Ã¢Å¡â„¢ Settings</button>
+<button class="mi">●  Team</button>
+<button class="mi">▷ Audit log</button>
+<button class="mi">⚙️ Settings</button>
 <div class="up">
-<b style="color:#fff">Usage Ã¢â‚¬â€ 78%</b><br>
-<span style="color:#8b91b5">312 / 400 seats Ã‚Â· resets Nov 1</span>
+<b style="color:#fff">Usage — 78%</b><br>
+<span style="color:#8b91b5">312 / 400 seats  · resets Nov 1</span>
 <div class="bar"><i></i></div>
-<button onclick="toast('Upgrade link copied')">Upgrade Ã¢â€ â€™</button>
+<button onclick="toast('Upgrade link copied')">Upgrade →</button>
 </div>
 </aside>
 <div class="main">
 <div class="top">
-<h1>Customers <span>/ 1,284 active Ã‚Â· updated just now</span></h1>
-<div class="search">Ã¢Å’â€¢ <input id="q" placeholder="Search name or emailÃ¢â‚¬Â¦"> <kbd>/</kbd></div>
+<h1>Customers <span>/ 1,284 active  · updated just now</span></h1>
+<div class="search">🔍 <input id="q" placeholder="Search name or email–¦"> <kbd>/</kbd></div>
 <button class="btn w" onclick="seedExport()">Export</button>
-<button class="btn pri" onclick="openM()">Ã¯Â¼â€¹ New customer</button>
+<button class="btn pri" onclick="openM()">＋ New customer</button>
+<a href="../index.html" class="nav-hub-pill" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:99px;background:rgba(79,70,229,0.1);border:1px solid rgba(79,70,229,0.3);color:var(--ind);font-size:12px;font-weight:700;text-decoration:none;margin-left:8px;" target="_top">← 80+ Projects Hub</a>
 </div>
 <div class="wrap">
 <div class="crumb">Home / <b>Customers</b> / Q4 cohort</div>
 <div class="hero-band">
-<div style="flex:1"><h2>Q4 expansion is compounding Ã°Å¸Å¡â‚¬</h2><p>Net revenue retention 118%. Invite the next 50 trials before seats run out Ã¢â‚¬â€ one click, no onboarding call.</p></div>
+<div style="flex:1"><h2>Q4 expansion is compounding 🚀</h2><p>Net revenue retention 118%. Invite the next 50 trials before seats run out — one click, no onboarding call.</p></div>
 <button class="btn" style="background:#fff;color:#0f1222" onclick="toast('Invite campaign started (demo)')">Invite trials</button>
 </div>
-<p style="color:var(--mut)">Full CRUD demo Ã¢â‚¬â€ create, search, filter, edit, delete. Stored in memory.</p>
+<p style="color:var(--mut)">Full CRUD demo — create, search, filter, edit, delete. Stored in memory.</p>
 <div class="kpis">
-<div class="kpi"><small>MRR</small><b>$48,210</b><em>Ã¢â€“Â² +6.2%</em></div>
-<div class="kpi"><small>Active subs</small><b>1,284</b><em>Ã¢â€“Â² +31</em></div>
-<div class="kpi"><small>Churn</small><b>1.8%</b><em>Ã¢â€“Â¼ healthy</em></div>
-<div class="kpi"><small>Trials</small><b>96</b><em>Ã¢â€“Â² +12 today</em></div>
+<div class="kpi"><small>MRR</small><b>$48,210</b><em>▲ +6.2%</em></div>
+<div class="kpi"><small>Active subs</small><b>1,284</b><em>▲ +31</em></div>
+<div class="kpi"><small>Churn</small><b>1.8%</b><em>▼ healthy</em></div>
+<div class="kpi"><small>Trials</small><b>96</b><em>▲ +12 today</em></div>
 </div>
 <div class="toolbar">
 <select id="f"><option value="">All statuses</option><option>paying</option><option>trial</option><option>canceled</option></select>
 <span style="color:var(--mut);font-size:13px" id="count"></span>
-<span style="margin-left:auto;color:var(--mut);font-size:12.5px">Press <b>C</b> new Ã‚Â· <b>E</b> export Ã‚Â· <b>Ã¢â€ â€™</b> next page</span>
+<span style="margin-left:auto;color:var(--mut);font-size:12.5px">Press <b>C</b> new  · <b>E</b> export  · <b>→</b> next page</span>
 </div>
 <div class="tbl">
 <table>
@@ -632,18 +633,18 @@ tr:hover td { background:#fafbff; }
 </table>
 </div>
 <div class="pager">
-<button onclick="page(-1)">Ã¢â€ Â Prev</button>
+<button onclick="page(-1)">← Prev</button>
 <span id="pg">Page 1 / 1</span>
-<button onclick="page(1)">Next Ã¢â€ â€™</button>
+<button onclick="page(1)">Next →</button>
 </div>
 <div class="split">
 <div class="panel2">
 <h3>Recent activity</h3>
 <p>Every create, edit and delete lands here.</p>
-<div class="act"><div class="d">Ã¯Â¼â€¹</div><div><b>Ada upgraded</b><small>Scale $149 Ã‚Â· 2h ago</small></div></div>
-<div class="act"><div class="d">Ã¢Å“Å½</div><div><b>Alan changed plan</b><small>Growth Ã¢â€ â€™ Scale Ã‚Â· 5h ago</small></div></div>
-<div class="act"><div class="d">Ã¢Ë†â€™</div><div><b>Steve canceled</b><small>exit survey: price Ã‚Â· 1d ago</small></div></div>
-<div class="act"><div class="d">Ã¢â€”Å½</div><div><b>96 trials started</b><small>highest this month Ã‚Â· 1d ago</small></div></div>
+<div class="act"><div class="d">＋</div><div><b>Ada upgraded</b><small>Scale $149  · 2h ago</small></div></div>
+<div class="act"><div class="d">✎</div><div><b>Alan changed plan</b><small>Growth → Scale  · 5h ago</small></div></div>
+<div class="act"><div class="d">−</div><div><b>Steve canceled</b><small>exit survey: price  · 1d ago</small></div></div>
+<div class="act"><div class="d">◎</div><div><b>96 trials started</b><small>highest this month  · 1d ago</small></div></div>
 </div>
 <div class="panel2">
 <h3>Keyboard shortcuts</h3>
@@ -651,32 +652,32 @@ tr:hover td { background:#fafbff; }
 <div class="keys">
 <div><span>New customer</span><kbd>C</kbd></div>
 <div><span>Focus search</span><kbd>/</kbd></div>
-<div><span>Next page</span><kbd>Ã¢â€ â€™</kbd></div>
+<div><span>Next page</span><kbd>→</kbd></div>
 <div><span>Export CSV</span><kbd>E</kbd></div>
 </div>
 </div>
 </div>
 <div class="integ2">
-<div class="ig">Ã¢Â¬Â£<b>Stripe</b><br><small>billing live</small><br><button>Manage</button></div>
-<div class="ig">Ã¢Å“â€°<b>Postmark</b><br><small>email live</small><br><button>Manage</button></div>
-<div class="ig">Ã¢â€”Â<b>Slack</b><br><small>alerts on</small><br><button>Manage</button></div>
-<div class="ig">Ã¢Â§â€°<b>API</b><br><small>v2 Ã‚Â· 99.99%</small><br><button>Docs</button></div>
+<div class="ig">⬣<b>Stripe</b><br><small>billing live</small><br><button>Manage</button></div>
+<div class="ig">✉<b>Postmark</b><br><small>email live</small><br><button>Manage</button></div>
+<div class="ig">● <b>Slack</b><br><small>alerts on</small><br><button>Manage</button></div>
+<div class="ig">⚡<b>API</b><br><small>v2  · 99.99%</small><br><button>Docs</button></div>
 </div>
 <div class="bill">
 <div>
 <h3>Current cycle</h3>
-<p>Oct 1 Ã¢â‚¬â€œ Oct 31 Ã‚Â· Growth plan</p>
-<div class="rowline"><span>Seats 312 Ãƒâ€” $49</span><b>$15,288</b></div>
+<p>Oct 1 —œ Oct 31  · Growth plan</p>
+<div class="rowline"><span>Seats 312 × $49</span><b>$15,288</b></div>
 <div class="rowline"><span>Overage API</span><b>$210</b></div>
-<div class="rowline"><span>Discount Ã¢Ë†â€™10%</span><b>Ã¢Ë†â€™$1,550</b></div>
+<div class="rowline"><span>Discount −10%</span><b>−$1,550</b></div>
 <div class="rowline"><span><b>Total due</b></span><b>$13,948</b></div>
 </div>
 <div>
 <h3>Payment method</h3>
 <p>Charged on the 1st, receipts by email.</p>
-<div class="rowline"><span>Visa Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢ 4242</span><b>default</b></div>
+<div class="rowline"><span>Visa –¢–¢–¢–¢ 4242</span><b>default</b></div>
 <div class="rowline"><span>Invoice email</span><b>billing@acme.co</b></div>
-<div class="rowline"><span>VAT ID</span><b>verified Ã¢Å“â€œ</b></div>
+<div class="rowline"><span>VAT ID</span><b>verified ✓</b></div>
 <button class="btn w" onclick="toast('Billing portal opened (demo)')">Manage billing</button>
 </div>
 <div>
@@ -684,11 +685,11 @@ tr:hover td { background:#fafbff; }
 <p>400 seats included. Overage is $0.8/seat/day, prorated.</p>
 <div class="rowline"><span>Seats used</span><b>312 / 400</b></div>
 <div class="rowline"><span>Forecast Nov</span><b>~340</b></div>
-<div class="rowline"><span>Recommend</span><b>stay Ã¢Å“â€œ</b></div>
+<div class="rowline"><span>Recommend</span><b>stay ✓</b></div>
 <button class="btn pri" onclick="toast('Seats added (demo)')">Add 50 seats</button>
 </div>
 </div>
-<div class="foot">Northloop demo Ã‚Â· nothing leaves your browser</div>
+<div class="foot">Northloop demo  · nothing leaves your browser</div>
 </div>
 </div>
 </div>
@@ -763,7 +764,7 @@ e=document.getElementById('fe').value.trim()||'no@email.co',
 p=document.getElementById('fp').value,s=document.getElementById('fs').value;
 var mrr=s==='paying'?parseInt(p.match(/\$(\d+)/)[1]):0;
 if(editI<0)rows.unshift([n,e,p,s,mrr]);else rows[editI]=[n,e,p,s,mrr];
-closeM();toast(editI<0?'Customer created Ã¢Å“â€œ':'Changes saved Ã¢Å“â€œ');render();
+closeM();toast(editI<0?'Customer created ✓':'Changes saved ✓');render();
 }
 function seedExport(){
 var s='name,email,plan,status,mrr\n'+rows.map(function(r){return r.join(',');}).join('\n');
@@ -784,9 +785,60 @@ if(e.key==='Escape')closeM();
 });
 render();
 </script>
-<style>.ceo-hub-floating-badge{position:fixed;bottom:22px;right:22px;z-index:99999;background:rgba(12,12,20,.88);backdrop-filter:blur(14px);border:1px solid rgba(233,196,106,.4);color:#f4f2ea!important;text-decoration:none!important;padding:8px 16px;border-radius:9999px;font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.8)}@media(max-width:640px){.ceo-hub-floating-badge{bottom:12px;right:12px;padding:6px 12px;font-size:11px}}</style>
-<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
-<a href="../index.html" class="ceo-hub-floating-badge">Ã¢â€”Ë† 66 Projects Hub</a>
+
+<!-- CEO Master Hub Badge & Live API Runtime -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
 <script src="../api-runtime.js"></script>
 </body>
 </html>
+

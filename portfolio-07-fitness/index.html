@@ -501,11 +501,36 @@ height:440px
 }
 }
 </style>
+
+<style>
+.nav-hub-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: rgba(233, 196, 106, 0.12);
+  border: 1px solid rgba(233, 196, 106, 0.35);
+  color: #e9c46a !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none !important;
+  margin-left: 10px;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+}
+.nav-hub-pill:hover {
+  background: rgba(233, 196, 106, 0.25);
+  transform: translateY(-1px);
+}
+</style>
+
 </head>
 <body>
 <nav>
 <div class="nav-in">
-<div class="logo">FORGE<span>.</span>
+<div class="logo">FORGE<span>.</span> <a href="../index.html" class="nav-hub-pill" target="_top">← 80+ Projects Hub</a>
 </div>
 <div class="links">
 <a href="#programs">Programs</a>
@@ -765,5 +790,58 @@ height:440px
 </div>
 <button id="toTop" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
 <script>function calcBMI(){const h=parseFloat(document.getElementById('bmiH').value)/100,w=parseFloat(document.getElementById('bmiW').value);const r=document.getElementById('bmires');if(!h||!w||h<1||h>2.5){r.textContent='ENTER VALID HEIGHT + WEIGHT.';return}const b=w/(h*h);let c=b<18.5?'UNDER — TIME TO BUILD':b<25?'SOLID BASE — ADD MUSCLE':b<30?'OVER — ENGINE ROOM 2×/WEEK':'OBESE RANGE — COACH PLAN NEEDED';r.textContent='BMI '+b.toFixed(1)+' → '+c+'.'}const dup=document.querySelector('.ticker span');dup.innerHTML+=dup.innerHTML;const ov=document.getElementById('ov');function openJoin(t){document.getElementById('jSub').textContent=t+'. NO CONTRACT, CANCEL ANYTIME.';ov.classList.add('open')}function closeJoin(){ov.classList.remove('open')}function submitJoin(e){const b=e.target;b.textContent='LOCKING IN…';setTimeout(()=>{document.getElementById('jForm').style.display='none';document.getElementById('ok').style.display='block';document.getElementById('okTxt').textContent=(document.getElementById('jName').value||'ATHLETE')+', SHOW THIS SCREEN AT THE DESK FOR YOUR $9 WEEK.';setTimeout(()=>{closeJoin();setTimeout(()=>{document.getElementById('jForm').style.display='';document.getElementById('ok').style.display='none';b.textContent='Claim spot →'},400)},2400)},700)}const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.rv').forEach(el=>io.observe(el));const cio=new IntersectionObserver(e=>e.forEach(x=>{if(!x.isIntersecting)return;const b=x.target,v=parseFloat(b.dataset.v);let t=0;const t2=setInterval(()=>{t+=v/30;if(t>=v){t=v;clearInterval(t2)}b.textContent=Math.round(t).toLocaleString()},35);cio.unobserve(x.target)}),{threshold:.5});document.querySelectorAll('[data-v]').forEach(el=>cio.observe(el));addEventListener('scroll',()=>document.getElementById('toTop').style.display=scrollY>600?'block':'none');</script>
+<!-- CEO Master Hub Badge & Live API Runtime -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" target="_top" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+<script src="../api-runtime.js"></script>
 </body>
 </html>

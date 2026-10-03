@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -626,10 +626,35 @@ footer {
 .rv.vis{opacity:1;transform:none}
 @media(max-width:920px){.hero,#play,.howto{grid-template-columns:1fr}}
 </style>
+
+<style>
+.nav-hub-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: rgba(233, 196, 106, 0.12);
+  border: 1px solid rgba(233, 196, 106, 0.35);
+  color: #e9c46a !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none !important;
+  margin-left: 10px;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+}
+.nav-hub-pill:hover {
+  background: rgba(233, 196, 106, 0.25);
+  transform: translateY(-1px);
+}
+</style>
+
 </head>
 <body>
 <div id="loader"><div class="stamp">&#128290;</div><div class="rule"><i></i></div><small>INKBOARD &middot; No. 2048</small></div>
-<nav><div class="nin"><b>Inkboard &#8470;2048</b><span class="press">PRINT / PLAY</span><a href="#play">Play</a><a href="#lead2">Ranks</a><a href="#dev">Author</a><span class="sp"></span><button class="sbtn" onclick="openAuth()">Sign in</button></div></nav>
+<nav> <a href="../index.html" class="nav-hub-pill" target="_top">← 80+ Projects Hub</a><div class="nin"><b>Inkboard &#8470;2048</b><span class="press">PRINT / PLAY</span><a href="#play">Play</a><a href="#lead2">Ranks</a><a href="#dev">Author</a><span class="sp"></span><button class="sbtn" onclick="openAuth()">Sign in</button></div></nav>
 <header class="hero">
 <div><span class="eyebrow">EDITION &#8470; 66 &middot; PRINTED FOR PLAY</span><h1>Merge numbers<br><b>like <span class="u">letterpress.</span></b></h1><p>A fully playable 2048 &mdash; arrows, WASD, swipe, undo, hints, timer, sizes 4&times;4&rarr;6&times;6. I&rsquo;m <b>Theo Lind</b>, game-feel developer. Your best score is typeset in this browser.</p><div class="hbullets"><span>Keyboard + swipe</span><span>Undo 20 moves</span><span>Live timer</span><span>Local ranks</span></div><div class="byline"><img src="https://picsum.photos/seed/theoface/100/100" alt="Theo Lind"><div>By <b>Theo Lind</b> &middot; Game developer &middot; 5.0&#9733;<br>&#9201; <span id="time">0:00</span> &middot; &#127919; goal <span id="goalLab">2048</span></div></div></div>
 <figure class="heroArt"><img src="https://picsum.photos/seed/inkhero/600/380" alt="Inkboard press"><figcaption>PLATE 01 &mdash; THE MERGE PRESS, 60 FPS</figcaption></figure>
@@ -833,9 +858,60 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 newGame();drawLead();
 </script>
-<style>.ceo-hub-floating-badge{position:fixed;bottom:22px;right:22px;z-index:99999;background:rgba(12,12,20,.88);backdrop-filter:blur(14px);border:1px solid rgba(233,196,106,.4);color:#f4f2ea!important;text-decoration:none!important;padding:8px 16px;border-radius:9999px;font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.8);transition:.25s}@media(max-width:640px){.ceo-hub-floating-badge{bottom:12px;right:12px;padding:6px 12px;font-size:11px}}</style>
-<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects">&#9672; 66 Projects Hub <span style="font-size:10px;background:rgba(233,196,106,.18);border:1px solid rgba(233,196,106,.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span></a>
+
+<!-- CEO Master Hub Badge & Live API Runtime -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" target="_top" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
 <script src="../api-runtime.js"></script>
 </body>
 </html>
+

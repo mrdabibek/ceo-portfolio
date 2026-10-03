@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Wavefront Ã¢â‚¬â€ Team Chat Workspace</title>
+<title>Wavefront — Team Chat Workspace</title>
 <style>
 * {
   margin:0;
@@ -564,86 +564,89 @@ body {
 </head>
 <body>
 <div class="top">
-<b style="white-space:nowrap">Ã¢â€°â€¹ Wavefront</b>
-<div class="pill">Ã¢Å’â€¢ <input id="q" placeholder="Search messages, files, peopleÃ¢â‚¬Â¦  ( try 'beta' )"></div>
+<div style="display:flex;align-items:center;gap:12px;">
+<b style="white-space:nowrap">≋ Wavefront</b>
+<a href="../index.html" class="nav-hub-pill" style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:99px;background:rgba(233,196,106,0.15);border:1px solid rgba(233,196,106,0.35);color:#e9c46a;font-size:11px;font-weight:700;text-decoration:none;" target="_top">← 80+ Projects Hub</a>
+</div>
+<div class="pill">🔍 <input id="q" placeholder="Search messages, files, people ( try 'beta' )"></div>
 <div class="presence"><i></i>14 online</div>
 </div>
 <div class="app">
 <aside class="side">
-<div class="ws"><div><b>Acme Studio Ã¢Å’â€ž</b><small>Ã¢â€”Â 14 online Ã‚Â· Pro trial</small></div><button onclick="alert('Message yourself Ã¢â‚¬â€ noted!')">Ã¢Å“Å½</button></div>
-<div class="sec"><h5>CHANNELS Ã¢Å’â€ž <span>+</span></h5><div id="chs"></div></div>
-<div class="sec"><h5>DIRECT MESSAGES Ã¯Â¼â€¹</h5><div id="dms"></div></div>
+<div class="ws"><div><b>Acme Studio ▾</b><small>●  14 online  · Pro trial</small></div><button onclick="alert('Message yourself — noted!')">✎</button></div>
+<div class="sec"><h5>CHANNELS ▾ <span>+</span></h5><div id="chs"></div></div>
+<div class="sec"><h5>DIRECT MESSAGES ＋</h5><div id="dms"></div></div>
 <div style="margin-top:auto"></div>
 <div class="apps">
-<h5>APPS Ã¢â€“Â¸</h5>
-<div class="approw">Ã°Å¸â€œâ€¦ GCal <button>Open</button></div>
-<div class="approw">Ã¢â€”Â Drive <button>Open</button></div>
-<div class="approw">Ã¢Â¬Â£ GitHub <button>Open</button></div>
-<div class="approw">Ã¢â€“Â¦ Notion <button>Open</button></div>
+<h5>APPS ▾</h5>
+<div class="approw">📅 GCal <button>Open</button></div>
+<div class="approw">●  Drive <button>Open</button></div>
+<div class="approw">⬣ GitHub <button>Open</button></div>
+<div class="approw">▪ Notion <button>Open</button></div>
 </div>
-<div class="huddle">Voice room: <b style="color:#fff">design-crit</b> Ã‚Â· 3 in call <button onclick="alert('Joining huddleÃ¢â‚¬Â¦ (demo)')">Join</button></div>
+<div class="huddle">Voice room: <b style="color:#fff">design-crit</b>  · 3 in call <button onclick="alert('Joining huddle–¦ (demo)')">Join</button></div>
 </aside>
 <div class="main">
 <div class="chead">
 <b id="ct"># product-launch</b>
-<small id="cd">Ã°Å¸Å¡â‚¬ ship it Ã‚Â· 128 members</small>
+<small id="cd">🚀 ship it  · 128 members</small>
 <div class="m">
-<button onclick="alert('Call started (demo)')">Ã¢â€”â€° Huddle</button>
-<button class="thread-btn" id="tb" onclick="toggleT()">Ã¢ËœÂ° Thread</button>
+<button onclick="alert('Call started (demo)')">🎙 Huddle</button>
+<button class="thread-btn" id="tb" onclick="toggleT()">☰ Thread</button>
 </div>
 </div>
-<div class="banner"><div style="font-size:26px">Ã°Å¸Å¡â‚¬</div><div><b>Launch week Ã¢â‚¬â€ build 0.9.4</b><p>3 open threads Ã‚Â· QA green Ã‚Â· ship Friday 18:00. Press T for thread.</p></div><button onclick="toggleT()">Open thread</button></div>
+<div class="banner"><div style="font-size:26px">🚀</div><div><b>Launch week — build 0.9.4</b><p>3 open threads  · QA green  · ship Friday 18:00. Press T for thread.</p></div><button onclick="toggleT()">Open thread</button></div>
 <div class="body">
 <div class="col">
 <div class="msgs" id="msgs"></div>
 <div class="flows">
-<div class="flow"><h4>Ã¢Å¡Â¡ Standup bot</h4><p>Collects updates every weekday at 9:30, posts one digest.</p><div class="steps"><span><b>1.</b> Bot DMs 3 questions</span><span><b>2.</b> Answers roll into #standup</span><span><b>3.</b> Late replies nudge once</span></div><button onclick="alert('Standup bot enabled (demo)')">Enable</button></div>
-<div class="flow"><h4>Ã°Å¸Å¡Â¢ Deploy notifier</h4><p>GitHub Ã¢â€ â€™ channel alerts with rollback button.</p><div class="steps"><span><b>1.</b> Connect repo</span><span><b>2.</b> Pick events: push, fail</span><span><b>3.</b> Mentions on-call on red</span></div><button onclick="alert('Deploy notifier enabled (demo)')">Enable</button></div>
-<div class="flow"><h4>Ã°Å¸Å½â€° Kudos jar</h4><p>/kudos @person Ã¢â‚¬â€ Friday roundup with confetti.</p><div class="steps"><span><b>1.</b> Anyone can give</span><span><b>2.</b> Leaderboard monthly</span><span><b>3.</b> Winner picks lunch</span></div><button onclick="alert('Kudos jar enabled (demo)')">Enable</button></div>
-<div class="flow"><h4>Ã°Å¸â€œâ€¹ Request queue</h4><p>Emoji-vote triage for design requests.</p><div class="steps"><span><b>1.</b> Form Ã¢â€ â€™ #design queue</span><span><b>2.</b> Ã°Å¸â€˜Â 5 votes = accepted</span><span><b>3.</b> SLA timer visible</span></div><button onclick="alert('Request queue enabled (demo)')">Enable</button></div>
+<div class="flow"><h4>⚡ Standup bot</h4><p>Collects updates every weekday at 9:30, posts one digest.</p><div class="steps"><span><b>1.</b> Bot DMs 3 questions</span><span><b>2.</b> Answers roll into #standup</span><span><b>3.</b> Late replies nudge once</span></div><button onclick="alert('Standup bot enabled (demo)')">Enable</button></div>
+<div class="flow"><h4>🚢 Deploy notifier</h4><p>GitHub → channel alerts with rollback button.</p><div class="steps"><span><b>1.</b> Connect repo</span><span><b>2.</b> Pick events: push, fail</span><span><b>3.</b> Mentions on-call on red</span></div><button onclick="alert('Deploy notifier enabled (demo)')">Enable</button></div>
+<div class="flow"><h4>🎉 Kudos jar</h4><p>/kudos @person — Friday roundup with confetti.</p><div class="steps"><span><b>1.</b> Anyone can give</span><span><b>2.</b> Leaderboard monthly</span><span><b>3.</b> Winner picks lunch</span></div><button onclick="alert('Kudos jar enabled (demo)')">Enable</button></div>
+<div class="flow"><h4>📋 Request queue</h4><p>Emoji-vote triage for design requests.</p><div class="steps"><span><b>1.</b> Form → #design queue</span><span><b>2.</b> 👋 5 votes = accepted</span><span><b>3.</b> SLA timer visible</span></div><button onclick="alert('Request queue enabled (demo)')">Enable</button></div>
 </div>
-<div class="canvas"><h4>Ã¢â€”Â Canvas Ã¢â‚¬â€ launch plan (shared doc)</h4><p>3 collaborators editing now Ã‚Â· auto-saves to the channel.</p><div class="docs"><span>Ã°Å¸â€œâ€ž Launch checklist v4</span><span>Ã°Å¸â€œâ€ž Beta feedback log</span><span>Ã°Å¸â€œâ€ž Pricing FAQ</span><span>Ã¯Â¼â€¹ New doc</span></div></div>
+<div class="canvas"><h4>●  Canvas — launch plan (shared doc)</h4><p>3 collaborators editing now  · auto-saves to the channel.</p><div class="docs"><span>👋 Launch checklist v4</span><span>👋 Beta feedback log</span><span>👋 Pricing FAQ</span><span>＋ New doc</span></div></div>
 <div class="typing" id="typing"></div>
 <div class="composer">
 <div class="cbox">
-<div class="fmt"><button><b>B</b></button><button><i>I</i></button><button>SÃŒÂ¶</button><button>Ã°Å¸â€â€”</button><button>&lt;/&gt;</button><button>Ã°Å¸ËœÅ </button><span style="margin-left:auto;color:var(--mut);font-size:12px">Ã¢ÂÅ½ enter to send Ã‚Â· :fire: works</span></div>
+<div class="fmt"><button><b>B</b></button><button><i>I</i></button><button>S̶</button><button>👋 </button><span style="margin-left:auto;color:var(--mut);font-size:12px">• enter to send  · :fire: works</span></div>
 <textarea id="in" placeholder="Message #product-launch"></textarea>
-<div class="send"><small style="color:var(--mut)">Markdown + emoji shortcodes work (:fire:)</small><button onclick="send()">Send Ã¢Å¾Â¤</button></div>
+<div class="send"><small style="color:var(--mut)">Markdown + emoji shortcodes work (:fire:)</small><button onclick="send()">Send •</button></div>
 </div>
 </div>
 </div>
 <div class="thread" id="thread">
-<div class="th"><span>Thread Ã‚Â· <span id="tc">2</span> replies</span><button style="border:0;background:transparent;cursor:pointer;font-size:16px" onclick="toggleT()">Ã¢Å“â€¢</button></div>
+<div class="th"><span>Thread  · <span id="tc">2</span> replies</span><button style="border:0;background:transparent;cursor:pointer;font-size:16px" onclick="toggleT()">•</button></div>
 <div class="tl" id="tl"></div>
-<div style="padding:12px;border-top:1px solid var(--line)"><input id="tin" placeholder="ReplyÃ¢â‚¬Â¦" style="width:100%;border:1px solid var(--line);border-radius:9px;padding:11px 13px;font-family:inherit" onkeydown="if(event.key==='Enter')treply()"></div>
+<div style="padding:12px;border-top:1px solid var(--line)"><input id="tin" placeholder="Reply–¦" style="width:100%;border:1px solid var(--line);border-radius:9px;padding:11px 13px;font-family:inherit" onkeydown="if(event.key==='Enter')treply()"></div>
 </div>
 </div>
 </div>
 <aside class="right">
-<h5>Ã°Å¸â€˜Â¥ MEMBERS Ã¢â‚¬â€ <span id="mc">5</span></h5>
+<h5>👥 MEMBERS — <span id="mc">5</span></h5>
 <div id="mems"></div>
-<h5>Ã°Å¸â€œÅ’ PINNED</h5>
-<div class="pinbox">Launch checklist v4 Ã¢â‚¬â€ <u>open doc</u><br><small style="color:var(--mut)">pinned by Ada Ã‚Â· Oct 1</small></div>
-<h5>Ã°Å¸â€œÂ FILES</h5>
-<div style="font-size:13px;display:flex;flex-direction:column;gap:7px"><span>Ã°Å¸â€œâ€ž roadmap-q4.pdf</span><span>Ã°Å¸â€“Â¼Ã¯Â¸Â hero-v2.png</span><span>Ã°Å¸â€œÅ  metrics.csv</span></div>
-<h5>Ã¢Å’Â¨Ã¯Â¸Â SHORTCUTS</h5>
+<h5>📌 PINNED</h5>
+<div class="pinbox">Launch checklist v4 — <u>open doc</u><br><small style="color:var(--mut)">pinned by Ada  · Oct 1</small></div>
+<h5>📄 FILES</h5>
+<div style="font-size:13px;display:flex;flex-direction:column;gap:7px"><span>👋 roadmap-q4.pdf</span><span>👋 hero-v2.png</span><span>👋  metrics.csv</span></div>
+<h5>⌨️ SHORTCUTS</h5>
 <div class="krow"><span>Bold</span><b>Ctrl+B</b></div>
 <div class="krow"><span>Code</span><b>Ctrl+Shift+C</b></div>
 <div class="krow"><span>Emoji</span><b>Win+.</b></div>
 <div class="krow"><span>Thread</span><b>T</b></div>
 <div class="krow"><span>Search</span><b>Ctrl+K</b></div>
-<h5>Ã°Å¸â€Å’ INTEGRATIONS</h5>
-<div style="font-size:13px;display:flex;flex-direction:column;gap:7px"><span>Ã°Å¸â€œâ€¦ Calendar Ã¢â‚¬â€ synced</span><span>Ã¢Â¬Â£ GitHub Ã¢â‚¬â€ 3 PRs</span><span>Ã¢â€”Â Drive Ã¢â‚¬â€ 18 files</span><span>Ã¢â€”Å½ Figma Ã¢â‚¬â€ 2 libs</span></div>
-<h5>Ã°Å¸Å½Â¯ CHANNEL GOALS</h5>
-<div class="goal">Ship 0.9.4 by Fri<div class="gbar"><i></i></div><small style="color:var(--mut)">71% Ã‚Â· 5 of 7 tasks</small></div>
+<h5>👋 INTEGRATIONS</h5>
+<div style="font-size:13px;display:flex;flex-direction:column;gap:7px"><span>📅 Calendar — synced</span><span>⬣ GitHub — 3 PRs</span><span>●  Drive — 18 files</span><span>◎ Figma — 2 libs</span></div>
+<h5>🎯 CHANNEL GOALS</h5>
+<div class="goal">Ship 0.9.4 by Fri<div class="gbar"><i></i></div><small style="color:var(--mut)">71%  · 5 of 7 tasks</small></div>
 </aside>
 </div>
 <script>
 var chans=[
-{n:"product-launch",d:"Ã°Å¸Å¡â‚¬ ship it Ã‚Â· 128 members"},
-{n:"design-crit",d:"Ã°Å¸Å½Â¨ tuesdays 11:00 Ã‚Â· 34 members"},
-{n:"random",d:"Ã°Å¸Å’Â® literally anything Ã‚Â· 200 members"},
-{n:"hiring",d:"Ã°Å¸â€â€™ private Ã‚Â· 6 members"}
+{n:"product-launch",d:"🚀 ship it  · 128 members"},
+{n:"design-crit",d:"🎨 tuesdays 11:00  · 34 members"},
+{n:"random",d:"🌐® literally anything  · 200 members"},
+{n:"hiring",d:"👋 private  · 6 members"}
 ];
 var dms=[
 {n:"Ada Lovelace",c:"#0ea5e9",on:1},
@@ -652,10 +655,10 @@ var dms=[
 {n:"Dev Bot",c:"#16a34a",on:1}
 ];
 var msgs=[
-{u:"Ada Lovelace",c:"#0ea5e9",t:"9:41 AM",x:"Morning! Beta build <b>0.9.4</b> is on staging. Changelog in the thread Ã°Å¸â€˜â€¡",r:[["Ã°Å¸Å½â€°",4,true],["Ã°Å¸â€Â¥",2,false]]},
-{u:"Timur Kim",c:"#2563eb",t:"9:52 AM",x:"QA passed on payments. One flaky test in checkout Ã¢â‚¬â€ rerunning now.",r:[["Ã°Å¸â€˜Â",3,false]]},
-{u:"Sara Lee",c:"#db2777",t:"10:05 AM",x:"New hero mock is up :fire: Ã¢â‚¬â€ feedback by EOD please?",r:[["Ã¢ÂÂ¤Ã¯Â¸Â",5,true]]},
-{u:"Dev Bot",c:"#16a34a",t:"10:06 AM",x:"Ã¢Å“â€¦ Deploy <b>#4821</b> succeeded in 3m 12s Ã‚Â· 14 files changed.",r:[]}
+{u:"Ada Lovelace",c:"#0ea5e9",t:"9:41 AM",x:"Morning! Beta build <b>0.9.4</b> is on staging. Changelog in the thread 👋
+{u:"Timur Kim",c:"#2563eb",t:"9:52 AM",x:"QA passed on payments. One flaky test in checkout — rerunning now.",r:[["👋
+{u:"Sara Lee",c:"#db2777",t:"10:05 AM",x:"New hero mock is up :fire: — feedback by EOD please?",r:[["•¯Â¸Â",5,true]]},
+{u:"Dev Bot",c:"#16a34a",t:"10:06 AM",x:"✅ Deploy <b>#4821</b> succeeded in 3m 12s  · 14 files changed.",r:[]}
 ];
 var thread=[
 {u:"Ada Lovelace",c:"#0ea5e9",t:"9:44 AM",x:"Changelog: faster search, fixed emoji picker."},
@@ -679,14 +682,14 @@ m.innerHTML+='<div class="member"><span class="face" style="background:'+d.c+'">
 });
 document.getElementById('mc').textContent=dms.length+1;
 }
-function emo(s){return s.replace(/:fire:/g,'Ã°Å¸â€Â¥');}
+function emo(s){return s.replace(/:fire:/g,'🔍¥');}
 function renderM(){
-var w=document.getElementById('msgs');w.innerHTML='<div class="day">Today Ã‚Â· October 2</div>';
+var w=document.getElementById('msgs');w.innerHTML='<div class="day">Today  · October 2</div>';
 msgs.filter(function(m){return !q||(m.u+m.x).toLowerCase().includes(q);}).forEach(function(m,mi){
 var rs=m.r.map(function(r,ri){
 return '<button class="'+(r[2]?'me':'')+'" onclick="react('+mi+','+ri+')">'+r[0]+' '+r[1]+'</button>';
 }).join('');
-w.innerHTML+='<div class="msg"><div class="face" style="background:'+m.c+'">'+m.u[0]+'</div><div style="flex:1"><b>'+m.u+'</b><time>'+m.t+'</time><p>'+emo(m.x)+'</p><div class="react">'+rs+'<button onclick="addR('+mi+')" style="color:var(--mut)">Ã¯Â¼â€¹</button></div></div></div>';
+w.innerHTML+='<div class="msg"><div class="face" style="background:'+m.c+'">'+m.u[0]+'</div><div style="flex:1"><b>'+m.u+'</b><time>'+m.t+'</time><p>'+emo(m.x)+'</p><div class="react">'+rs+'<button onclick="addR('+mi+')" style="color:var(--mut)">＋</button></div></div></div>';
 });
 w.scrollTop=w.scrollHeight;
 }
@@ -701,15 +704,15 @@ function send(){
 var v=document.getElementById('in').value.trim();if(!v)return;
 msgs.push({u:"You",c:"#0f1c2e",t:new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}),x:v.replace(/</g,'&lt;'),r:[]});
 document.getElementById('in').value='';renderM();
-var t=document.getElementById('typing');t.textContent='Dev Bot is typingÃ¢â‚¬Â¦';
-setTimeout(function(){t.textContent='';msgs.push({u:"Dev Bot",c:"#16a34a",t:"now",x:"Noted Ã¢Å“â€œ Ã¢â‚¬â€ logged to the sprint doc.",r:[]});renderM();},1200);
+var t=document.getElementById('typing');t.textContent='Dev Bot is typing–¦';
+setTimeout(function(){t.textContent='';msgs.push({u:"Dev Bot",c:"#16a34a",t:"now",x:"Noted ✓ — logged to the sprint doc.",r:[]});renderM();},1200);
 }
 function treply(){
 var v=document.getElementById('tin').value.trim();if(!v)return;
 thread.push({u:"You",c:"#0f1c2e",t:"now",x:v});document.getElementById('tin').value='';renderT();
 }
 function react(mi,ri){msgs[mi].r[ri][1]+=msgs[mi].r[ri][2]?-1:1;msgs[mi].r[ri][2]=!msgs[mi].r[ri][2];renderM();}
-function addR(mi){msgs[mi].r.push(["Ã¢ÂÂ¤Ã¯Â¸Â",1,true]);renderM();}
+function addR(mi){msgs[mi].r.push(["•¯Â¸Â",1,true]);renderM();}
 function toggleT(){document.getElementById('thread').classList.toggle('show');document.getElementById('tb').classList.toggle('on');}
 document.getElementById('in').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
 document.getElementById('q').addEventListener('input',function(e){q=e.target.value.toLowerCase();renderM();});
@@ -727,9 +730,60 @@ if(e.key==='t'||e.key==='T')toggleT();
 });
 renderCh();renderDm();renderM();renderT();
 </script>
-<style>.ceo-hub-floating-badge{position:fixed;bottom:22px;right:22px;z-index:99999;background:rgba(12,12,20,.88);backdrop-filter:blur(14px);border:1px solid rgba(233,196,106,.4);color:#f4f2ea!important;text-decoration:none!important;padding:8px 16px;border-radius:9999px;font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.8)}@media(max-width:640px){.ceo-hub-floating-badge{bottom:12px;right:12px;padding:6px 12px;font-size:11px}}</style>
-<script>if(window.self!==window.top){document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector('.ceo-hub-floating-badge');if(b)b.style.display='none';});}</script>
-<a href="../index.html" class="ceo-hub-floating-badge">Ã¢â€”Ë† 66 Projects Hub</a>
+
+<!-- CEO Master Hub Badge & Live API Runtime -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
 <script src="../api-runtime.js"></script>
 </body>
 </html>
+

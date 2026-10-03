@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="../api-runtime.js"></script>
     <style>
       :root {
         --bg1: #091927;
@@ -320,7 +319,7 @@
     <a href="../index.html" class="ceo-hub-badge" style="position:fixed; top:16px; left:18px; z-index:9999; display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:9999px; background:rgba(9,25,39,0.85); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.18); color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:700; text-decoration:none; box-shadow:0 8px 32px rgba(0,0,0,0.36); transition:all 0.25s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 36px rgba(105,239,255,0.3)';this.style.borderColor='rgba(105,239,255,0.5)';" onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 32px rgba(0,0,0,0.36)';this.style.borderColor='rgba(255,255,255,0.18)';">
       <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#69efff; box-shadow:0 0 10px #69efff;"></span>
       <span>← CEO Hub</span>
-      <span style="background:rgba(255,255,255,0.12); padding:2px 7px; border-radius:6px; font-size:10px; color:#cbd5e1;">76 Builds</span>
+      <span style="background:rgba(255,255,255,0.12); padding:2px 7px; border-radius:6px; font-size:10px; color:#cbd5e1;">80+ Builds</span>
     </a>
 
     <div id="game-root">
@@ -1102,5 +1101,60 @@
 
       new Game();
     </script>
-  </body>
+  <!-- CEO Master Hub Badge & Live API Runtime -->
+<style>
+.ceo-hub-floating-badge {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 99999;
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  color: #f4f2ea !important;
+  text-decoration: none !important;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ceo-hub-floating-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 27, 40, 0.98);
+  border-color: #e9c46a;
+  color: #fff !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
+}
+@media (max-width: 640px) {
+  .ceo-hub-floating-badge {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+</style>
+<script>
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.querySelector('.ceo-hub-floating-badge');
+    if (b) b.style.display = 'none';
+  });
+}
+</script>
+<a href="../index.html" class="ceo-hub-floating-badge" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
+  <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
+</a>
+<script src="../api-runtime.js"></script>
+</body>
 </html>
+
+

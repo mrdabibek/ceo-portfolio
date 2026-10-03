@@ -599,12 +599,37 @@ row-gap:10px
 }
 }
 </style>
+
+<style>
+.nav-hub-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: rgba(233, 196, 106, 0.12);
+  border: 1px solid rgba(233, 196, 106, 0.35);
+  color: #e9c46a !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none !important;
+  margin-left: 10px;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+}
+.nav-hub-pill:hover {
+  background: rgba(233, 196, 106, 0.25);
+  transform: translateY(-1px);
+}
+</style>
+
 </head>
 <body>
 <div id="preloader"><div class="pl">VOLT<span>LINE</span></div><div class="bar"><i></i></div><small>LOADING STAGE…</small></div>
 <div class="strip">WORLD TOUR 2026 — NEW ALBUM "STATIC BLOOD" OUT NOW &nbsp;///&nbsp; <span>●</span> TICKETS ON SALE &nbsp;///&nbsp; WORLD TOUR 2026</div>
 <nav>
-<div class="logo">VOLT<em>LINE</em></div>
+<div class="logo">VOLT<em>LINE</em></div> <a href="../index.html" class="nav-hub-pill" target="_top">← 80+ Projects Hub</a>
 <div class="nlinks" id="nlinks">
 <a href="#tour">TOUR</a><a href="#music">MUSIC</a><a href="#band">BAND</a><a href="#video">VIDEO</a><a href="#merch">MERCH</a>
 </div>
@@ -754,34 +779,37 @@ const io=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.cla
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
 <!-- Global Portfolio Hub Floating Navigation Badge -->
+
+<!-- CEO Master Hub Badge & Live API Runtime -->
 <style>
 .ceo-hub-floating-badge {
   position: fixed;
   bottom: 22px;
   right: 22px;
   z-index: 99999;
-  background: rgba(12, 12, 20, 0.88);
+  background: rgba(10, 14, 23, 0.92);
   backdrop-filter: blur(14px);
-  border: 1px solid rgba(233, 196, 106, 0.4);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(233, 196, 106, 0.45);
   color: #f4f2ea !important;
   text-decoration: none !important;
   padding: 8px 16px;
   border-radius: 9999px;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 12px;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(233, 196, 106, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .ceo-hub-floating-badge:hover {
   transform: translateY(-2px);
-  background: rgba(26, 21, 10, 0.95);
+  background: rgba(22, 27, 40, 0.98);
   border-color: #e9c46a;
   color: #fff !important;
-  box-shadow: 0 14px 40px rgba(233, 196, 106, 0.25);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(233, 196, 106, 0.35);
 }
 @media (max-width: 640px) {
   .ceo-hub-floating-badge {
@@ -800,11 +828,10 @@ if (window.self !== window.top) {
   });
 }
 </script>
-<a href="../index.html" class="ceo-hub-floating-badge" title="View all 66 production projects by CEO & Lead Architect">
-  <span style="color:#e9c46a;font-size:14px">◈</span> 66 Projects Hub
+<a href="../index.html" class="ceo-hub-floating-badge" target="_top" title="View all 80+ production builds by CEO & Lead Architect">
+  <span style="color:#e9c46a;font-size:14px">◈</span> 80+ Projects Hub
   <span style="font-size:10px;background:rgba(233,196,106,0.18);border:1px solid rgba(233,196,106,0.3);color:#e9c46a;padding:1px 6px;border-radius:99px;">CEO·LAB</span>
 </a>
-
-  <script src="../api-runtime.js"></script>
+<script src="../api-runtime.js"></script>
 </body>
 </html>

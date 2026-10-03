@@ -1258,6 +1258,66 @@ section {
   border-radius: 99px;
   background: rgba(233, 196, 106, 0.06);
 }
+/* Contact meta (response SLA) */
+.cmeta2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+}
+.cmeta2 div {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.cmeta2 b {
+  font-family: var(--font-display);
+  color: var(--gold);
+  font-size: 18px;
+  display: block;
+}
+.cmeta2 small {
+  color: var(--text-dim);
+  font-size: 12px;
+}
+/* Pricing fine print */
+.pnote {
+  max-width: 760px;
+  margin: 26px auto 0;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+/* Hero trust row */
+.trust {
+  margin-top: 26px;
+}
+.trust small {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+}
+.trust-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.trust-row span {
+  border: 1px solid var(--border);
+  padding: 7px 16px;
+  border-radius: 99px;
+  font-size: 13px;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.03);
+}
+.trust-note {
+  display: block;
+  margin-top: 10px;
+  color: var(--gold) !important;
+}
 #cform input, #cform select, #cform textarea {
   width: 100%;
   padding: 15px 18px;

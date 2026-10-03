@@ -1298,6 +1298,19 @@ footer {
   font-size: 13px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
+.flinks {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.flinks a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13px;
+}
+.flinks a:hover { color: var(--gold); }
 
 /* FAQ (details-driven, no JS required) */
 .faq {
@@ -1335,6 +1348,24 @@ footer {
 }
 .faq details[open] summary::before { transform: rotate(45deg); }
 .faq p { color: var(--text-dim); margin-top: 10px; font-size: 14.5px; }
+
+/* Guarantees band (process section) */
+.guarantees {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 28px;
+}
+.guarantees span {
+  border: 1px solid var(--border-gold);
+  background: rgba(233, 196, 106, 0.07);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 9px 18px;
+  border-radius: 99px;
+}
 
 /* Animations */
 .rv {

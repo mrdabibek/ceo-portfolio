@@ -12,6 +12,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "NOVA Studio",
+  "description": "Flagship digital product engineering: SaaS platforms, Flutter mobile apps, Godot 3D games, autonomous AI pipelines.",
+  "priceRange": "$1500-$9800",
+  "address": { "@type": "PostalAddress", "addressLocality": "Remote", "addressCountry": "WW" }
+}
+</script>
 </head>
 <body>
 
@@ -34,6 +44,7 @@
   <div class="nlinks">
     <a href="../index.html" class="nav-hub-pill">← 66 Projects Hub</a>
     <a href="#work">Work</a>
+    <a href="#process">Process</a>
     <a href="#services">Services</a>
     <a href="#play">Playground</a>
     <a href="#pricing">Pricing</a>
@@ -51,6 +62,7 @@
 <div id="mmenu">
   <a href="../index.html" style="color:#e9c46a;font-weight:700">← 66 Projects Hub</a>
   <a href="#work" onclick="closeM()">Work</a>
+  <a href="#process" onclick="closeM()">Process</a>
   <a href="#services" onclick="closeM()">Services</a>
   <a href="#play" onclick="closeM()">Playground</a>
   <a href="#pricing" onclick="closeM()">Pricing</a>
@@ -90,6 +102,14 @@
         <div><b><span class="cnt" data-n="12">0</span></b><small>industries</small></div>
         <div><b><span class="cnt" data-n="100">0</span>%</b><small>on-time delivery</small></div>
         <div><b>&lt;24h</b><small>response time</small></div>
+      </div>
+
+      <div class="trust rv">
+        <small>TRUSTED BY FOUNDERS IN</small>
+        <div class="trust-row">
+          <span>SaaS</span><span>Fintech</span><span>Health</span><span>E-commerce</span><span>EdTech</span><span>Logistics</span>
+        </div>
+        <small class="trust-note">Top Rated Plus · 100% on-time · NDA friendly · Source ownership included</small>
       </div>
     </div>
 
@@ -161,10 +181,51 @@
   </div>
 </section>
 
+<!-- Delivery Process -->
+<section id="process">
+  <div class="shead rv">
+    <small>02 — PROCESS</small>
+    <h2>Idea to launch in four moves.</h2>
+  </div>
+  <div class="sgrid">
+    <div class="scard rv tilt">
+      <i>①</i>
+      <h3>Scope in 24h</h3>
+      <p>One call, one written spec, one fixed quote. You know the price and the date before we start.</p>
+      <div class="tags"><span>Discovery</span><span>Fixed quote</span></div>
+    </div>
+    <div class="scard rv tilt">
+      <i>②</i>
+      <h3>Architecture first</h3>
+      <p>Data model, API contracts, UI system. Reviewed with you before a single feature is built.</p>
+      <div class="tags"><span>Spec</span><span>Review</span></div>
+    </div>
+    <div class="scard rv tilt">
+      <i>③</i>
+      <h3>Weekly demos</h3>
+      <p>Working build every Friday. You click, we adjust. No black-box months, no surprises.</p>
+      <div class="tags"><span>Sprints</span><span>Demos</span></div>
+    </div>
+    <div class="scard rv tilt">
+      <i>④</i>
+      <h3>Launch + warranty</h3>
+      <p>Deploy, handover docs, full source ownership. 30-day warranty on every line shipped.</p>
+      <div class="tags"><span>Deploy</span><span>30-day cover</span></div>
+    </div>
+  </div>
+  <div class="guarantees rv">
+    <span>✓ Fixed scope</span>
+    <span>✓ 100% on-time</span>
+    <span>✓ Source ownership</span>
+    <span>✓ NDA friendly</span>
+    <span>✓ &lt;24h response</span>
+  </div>
+</section>
+
 <!-- Selected Work Showcase -->
 <section id="work">
   <div class="shead rv">
-    <small>02 — SELECTED WORK</small>
+    <small>03 — SELECTED WORK</small>
     <h2>66 builds. 6 signatures.</h2>
     <div class="filters">
       <button class="on" data-f="all">All Signatures</button>
@@ -175,7 +236,20 @@
       <button data-f="os">Web OS</button>
     </div>
   </div>
-  <div class="wgrid" id="wgrid"></div>
+  <div class="wgrid" id="wgrid">
+    <div class="wcard rv on">
+      <div class="wimgw"><span class="go">→</span></div>
+      <div><span>SAAS · $9.8K</span><br><b>Plainbase SaaS Admin</b><p>Go &amp; Python backend + JWT Auth. Enable JavaScript for the live case-study grid.</p></div>
+    </div>
+    <div class="wcard rv on">
+      <div class="wimgw"><span class="go">→</span></div>
+      <div><span>GAME · $6.0K</span><br><b>Moss Temple 2D</b><p>Playable HTML5 Canvas platformer. Enable JavaScript for the live case-study grid.</p></div>
+    </div>
+    <div class="wcard rv on">
+      <div class="wimgw"><span class="go">→</span></div>
+      <div><span>AI · $5.0K</span><br><b>Ember AI Concierge</b><p>Conversational AI chatbot. Enable JavaScript for the live case-study grid.</p></div>
+    </div>
+  </div>
 </section>
 
 <!-- Interactive Live Simulator Modal -->
@@ -214,7 +288,7 @@
 <!-- Playground Section -->
 <section id="play">
   <div class="shead rv">
-    <small>03 — PLAYGROUND</small>
+    <small>04 — PLAYGROUND</small>
     <h2>Don't trust words.<br>Touch it.</h2>
   </div>
 
@@ -296,7 +370,7 @@
 <!-- Pricing Section -->
 <section id="pricing">
   <div class="shead rv">
-    <small>04 — PRICING</small>
+    <small>05 — PRICING</small>
     <h2>Fixed scope. Fixed price. Zero surprises.</h2>
   </div>
   <div class="pgrid">
@@ -340,12 +414,13 @@
       <button class="ghost" onclick="choosePackage('Partner — $3K/mo')">Talk First</button>
     </div>
   </div>
+  <p class="pnote rv">Every tier includes fixed scope in writing, weekly demo builds, full source ownership and a 30-day post-launch warranty. No hourly drift — the quote you sign is the price you pay.</p>
 </section>
 
 <!-- Proof / Testimonials -->
 <section id="testi">
   <div class="shead rv">
-    <small>05 — PROOF</small>
+    <small>06 — PROOF</small>
     <h2>What founders & clients say.</h2>
   </div>
   <div class="tview rv">
@@ -364,7 +439,7 @@
 <!-- Contact Form -->
 <section id="faq">
   <div class="shead rv">
-    <small>06 — FAQ</small>
+    <small>07 — FAQ</small>
     <h2>Answers, before you ask.</h2>
   </div>
   <div class="faq rv">
@@ -379,7 +454,7 @@
 <section id="contact">
   <div class="cgrid">
     <div class="rv">
-      <small>07 — CONTACT</small>
+      <small>08 — CONTACT</small>
       <h2>Concept → launch.<br>One message away.</h2>
       <p class="sub">
         Receive a comprehensive scope breakdown and guaranteed fixed-price quote within 24 hours. NDA friendly.
@@ -388,6 +463,11 @@
         <span>✉️ hello@nova-studio.dev</span>
         <span>✈️ t.me/novabuilds</span>
         <span>💼 Upwork Top Rated Plus</span>
+      </div>
+      <div class="cmeta2">
+        <div><b>&lt;24h</b><small>first reply — scope + fixed quote</small></div>
+        <div><b>GMT+5</b><small>overlap with EU &amp; US mornings</small></div>
+        <div><b>NDA</b><small>signed before you share anything</small></div>
       </div>
       <div style="margin-top:24px">
         <a href="../index.html" class="ghost" style="display:inline-block">← Explore All 66 Production Builds</a>
@@ -416,6 +496,14 @@
 
 <!-- Footer -->
 <footer>
+  <div class="flinks">
+    <a href="#services">Capabilities</a>
+    <a href="#process">Process</a>
+    <a href="#work">Work</a>
+    <a href="#play">Playground</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </div>
   ◈ NOVA Studio — CEO & Lead Software Architect · Python · Go · C++ · Flutter · Godot · Three.js · Swift · <a href="../index.html" style="color:#e9c46a">All 66 Projects Hub</a> · © 2026
 </footer>
 

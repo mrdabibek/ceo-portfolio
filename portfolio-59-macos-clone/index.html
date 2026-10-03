@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Malika A. — macOS & iOS Developer</title>
+<title>Malika A. â€” macOS & iOS Developer</title>
 <style>
  * {
  margin:0;
@@ -454,6 +454,9 @@
  #about {
  display:none
  }
+ #nc {
+ display:none
+ }
  .dock {
  width:44px;
  height:44px;
@@ -465,55 +468,56 @@
 </style>
 </head>
 <body>
-<div id="pre"><div class="lg">🍑</div><div class="track"><i></i></div><small>APRICOT OS · LOADING</small></div>
+<div id="pre"><div class="lg">ðŸ‘</div><div class="track"><i></i></div><small>APRICOT OS Â· LOADING</small></div>
 <div id="wall"></div><div id="sun"></div>
-<div id="menu"><span>🍑</span><b>Finder</b><span style="font-weight:500">File</span><span style="font-weight:500">Edit</span><span style="font-weight:500" class="hide">Portfolio</span><span class="r"><span>🔋 92%</span><span>📶</span><span id="clock">—</span><span>🔍</span></span></div>
-<div id="about"><b>👩‍💻 Malika A.</b><p>macOS & iOS dev · Swift/SwiftUI<br>⭐ 5.0 · 64 reviews · $40/hr</p></div>
+<div id="menu"><span>ðŸ‘</span><b>Finder</b><span style="font-weight:500">File</span><span style="font-weight:500">Edit</span><span style="font-weight:500" class="hide">Portfolio</span><span class="r"><span>ðŸ”‹ 92%</span><span>ðŸ“¶</span><span id="clock">â€”</span><span>ðŸ”</span></span></div>
+<div id="nc"><div class="wdg"><b>🔋 Battery · 92%</b><p>Lasts my whole workday — and your app will sip power too. Instruments-tested.</p></div><div class="wdg"><b>🌤️ Tashkent · 24°</b><p>Clear for shipping. Status: <b style="color:#16a34a">open for 1 project</b>.</p></div><div class="wdg"><b>⏱ Quick quote</b><p>Describe your app, get a fixed price in 24h.</p><button onclick="hire()">Ask →</button></div></div>
+<div id="about"><b>ðŸ‘©â€ðŸ’» Malika A.</b><p>macOS & iOS dev Â· Swift/SwiftUI<br>â­ 5.0 Â· 64 reviews Â· $40/hr</p></div>
 <div id="desk">
-<div class="ficon" style="top:16px;right:20px" ondblclick="openW('work')"><span class="im">📁</span>Work</div>
-<div class="ficon" style="top:116px;right:20px" ondblclick="openW('me')"><span class="im">👩‍💻</span>About Me</div>
-<div class="ficon" style="top:216px;right:20px" ondblclick="openW('hire')"><span class="im">💌</span>Hire.rtf</div>
-<div class="win" id="w-work" style="top:40px;left:8%;width:460px"><div class="wbar"><span class="tl"><i class="c" onclick="closeW('work')">✕</i><i class="m" onclick="minW('work')">–</i><i class="p" onclick="toast('Apricot keeps windows cozy ☕')">+</i></span>📁 Work — Recent Projects</div><div class="wbody">
-<div class="proj"><b>💳 FinPay iOS — featured</b><p>SwiftUI banking app, 200k users, Face ID + widgets. $9k contract.</p><button onclick="hire('FinPay')">Hire for similar</button></div>
-<div class="proj"><b>🍽 Foodie macOS</b><p>Catalyst restaurant POS, printers + offline sync.</p><button onclick="hire('Foodie')">Hire for similar</button></div>
-<div class="proj"><b>🏋️ Pulse Watch</b><p>watchOS fitness, HealthKit + complications.</p><button onclick="hire('Pulse')">Hire for similar</button></div>
+<div class="ficon" style="top:16px;right:20px" ondblclick="openW('work')"><span class="im">ðŸ“</span>Work</div>
+<div class="ficon" style="top:116px;right:20px" ondblclick="openW('me')"><span class="im">ðŸ‘©â€ðŸ’»</span>About Me</div>
+<div class="ficon" style="top:216px;right:20px" ondblclick="openW('hire')"><span class="im">ðŸ’Œ</span>Hire.rtf</div>
+<div class="win" id="w-work" style="top:40px;left:8%;width:460px"><div class="wbar"><span class="tl"><i class="c" onclick="closeW('work')">âœ•</i><i class="m" onclick="minW('work')">â€“</i><i class="p" onclick="toast('Apricot keeps windows cozy â˜•')">+</i></span>ðŸ“ Work â€” Recent Projects</div><div class="wbody">
+<div class="proj"><b>ðŸ’³ FinPay iOS â€” featured</b><p>SwiftUI banking app, 200k users, Face ID + widgets. $9k contract.</p><button onclick="hire('FinPay')">Hire for similar</button></div>
+<div class="proj"><b>ðŸ½ Foodie macOS</b><p>Catalyst restaurant POS, printers + offline sync.</p><button onclick="hire('Foodie')">Hire for similar</button></div>
+<div class="proj"><b>ðŸ‹ï¸ Pulse Watch</b><p>watchOS fitness, HealthKit + complications.</p><button onclick="hire('Pulse')">Hire for similar</button></div>
 </div></div>
-<div class="win hide" id="w-me" style="top:70px;left:40%;width:400px"><div class="wbar"><span class="tl"><i class="c" onclick="closeW('me')">✕</i><i class="m" onclick="minW('me')">–</i><i class="p">+</i></span>👩‍💻 About Me</div><div class="wbody">
-<h3>Salom! I'm Malika 👋</h3><p>5 yrs crafting Apple-platform apps. Swift, SwiftUI, Combine, Core Data, push, App Store release. 25 apps shipped, zero rejections on last 12 submissions.</p>
+<div class="win hide" id="w-me" style="top:70px;left:40%;width:400px"><div class="wbar"><span class="tl"><i class="c" onclick="closeW('me')">âœ•</i><i class="m" onclick="minW('me')">â€“</i><i class="p">+</i></span>ðŸ‘©â€ðŸ’» About Me</div><div class="wbody">
+<h3>Salom! I'm Malika ðŸ‘‹</h3><p>5 yrs crafting Apple-platform apps. Swift, SwiftUI, Combine, Core Data, push, App Store release. 25 apps shipped, zero rejections on last 12 submissions.</p>
 <div style="margin-top:10px"><span class="tag">Swift</span><span class="tag">SwiftUI</span><span class="tag">UIKit</span><span class="tag">Core Data</span><span class="tag">WidgetKit</span><span class="tag">TestFlight</span></div>
 </div></div>
-<div class="win hide" id="w-notes" style="top:110px;left:25%;width:380px"><div class="wbar"><span class="tl"><i class="c" onclick="closeW('notes')">✕</i><i class="m" onclick="minW('notes')">–</i><i class="p">+</i></span>📝 Notes — Services</div><div class="wbody">
-<div class="note">📱 iOS app from <b>$2,500</b> — SwiftUI, 4–6 wks, TestFlight + Store ✅</div>
-<div class="note">💻 macOS app from <b>$2,000</b> — Catalyst / AppKit native ⚡</div>
-<div class="note">⌚ Watch + widgets from <b>$900</b> — HealthKit, complications ⌚</div>
-<button onclick="hire()" style="background:var(--ink);color:#fff;border:0;padding:10px 24px;border-radius:99px;font-weight:700;cursor:pointer;width:100%">💌 Request quote</button>
+<div class="win hide" id="w-notes" style="top:110px;left:25%;width:380px"><div class="wbar"><span class="tl"><i class="c" onclick="closeW('notes')">âœ•</i><i class="m" onclick="minW('notes')">â€“</i><i class="p">+</i></span>ðŸ“ Notes â€” Services</div><div class="wbody">
+<div class="note">ðŸ“± iOS app from <b>$2,500</b> â€” SwiftUI, 4â€“6 wks, TestFlight + Store âœ…</div>
+<div class="note">ðŸ’» macOS app from <b>$2,000</b> â€” Catalyst / AppKit native âš¡</div>
+<div class="note">âŒš Watch + widgets from <b>$900</b> â€” HealthKit, complications âŒš</div>
+<button onclick="hire()" style="background:var(--ink);color:#fff;border:0;padding:10px 24px;border-radius:99px;font-weight:700;cursor:pointer;width:100%">ðŸ’Œ Request quote</button>
 </div></div>
-<div class="win hide" id="w-hire" style="top:60px;left:15%;width:380px"><div class="wbar"><span class="tl"><i class="c" onclick="closeW('hire')">✕</i><i class="m" onclick="minW('hire')">–</i><i class="p">+</i></span>💌 Hire.rtf</div><div class="wbody" style="font-family:Georgia,serif">
-<h3>Let's ship your app 💌</h3><p>📧 malika@apple.dev · ✈️ @malika_builds<br>💵 $40/hr · ⏱ replies in ~4h · 📅 20h/wk open</p>
-<button onclick="hire()" style="background:var(--ink);color:#fff;border:0;padding:10px 24px;border-radius:99px;font-weight:700;cursor:pointer;margin-top:10px">Send inquiry →</button>
+<div class="win hide" id="w-hire" style="top:60px;left:15%;width:380px"><div class="wbar"><span class="tl"><i class="c" onclick="closeW('hire')">âœ•</i><i class="m" onclick="minW('hire')">â€“</i><i class="p">+</i></span>ðŸ’Œ Hire.rtf</div><div class="wbody" style="font-family:Georgia,serif">
+<h3>Let's ship your app ðŸ’Œ</h3><p>ðŸ“§ malika@apple.dev Â· âœˆï¸ @malika_builds<br>ðŸ’µ $40/hr Â· â± replies in ~4h Â· ðŸ“… 20h/wk open</p>
+<button onclick="hire()" style="background:var(--ink);color:#fff;border:0;padding:10px 24px;border-radius:99px;font-weight:700;cursor:pointer;margin-top:10px">Send inquiry â†’</button>
 </div></div>
-<div class="win hide" id="w-mail" style="top:90px;left:32%;width:420px"><div class="wbar"><span class="tl"><i class="c" onclick="closeW('mail')">✕</i><i class="m" onclick="minW('mail')">–</i><i class="p">+</i></span>✉️ Mail — Inbox (3)</div><div class="wbody">
-<div class="proj"><b>Daniel K. — fintech founder ⭐⭐⭐⭐⭐</b><p>"TestFlight in 6 days, Store review passed first try. Best iOS hire we've had — already rebooked for phase 2."</p></div>
-<div class="proj"><b>Sara M. — SaaS CEO ⭐⭐⭐⭐⭐</b><p>"Rewrote our UIKit mess into SwiftUI in 5 weeks. Crash-free rate went from 96% to 99.9%."</p></div>
-<div class="proj"><b>Otabek R. — startup CTO ⭐⭐⭐⭐⭐</b><p>"Widgets + Watch delivered two days early. Communication in English was flawless."</p></div>
-<div class="proj"><b>📊 Upwork stats</b><p>64 reviews · 5.0 average · $30k+ earned · Top Rated since 2022.</p><button onclick="hire('after reviews')">Join them →</button></div>
+<div class="win hide" id="w-mail" style="top:90px;left:32%;width:420px"><div class="wbar"><span class="tl"><i class="c" onclick="closeW('mail')">âœ•</i><i class="m" onclick="minW('mail')">â€“</i><i class="p">+</i></span>âœ‰ï¸ Mail â€” Inbox (3)</div><div class="wbody">
+<div class="proj"><b>Daniel K. â€” fintech founder â­â­â­â­â­</b><p>"TestFlight in 6 days, Store review passed first try. Best iOS hire we've had â€” already rebooked for phase 2."</p></div>
+<div class="proj"><b>Sara M. â€” SaaS CEO â­â­â­â­â­</b><p>"Rewrote our UIKit mess into SwiftUI in 5 weeks. Crash-free rate went from 96% to 99.9%."</p></div>
+<div class="proj"><b>Otabek R. â€” startup CTO â­â­â­â­â­</b><p>"Widgets + Watch delivered two days early. Communication in English was flawless."</p></div>
+<div class="proj"><b>ðŸ“Š Upwork stats</b><p>64 reviews Â· 5.0 average Â· $30k+ earned Â· Top Rated since 2022.</p><button onclick="hire('after reviews')">Join them â†’</button></div>
 </div></div>
-<div class="win hide" id="w-cal" style="top:120px;left:45%;width:340px"><div class="wbar"><span class="tl"><i class="c" onclick="closeW('cal')">✕</i><i class="m" onclick="minW('cal')">–</i><i class="p">+</i></span>📅 Calendar — Availability</div><div class="wbody">
-<div class="proj"><b>🟢 This week — 20h open</b><p>Mon–Fri · 9:00–13:00 GMT+5 · calls in English / Russian / Uzbek.</p></div>
-<div class="proj"><b>📞 Free 20-min intro call</b><p>Scope, timeline, fixed quote — no commitment.</p><button onclick="hire('intro call')">Book a slot →</button></div>
+<div class="win hide" id="w-cal" style="top:120px;left:45%;width:340px"><div class="wbar"><span class="tl"><i class="c" onclick="closeW('cal')">âœ•</i><i class="m" onclick="minW('cal')">â€“</i><i class="p">+</i></span>ðŸ“… Calendar â€” Availability</div><div class="wbody">
+<div class="proj"><b>ðŸŸ¢ This week â€” 20h open</b><p>Monâ€“Fri Â· 9:00â€“13:00 GMT+5 Â· calls in English / Russian / Uzbek.</p></div>
+<div class="proj"><b>ðŸ“ž Free 20-min intro call</b><p>Scope, timeline, fixed quote â€” no commitment.</p><button onclick="hire('intro call')">Book a slot â†’</button></div>
 </div></div>
 </div>
-<div id="spot"><input id="spotIn" placeholder="🔍  Spotlight Search — try 'hire', 'finpay', 'swift'…"><div id="sres"></div></div>
+<div id="spot"><input id="spotIn" placeholder="ðŸ”  Spotlight Search â€” try 'hire', 'finpay', 'swift'â€¦"><div id="sres"></div></div>
 <div id="dock">
-<div class="dock run" onclick="openW('work')"><span class="tip">Finder · Work</span>📁</div>
-<div class="dock" onclick="openW('me')"><span class="tip">About Me</span>👩‍💻</div>
-<div class="dock" onclick="openW('notes')"><span class="tip">Notes · Services</span>📝</div>
-<div class="dock" onclick="openW('mail')"><span class="tip">Mail · Reviews</span>✉️</div>
-<div class="dock" onclick="openW('cal')"><span class="tip">Calendar · Booking</span>📅</div>
-<div class="dock" onclick="toggleSpot()"><span class="tip">Spotlight (⌘Space)</span>🔍</div>
-<div class="dock" onclick="openW('hire')"><span class="tip">Hire Me</span>💌</div>
-<div class="dock" onclick="toast('Safari: malika.apple.dev 🌐')"><span class="tip">Safari</span>🧭</div>
-<div class="dock" onclick="toast('Trash is empty. Like my bug backlog ✨')"><span class="tip">Trash</span>🗑️</div>
+<div class="dock run" onclick="openW('work')"><span class="tip">Finder Â· Work</span>ðŸ“</div>
+<div class="dock" onclick="openW('me')"><span class="tip">About Me</span>ðŸ‘©â€ðŸ’»</div>
+<div class="dock" onclick="openW('notes')"><span class="tip">Notes Â· Services</span>ðŸ“</div>
+<div class="dock" onclick="openW('mail')"><span class="tip">Mail Â· Reviews</span>âœ‰ï¸</div>
+<div class="dock" onclick="openW('cal')"><span class="tip">Calendar Â· Booking</span>ðŸ“…</div>
+<div class="dock" onclick="toggleSpot()"><span class="tip">Spotlight (âŒ˜Space)</span>ðŸ”</div>
+<div class="dock" onclick="openW('hire')"><span class="tip">Hire Me</span>ðŸ’Œ</div>
+<div class="dock" onclick="toast('Safari: malika.apple.dev ðŸŒ')"><span class="tip">Safari</span>ðŸ§­</div>
+<div class="dock" onclick="toast('Trash is empty. Like my bug backlog âœ¨')"><span class="tip">Trash</span>ðŸ—‘ï¸</div>
 </div>
 <div id="toast"></div>
 <script>
@@ -524,16 +528,16 @@ function openW(id){const w=document.getElementById('w-'+id);w.classList.remove('
 function closeW(id){document.getElementById('w-'+id).classList.add('hide');}
 function minW(id){const w=document.getElementById('w-'+id);w.style.opacity='0';w.style.transform='scale(.9)';setTimeout(()=>{w.classList.add('hide');w.style.opacity='';w.style.transform='';},280);}
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2300);}
-function hire(w){toast('Inquiry → malika@apple.dev 💌'+(w?' · re: '+w:''));openW('hire');}
+function hire(w){toast('Inquiry â†’ malika@apple.dev ðŸ’Œ'+(w?' Â· re: '+w:''));openW('hire');}
 /* SPOTLIGHT */
-const IDX=[{t:'📁 Work — Recent Projects',k:'work project finpay foodie pulse portfolio',go:()=>openW('work')},{t:'👩‍💻 About Me',k:'about malika cv resume swift',go:()=>openW('me')},{t:'📝 Notes — Services & pricing',k:'notes service price cost ios',go:()=>openW('notes')},{t:'💌 Hire Me',k:'hire contact email quote inquiry',go:()=>openW('hire')},{t:'✉️ Mail — client reviews',k:'mail review testimonial rating star',go:()=>openW('mail')},{t:'📅 Calendar — book intro call',k:'calendar book call slot availability meet',go:()=>openW('cal')},{t:'💳 FinPay iOS case study',k:'finpay bank fintech featured',go:()=>{openW('work');hire('FinPay');}},{t:'✉️ Email malika@apple.dev',k:'email mail send',go:()=>hire()}];
+const IDX=[{t:'ðŸ“ Work â€” Recent Projects',k:'work project finpay foodie pulse portfolio',go:()=>openW('work')},{t:'ðŸ‘©â€ðŸ’» About Me',k:'about malika cv resume swift',go:()=>openW('me')},{t:'ðŸ“ Notes â€” Services & pricing',k:'notes service price cost ios',go:()=>openW('notes')},{t:'ðŸ’Œ Hire Me',k:'hire contact email quote inquiry',go:()=>openW('hire')},{t:'âœ‰ï¸ Mail â€” client reviews',k:'mail review testimonial rating star',go:()=>openW('mail')},{t:'ðŸ“… Calendar â€” book intro call',k:'calendar book call slot availability meet',go:()=>openW('cal')},{t:'ðŸ’³ FinPay iOS case study',k:'finpay bank fintech featured',go:()=>{openW('work');hire('FinPay');}},{t:'âœ‰ï¸ Email malika@apple.dev',k:'email mail send',go:()=>hire()}];
 function toggleSpot(force){const s=document.getElementById('spot');const open=force!==undefined?force:!s.classList.contains('open');s.classList.toggle('open',open);if(open){document.getElementById('spotIn').value='';sRes('');setTimeout(()=>document.getElementById('spotIn').focus(),60);}}
-function sRes(q){q=q.toLowerCase();const box=document.getElementById('sres');const hits=IDX.filter(i=>!q||i.t.toLowerCase().includes(q)||i.k.includes(q));box.innerHTML=hits.length?hits.map((h,i)=>'<div data-i="'+IDX.indexOf(h)+'" class="'+(i===0?'hot':'')+'">🔍 '+h.t+'</div>').join(''):'<div>😕 No results for "'+q+'"</div>';box.querySelectorAll('div[data-i]').forEach(d=>d.onclick=()=>{IDX[+d.dataset.i].go();toggleSpot(false);});}
+function sRes(q){q=q.toLowerCase();const box=document.getElementById('sres');const hits=IDX.filter(i=>!q||i.t.toLowerCase().includes(q)||i.k.includes(q));box.innerHTML=hits.length?hits.map((h,i)=>'<div data-i="'+IDX.indexOf(h)+'" class="'+(i===0?'hot':'')+'">ðŸ” '+h.t+'</div>').join(''):'<div>ðŸ˜• No results for "'+q+'"</div>';box.querySelectorAll('div[data-i]').forEach(d=>d.onclick=()=>{IDX[+d.dataset.i].go();toggleSpot(false);});}
 document.getElementById('spotIn').addEventListener('input',e=>sRes(e.target.value));
 document.getElementById('spotIn').addEventListener('keydown',e=>{if(e.key==='Enter'){const f=document.querySelector('#sres div[data-i]');if(f)f.click();}if(e.key==='Escape')toggleSpot(false);});
 document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key===' '){e.preventDefault();toggleSpot();}if(e.key==='Escape'){toggleSpot(false);}});
 document.addEventListener('click',e=>{const s=document.getElementById('spot');if(s.classList.contains('open')&&!s.contains(e.target))toggleSpot(false);});
-/* DRAG — traffic-light bars */
+/* DRAG â€” traffic-light bars */
 let drag=null,sx=0,sy=0,ox=0,oy=0;
 document.querySelectorAll('.win').forEach(win=>{
 const bar=win.querySelector('.wbar');

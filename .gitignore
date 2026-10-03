@@ -25,4 +25,6 @@ desktop.ini
 
 bot_config.json
 *.apk
+*.exe
+*.pdb
 

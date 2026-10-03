@@ -8,12 +8,12 @@ Ushbu fayldagi matnlarni to'g'ridan-to'g'ri Upwork profilingizga ko'chirib (Ctrl
 Profilingizning eng yuqori qismiga (birinchi 3-4 qatoriga) qo'ying:
 
 ```text
-🚀 Fullstack Software Architect & Lead Product Engineer | 75+ Production Builds Shipped
+🚀 Fullstack Software Architect & Lead Product Engineer | 77+ Production Builds Shipped
 
 Looking for an enterprise-level engineer who writes scalable, zero-technical-debt code?
-I have architected and deployed 75+ full-scale web platforms, SaaS ecosystems, high-frequency fintech engines, and Telegram Mini Apps.
+I have architected and deployed 77+ full-scale web platforms, SaaS ecosystems, high-frequency fintech engines, and Telegram Mini Apps.
 
-🌐 Live Interactive 3D Portfolio Hub (75+ Builds & Device Simulator):
+🌐 Live Interactive 3D Portfolio Hub (77+ Builds & Device Simulator):
 https://mrdabibek.github.io/ceo-portfolio/
 
 💎 Flagship Agency Studio ($10K Tier):
@@ -115,6 +115,30 @@ Engineered an Awwwards-tier 3D motorsport web showcase and Godot mobile game. Fe
 
 ---
 
+### 🔹 8-LOYIHA: WenCamera Pro (AI 8K Camera Engine & Native Android APK)
+* **Project Title:** `WenCamera — Pro 8K Camera Engine, Computer Vision & Native Android APK`
+* **Role:** Lead Mobile & Computer Vision Engineer
+* **Skills:** `PWA`, `WebRTC`, `MediaStream`, `Android APK`, `Canvas Shaders`, `LUT Color Science`
+* **Project URL:** `https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-76-wencamera/index.html`
+* **Overview / Description:**
+```text
+Architected an advanced AI camera engine and Android application. Features real-time WebGL/Canvas LUT color grading, beauty enhancement pipelines, low-light night mode, acoustic shutter feedback, and instant native APK distribution.
+```
+
+---
+
+### 🔹 9-LOYIHA: NoutBooster MAX 4.0 (Windows Kernel Engine & 3D Simulation)
+* **Project Title:** `NoutBooster MAX — Windows Kernel Suite, ACPI Telemetry & 3D WebGL Simulation`
+* **Role:** Systems Software Architect & C# / .NET Engineer
+* **Skills:** `C# .NET 10`, `Win32 API`, `Kernel Scheduling`, `Three.js`, `ACPI Telemetry`, `Inno Setup`
+* **Project URL:** `https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-77-noutbooster/index.html`
+* **Overview / Description:**
+```text
+Engineered an enterprise Windows performance optimizer with kernel-level thread scheduling (.NET 10 & Win32 API), hardware ACPI thermal protection, non-blocking RAM WorkingSet management, and an interactive Three.js 3D vehicle simulation.
+```
+
+---
+
 ## 3. PROPOSALS (COVER LETTER) SHABLONI (Upworkda ish yutish uchun)
 
 Mijoz ish e'lon qilganda ushbu qisqa va kuchli matndan foydalaning:
@@ -122,11 +146,13 @@ Mijoz ish e'lon qilganda ushbu qisqa va kuchli matndan foydalaning:
 ```text
 Hi! I reviewed your project requirements and can deliver this cleanly and on schedule.
 
-I have already architected and shipped over 75+ production-grade digital products with this exact architecture. You can test my live interactive builds directly in the browser:
+I have already architected and shipped over 77+ production-grade digital products with this exact architecture. You can test my live interactive builds directly in the browser:
 
 🌐 Live Interactive 3D Portfolio Hub: https://mrdabibek.github.io/ceo-portfolio/
 💎 Flagship Studio: https://mrdabibek.github.io/ceo-portfolio/flagship/index.html
-🏎️ Cluix Car Racer 3D: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-74-cluix-racer/index.html
+🏎️ Cluix Car Racer 3D ($10K Tier): https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-74-cluix-racer/index.html
+🏃 Metro Rush 3D (Telegram): https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-75-metro-rush/index.html
+💻 NoutBooster MAX 3D: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-77-noutbooster/index.html
 
 I guarantee zero technical debt, modular components, and 30-day post-launch support. Let's connect and discuss your roadmap!
 ```

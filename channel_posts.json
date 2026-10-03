@@ -664,5 +664,32 @@
     "folder": "portfolio-74-cluix-racer",
     "text": "🏎️ #Loyiha74 — Cluix Car Racer — AAA Hypercar Le Mans 3D\n\n💡 Loyiha Haqida:\nAwwwards darajasidagi giperkar poygasi tajribasi. Afsonaviy BMW M3 GTR Le Mans #42, 15 ta dunyo giperkarlari (Lamborghini Countach, McLaren W1, Porsche 911), Toshkent trassalari, interaktiv 3D scrollytelling va WebGL garaj!\n\n🛠 Texnologik Stek:\n• Asosiy: Godot Engine, Three.js, 3D WebGL, Web Audio API, Android APK\n• Arxitektura: 60-120 FPS fotorealistik avtomobil fizika simulyatori, V8/V12 dvigatel ovozlari sintezi.\n\n📱 Yuklab Olish (Android APK - 437 MB):\nSayt orqali to'g'ridan-to'g'ri APK yoki QR-kod orqali telefonga yuklab olish imkoniyati mavjud.\n\n💰 Upwork Shartnoma Qiymati: .0K\n⏱ Sifat Darajasi: AAA Game Studio Tier\n🌐 Jonli 3D Sayt & Garaj: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-74-cluix-racer/index.html\n\n#gamedev #godot #threejs #awwwards #bmwm3 #hypercar #racing #upwork #ceobuilds",
     "img": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=900&auto=format&fit=crop"
+  },
+  "75": {
+    "num": "75",
+    "title": "Metro Rush 3D — Telegram Runner & Rails",
+    "val": ".5K",
+    "cat": "game",
+    "folder": "portfolio-75-metro-rush",
+    "text": "🏃 #Loyiha75 — Metro Rush 3D — Telegram Runner & Rails\n\n💡 Loyiha Haqida:\n3D Subway Surfers uslubidagi cheksiz poyga o'yini. Cyber Neon Tokio va Venice Beach temalari, real-time procedural rails, touch swipe va keyboard harakatlari, Web Audio retro sintezator tovushlari hamda Telegram WebApp SDK to'liq integratsiyasi!\n\n🛠 Texnologik Stek:\n• Three.js, WebGL 60FPS, Web Audio API, Telegram WebApp SDK\n• Haptic Feedback, LocalStorage yuqori ballar va REST API telemetriya tizimi.\n\n💰 Upwork Shartnoma Qiymati: .5K\n🌐 Jonli O'yin: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-75-metro-rush/index.html\n\n#subwaysurfers #telegram #webapp #threejs #gamedev #upwork",
+    "img": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=900&auto=format&fit=crop"
+  },
+  "76": {
+    "num": "76",
+    "title": "WenCamera — Pro 8K Camera Engine & Native APK",
+    "val": ".0K",
+    "cat": "mobile",
+    "folder": "portfolio-76-wencamera",
+    "text": "📸 #Loyiha76 — WenCamera — Pro 8K Camera Engine & Native APK\n\n💡 Loyiha Haqida:\nProfessional AI kamera progressive web application (PWA) va Android APK ilovasi. 8K go'zallik filtrlari, tungi rejim, portret xiralashtirish, LUT rang ilmi, audio zatvor effektlari va fotogalereya!\n\n🛠 Texnologik Stek:\n• PWA, WebRTC MediaStream, Canvas Video Shaders, Android Release APK\n• Real-time foto qayta ishlash, RAW capture va ko'p tilli interfeys.\n\n💰 Upwork Shartnoma Qiymati: .0K\n🌐 Jonli Kamera & APK: https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-76-wencamera/index.html\n\n#camera #android #pwa #ai #computervision #mobileapp #upwork",
+    "img": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=900&auto=format&fit=crop"
+  },
+  "77": {
+    "num": "77",
+    "title": "NoutBooster MAX — Windows Kernel Engine & Cobalt 3D",
+    "val": ".5K",
+    "cat": "services",
+    "folder": "portfolio-77-noutbooster",
+    "text": "💻 #Loyiha77 — NoutBooster MAX — Windows Kernel Engine & Cobalt 3D\n\n💡 Loyiha Haqida:\nWindows 10/11 uchun enterprise darajadagi tezlashtiruvchi utilita. ACPI apparat termal himoyasi, kernel darajasidagi o'yin prioritetlarini sozlash (.NET 10 & Win32 API), RAM WorkingSet optimallashtirish va interaktiv 3D Chevrolet Cobalt simulyatsiyasi!\n\n🛠 Texnologik Stek:\n• C# .NET 10, Win32 Kernel APIs, Three.js 3D WebGL, Inno Setup x64 Installer\n• Real-time apparat monitoringi va CSV telemetriya jurnali.\n\n💰 Upwork Shartnoma Qiymati: .5K\n🌐 Jonli Portal & Setup (.EXE): https://potentially-sunday-pmid-yet.trycloudflare.com/portfolio-77-noutbooster/index.html\n\n#windows #dotnet #csharp #kernel #threejs #gamedev #pcgaming #upwork",
+    "img": "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=900&auto=format&fit=crop"
   }
 }

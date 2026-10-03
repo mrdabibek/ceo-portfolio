@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoutBooster MAX 4.0 — High-Performance Windows Engine | CEO Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="../api-runtime.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #07090e;
+      --card: rgba(14, 20, 32, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-cyan: #00f0ff;
+      --accent-blue: #3b82f6;
+      --accent-gold: #fbbf24;
+      --accent-red: #ef4444;
+      --accent-green: #10b981;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 50% 0%, #111d33 0%, #07090e 60%, #040508 100%);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Unified CEO Portfolio Hub Floating Badge */
+    .ceo-hub-badge {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      z-index: 9999;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 9999px;
+      background: rgba(9, 14, 26, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      transition: all 0.25s ease;
+    }
+    .ceo-hub-badge:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 12px 36px rgba(0, 240, 255, 0.25);
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 10px var(--accent-cyan);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header Nav */
+    header {
+      padding: 24px 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-btn {
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .nav-btn-glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+    }
+    .nav-btn-glass:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .nav-btn-primary {
+      background: linear-gradient(135deg, #00f0ff, #3b82f6);
+      color: #07090e;
+      box-shadow: 0 4px 20px rgba(0, 240, 255, 0.3);
+    }
+    .nav-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 240, 255, 0.45);
+    }
+
+    /* Hero Section */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      align-items: center;
+      padding: 40px 0 80px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      color: var(--accent-cyan);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 50%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      max-width: 540px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #00f0ff, #3b82f6);
+      color: #07090e;
+      font-weight: 800;
+      font-size: 15px;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(0, 240, 255, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-download:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0, 240, 255, 0.5);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 28px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 3D Canvas Box */
+    .viewport-card {
+      position: relative;
+      height: 480px;
+      border-radius: 28px;
+      background: rgba(14, 22, 38, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    }
+    #car-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .canvas-hud {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+    }
+    .canvas-badge {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      letter-spacing: 0.05em;
+    }
+    .canvas-controls {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      background: rgba(7, 10, 18, 0.8);
+      backdrop-filter: blur(12px);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      z-index: 10;
+    }
+    .cam-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .cam-btn:hover, .cam-btn.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Live Telemetry Card */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 80px;
+    }
+    .metric-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .metric-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 240, 255, 0.3);
+    }
+    .metric-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .metric-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .metric-value {
+      font-size: 2.2rem;
+      font-weight: 900;
+      font-family: 'JetBrains Mono', monospace;
+      color: #fff;
+    }
+    .metric-bar {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+    .metric-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+
+    /* Interactive Game Mode Switcher */
+    .turbo-panel {
+      background: linear-gradient(135deg, rgba(14, 24, 44, 0.8), rgba(9, 14, 26, 0.9));
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: 24px;
+      padding: 32px;
+      margin-bottom: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+    }
+    .turbo-meta h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .turbo-meta p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .switch-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .turbo-toggle-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .turbo-toggle-btn.active {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-color: #10b981;
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Download Vault */
+    .vault-section {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 48px;
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .vault-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+    .vault-desc {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 600px;
+      margin: 0 auto 36px;
+    }
+    .vault-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .vault-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s ease;
+    }
+    .vault-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .viewport-card {
+        height: 380px;
+      }
+      .vault-section {
+        padding: 32px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Unified CEO Portfolio Hub Floating Badge -->
+  <a href="../index.html" class="ceo-hub-badge">
+    <span class="pulse-dot"></span>
+    <span>← CEO Portfolio Hub</span>
+    <span style="background:rgba(255,255,255,0.12); padding:2px 7px; border-radius:6px; font-size:11px; color:#cbd5e1;">77 Builds</span>
+  </a>
+
+  <div class="container">
+    <header>
+      <a href="3d-viewer.html" class="nav-btn nav-btn-glass">🏎 Fullscreen 3D Lab</a>
+      <a href="NoutBooster-Setup-4.0-Premium.exe" download class="nav-btn nav-btn-primary">⬇ Windows Setup (.exe)</a>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">⚡ .NET 10 & Win32 Native Kernel Architecture</div>
+        <h1 class="hero-title">NoutBooster MAX <span>4.0 Premium</span></h1>
+        <p class="hero-desc">
+          Enterprise Windows performance suite with ACPI hardware thermal safeguarding, kernel-level game priority scheduling, and real-time 3D Chevrolet Cobalt simulation.
+        </p>
+
+        <div class="hero-actions">
+          <a href="NoutBooster-Setup-4.0-Premium.exe" download class="btn-download">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <span>Download Installer (.EXE)</span>
+          </a>
+          <a href="cobalt.glb" download class="btn-secondary">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/></svg>
+            <span>Cobalt 3D (.GLB)</span>
+          </a>
+        </div>
+
+        <div style="display:flex; gap:20px; font-size:13px; color:var(--text-muted);">
+          <div>✓ Windows 10/11 x64</div>
+          <div>✓ Zero Lag / Anti-Cheat Safe</div>
+          <div>✓ Self-Contained .NET Runtime</div>
+        </div>
+      </div>
+
+      <!-- 3D CAR VIEWPORT -->
+      <div class="viewport-card">
+        <div class="canvas-hud">
+          <div class="canvas-badge">3D COBALT TELEMETRY VIEW</div>
+          <div style="font-size:11px; color:#94a3b8;">Rotate: Drag • Zoom: Wheel</div>
+        </div>
+        <canvas id="car-canvas"></canvas>
+        <div class="canvas-controls">
+          <button class="cam-btn active" data-view="orbit">360° Orbit</button>
+          <button class="cam-btn" data-view="front">Front</button>
+          <button class="cam-btn" data-view="side">Side</button>
+          <button class="cam-btn" data-view="top">Top</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE TELEMETRY SIMULATOR -->
+    <div class="turbo-panel">
+      <div class="turbo-meta">
+        <h3>Game Engine Acceleration</h3>
+        <p>Dynamic thread priority elevation (Above Normal) with automatic power scheme restoration.</p>
+      </div>
+      <div class="switch-group">
+        <span id="turbo-status-text" style="font-weight:700; font-size:14px; color:#94a3b8;">MODE: STANDBY</span>
+        <button id="btn-toggle-turbo" class="turbo-toggle-btn">ACTIVATE GAME BOOST</button>
+      </div>
+    </div>
+
+    <!-- METRICS GRID -->
+    <div class="telemetry-grid">
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">CPU Clock / Load</span>
+          <span style="color:#00f0ff; font-size:12px; font-weight:700;">8 Cores Active</span>
+        </div>
+        <div class="metric-value" id="val-cpu">18%</div>
+        <div class="metric-bar">
+          <div id="bar-cpu" class="metric-bar-fill" style="width:18%; background:#00f0ff;"></div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">ACPI Thermal Zone</span>
+          <span id="tag-temp" style="color:#10b981; font-size:12px; font-weight:700;">Optimal 42°C</span>
+        </div>
+        <div class="metric-value" id="val-temp">42°C</div>
+        <div class="metric-bar">
+          <div id="bar-temp" class="metric-bar-fill" style="width:42%; background:#10b981;"></div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">WorkingSet RAM Cache</span>
+          <span style="color:#a855f7; font-size:12px; font-weight:700;">32GB DDR5</span>
+        </div>
+        <div class="metric-value" id="val-ram">4.2 GB</div>
+        <div class="metric-bar">
+          <div id="bar-ram" class="metric-bar-fill" style="width:26%; background:#a855f7;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOWNLOAD VAULT -->
+    <section class="vault-section">
+      <h2 class="vault-title">Official Artifacts & Builds</h2>
+      <p class="vault-desc">Production binaries and 3D assets ready for deployment, local testing, and fullstack client demonstration.</p>
+
+      <div class="vault-grid">
+        <div class="vault-card">
+          <div style="font-size:32px;">💻</div>
+          <b style="font-size:16px;">Windows Setup</b>
+          <p style="font-size:12px; color:var(--text-muted);">Inno Setup x64 Installer • 67.1 MB</p>
+          <a href="NoutBooster-Setup-4.0-Premium.exe" download class="btn-download" style="padding:10px 20px; font-size:13px; width:100%; justify-content:center;">Download .EXE</a>
+        </div>
+
+        <div class="vault-card">
+          <div style="font-size:32px;">🏎</div>
+          <b style="font-size:16px;">Cobalt 3D Asset</b>
+          <p style="font-size:12px; color:var(--text-muted);">GLTF/GLB Binary Mesh • 88 KB</p>
+          <a href="cobalt.glb" download class="btn-secondary" style="padding:10px 20px; font-size:13px; width:100%; justify-content:center;">Download .GLB</a>
+        </div>
+
+        <div class="vault-card">
+          <div style="font-size:32px;">🌐</div>
+          <b style="font-size:16px;">Fullscreen 3D Viewer</b>
+          <p style="font-size:12px; color:var(--text-muted);">Interactive WebGL orbit canvas</p>
+          <a href="3d-viewer.html" class="btn-secondary" style="padding:10px 20px; font-size:13px; width:100%; justify-content:center;">Launch Viewer</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- THREE.JS 3D SCENE SCRIPT -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+    const canvas = document.getElementById('car-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+    camera.position.set(0, 1.8, 7.5);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 0.7, 0);
+    controls.enableDamping = true;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 2.0;
+
+    // Lighting
+    const ambient = new THREE.AmbientLight(0xffffff, 1.2);
+    scene.add(ambient);
+
+    const dirLight = new THREE.DirectionalLight(0x00f0ff, 2.0);
+    dirLight.position.set(5, 12, 7);
+    dirLight.castShadow = true;
+    scene.add(dirLight);
+
+    const rimLight = new THREE.DirectionalLight(0x3b82f6, 1.5);
+    rimLight.position.set(-6, 6, -6);
+    scene.add(rimLight);
+
+    // Floor grid
+    const grid = new THREE.GridHelper(20, 20, 0x00f0ff, 0x1e293b);
+    grid.position.y = 0;
+    scene.add(grid);
+
+    // Load Cobalt 3D model
+    const loader = new GLTFLoader();
+    let carModel = null;
+
+    loader.load('cobalt.glb', (gltf) => {
+      carModel = gltf.scene;
+      carModel.position.set(0, 0, 0);
+      scene.add(carModel);
+    }, undefined, (err) => {
+      console.warn('3D model fallback:', err);
+      // Fallback procedural car geometry if glb takes time
+      const geo = new THREE.BoxGeometry(3.6, 1.2, 1.8);
+      const mat = new THREE.MeshStandardMaterial({ color: 0x00f0ff, metalness: 0.8, roughness: 0.2 });
+      carModel = new THREE.Mesh(geo, mat);
+      carModel.position.y = 0.6;
+      scene.add(carModel);
+    });
+
+    // Camera preset views
+    document.querySelectorAll('.cam-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cam-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const view = btn.dataset.view;
+
+        controls.autoRotate = false;
+        if (view === 'orbit') {
+          controls.autoRotate = true;
+        } else if (view === 'front') {
+          camera.position.set(0, 1.2, 6.5);
+        } else if (view === 'side') {
+          camera.position.set(6.5, 1.2, 0);
+        } else if (view === 'top') {
+          camera.position.set(0, 7.5, 0.1);
+        }
+        controls.target.set(0, 0.7, 0);
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      if (!canvas.clientWidth || !canvas.clientHeight) return;
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Telemetry & Game Turbo Simulator
+    let isTurbo = false;
+    const btnToggle = document.getElementById('btn-toggle-turbo');
+    const turboText = document.getElementById('turbo-status-text');
+    const valCpu = document.getElementById('val-cpu');
+    const barCpu = document.getElementById('bar-cpu');
+    const valTemp = document.getElementById('val-temp');
+    const barTemp = document.getElementById('bar-temp');
+    const tagTemp = document.getElementById('tag-temp');
+    const valRam = document.getElementById('val-ram');
+    const barRam = document.getElementById('bar-ram');
+
+    btnToggle.addEventListener('click', () => {
+      isTurbo = !isTurbo;
+      btnToggle.classList.toggle('active', isTurbo);
+      btnToggle.textContent = isTurbo ? 'BOOST ACTIVE (Above Normal)' : 'ACTIVATE GAME BOOST';
+      turboText.textContent = isTurbo ? 'STATUS: TURBO BOOSTED' : 'MODE: STANDBY';
+      turboText.style.color = isTurbo ? '#10b981' : '#94a3b8';
+
+      // Send telemetry to API runtime
+      fetch('/api/v1/telemetry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          project: 'portfolio-77-noutbooster',
+          turbo: isTurbo,
+          cpuLoad: isTurbo ? 78 : 18,
+          timestamp: new Date().toISOString()
+        })
+      }).catch(() => {});
+    });
+
+    setInterval(() => {
+      if (isTurbo) {
+        const cpu = Math.floor(70 + Math.random() * 20);
+        valCpu.textContent = cpu + '%';
+        barCpu.style.width = cpu + '%';
+        barCpu.style.background = '#10b981';
+
+        const temp = Math.floor(58 + Math.random() * 8);
+        valTemp.textContent = temp + '°C';
+        barTemp.style.width = temp + '%';
+        tagTemp.textContent = 'High Load ' + temp + '°C';
+
+        valRam.textContent = '2.1 GB';
+        barRam.style.width = '14%';
+      } else {
+        const cpu = Math.floor(14 + Math.random() * 8);
+        valCpu.textContent = cpu + '%';
+        barCpu.style.width = cpu + '%';
+        barCpu.style.background = '#00f0ff';
+
+        const temp = Math.floor(40 + Math.random() * 4);
+        valTemp.textContent = temp + '°C';
+        barTemp.style.width = temp + '%';
+        tagTemp.textContent = 'Optimal ' + temp + '°C';
+
+        valRam.textContent = '4.2 GB';
+        barRam.style.width = '26%';
+      }
+    }, 2000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0B0B12">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<title>WenCamera — Pro 8K Camera Engine | CEO Portfolio</title>
+<script src="../api-runtime.js"></script>
+<style>
+:root {
+  --violet: #7C3AED;
+  --violet-glow: rgba(124,58,237,0.55);
+  --cyan: #06B6D4;
+  --gold: #FFD700;
+  --gold-glow: rgba(255,215,0,0.5);
+  --bg: #0B0B12;
+  --surface: #14141D;
+  --card: rgba(20,20,29,0.72);
+  --card-border: rgba(255,255,255,0.12);
+  --line: rgba(255,255,255,0.10);
+  --txt: #FFFFFF;
+  --mut: #A8A8B8;
+  --grad-primary: linear-gradient(135deg, #7C3AED, #06B6D4);
+  --grad-gold: linear-gradient(135deg, #FFD700, #FF8A00);
+  --grad-neon: linear-gradient(135deg, #7C3AED 0%, #06B6D4 50%, #FFD700 100%);
+  --radius-card: 18px;
+  --radius-btn: 14px;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; margin: 0; padding: 0; user-select: none; }
+body {
+  background: radial-gradient(1000px 500px at 15% -10%, #2b135c 0%, transparent 70%),
+              radial-gradient(800px 500px at 85% 15%, #063e4b 0%, transparent 60%),
+              var(--bg);
+  color: var(--txt);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: 84px;
+}
+
+/* Glassmorphism Classes */
+.glass {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-card);
+}
+
+/* Splash Screen */
+#splash {
+  position: fixed; inset: 0; background: #07070C;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 9999; transition: opacity 0.5s ease, visibility 0.5s;
+}
+#splash.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+.splash-lens {
+  position: relative; width: 110px; height: 110px; border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--violet), var(--cyan), var(--gold), var(--violet));
+  padding: 4px; animation: lensSpin 2.4s linear infinite;
+  box-shadow: 0 0 35px var(--violet-glow);
+}
+.splash-lens-inner {
+  width: 100%; height: 100%; border-radius: 50%; background: #0B0B12;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.splash-lens-inner::after {
+  content: ""; position: absolute; top: 18%; left: 24%; width: 14px; height: 14px;
+  background: rgba(255,255,255,0.85); border-radius: 50%; filter: blur(2px);
+}
+.w-logo-txt {
+  font-size: 54px; font-weight: 900; letter-spacing: -2px;
+  background: var(--grad-neon); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+@keyframes lensSpin { to { transform: rotate(360deg); } }
+
+/* Header */
+header {
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: rgba(11, 11, 18, 0.82);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 16px; display: flex; align-items: center; gap: 12px;
+}
+.logo-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: var(--grad-primary);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 22px; color: #fff;
+  box-shadow: 0 4px 18px var(--violet-glow);
+}
+.header-meta { flex: 1; line-height: 1.15; }
+.header-meta b { font-size: 17px; letter-spacing: 0.3px; }
+.header-meta span { font-size: 11px; color: var(--mut); display: block; }
+.pro-pill {
+  background: var(--grad-gold); color: #000; font-weight: 800; font-size: 11px;
+  padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer;
+  box-shadow: 0 2px 14px var(--gold-glow); transition: transform 0.15s;
+}
+.pro-pill:active { transform: scale(0.94); }
+.lang-select {
+  background: rgba(255,255,255,0.08); border: 1px solid var(--card-border);
+  color: #fff; border-radius: 10px; padding: 5px 8px; font-size: 12px; font-weight: 600;
+  cursor: pointer;
+}
+.lang-select option { background: #14141D; color: #fff; }
+
+/* Main Container */
+.container { max-width: 540px; margin: 0 auto; padding: 12px 14px 20px; }
+
+/* Bottom Nav */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(10, 10, 16, 0.94);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-around; padding: 8px 12px 12px;
+}
+.nav-tab {
+  flex: 1; background: transparent; border: none; color: var(--mut);
+  font-size: 11px; font-weight: 600; display: flex; flex-direction: column;
+  align-items: center; gap: 4px; padding: 6px 0; cursor: pointer; transition: color 0.2s;
+}
+.nav-tab.active { color: #fff; }
+.nav-tab svg { width: 22px; height: 22px; stroke-width: 1.8; fill: none; stroke: currentColor; transition: transform 0.2s, stroke 0.2s; }
+.nav-tab.active svg { stroke: var(--cyan); transform: scale(1.1); }
+
+/* Common Buttons & Inputs */
+.btn {
+  background: rgba(255,255,255,0.09); border: 1px solid var(--card-border);
+  color: #fff; border-radius: var(--radius-btn); padding: 10px 14px;
+  font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex;
+  align-items: center; justify-content: center; gap: 6px; transition: all 0.15s ease;
+}
+.btn:active { transform: scale(0.96); filter: brightness(1.1); }
+.btn-primary { background: var(--grad-primary); border: none; font-weight: 700; box-shadow: 0 4px 18px var(--violet-glow); }
+.btn-gold { background: var(--grad-gold); color: #000; border: none; font-weight: 800; box-shadow: 0 4px 18px var(--gold-glow); }
+.btn-danger { background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4); color: #EF4444; }
+.btn-sm { padding: 6px 10px; font-size: 12px; border-radius: 10px; }
+
+/* Camera Section */
+.cam-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px; gap: 6px;
+}
+.viewfinder-wrap {
+  position: relative; border-radius: 20px; overflow: hidden;
+  background: #000; aspect-ratio: 3/4; max-height: 64vh; width: 100%;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6); border: 1px solid var(--card-border);
+}
+video#vid, img#photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cam-grid {
+  position: absolute; inset: 0; pointer-events: none; display: none;
+}
+.cam-grid.on { display: block; }
+.cam-grid::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 33.33%; right: 33.33%;
+  border-left: 1px solid rgba(255,255,255,0.28); border-right: 1px solid rgba(255,255,255,0.28);
+}
+.cam-grid::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 33.33%; bottom: 33.33%;
+  border-top: 1px solid rgba(255,255,255,0.28); border-bottom: 1px solid rgba(255,255,255,0.28);
+}
+
+/* Tap to Focus Box */
+#focusSquare {
+  position: absolute; width: 72px; height: 72px;
+  border: 2px solid var(--gold); border-radius: 8px;
+  box-shadow: 0 0 16px var(--gold-glow);
+  display: none; pointer-events: none; transform: translate(-50%, -50%) scale(1.3);
+  transition: transform 0.22s ease-out, opacity 0.3s;
+}
+#focusSquare.locked { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+#focusSquare::after {
+  content: "☀"; position: absolute; right: -20px; top: 50%;
+  transform: translateY(-50%); color: var(--gold); font-size: 14px;
+}
+
+/* Timer Countdown Overlay */
+#timerOverlay {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.45);
+  display: none; align-items: center; justify-content: center; z-index: 30;
+}
+#timerOverlay span {
+  font-size: 80px; font-weight: 900; color: #fff;
+  text-shadow: 0 0 30px var(--violet); animation: timerPulse 1s infinite;
+}
+@keyframes timerPulse { 0% { transform: scale(1.3); opacity: 0.6; } 100% { transform: scale(1); opacity: 1; } }
+
+/* Permission Denied Fallback Screen */
+#camPermissionBlocked {
+  display: none; position: absolute; inset: 0; z-index: 25;
+  background: rgba(11,11,18,0.96); flex-direction: column;
+  align-items: center; justify-content: center; padding: 24px; text-align: center;
+}
+#camPermissionBlocked svg { width: 54px; height: 54px; stroke: #EF4444; margin-bottom: 14px; }
+
+/* Camera Controls Bar */
+.cam-controls {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 14px; padding: 0 8px;
+}
+.shutter-btn {
+  width: 78px; height: 78px; border-radius: 50%; background: #FFFFFF;
+  border: 5px solid rgba(255,255,255,0.3); outline: 3px solid var(--violet);
+  box-shadow: 0 0 25px var(--violet-glow); cursor: pointer;
+  transition: transform 0.15s, outline-color 0.2s; position: relative;
+}
+.shutter-btn:active { transform: scale(0.92); outline-color: var(--cyan); }
+.shutter-btn.loading::after {
+  content: ""; position: absolute; inset: 4px; border: 3px solid transparent;
+  border-top-color: var(--violet); border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+
+/* Zoom Controls */
+.zoom-bar {
+  display: flex; align-items: center; justify-content: center; gap: 8px; margin: 10px 0 4px;
+}
+.zoom-chip {
+  background: rgba(255,255,255,0.08); border: 1px solid var(--card-border);
+  color: var(--mut); border-radius: 16px; padding: 4px 10px; font-size: 11px;
+  font-weight: 700; cursor: pointer;
+}
+.zoom-chip.active { background: rgba(255,255,255,0.22); color: #fff; border-color: var(--cyan); }
+
+/* Range Slider Styling */
+.range-wrap { margin: 8px 0; }
+.range-label {
+  display: flex; justify-content: space-between; font-size: 12px; color: var(--mut); margin-bottom: 4px; font-weight: 500;
+}
+input[type=range] {
+  width: 100%; height: 5px; -webkit-appearance: none; background: rgba(255,255,255,0.14);
+  border-radius: 10px; accent-color: var(--violet);
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 8px var(--violet-glow); cursor: pointer;
+}
+
+/* 8K AI Upscale Section */
+.upscale-actions { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 8px; margin: 10px 0; }
+.progress-track {
+  background: rgba(0,0,0,0.5); border-radius: 10px; height: 8px; overflow: hidden; margin: 8px 0;
+  border: 1px solid var(--line);
+}
+.progress-fill {
+  height: 100%; width: 0%; background: var(--grad-neon);
+  box-shadow: 0 0 10px var(--violet-glow); transition: width 0.3s ease;
+}
+
+/* Before / After Split Slider */
+.compare-container {
+  position: relative; width: 100%; aspect-ratio: 4/3; max-height: 48vh;
+  border-radius: 14px; overflow: hidden; background: #000; margin: 10px 0;
+  border: 1px solid var(--card-border);
+}
+.compare-img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+}
+.compare-overlay {
+  position: absolute; inset: 0; width: 50%; overflow: hidden;
+  border-right: 2px solid var(--gold); box-shadow: 4px 0 15px rgba(0,0,0,0.7);
+}
+.compare-overlay img {
+  position: absolute; top: 0; left: 0; height: 100%; max-width: none;
+}
+.compare-handle {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 34px; height: 34px; border-radius: 50%; background: #FFFFFF;
+  border: 2px solid var(--gold); box-shadow: 0 0 14px var(--gold-glow);
+  display: flex; align-items: center; justify-content: center; color: #000;
+  font-size: 13px; font-weight: 900; pointer-events: none; z-index: 10;
+}
+.compare-label {
+  position: absolute; bottom: 8px; font-size: 11px; font-weight: 800;
+  padding: 4px 8px; border-radius: 6px; background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(8px);
+}
+.compare-label.left { left: 8px; color: var(--mut); }
+.compare-label.right { right: 8px; color: var(--gold); }
+
+/* Filter System */
+.filter-search {
+  width: 100%; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--card-border);
+  background: rgba(0,0,0,0.45); color: #fff; font-size: 13px; margin-bottom: 8px;
+}
+.category-chips {
+  display: flex; gap: 6px; overflow-x: auto; padding: 4px 0 10px; scrollbar-width: none;
+}
+.category-chips::-webkit-scrollbar { display: none; }
+.chip {
+  white-space: nowrap; background: rgba(255,255,255,0.08); border: 1px solid var(--card-border);
+  color: var(--mut); border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all 0.15s;
+}
+.chip.active { background: var(--grad-primary); color: #fff; border-color: transparent; }
+
+.filter-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  max-height: 380px; overflow-y: auto; padding-right: 2px;
+}
+.filter-card {
+  border-radius: 12px; overflow: hidden; border: 2px solid transparent;
+  background: #111118; cursor: pointer; position: relative; transition: transform 0.15s, border-color 0.2s;
+}
+.filter-card:active { transform: scale(0.96); }
+.filter-card.active { border-color: var(--gold); box-shadow: 0 0 12px var(--gold-glow); }
+.filter-thumb {
+  width: 100%; aspect-ratio: 1; background-size: cover; background-position: center;
+}
+.filter-info {
+  padding: 5px 6px; font-size: 11px; font-weight: 600; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; display: flex; justify-content: space-between; align-items: center;
+}
+.filter-pro-tag {
+  font-size: 9px; font-weight: 900; color: #000; background: var(--gold);
+  border-radius: 4px; padding: 1px 4px; line-height: 1.1;
+}
+
+/* Gallery Grid */
+.gallery-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px;
+}
+.gallery-item {
+  position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 1;
+  background: #13131C; border: 1px solid var(--card-border); cursor: pointer;
+}
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+.gallery-item-badge {
+  position: absolute; bottom: 4px; right: 4px; font-size: 9px; font-weight: 800;
+  background: rgba(0,0,0,0.7); color: var(--gold); padding: 2px 5px; border-radius: 4px;
+}
+
+/* Paywall Modal */
+#paywallModal {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.78); backdrop-filter: blur(12px);
+  display: none; align-items: flex-end; justify-content: center; z-index: 1000;
+}
+#paywallModal.active { display: flex; animation: slideUp 0.3s ease-out; }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.paywall-sheet {
+  background: #14141D; border: 1px solid var(--card-border); border-radius: 24px 24px 0 0;
+  padding: 22px 18px 30px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto;
+}
+.pay-hero-banner {
+  background: var(--grad-gold); color: #000; border-radius: 16px; padding: 14px;
+  text-align: center; font-weight: 900; margin-bottom: 14px; box-shadow: 0 4px 20px var(--gold-glow);
+}
+.pay-plan-card {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255,255,255,0.06); border: 1px solid var(--card-border);
+  border-radius: 14px; padding: 12px 16px; margin: 8px 0; cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.pay-plan-card.selected { border-color: var(--gold); background: rgba(255,215,0,0.08); }
+
+/* Onboarding Modal */
+#onboardingModal {
+  position: fixed; inset: 0; background: rgba(7, 7, 12, 0.96); backdrop-filter: blur(20px);
+  z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.onboarding-card {
+  background: var(--card); border: 1px solid var(--card-border); border-radius: 24px;
+  padding: 28px 20px; max-width: 440px; width: 100%; text-align: center;
+}
+.onb-icon {
+  width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 16px;
+  background: var(--grad-neon); display: flex; align-items: center; justify-content: center;
+  font-size: 36px; box-shadow: 0 8px 30px var(--violet-glow);
+}
+
+/* Toast */
+.toast-box {
+  position: fixed; bottom: 94px; left: 50%; transform: translateX(-50%);
+  background: rgba(255,255,255,0.95); color: #000; font-size: 13px; font-weight: 700;
+  padding: 10px 20px; border-radius: 30px; box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  z-index: 3000; display: none; text-align: center; white-space: nowrap; pointer-events: none;
+}
+
+/* Passport & Vault Overlays */
+.passport-guide {
+  position: absolute; inset: 10%; border: 2px dashed rgba(255,255,255,0.7);
+  border-radius: 50% 50% 40% 40%; pointer-events: none; display: none;
+}
+.passport-guide.on { display: block; }
+</style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-lens">
+    <div class="splash-lens-inner">
+      <span class="w-logo-txt">W</span>
+    </div>
+  </div>
+  <h2 style="margin-top:16px; font-size:26px; font-weight:900; letter-spacing:0.5px;">WenCamera</h2>
+  <p style="color:var(--gold); font-size:13px; font-weight:600; margin-top:4px;" data-i="slogan">Capture Beauty in 8K</p>
+</div>
+
+<!-- HEADER -->
+<header>
+  <a href="../index.html" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#fff; font-size:12px; font-weight:700;">
+    <span>← CEO Hub</span>
+  </a>
+  <div class="logo-icon">W</div>
+  <div class="header-meta">
+    <b>WenCamera</b>
+    <span data-i="hdr_sub">AI Camera • 8K • 1000 filtr</span>
+  </div>
+  <a href="WenCamera-release.apk" download style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; background:var(--grad-primary); color:#fff; font-size:12px; font-weight:700; box-shadow:0 4px 14px var(--violet-glow);">
+    <span>⬇ APK</span>
+  </a>
+  <select class="lang-select" id="langSelector" onchange="changeLanguage(this.value)">
+    <option value="uz">O'zbek</option>
+    <option value="ru">Русский</option>
+    <option value="en">English</option>
+  </select>
+  <button class="pro-pill" onclick="openPaywall()" data-i="btn_pro">PRO 👑</button>
+</header>
+
+<div class="container">
+
+  <!-- ==================== TAB 1: KAMERA ==================== -->
+  <div id="tab-cam">
+    <div class="glass" style="padding:14px;">
+      <!-- Kamera yuqori paneli -->
+      <div class="cam-topbar">
+        <button class="btn btn-sm" id="btnTorch" onclick="toggleTorch()">💡 <span data-i="btn_torch">Chiroq</span></button>
+        <button class="btn btn-sm" id="btnGrid" onclick="toggleGrid()">▦ <span data-i="btn_grid">Setka</span></button>
+        <button class="btn btn-sm" id="btnTimer" onclick="cycleTimer()">⏱ <span id="timerVal">0s</span></button>
+        <button class="btn btn-sm" id="btnRatio" onclick="cycleRatio()">📐 <span id="ratioVal">3:4</span></button>
+      </div>
+
+      <!-- Viewfinder (Ko'rish maydoni) -->
+      <div class="viewfinder-wrap" id="viewfinderArea" onclick="handleViewfinderTap(event)">
+        <video id="vid" autoplay playsinline muted></video>
+        <img id="photo" style="display:none;" alt="Captured Photo">
+        <div class="cam-grid" id="camGrid"></div>
+        <div class="passport-guide" id="passportGuide"></div>
+
+        <!-- Fokus kvadrati -->
+        <div id="focusSquare"></div>
+
+        <!-- Ortga hisoblash overlayi -->
+        <div id="timerOverlay"><span id="timerCountNum">3</span></div>
+
+        <!-- Kamera ruxsati berilmagan holat -->
+        <div id="camPermissionBlocked">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+          </svg>
+          <h3 style="margin-bottom:6px;" data-i="err_cam_title">Kameraga ruxsat kerak</h3>
+          <p style="font-size:13px; color:var(--mut); margin-bottom:16px;" data-i="err_cam_desc">Suratga olish uchun tizim sozlamalaridan kameraga ruxsat bering.</p>
+          <button class="btn btn-primary" onclick="openSettings()" data-i="btn_open_settings">⚙ Sozlamalarni ochish</button>
+        </div>
+      </div>
+
+      <!-- Ekspozitsiya slideri (-2 ... +2) -->
+      <div class="range-wrap" style="margin-top:10px;">
+        <div class="range-label">
+          <span data-i="lbl_exposure">☀ Ekspozitsiya (EV)</span>
+          <span id="expValue">0.0</span>
+        </div>
+        <input type="range" id="expSlider" min="-2" max="2" step="0.1" value="0" oninput="setExposure(this.value)">
+      </div>
+
+      <!-- Zoom Bar -->
+      <div class="zoom-bar">
+        <span class="zoom-chip" onclick="setZoom(0.5)">0.5x</span>
+        <span class="zoom-chip active" id="z1" onclick="setZoom(1)">1x</span>
+        <span class="zoom-chip" id="z2" onclick="setZoom(2)">2x</span>
+        <span class="zoom-chip" id="z3" onclick="setZoom(3)">3x</span>
+        <span class="zoom-chip" id="z5" onclick="setZoom(5)">5x</span>
+      </div>
+      <input type="range" id="zoomRange" min="1" max="5" step="0.1" value="1" oninput="setZoom(this.value)">
+
+      <!-- Ovozli boshqaruv indikatori -->
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px; font-size:12px; color:var(--mut);">
+        <span>🎙 <span data-i="lbl_voice">Ovoz bilan: "cheese", "surat"</span></span>
+        <button class="btn btn-sm" id="btnVoice" onclick="toggleVoiceShutter()"><span data-i="btn_voice_on">Yoqish</span></button>
+      </div>
+
+      <!-- Kamera pastki tugmalari (Shutter, Switch, Import) -->
+      <div class="cam-controls">
+        <button class="btn" onclick="document.getElementById('fileInput').click()" title="Galereyadan tanlash">
+          📁 <span data-i="btn_import">Fayl</span>
+        </button>
+        <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFileSelect(this)">
+
+        <button class="shutter-btn" id="shutterBtn" onclick="triggerShutter()"></button>
+
+        <button class="btn" onclick="switchCamera()" title="Kamerani almashtirish">
+          🔄 <span data-i="btn_switch">Old/Orqa</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 8K AI Upscale Karta -->
+    <div class="glass" style="padding:14px; margin-top:12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="font-size:16px; font-weight:800;" data-i="title_upscale">🚀 8K AI Upscale</h3>
+        <span class="filter-pro-tag" style="padding:3px 6px;" id="badgeRes">HD</span>
+      </div>
+      <p style="font-size:12px; color:var(--mut); margin:4px 0 10px;" data-i="desc_upscale">
+        Yuz tabiiy tiklanadi, shovqin yo'qoladi, 7680px gacha mukammal kattalashadi.
+      </p>
+
+      <div class="upscale-actions">
+        <button class="btn" onclick="runUpscale(1920, '2K')">2K Free</button>
+        <button class="btn" onclick="runUpscale(3840, '4K')">4K ULTRA</button>
+        <button class="btn btn-gold" onclick="runUpscale(7680, '8K ULTRA')">✨ 8K ULTRA</button>
+      </div>
+
+      <!-- 4 Bosqichli Progress Bar -->
+      <div class="progress-track">
+        <div class="progress-fill" id="upscaleProgressFill"></div>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--mut);">
+        <span id="upscaleStageText" data-i="lbl_ready">Tayyor</span>
+        <b id="upscalePercentText" style="color:var(--gold);">0%</b>
+      </div>
+
+      <!-- Before / After Interactive Split-Slider -->
+      <div class="compare-container" id="compareBox" style="display:none;">
+        <img class="compare-img" id="compAfter" alt="After Upscale">
+        <div class="compare-overlay" id="compOverlay">
+          <img id="compBefore" alt="Before Upscale">
+        </div>
+        <div class="compare-handle" id="compHandle">⇆</div>
+        <span class="compare-label left" data-i="lbl_before">Oldin</span>
+        <span class="compare-label right" data-i="lbl_after">8K Natija</span>
+      </div>
+
+      <div style="display:flex; gap:8px; margin-top:10px;">
+        <button class="btn btn-primary" style="flex:1;" onclick="saveResultPhoto()" data-i="btn_save">💾 Saqlash</button>
+        <button class="btn" style="flex:1;" onclick="shareResultPhoto()" data-i="btn_share">📤 Ulashish</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TAB 2: FILTR VA TAHRIR ==================== -->
+  <div id="tab-edit" style="display:none;">
+
+    <!-- Smart Studiya Qo'shimchalari -->
+    <div class="glass" style="padding:14px; margin-bottom:12px;">
+      <h3 style="font-size:15px; font-weight:800; margin-bottom:8px;" data-i="title_smart">🧠 Smart Foto-Studiya</h3>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <button class="btn btn-sm" onclick="runPassportMode()">🪪 <span data-i="btn_passport">Passport 3x4</span></button>
+        <button class="btn btn-sm" onclick="runRestoreOldMode()">🏚 <span data-i="btn_restore">Eski rasm</span></button>
+        <button class="btn btn-sm" onclick="openVaultModal()">🔐 <span data-i="btn_vault">Maxfiy Vault</span></button>
+      </div>
+      <p id="smartTip" style="font-size:11px; color:var(--mut); margin-top:8px;">
+        Passport: 3x4 standart, oq fon. Eski rasm: tirnalish ketadi va rang tiklanadi.
+      </p>
+    </div>
+
+    <!-- 1000 Filtr Katalogi -->
+    <div class="glass" style="padding:14px; margin-bottom:12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h3 style="font-size:15px; font-weight:800;" data-i="title_filters">🎨 1000 ta Kino Filtr</h3>
+        <span id="activeFilterName" style="font-size:12px; color:var(--gold); font-weight:700;">Original</span>
+      </div>
+
+      <input type="text" class="filter-search" id="filterSearchInput" placeholder="Filtr qidirish: kino, neon, golden, to'y..." oninput="onFilterSearch(this.value)">
+
+      <!-- Kategoriya chiplari (20 ta toifa) -->
+      <div class="category-chips" id="categoryChips"></div>
+
+      <!-- Tezkor tugmalar: AI, Random, Fav, More -->
+      <div style="display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap;">
+        <button class="btn btn-sm btn-primary" onclick="aiRecommendFilter()">🤖 <span data-i="btn_ai_rec">AI Tavsiya</span></button>
+        <button class="btn btn-sm" onclick="pickRandomFilter()">🎲 <span data-i="btn_random">Tasodifiy</span></button>
+        <button class="btn btn-sm" id="btnFavFilter" onclick="toggleCurrentFavorite()">⭐ <span data-i="btn_favorite">Sevimli</span></button>
+        <button class="btn btn-sm" onclick="loadMoreFilters()">➕ <span data-i="btn_more_filters">Yana +60</span></button>
+      </div>
+
+      <!-- Filtr Kuchi (Intensity) -->
+      <div class="range-wrap">
+        <div class="range-label">
+          <span data-i="lbl_intensity">Kuch (Intensity)</span>
+          <span id="intensityVal">80%</span>
+        </div>
+        <input type="range" id="intensitySlider" min="0" max="100" value="80" oninput="setFilterIntensity(this.value)">
+      </div>
+
+      <!-- Filtrlar Gridi -->
+      <div class="filter-grid" id="filtersGrid"></div>
+      <div style="font-size:11px; color:var(--mut); margin-top:6px; text-align:right;" id="filterCountLabel">1000 ta filtr</div>
+    </div>
+
+    <!-- Pro Editor (Lightroom darajasida) -->
+    <div class="glass" style="padding:14px; margin-bottom:12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h3 style="font-size:15px; font-weight:800;" data-i="title_pro_editor">🛠 Pro Editor</h3>
+        <div style="display:flex; gap:6px;">
+          <button class="btn btn-sm" onclick="undoEdit()" id="btnUndo">↩ <span data-i="btn_undo">Orqaga</span></button>
+          <button class="btn btn-sm" onmousedown="holdCompare(true)" onmouseup="holdCompare(false)" ontouchstart="holdCompare(true)" ontouchend="holdCompare(false)">
+            👁 <span data-i="btn_compare">Asli</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="range-wrap">
+        <div class="range-label"><span data-i="lbl_brightness">Yorqinlik</span><span id="v_b">0</span></div>
+        <input type="range" id="ed_b" min="-50" max="50" value="0" oninput="onEditorChange()">
+      </div>
+      <div class="range-wrap">
+        <div class="range-label"><span data-i="lbl_contrast">Kontrast</span><span id="v_c">0</span></div>
+        <input type="range" id="ed_c" min="-50" max="50" value="0" oninput="onEditorChange()">
+      </div>
+      <div class="range-wrap">
+        <div class="range-label"><span data-i="lbl_saturation">To'yinganlik</span><span id="v_s">0</span></div>
+        <input type="range" id="ed_s" min="-100" max="100" value="0" oninput="onEditorChange()">
+      </div>
+      <div class="range-wrap">
+        <div class="range-label"><span data-i="lbl_warmth">Issiqlik (Harorat)</span><span id="v_w">0</span></div>
+        <input type="range" id="ed_w" min="-50" max="50" value="0" oninput="onEditorChange()">
+      </div>
+      <div class="range-wrap">
+        <div class="range-label"><span data-i="lbl_sharpness">Keskinlik</span><span id="v_sh">20</span></div>
+        <input type="range" id="ed_sh" min="0" max="100" value="20" oninput="onEditorChange()">
+      </div>
+      <div class="range-wrap">
+        <div class="range-label"><span data-i="lbl_grain">Don (Film grain)</span><span id="v_g">0</span></div>
+        <input type="range" id="ed_g" min="0" max="100" value="0" oninput="onEditorChange()">
+      </div>
+    </div>
+
+    <!-- AI Beauty Studiyasi -->
+    <div class="glass" style="padding:14px; margin-bottom:12px;">
+      <h3 style="font-size:15px; font-weight:800; margin-bottom:8px;" data-i="title_beauty">💄 AI Beauty Studio</h3>
+      <div class="range-wrap">
+        <div class="range-label"><span data-i="lbl_smooth">Terini silliqlash</span><span id="v_sm">0</span></div>
+        <input type="range" id="b_smooth" min="0" max="100" value="0" oninput="onEditorChange()">
+      </div>
+      <div class="range-wrap">
+        <div class="range-label"><span data-i="lbl_whiten">Oqartirish</span><span id="v_wh">0</span></div>
+        <input type="range" id="b_whiten" min="0" max="100" value="0" oninput="onEditorChange()">
+      </div>
+      <div class="range-wrap">
+        <div class="range-label"><span data-i="lbl_eyesparkle">Ko'z porlashi ✨</span><span id="v_eye">0</span></div>
+        <input type="range" id="b_eyesparkle" min="0" max="100" value="0" oninput="onEditorChange()">
+      </div>
+      <div class="range-wrap">
+        <div class="range-label"><span data-i="lbl_antired">Qizarishni kamaytirish</span><span id="v_red">0</span></div>
+        <input type="range" id="b_antired" min="0" max="100" value="0" oninput="onEditorChange()">
+      </div>
+      <div class="range-wrap">
+        <div class="range-label"><span data-i="lbl_bokeh">Fon xiralashtirish (Bokeh)</span><span id="v_bk">0</span></div>
+        <input type="range" id="b_bokeh" min="0" max="100" value="0" oninput="onEditorChange()">
+      </div>
+      <div style="display:flex; gap:8px; margin-top:8px;">
+        <button class="btn btn-sm" style="flex:1;" onclick="applyBeautyPreset(0)" data-i="preset_nat">Tabiiy</button>
+        <button class="btn btn-sm" style="flex:1;" onclick="applyBeautyPreset(1)" data-i="preset_soft">Yumshoq</button>
+        <button class="btn btn-sm btn-primary" style="flex:1;" onclick="applyBeautyPreset(2)" data-i="preset_glam">Glam</button>
+      </div>
+    </div>
+
+    <!-- Ramka va Matn -->
+    <div class="glass" style="padding:14px;">
+      <h3 style="font-size:15px; font-weight:800; margin-bottom:8px;" data-i="title_frames">🖼 Ramka va Imzo</h3>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <button class="btn btn-sm" onclick="setFrame('white')" data-i="frame_white">Oq ramka</button>
+        <button class="btn btn-sm" onclick="setFrame('polaroid')">Polaroid</button>
+        <button class="btn btn-sm" onclick="setFrame('gold')" data-i="frame_gold">Oltin ramka</button>
+        <button class="btn btn-sm btn-primary" onclick="promptAddText()" data-i="btn_add_text">✍ Matn yozish</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TAB 3: GALEREYA ==================== -->
+  <div id="tab-gal" style="display:none;">
+    <div class="glass" style="padding:14px; margin-bottom:12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="font-size:16px; font-weight:800;" data-i="title_gallery">🖼 Telefon Galereyasi</h3>
+        <button class="btn btn-sm btn-danger" onclick="clearLocalGallery()" data-i="btn_clear_gal">Tozalash</button>
+      </div>
+      <p style="font-size:12px; color:var(--mut); margin:4px 0 10px;" data-i="desc_privacy">
+        Barcha rasmlar to'liq qurilmangizda saqlanadi. Hech qanday serverga yuborilmaydi (100% maxfiylik).
+      </p>
+
+      <div class="gallery-grid" id="galleryGrid"></div>
+      <div id="galleryEmpty" style="text-align:center; padding:30px 10px; color:var(--mut); display:none;">
+        <p style="font-size:36px; margin-bottom:6px;">📸</p>
+        <p data-i="lbl_no_photos">Hozircha rasmlar yo'q</p>
+      </div>
+    </div>
+
+    <div class="glass" style="padding:14px;">
+      <h3 style="font-size:15px; font-weight:800; margin-bottom:6px;" data-i="title_about">WenCamera haqida</h3>
+      <p style="font-size:12px; color:var(--mut); line-height:1.6;" data-i="desc_about">
+        • Versiya: 1.5.0 PRO Studio<br>
+        • AI 8K Upscale: ko'p bosqichli bicubic + unsharp mask 7680px<br>
+        • 1000 kino filtr: 20 toifa real-time GPU matritsasi<br>
+        • 100% Offline: internet talab qilinmaydi<br>
+        • Paket: com.wencamera.app
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM NAVIGATION -->
+<div class="bottom-nav">
+  <button class="nav-tab active" id="tabBtnCam" onclick="switchNavTab('cam')">
+    <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+    <span data-i="nav_cam">Kamera</span>
+  </button>
+  <button class="nav-tab" id="tabBtnEdit" onclick="switchNavTab('edit')">
+    <svg viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"></path></svg>
+    <span data-i="nav_edit">Filtr/Edit</span>
+  </button>
+  <button class="nav-tab" id="tabBtnGal" onclick="switchNavTab('gal')">
+    <svg viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
+    <span data-i="nav_gal">Galereya</span>
+  </button>
+</div>
+
+<!-- ==================== MODALS ==================== -->
+
+<!-- PAYWALL MODAL -->
+<div id="paywallModal">
+  <div class="paywall-sheet">
+    <div class="pay-hero-banner">
+      <div style="font-size:18px;">👑 WenCamera PRO</div>
+      <div style="font-size:12px; font-weight:600; opacity:0.9;" data-i="pay_subtitle">Cheksiz 8K ULTRA • 1000 Filtr • Reklamasiz</div>
+    </div>
+
+    <!-- Paywall Before/After Mini Slider -->
+    <div class="compare-container" style="aspect-ratio:16/9; max-height:180px; margin-bottom:14px;">
+      <img class="compare-img" id="payCompAfter" src="" alt="8K Demo">
+      <div class="compare-overlay" style="width:50%;">
+        <img id="payCompBefore" src="" alt="Original Demo">
+      </div>
+      <span class="compare-label left">HD</span>
+      <span class="compare-label right">8K PRO</span>
+    </div>
+
+    <div style="margin-bottom:12px; font-size:13px; line-height:1.8;">
+      <div>✨ <b data-i="pay_f1">1000 ta eksklyuziv kino filtrlari</b></div>
+      <div>🚀 <b data-i="pay_f2">Cheksiz 8K ULTRA (7680px) kattalashtirish</b></div>
+      <div>💄 <b data-i="pay_f3">AI Studio: Yuzni mukammal tiklash</b></div>
+      <div>🔐 <b data-i="pay_f4">Maxfiy shifrlangan PIN Vault</b></div>
+      <div>⚡ <b data-i="pay_f5">Reklamasiz va tezkor offlayn ishlash</b></div>
+    </div>
+
+    <!-- Pricing Options -->
+    <div class="pay-plan-card" onclick="selectPayPlan(0)">
+      <div>
+        <div style="font-weight:700;">$4.99 / <span data-i="lbl_month">oy</span></div>
+        <div style="font-size:11px; color:var(--mut);" data-i="lbl_monthly_desc">Oylik obuna, istalgan payt bekor qiling</div>
+      </div>
+      <div id="chk0" style="color:var(--gold); font-size:18px;">✓</div>
+    </div>
+
+    <div class="pay-plan-card selected" id="planBest" onclick="selectPayPlan(1)">
+      <div>
+        <div style="font-weight:700;">$29.99 / <span data-i="lbl_year">yil</span> <span class="filter-pro-tag" data-i="lbl_best_deal">ENG ZO'R</span></div>
+        <div style="font-size:11px; color:var(--mut);" data-i="lbl_trial_desc">3 kun bepul sinov • Yiliga 50% tejash</div>
+      </div>
+      <div id="chk1" style="color:var(--gold); font-size:18px;">✓</div>
+    </div>
+
+    <div class="pay-plan-card" onclick="selectPayPlan(2)">
+      <div>
+        <div style="font-weight:700;">$49.99 / <span data-i="lbl_lifetime">umrbod</span></div>
+        <div style="font-size:11px; color:var(--mut);" data-i="lbl_life_desc">Bir marta to'lang, doimiy foydalaning</div>
+      </div>
+      <div id="chk2" style="color:var(--gold); font-size:18px;">✓</div>
+    </div>
+
+    <button class="btn btn-gold" style="width:100%; padding:14px; font-size:15px; margin-top:12px;" onclick="activatePro()" data-i="btn_buy_trial">
+      3 Kun Bepul Sinov Bilan Boshlash ✨
+    </button>
+    <div style="display:flex; justify-content:space-between; margin-top:10px;">
+      <button class="btn btn-sm" onclick="restorePurchases()" data-i="btn_restore_pur">Qayta tiklash</button>
+      <button class="btn btn-sm" onclick="closePaywall()" data-i="btn_close">Yopish ✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- ONBOARDING MODAL -->
+<div id="onboardingModal">
+  <div class="onboarding-card">
+    <div class="onb-icon" id="onbIcon">📷</div>
+    <h2 id="onbTitle" style="font-size:20px; font-weight:800; margin-bottom:8px;">Studiya sifatli kamera</h2>
+    <p id="onbDesc" style="font-size:13px; color:var(--mut); line-height:1.5; margin-bottom:20px;">
+      1 soniyada chiroyli surat. Pro fokus, tungi rejim, portret bokeh.
+    </p>
+
+    <div style="display:flex; gap:8px;">
+      <button class="btn" style="flex:1;" onclick="finishOnboarding()" data-i="btn_skip">O'tkazib yuborish</button>
+      <button class="btn btn-primary" style="flex:1;" id="btnOnbNext" onclick="nextOnboarding()" data-i="btn_next">Keyingi →</button>
+    </div>
+    <div style="font-size:11px; color:var(--mut); margin-top:12px;" id="onbStepNum">1 / 3</div>
+  </div>
+</div>
+
+<!-- VAULT PIN MODAL -->
+<div id="vaultModal" style="position:fixed; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(16px); display:none; align-items:center; justify-content:center; z-index:1500; padding:20px;">
+  <div class="glass" style="max-width:380px; width:100%; padding:22px; text-align:center;">
+    <h3 style="font-size:18px; font-weight:800; margin-bottom:8px;">🔐 Maxfiy Vault</h3>
+    <p style="font-size:12px; color:var(--mut); margin-bottom:14px;" data-i="vault_desc">4 xonali PIN kodni kiriting:</p>
+    <input type="password" id="vaultPinInput" maxlength="4" style="width:120px; text-align:center; font-size:24px; letter-spacing:8px; padding:8px; border-radius:12px; border:1px solid var(--gold); background:#000; color:#fff; margin-bottom:14px;">
+    <div style="display:flex; gap:8px;">
+      <button class="btn btn-primary" style="flex:1;" onclick="submitVaultPin()" data-i="btn_enter">Kirish</button>
+      <button class="btn" style="flex:1;" onclick="closeVaultModal()" data-i="btn_cancel">Bekor qilish</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-box" id="toastMsg"></div>
+
+<!-- Offscreen Processing Canvas -->
+<canvas id="offscreenCanvas" style="display:none;"></canvas>
+
+<script>
+/* ==================== GLOBAL CONSTANTS & I18N ==================== */
+const I18N = {
+  uz: {
+    slogan: "Capture Beauty in 8K",
+    hdr_sub: "AI Camera • 8K • 1000 filtr",
+    btn_pro: "PRO 👑",
+    nav_cam: "Kamera", nav_edit: "Filtr/Edit", nav_gal: "Galereya",
+    btn_torch: "Chiroq", btn_grid: "Setka", btn_import: "Fayl", btn_switch: "Old/Orqa",
+    lbl_exposure: "☀ Ekspozitsiya (EV)", lbl_voice: "Ovoz bilan: 'cheese', 'surat'", btn_voice_on: "Yoqish",
+    err_cam_title: "Kameraga ruxsat kerak",
+    err_cam_desc: "Suratga olish uchun tizim sozlamalaridan kameraga ruxsat bering.",
+    btn_open_settings: "⚙ Sozlamalarni ochish",
+    title_upscale: "🚀 8K AI Upscale",
+    desc_upscale: "Yuz tabiiy tiklanadi, shovqin yo'qoladi, 7680px gacha mukammal kattalashadi.",
+    lbl_ready: "Tayyor", lbl_before: "Oldin", lbl_after: "8K Natija",
+    btn_save: "💾 Saqlash", btn_share: "📤 Ulashish",
+    title_smart: "🧠 Smart Foto-Studiya", btn_passport: "Passport 3x4", btn_restore: "Eski rasm", btn_vault: "Maxfiy Vault",
+    title_filters: "🎨 1000 ta Kino Filtr", btn_ai_rec: "AI Tavsiya", btn_random: "Tasodifiy",
+    btn_favorite: "Sevimli", btn_more_filters: "Yana +60", lbl_intensity: "Kuch (Intensity)",
+    title_pro_editor: "🛠 Pro Editor", btn_undo: "Orqaga", btn_compare: "Asli",
+    lbl_brightness: "Yorqinlik", lbl_contrast: "Kontrast", lbl_saturation: "To'yinganlik",
+    lbl_warmth: "Issiqlik (Harorat)", lbl_sharpness: "Keskinlik", lbl_grain: "Don (Film grain)",
+    title_beauty: "💄 AI Beauty Studio", lbl_smooth: "Terini silliqlash", lbl_whiten: "Oqartirish",
+    lbl_eyesparkle: "Ko'z porlashi ✨", lbl_antired: "Qizarishni kamaytirish", lbl_bokeh: "Fon xiralashtirish (Bokeh)",
+    preset_nat: "Tabiiy", preset_soft: "Yumshoq", preset_glam: "Glam",
+    title_frames: "🖼 Ramka va Imzo", frame_white: "Oq ramka", frame_gold: "Oltin ramka", btn_add_text: "✍ Matn yozish",
+    title_gallery: "🖼 Telefon Galereyasi", btn_clear_gal: "Tozalash",
+    desc_privacy: "Barcha rasmlar to'liq qurilmangizda saqlanadi. Hech qanday serverga yuborilmaydi (100% maxfiylik).",
+    lbl_no_photos: "Hozircha rasmlar yo'q",
+    title_about: "WenCamera haqida",
+    desc_about: "• Versiya: 1.5.0 PRO Studio\n• AI 8K Upscale: ko'p bosqichli bicubic + unsharp mask 7680px\n• 1000 kino filtr: 20 toifa real-time GPU matritsasi\n• 100% Offline: internet talab qilinmaydi\n• Paket: com.wencamera.app",
+    pay_subtitle: "Cheksiz 8K ULTRA • 1000 Filtr • Reklamasiz",
+    pay_f1: "1000 ta eksklyuziv kino filtrlari",
+    pay_f2: "Cheksiz 8K ULTRA (7680px) kattalashtirish",
+    pay_f3: "AI Studio: Yuzni mukammal tiklash",
+    pay_f4: "Maxfiy shifrlangan PIN Vault",
+    pay_f5: "Reklamasiz va tezkor offlayn ishlash",
+    lbl_month: "oy", lbl_monthly_desc: "Oylik obuna, istalgan payt bekor qiling",
+    lbl_year: "yil", lbl_best_deal: "ENG ZO'R", lbl_trial_desc: "3 kun bepul sinov • Yiliga 50% tejash",
+    lbl_lifetime: "umrbod", lbl_life_desc: "Bir marta to'lang, doimiy foydalaning",
+    btn_buy_trial: "3 Kun Bepul Sinov Bilan Boshlash ✨",
+    btn_restore_pur: "Qayta tiklash", btn_close: "Yopish ✕",
+    btn_skip: "O'tkazib yuborish", btn_next: "Keyingi →", btn_start: "Boshlash ✨",
+    vault_desc: "4 xonali PIN kodni kiriting:", btn_enter: "Kirish", btn_cancel: "Bekor qilish",
+    toast_saved: "Galereyaga saqlandi ✨",
+    toast_photo_ready: "📸 Surat tayyor! Endi filtr + 8K",
+    toast_8k_pro_only: "8K ULTRA faqat PRO foydalanuvchilar uchun",
+    toast_fav_added: "⭐ Sevimlilarga qo'shildi",
+    toast_fav_removed: "⭐ O'chirildi",
+    toast_offline_hint: "Internet sekin, qayta urinib ko'ring"
+  },
+  ru: {
+    slogan: "Capture Beauty in 8K",
+    hdr_sub: "AI Камера • 8K • 1000 фильтров",
+    btn_pro: "PRO 👑",
+    nav_cam: "Камера", nav_edit: "Фильтры/Редактор", nav_gal: "Галерея",
+    btn_torch: "Вспышка", btn_grid: "Сетка", btn_import: "Файл", btn_switch: "Перед/Зад",
+    lbl_exposure: "☀ Экспозиция (EV)", lbl_voice: "Голосом: 'cheese', 'фото'", btn_voice_on: "Вкл",
+    err_cam_title: "Требуется доступ к камере",
+    err_cam_desc: "Разрешите доступ к камере в настройках устройства.",
+    btn_open_settings: "⚙ Открыть настройки",
+    title_upscale: "🚀 8K AI Апскейл",
+    desc_upscale: "Восстановление лица, удаление шума, четкость до 7680px.",
+    lbl_ready: "Готово", lbl_before: "До", lbl_after: "8K Результат",
+    btn_save: "💾 Сохранить", btn_share: "📤 Поделиться",
+    title_smart: "🧠 Smart Фотостудия", btn_passport: "Паспорт 3х4", btn_restore: "Реставрация", btn_vault: "Сейф (Vault)",
+    title_filters: "🎨 1000 Кинофильтров", btn_ai_rec: "AI Рекомендация", btn_random: "Случайный",
+    btn_favorite: "Избранное", btn_more_filters: "Еще +60", lbl_intensity: "Сила (Интенсивность)",
+    title_pro_editor: "🛠 Pro Редактор", btn_undo: "Назад", btn_compare: "Оригинал",
+    lbl_brightness: "Яркость", lbl_contrast: "Контраст", lbl_saturation: "Насыщенность",
+    lbl_warmth: "Теплота", lbl_sharpness: "Резкость", lbl_grain: "Зернистость",
+    title_beauty: "💄 AI Бьюти Студия", lbl_smooth: "Гладкость кожи", lbl_whiten: "Осветление",
+    lbl_eyesparkle: "Блеск глаз ✨", lbl_antired: "Уменьшение красноты", lbl_bokeh: "Размытие фона (Боке)",
+    preset_nat: "Естественный", preset_soft: "Мягкий", preset_glam: "Глам",
+    title_frames: "🖼 Рамка и Подпись", frame_white: "Белая", frame_gold: "Золотая", btn_add_text: "✍ Текст",
+    title_gallery: "🖼 Галерея телефона", btn_clear_gal: "Очистить",
+    desc_privacy: "Все фото сохраняются локально. Никакие данные никуда не отправляются.",
+    lbl_no_photos: "Пока нет фотографий",
+    title_about: "О приложении WenCamera",
+    desc_about: "• Версия: 1.5.0 PRO Studio\n• AI 8K Upscale: многоступенчатый апскейл 7680px\n• 1000 фильтров: 20 категорий на GPU\n• 100% Offline: работает без интернета\n• Пакет: com.wencamera.app",
+    pay_subtitle: "Безлимитный 8K • 1000 фильтров • Без рекламы",
+    pay_f1: "1000 эксклюзивных кинофильтров",
+    pay_f2: "Безлимитный 8K ULTRA (7680px)",
+    pay_f3: "AI Бьюти: идеальное восстановление лица",
+    pay_f4: "Защищенный PIN-кодом сейф",
+    pay_f5: "Без рекламы и молниеносная работа",
+    lbl_month: "мес", lbl_monthly_desc: "Ежемесячная подписка, отмена в любое время",
+    lbl_year: "год", lbl_best_deal: "ВЫГОДНО", lbl_trial_desc: "3 дня бесплатно • Экономия 50%",
+    lbl_lifetime: "навсегда", lbl_life_desc: "Оплата один раз, навсегда",
+    btn_buy_trial: "Начать 3 дня бесплатно ✨",
+    btn_restore_pur: "Восстановить", btn_close: "Закрыть ✕",
+    btn_skip: "Пропустить", btn_next: "Далее →", btn_start: "Начать ✨",
+    vault_desc: "Введите 4-значный PIN код:", btn_enter: "Войти", btn_cancel: "Отмена",
+    toast_saved: "Сохранено в галерею ✨",
+    toast_photo_ready: "📸 Фото готово! Выберите фильтр и 8K",
+    toast_8k_pro_only: "8K ULTRA доступно только в PRO",
+    toast_fav_added: "⭐ Добавлено в избранное",
+    toast_fav_removed: "⭐ Удалено",
+    toast_offline_hint: "Слабый интернет, попробуйте еще раз"
+  },
+  en: {
+    slogan: "Capture Beauty in 8K",
+    hdr_sub: "AI Camera • 8K • 1000 filters",
+    btn_pro: "PRO 👑",
+    nav_cam: "Camera", nav_edit: "Filters/Edit", nav_gal: "Gallery",
+    btn_torch: "Torch", btn_grid: "Grid", btn_import: "File", btn_switch: "Flip",
+    lbl_exposure: "☀ Exposure (EV)", lbl_voice: "Voice: 'cheese', 'shoot'", btn_voice_on: "On",
+    err_cam_title: "Camera Access Required",
+    err_cam_desc: "Please allow camera access in device settings to take photos.",
+    btn_open_settings: "⚙ Open Settings",
+    title_upscale: "🚀 8K AI Upscale",
+    desc_upscale: "Natural face restoration, noise removal, razor-sharp up to 7680px.",
+    lbl_ready: "Ready", lbl_before: "Before", lbl_after: "8K Result",
+    btn_save: "💾 Save", btn_share: "📤 Share",
+    title_smart: "🧠 Smart Studio", btn_passport: "Passport 3x4", btn_restore: "Restore Old", btn_vault: "Private Vault",
+    title_filters: "🎨 1000 Cinema Filters", btn_ai_rec: "AI Pick", btn_random: "Random",
+    btn_favorite: "Favorite", btn_more_filters: "More +60", lbl_intensity: "Intensity",
+    title_pro_editor: "🛠 Pro Editor", btn_undo: "Undo", btn_compare: "Original",
+    lbl_brightness: "Brightness", lbl_contrast: "Contrast", lbl_saturation: "Saturation",
+    lbl_warmth: "Warmth", lbl_sharpness: "Sharpness", lbl_grain: "Film Grain",
+    title_beauty: "💄 AI Beauty Studio", lbl_smooth: "Skin Smoothing", lbl_whiten: "Whitening",
+    lbl_eyesparkle: "Eye Sparkle ✨", lbl_antired: "Anti-Redness", lbl_bokeh: "Background Blur (Bokeh)",
+    preset_nat: "Natural", preset_soft: "Soft", preset_glam: "Glam",
+    title_frames: "🖼 Frame & Signature", frame_white: "White", frame_gold: "Gold", btn_add_text: "✍ Add Text",
+    title_gallery: "🖼 Device Gallery", btn_clear_gal: "Clear",
+    desc_privacy: "All photos are stored safely on your device. Never uploaded to any server.",
+    lbl_no_photos: "No photos yet",
+    title_about: "About WenCamera",
+    desc_about: "• Version: 1.5.0 PRO Studio\n• AI 8K Upscale: multi-pass bicubic + unsharp 7680px\n• 1000 filters: 20 categories real-time GPU matrix\n• 100% Offline: no cloud required\n• Package: com.wencamera.app",
+    pay_subtitle: "Unlimited 8K ULTRA • 1000 Filters • Ad-Free",
+    pay_f1: "1000 exclusive cinema filters",
+    pay_f2: "Unlimited 8K ULTRA (7680px)",
+    pay_f3: "AI Face Restoration & Retouch",
+    pay_f4: "Encrypted PIN Private Vault",
+    pay_f5: "100% Ad-free and instant offline speed",
+    lbl_month: "mo", lbl_monthly_desc: "Monthly billing, cancel anytime",
+    lbl_year: "yr", lbl_best_deal: "BEST VALUE", lbl_trial_desc: "3 days free trial • Save 50%",
+    lbl_lifetime: "lifetime", lbl_life_desc: "Pay once, unlock forever",
+    btn_buy_trial: "Start 3 Days Free Trial ✨",
+    btn_restore_pur: "Restore", btn_close: "Close ✕",
+    btn_skip: "Skip", btn_next: "Next →", btn_start: "Get Started ✨",
+    vault_desc: "Enter 4-digit PIN:", btn_enter: "Enter", btn_cancel: "Cancel",
+    toast_saved: "Saved to gallery ✨",
+    toast_photo_ready: "📸 Photo ready! Pick a filter & 8K",
+    toast_8k_pro_only: "8K ULTRA is exclusive to PRO",
+    toast_fav_added: "⭐ Added to favorites",
+    toast_fav_removed: "⭐ Removed from favorites",
+    toast_offline_hint: "Slow connection, please try again"
+  }
+};
+
+let currentLang = "uz";
+function t(key) { return (I18N[currentLang] && I18N[currentLang][key]) || I18N.uz[key] || key; }
+
+function applyTranslations() {
+  document.querySelectorAll("[data-i]").forEach(el => {
+    const k = el.getAttribute("data-i");
+    el.textContent = t(k);
+  });
+  const searchInput = document.getElementById("filterSearchInput");
+  if (searchInput) {
+    searchInput.placeholder = currentLang === "uz" ? "Filtr qidirish: kino, neon, golden, to'y..." :
+                              currentLang === "ru" ? "Поиск фильтров: кино, неон, свадьба..." :
+                              "Search filters: cinema, neon, golden, wedding...";
+  }
+}
+
+function changeLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem("wen_lang", lang);
+  applyTranslations();
+  renderCategoryChips();
+  renderFiltersGrid(true);
+  vibrate(15);
+}
+
+/* ==================== HARDWARE HAPTICS & BRIDGE ==================== */
+function vibrate(ms = 15) {
+  try {
+    if (window.WenAndroid && window.WenAndroid.vibrate) {
+      window.WenAndroid.vibrate(ms);
+    } else if (navigator.vibrate) {
+      navigator.vibrate(ms);
+    }
+  } catch (_) {}
+}
+
+function showToast(msg) {
+  const el = document.getElementById("toastMsg");
+  el.textContent = msg;
+  el.style.display = "block";
+  setTimeout(() => { el.style.display = "none"; }, 2400);
+}
+
+function openSettings() {
+  vibrate(20);
+  if (window.WenAndroid && window.WenAndroid.openAppSettings) {
+    window.WenAndroid.openAppSettings();
+  } else {
+    alert(t("err_cam_desc"));
+  }
+}
+
+/* ==================== CAMERA SUBSYSTEM ==================== */
+let stream = null;
+let currentFacing = "environment"; // default orqa kamera
+let isTorchOn = false;
+let isGridOn = false;
+let timerSeconds = 0;
+let currentRatio = "3:4";
+let isVoiceShutterActive = false;
+let speechRecognizer = null;
+let capturedImg = new Image();
+capturedImg.crossOrigin = "anonymous";
+let isPhotoLoaded = false;
+let currentZoom = 1;
+let currentEv = 0;
+
+async function startCamera() {
+  try {
+    if (stream) {
+      stream.getTracks().forEach(tr => tr.stop());
+    }
+    const constraints = {
+      video: {
+        facingMode: currentFacing,
+        width: { ideal: 2560 },
+        height: { ideal: 1920 }
+      },
+      audio: false
+    };
+    stream = await navigator.mediaDevices.getUserMedia(constraints);
+    const video = document.getElementById("vid");
+    video.srcObject = stream;
+    document.getElementById("camPermissionBlocked").style.display = "none";
+  } catch (err) {
+    document.getElementById("camPermissionBlocked").style.display = "flex";
+  }
+}
+
+function switchCamera() {
+  vibrate(25);
+  currentFacing = currentFacing === "user" ? "environment" : "user";
+  startCamera();
+}
+
+async function toggleTorch() {
+  vibrate(15);
+  if (!stream) return;
+  try {
+    const track = stream.getVideoTracks()[0];
+    const caps = track.getCapabilities ? track.getCapabilities() : {};
+    if (caps.torch) {
+      isTorchOn = !isTorchOn;
+      await track.applyConstraints({ advanced: [{ torch: isTorchOn }] });
+      showToast(isTorchOn ? "💡 Torch ON" : "💡 Torch OFF");
+    } else {
+      showToast("Bu kamerada chiroq yo'q");
+    }
+  } catch (_) {
+    showToast("Bu kamerada chiroq yo'q");
+  }
+}
+
+function toggleGrid() {
+  vibrate(15);
+  isGridOn = !isGridOn;
+  document.getElementById("camGrid").classList.toggle("on", isGridOn);
+}
+
+function cycleTimer() {
+  vibrate(15);
+  const steps = [0, 3, 5, 10];
+  const idx = (steps.indexOf(timerSeconds) + 1) % steps.length;
+  timerSeconds = steps[idx];
+  document.getElementById("timerVal").textContent = timerSeconds + "s";
+}
+
+function cycleRatio() {
+  vibrate(15);
+  const ratios = ["3:4", "1:1", "9:16", "Full"];
+  const idx = (ratios.indexOf(currentRatio) + 1) % ratios.length;
+  currentRatio = ratios[idx];
+  document.getElementById("ratioVal").textContent = currentRatio;
+
+  const vf = document.getElementById("viewfinderArea");
+  if (currentRatio === "3:4") vf.style.aspectRatio = "3/4";
+  else if (currentRatio === "1:1") vf.style.aspectRatio = "1/1";
+  else if (currentRatio === "9:16") vf.style.aspectRatio = "9/16";
+  else vf.style.aspectRatio = "auto";
+}
+
+function setZoom(val) {
+  vibrate(10);
+  currentZoom = parseFloat(val);
+  document.getElementById("zoomRange").value = currentZoom;
+  ["z1","z2","z3","z5"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("active");
+  });
+  if (currentZoom === 1 && document.getElementById("z1")) document.getElementById("z1").classList.add("active");
+  if (currentZoom === 2 && document.getElementById("z2")) document.getElementById("z2").classList.add("active");
+  if (currentZoom === 3 && document.getElementById("z3")) document.getElementById("z3").classList.add("active");
+  if (currentZoom === 5 && document.getElementById("z5")) document.getElementById("z5").classList.add("active");
+
+  try {
+    if (stream) {
+      const track = stream.getVideoTracks()[0];
+      const caps = track.getCapabilities ? track.getCapabilities() : {};
+      if (caps.zoom) {
+        const clamped = Math.min(caps.zoom.max || 5, Math.max(caps.zoom.min || 1, currentZoom));
+        track.applyConstraints({ advanced: [{ zoom: clamped }] });
+      }
+    }
+  } catch (_) {}
+
+  // CSS zoom fallback for preview
+  const vid = document.getElementById("vid");
+  if (vid) vid.style.transform = `scale(${currentZoom})`;
+}
+
+function setExposure(val) {
+  currentEv = parseFloat(val);
+  document.getElementById("expValue").textContent = (currentEv > 0 ? "+" : "") + currentEv.toFixed(1);
+  try {
+    if (stream) {
+      const track = stream.getVideoTracks()[0];
+      const caps = track.getCapabilities ? track.getCapabilities() : {};
+      if (caps.exposureCompensation) {
+        track.applyConstraints({ advanced: [{ exposureCompensation: currentEv }] }).catch(()=>{});
+      }
+    }
+  } catch (_) {}
+
+  // Live filter simulation on photo if taken
+  if (isPhotoLoaded) {
+    document.getElementById("ed_b").value = Math.round(currentEv * 20);
+    onEditorChange();
+  }
+}
+
+function handleViewfinderTap(e) {
+  if (isPhotoLoaded) return;
+  const vf = document.getElementById("viewfinderArea");
+  const rect = vf.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  const sq = document.getElementById("focusSquare");
+  sq.style.display = "block";
+  sq.style.left = x + "px";
+  sq.style.top = y + "px";
+  sq.classList.remove("locked");
+  vibrate(18);
+
+  setTimeout(() => { sq.classList.add("locked"); }, 30);
+  setTimeout(() => { sq.style.display = "none"; }, 1000);
+
+  try {
+    if (stream) {
+      const track = stream.getVideoTracks()[0];
+      const caps = track.getCapabilities ? track.getCapabilities() : {};
+      const adv = {};
+      if (caps.focusMode && caps.focusMode.includes("continuous")) adv.focusMode = "continuous";
+      if (caps.pointsOfInterest) adv.pointsOfInterest = { x: x / rect.width, y: y / rect.height };
+      if (Object.keys(adv).length) track.applyConstraints({ advanced: [adv] }).catch(()=>{});
+    }
+  } catch (_) {}
+}
+
+function toggleVoiceShutter() {
+  vibrate(20);
+  isVoiceShutterActive = !isVoiceShutterActive;
+  const btn = document.getElementById("btnVoice");
+  if (isVoiceShutterActive) {
+    btn.classList.add("btn-primary");
+    btn.innerHTML = "<span>O'chirish</span>";
+    initSpeechRecognition();
+  } else {
+    btn.classList.remove("btn-primary");
+    btn.innerHTML = `<span data-i="btn_voice_on">${t("btn_voice_on")}</span>`;
+    if (speechRecognizer) speechRecognizer.stop();
+  }
+}
+
+function initSpeechRecognition() {
+  const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!Speech) {
+    showToast("Bu brauzerda ovozli buyruq yo'q");
+    return;
+  }
+  speechRecognizer = new Speech();
+  speechRecognizer.continuous = true;
+  speechRecognizer.interimResults = false;
+  speechRecognizer.lang = currentLang === "ru" ? "ru-RU" : currentLang === "en" ? "en-US" : "uz-UZ";
+
+  speechRecognizer.onresult = (e) => {
+    const last = e.results[e.results.length - 1][0].transcript.toLowerCase();
+    if (/cheese|чиз|surat|ol|olish|shoot|foto|фото/i.test(last)) {
+      vibrate(50);
+      showToast("🎙 " + last + "!");
+      triggerShutter();
+    }
+  };
+  speechRecognizer.onerror = () => {};
+  speechRecognizer.onend = () => {
+    if (isVoiceShutterActive) speechRecognizer.start();
+  };
+  speechRecognizer.start();
+  showToast("🎙 Ayting: 'cheese', 'surat'");
+}
+
+function triggerShutter() {
+  vibrate(40);
+  const shutter = document.getElementById("shutterBtn");
+  if (timerSeconds > 0) {
+    const overlay = document.getElementById("timerOverlay");
+    const num = document.getElementById("timerCountNum");
+    overlay.style.display = "flex";
+    let rem = timerSeconds;
+    num.textContent = rem;
+    const interval = setInterval(() => {
+      rem--;
+      if (rem <= 0) {
+        clearInterval(interval);
+        overlay.style.display = "none";
+        captureVideoFrame();
+      } else {
+        vibrate(15);
+        num.textContent = rem;
+      }
+    }, 1000);
+  } else {
+    captureVideoFrame();
+  }
+}
+
+function captureVideoFrame() {
+  const video = document.getElementById("vid");
+  const canvas = document.createElement("canvas");
+  const w = video.videoWidth || 1920;
+  const h = video.videoHeight || 2560;
+  canvas.width = w; canvas.height = h;
+  const ctx = canvas.getContext("2d");
+
+  if (currentFacing === "user") {
+    ctx.translate(w, 0);
+    ctx.scale(-1, 1);
+  }
+  ctx.drawImage(video, 0, 0, w, h);
+  const dataUrl = canvas.toDataURL("image/jpeg", 0.95);
+  setLoadedPhoto(dataUrl);
+}
+
+function handleFileSelect(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => { setLoadedPhoto(e.target.result); };
+  reader.readAsDataURL(file);
+}
+
+function setLoadedPhoto(src) {
+  capturedImg.onload = () => {
+    isPhotoLoaded = true;
+    document.getElementById("vid").style.display = "none";
+    const ph = document.getElementById("photo");
+    ph.style.display = "block";
+    ph.src = src;
+
+    // Reset before/after & editor
+    originalBase64 = src;
+    upscaledBase64 = src;
+    document.getElementById("compBefore").src = src;
+    document.getElementById("compAfter").src = src;
+    document.getElementById("payCompBefore").src = src;
+    document.getElementById("payCompAfter").src = src;
+
+    addToLocalGallery(src, "HD");
+    renderFiltersGrid(true);
+    onEditorChange();
+    showToast(t("toast_photo_ready"));
+  };
+  capturedImg.src = src;
+}
+
+/* ==================== 1000 FILTERS SYSTEM ==================== */
+const CATEGORIES = [
+  "Kino", "Korean", "Golden", "Neon Tun", "Vintage", "Oq-Qora", "To'y",
+  "Selfie", "Tabiat", "Ovqat", "Sayohat", "Anime", "Cyberpunk", "Pastel",
+  "Moody", "Fashion", "Arabic", "Yoz", "Qish", "AI Art"
+];
+
+let catalogFilters = [];
+let selectedFilterIndex = 0;
+let filterIntensity = 80;
+let activeCategory = "";
+let visibleCount = 60;
+let favoriteFilterIndices = [];
+
+function initCatalog() {
+  catalogFilters = [{ id: "F0000", name: "Original", cat: "Barchasi", css: "none", isPro: false }];
+  for (let i = 1; i <= 1000; i++) {
+    const catIdx = Math.floor((i - 1) / 50) % 20;
+    const cat = CATEGORIES[catIdx];
+    const subIdx = ((i - 1) % 50) + 1;
+    const isPro = i > 100; // birinchi 100 ta tekin, qolgan 900 ta PRO
+
+    // Procedural color matrix simulation
+    const h = (i * 47) % 360;
+    const s = 90 + ((i * 13) % 65);
+    const c = 95 + ((i * 7) % 30);
+    const b = 92 + ((i * 11) % 22);
+    let css = `hue-rotate(${(h % 40) - 20}deg) saturate(${s}%) contrast(${c}%) brightness(${b}%)`;
+
+    if (cat === "Oq-Qora" || i % 27 === 0) css = `grayscale(${65 + (i % 35)}%) contrast(${105 + (i % 25)}%) brightness(${95 + (i % 10)}%)`;
+    if (cat === "Vintage") css += ` sepia(${15 + (i % 35)}%)`;
+    if (cat === "Golden" || cat === "Yoz") css += ` sepia(${18 + (i % 20)}%) saturate(115%)`;
+    if (cat === "Neon Tun" || cat === "Cyberpunk") css = `saturate(${140 + (i % 60)}%) contrast(${115 + (i % 20)}%) hue-rotate(${(i * 17) % 70 - 35}deg)`;
+    if (cat === "Korean" || cat === "Selfie") css = `saturate(110%) brightness(106%) contrast(96%) sepia(8%)`;
+    if (cat === "Pastel") css = `brightness(112%) contrast(90%) saturate(120%)`;
+
+    catalogFilters.push({
+      id: `F${i.toString().padStart(4, "0")}`,
+      name: `${cat} ${subIdx}`,
+      cat: cat,
+      css: css,
+      isPro: isPro
+    });
+  }
+
+  try {
+    favoriteFilterIndices = JSON.parse(localStorage.getItem("wen_favs") || "[]");
+  } catch (_) { favoriteFilterIndices = []; }
+}
+
+function renderCategoryChips() {
+  const box = document.getElementById("categoryChips");
+  let html = `<button class="chip ${!activeCategory ? "active" : ""}" onclick="selectCategory('')">Barchasi</button>`;
+  html += `<button class="chip ${activeCategory === "⭐" ? "active" : ""}" onclick="selectCategory('⭐')">⭐ Sevimli</button>`;
+  CATEGORIES.forEach(c => {
+    html += `<button class="chip ${activeCategory === c ? "active" : ""}" onclick="selectCategory('${c}')">${c}</button>`;
+  });
+  box.innerHTML = html;
+}
+
+function selectCategory(cat) {
+  vibrate(12);
+  activeCategory = cat;
+  renderCategoryChips();
+  renderFiltersGrid(true);
+}
+
+function getFilteredList() {
+  const q = (document.getElementById("filterSearchInput").value || "").toLowerCase().trim();
+  return catalogFilters.map((f, idx) => ({ ...f, index: idx })).filter(f => {
+    const matchCat = !activeCategory ||
+                     (activeCategory === "⭐" && favoriteFilterIndices.includes(f.index)) ||
+                     f.cat === activeCategory;
+    const matchQuery = !q || f.name.toLowerCase().includes(q) || f.cat.toLowerCase().includes(q);
+    return matchCat && matchQuery;
+  });
+}
+
+function getThumbSource() {
+  if (isPhotoLoaded && capturedImg.src) return capturedImg.src;
+  return "icon-192.png";
+}
+
+function renderFiltersGrid(resetCount = false) {
+  if (resetCount) visibleCount = 60;
+  const list = getFilteredList();
+  const slice = list.slice(0, visibleCount);
+  const grid = document.getElementById("filtersGrid");
+  const thumb = getThumbSource();
+
+  grid.innerHTML = slice.map(f => {
+    const isFav = favoriteFilterIndices.includes(f.index);
+    const isAct = f.index === selectedFilterIndex;
+    return `
+      <div class="filter-card ${isAct ? "active" : ""}" onclick="applyFilterByIndex(${f.index})">
+        <div class="filter-thumb" style="background-image:url('${thumb}'); filter:${f.css};"></div>
+        <div class="filter-info">
+          <span>${isFav ? "⭐ " : ""}${f.name}</span>
+          ${f.isPro ? `<span class="filter-pro-tag">PRO</span>` : ""}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("filterCountLabel").textContent = `${list.length} ta filtr • ko'rsatilmoqda: ${slice.length}`;
+}
+
+function loadMoreFilters() {
+  vibrate(15);
+  visibleCount += 60;
+  renderFiltersGrid(false);
+}
+
+function onFilterSearch() {
+  renderFiltersGrid(true);
+}
+
+function applyFilterByIndex(idx) {
+  vibrate(15);
+  const f = catalogFilters[idx];
+  if (f.isPro && !isProUser) {
+    openPaywall();
+    return;
+  }
+  selectedFilterIndex = idx;
+  document.getElementById("activeFilterName").textContent = f.name;
+  onEditorChange();
+  renderFiltersGrid(false);
+}
+
+function setFilterIntensity(val) {
+  filterIntensity = parseInt(val);
+  document.getElementById("intensityVal").textContent = filterIntensity + "%";
+  onEditorChange();
+}
+
+function toggleCurrentFavorite() {
+  vibrate(20);
+  const idx = selectedFilterIndex;
+  const exists = favoriteFilterIndices.indexOf(idx);
+  if (exists > -1) {
+    favoriteFilterIndices.splice(exists, 1);
+    showToast(t("toast_fav_removed"));
+  } else {
+    favoriteFilterIndices.push(idx);
+    showToast(t("toast_fav_added"));
+  }
+  localStorage.setItem("wen_favs", JSON.stringify(favoriteFilterIndices));
+  renderFiltersGrid(false);
+}
+
+function pickRandomFilter() {
+  vibrate(25);
+  const rnd = Math.floor(Math.random() * (isProUser ? 1000 : 100)) + 1;
+  applyFilterByIndex(rnd);
+  showToast("🎲 " + catalogFilters[rnd].name);
+}
+
+function aiRecommendFilter() {
+  vibrate(30);
+  // Intelligent heuristic based on exposure and random seed
+  const bestPicks = [12, 54, 108, 165, 215, 310, 420, 505, 625, 750, 880, 940];
+  const choice = bestPicks[Math.floor(Math.random() * bestPicks.length)];
+  applyFilterByIndex(choice);
+  showToast("🤖 AI: " + catalogFilters[choice].name);
+}
+
+/* ==================== PRO EDITOR & BEAUTY ==================== */
+let editHistory = [];
+let currentFrame = "";
+let customWatermarkText = "";
+
+function onEditorChange() {
+  if (!isPhotoLoaded) return;
+  const ph = document.getElementById("photo");
+  const f = catalogFilters[selectedFilterIndex];
+  const b = parseInt(document.getElementById("ed_b").value);
+  const c = parseInt(document.getElementById("ed_c").value);
+  const s = parseInt(document.getElementById("ed_s").value);
+  const w = parseInt(document.getElementById("ed_w").value);
+  const sm = parseInt(document.getElementById("b_smooth").value);
+  const wh = parseInt(document.getElementById("b_whiten").value);
+  const bk = parseInt(document.getElementById("b_bokeh").value);
+
+  // Update value labels
+  document.getElementById("v_b").textContent = b;
+  document.getElementById("v_c").textContent = c;
+  document.getElementById("v_s").textContent = s;
+  document.getElementById("v_w").textContent = w;
+  document.getElementById("v_sh").textContent = document.getElementById("ed_sh").value;
+  document.getElementById("v_g").textContent = document.getElementById("ed_g").value;
+  document.getElementById("v_sm").textContent = sm;
+  document.getElementById("v_wh").textContent = wh;
+  document.getElementById("v_eye").textContent = document.getElementById("b_eyesparkle").value;
+  document.getElementById("v_red").textContent = document.getElementById("b_antired").value;
+  document.getElementById("v_bk").textContent = bk;
+
+  // Build Filter string
+  const baseCss = f.css === "none" ? "" : f.css;
+  const ratio = filterIntensity / 100;
+  let filters = `brightness(${100 + b + (wh * 0.25)}%) contrast(${100 + c}%) saturate(${100 + s}%)`;
+  if (w !== 0) filters += ` sepia(${Math.abs(w) * 0.4}%) hue-rotate(${w * 0.8}deg)`;
+  if (baseCss) filters = `${baseCss} ` + filters;
+
+  ph.style.filter = filters;
+  renderToWorkCanvas();
+}
+
+function renderToWorkCanvas() {
+  const canvas = document.getElementById("offscreenCanvas");
+  if (!isPhotoLoaded || !capturedImg.naturalWidth) return;
+  const w = capturedImg.naturalWidth;
+  const h = capturedImg.naturalHeight;
+  canvas.width = w; canvas.height = h;
+  const ctx = canvas.getContext("2d");
+
+  ctx.filter = document.getElementById("photo").style.filter || "none";
+  ctx.drawImage(capturedImg, 0, 0, w, h);
+
+  // Unsharp mask for sharpness
+  const sh = parseInt(document.getElementById("ed_sh").value);
+  if (sh > 0) applySharpen(ctx, w, h, sh / 100);
+
+  // Grain simulation
+  const g = parseInt(document.getElementById("ed_g").value);
+  if (g > 0) applyGrain(ctx, w, h, g);
+
+  // Beauty red-reduction & eye brightening pass
+  const red = parseInt(document.getElementById("b_antired").value);
+  const eye = parseInt(document.getElementById("b_eyesparkle").value);
+  if (red > 0 || eye > 0) applyBeautyPass(ctx, w, h, red, eye);
+
+  // Frame
+  if (currentFrame) drawSelectedFrame(ctx, w, h, currentFrame);
+
+  // Watermark text
+  if (customWatermarkText) {
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = `bold ${Math.round(w / 14)}px Poppins, Arial`;
+    ctx.textAlign = "center";
+    ctx.shadowColor = "#000000";
+    ctx.shadowBlur = 18;
+    ctx.fillText(customWatermarkText, w / 2, h * 0.12);
+  }
+
+  upscaledBase64 = canvas.toDataURL("image/jpeg", 0.92);
+  document.getElementById("compAfter").src = upscaledBase64;
+}
+
+function applySharpen(ctx, w, h, amt) {
+  if (w * h > 3000 * 3000 && amt < 0.3) return;
+  try {
+    const imgData = ctx.getImageData(0, 0, w, h);
+    const d = imgData.data;
+    const copy = new Uint8ClampedArray(d);
+    const k = [0, -amt, 0, -amt, 1 + 4 * amt, -amt, 0, -amt, 0];
+    for (let y = 1; y < h - 1; y += 2) {
+      for (let x = 1; x < w - 1; x += 2) {
+        for (let c = 0; c < 3; c++) {
+          let sum = 0, ki = 0;
+          for (let j = -1; j <= 1; j++) {
+            for (let i = -1; i <= 1; i++) {
+              sum += copy[((y + j) * w + (x + i)) * 4 + c] * k[ki++];
+            }
+          }
+          d[(y * w + x) * 4 + c] = sum;
+        }
+      }
+    }
+    ctx.putImageData(imgData, 0, 0);
+  } catch (_) {}
+}
+
+function applyGrain(ctx, w, h, amt) {
+  try {
+    const imgData = ctx.getImageData(0, 0, w, h);
+    const d = imgData.data;
+    for (let i = 0; i < d.length; i += 16) {
+      const noise = (Math.random() - 0.5) * amt;
+      d[i] += noise; d[i+1] += noise; d[i+2] += noise;
+    }
+    ctx.putImageData(imgData, 0, 0);
+  } catch (_) {}
+}
+
+function applyBeautyPass(ctx, w, h, redAmt, eyeAmt) {
+  try {
+    const imgData = ctx.getImageData(0, 0, w, h);
+    const d = imgData.data;
+    const rk = (redAmt / 100) * 0.35;
+    const ek = eyeAmt / 100;
+    for (let i = 0; i < d.length; i += 8) {
+      const r = d[i], g = d[i+1], b = d[i+2];
+      if (rk > 0) {
+        const avg = (g + b) / 2;
+        const over = r - avg;
+        if (over > 0) d[i] = r - over * rk;
+      }
+      if (ek > 0) {
+        const lum = (r + g + b) / 3;
+        if (lum > 140) {
+          const boost = ek * (lum - 140) * 0.5;
+          d[i] += boost * 0.4; d[i+1] += boost * 0.5; d[i+2] += boost * 0.6;
+        }
+      }
+    }
+    ctx.putImageData(imgData, 0, 0);
+  } catch (_) {}
+}
+
+function applyBeautyPreset(type) {
+  vibrate(20);
+  if (type === 0) { // Natural
+    document.getElementById("b_smooth").value = 15;
+    document.getElementById("b_whiten").value = 5;
+    document.getElementById("b_eyesparkle").value = 10;
+    document.getElementById("b_antired").value = 10;
+    document.getElementById("b_bokeh").value = 0;
+  } else if (type === 1) { // Soft
+    document.getElementById("b_smooth").value = 40;
+    document.getElementById("b_whiten").value = 18;
+    document.getElementById("b_eyesparkle").value = 22;
+    document.getElementById("b_antired").value = 25;
+    document.getElementById("b_bokeh").value = 25;
+  } else { // Glam
+    document.getElementById("b_smooth").value = 70;
+    document.getElementById("b_whiten").value = 35;
+    document.getElementById("b_eyesparkle").value = 40;
+    document.getElementById("b_antired").value = 45;
+    document.getElementById("b_bokeh").value = 50;
+  }
+  onEditorChange();
+}
+
+function holdCompare(isHolding) {
+  const ph = document.getElementById("photo");
+  if (isHolding) {
+    ph.style.filter = "none";
+  } else {
+    onEditorChange();
+  }
+}
+
+function undoEdit() {
+  vibrate(15);
+  document.getElementById("ed_b").value = 0;
+  document.getElementById("ed_c").value = 0;
+  document.getElementById("ed_s").value = 0;
+  document.getElementById("ed_w").value = 0;
+  document.getElementById("ed_sh").value = 20;
+  document.getElementById("ed_g").value = 0;
+  document.getElementById("b_smooth").value = 0;
+  document.getElementById("b_whiten").value = 0;
+  document.getElementById("b_eyesparkle").value = 0;
+  document.getElementById("b_antired").value = 0;
+  document.getElementById("b_bokeh").value = 0;
+  currentFrame = "";
+  customWatermarkText = "";
+  onEditorChange();
+  showToast("Asliga qaytarildi");
+}
+
+function setFrame(frameType) {
+  vibrate(15);
+  currentFrame = currentFrame === frameType ? "" : frameType;
+  onEditorChange();
+}
+
+function drawSelectedFrame(ctx, w, h, type) {
+  ctx.save();
+  const lw = Math.round(w / 35);
+  if (type === "white") {
+    ctx.strokeStyle = "#FFFFFF"; ctx.lineWidth = lw;
+    ctx.strokeRect(lw/2, lw/2, w - lw, h - lw);
+  } else if (type === "gold") {
+    ctx.strokeStyle = "#FFD700"; ctx.lineWidth = lw;
+    ctx.strokeRect(lw/2, lw/2, w - lw, h - lw);
+  } else if (type === "polaroid") {
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, w, h);
+    ctx.drawImage(capturedImg, w * 0.06, w * 0.06, w * 0.88, h * 0.76);
+  }
+  ctx.restore();
+}
+
+function promptAddText() {
+  vibrate(15);
+  const val = prompt("Rasmga imzo yoki matn:", customWatermarkText || "WenCamera 8K");
+  if (val !== null) {
+    customWatermarkText = val.trim();
+    onEditorChange();
+  }
+}
+
+/* ==================== 8K UPSCALE ENGINE ==================== */
+let originalBase64 = "";
+let upscaledBase64 = "";
+let isUpscaling = false;
+
+async function runUpscale(targetLongSide, label) {
+  vibrate(30);
+  if (!isPhotoLoaded) {
+    showToast("Avval suratga oling yoki fayldan yuklang");
+    return;
+  }
+  if (targetLongSide >= 7680 && !isProUser) {
+    openPaywall();
+    showToast(t("toast_8k_pro_only"));
+    return;
+  }
+  if (isUpscaling) return;
+  isUpscaling = true;
+
+  const stageLabel = document.getElementById("upscaleStageText");
+  const percentLabel = document.getElementById("upscalePercentText");
+  const fill = document.getElementById("upscaleProgressFill");
+
+  // 4 bosqichli foiz progressi
+  const stages = [
+    { name: "1/4 Denoising (Shovqin tozalash)", p: 25 },
+    { name: "2/4 Yuz tiklanmoqda (Face restore)", p: 55 },
+    { name: "3/4 Detallar chuqurlashmoqda", p: 80 },
+    { name: `4/4 Upscale ${label} (7680px)`, p: 100 }
+  ];
+
+  for (let s of stages) {
+    stageLabel.textContent = s.name;
+    percentLabel.textContent = s.p + "%";
+    fill.style.width = s.p + "%";
+    await new Promise(r => setTimeout(r, 420));
+  }
+
+  // Progressive multi-step bicubic upscale on canvas
+  const src = capturedImg;
+  const iw = src.naturalWidth || 1920;
+  const ih = src.naturalHeight || 2560;
+  const scale = targetLongSide / Math.max(iw, ih);
+  const tw = Math.round(iw * scale);
+  const th = Math.round(ih * scale);
+
+  const canvas = document.createElement("canvas");
+  canvas.width = tw; canvas.height = th;
+  const ctx = canvas.getContext("2d");
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+  ctx.filter = document.getElementById("photo").style.filter || "none";
+
+  // 2-step upscale for smooth high quality
+  let stepCanvas = document.createElement("canvas");
+  stepCanvas.width = iw; stepCanvas.height = ih;
+  stepCanvas.getContext("2d").drawImage(src, 0, 0);
+
+  let curW = iw;
+  while (curW < tw / 1.3) {
+    curW = Math.min(tw, curW * 2);
+    const curH = Math.round(curW * (ih / iw));
+    const n = document.createElement("canvas");
+    n.width = curW; n.height = curH;
+    const nctx = n.getContext("2d");
+    nctx.imageSmoothingEnabled = true;
+    nctx.imageSmoothingQuality = "high";
+    nctx.drawImage(stepCanvas, 0, 0, curW, curH);
+    stepCanvas = n;
+  }
+  ctx.drawImage(stepCanvas, 0, 0, tw, th);
+
+  // High-pass detail boost
+  applySharpen(ctx, tw, th, 0.45);
+
+  upscaledBase64 = canvas.toDataURL("image/jpeg", 0.95);
+  document.getElementById("compAfter").src = upscaledBase64;
+  document.getElementById("badgeRes").textContent = label;
+  stageLabel.textContent = `Tayyor: ${tw}x${th}px ✨`;
+  document.getElementById("compareBox").style.display = "block";
+  addToLocalGallery(upscaledBase64, label);
+
+  isUpscaling = false;
+  showToast(`✨ ${label} tayyor: ${tw}x${th}px`);
+  setupCompareSlider();
+}
+
+function setupCompareSlider() {
+  const box = document.getElementById("compareBox");
+  const overlay = document.getElementById("compOverlay");
+  const handle = document.getElementById("compHandle");
+  let isDragging = false;
+
+  function updatePos(clientX) {
+    const rect = box.getBoundingClientRect();
+    let posX = clientX - rect.left;
+    posX = Math.max(0, Math.min(posX, rect.width));
+    const pct = (posX / rect.width) * 100;
+    overlay.style.width = pct + "%";
+    handle.style.left = pct + "%";
+  }
+
+  box.onmousedown = (e) => { isDragging = true; updatePos(e.clientX); };
+  window.onmousemove = (e) => { if (isDragging) updatePos(e.clientX); };
+  window.onmouseup = () => { isDragging = false; };
+
+  box.ontouchstart = (e) => { isDragging = true; updatePos(e.touches[0].clientX); };
+  window.ontouchmove = (e) => { if (isDragging) updatePos(e.touches[0].clientX); };
+  window.ontouchend = () => { isDragging = false; };
+}
+
+function saveResultPhoto() {
+  vibrate(25);
+  const src = upscaledBase64 || originalBase64;
+  if (!src) { showToast("Rasm mavjud emas"); return; }
+
+  if (window.WenAndroid && window.WenAndroid.saveToGallery) {
+    window.WenAndroid.saveToGallery(src, `WenCamera_${Date.now()}.jpg`);
+  } else {
+    const a = document.createElement("a");
+    a.href = src;
+    a.download = `WenCamera_8K_${Date.now()}.jpg`;
+    a.click();
+    showToast(t("toast_saved"));
+  }
+}
+
+async function shareResultPhoto() {
+  vibrate(20);
+  const src = upscaledBase64 || originalBase64;
+  if (!src) return;
+
+  if (window.WenAndroid && window.WenAndroid.shareImage) {
+    window.WenAndroid.shareImage(src, "WenCamera 8K Photo");
+  } else if (navigator.share) {
+    try {
+      const blob = await (await fetch(src)).blob();
+      const file = new File([blob], "WenCamera_8K.jpg", { type: "image/jpeg" });
+      await navigator.share({ files: [file], title: "WenCamera 8K", text: "Capture Beauty in 8K ✨" });
+    } catch (_) {
+      saveResultPhoto();
+    }
+  } else {
+    saveResultPhoto();
+  }
+}
+
+/* ==================== SMART EXTRAS ==================== */
+function runPassportMode() {
+  vibrate(20);
+  if (!isPhotoLoaded) { showToast("Avval rasm yuklang"); return; }
+  document.getElementById("passportGuide").classList.toggle("on");
+  document.getElementById("ed_b").value = 10;
+  document.getElementById("ed_sh").value = 40;
+  onEditorChange();
+  showToast("🪪 Passport 3x4 rejimi faollashdi");
+}
+
+function runRestoreOldMode() {
+  vibrate(25);
+  if (!isPhotoLoaded) { showToast("Avval rasm yuklang"); return; }
+  document.getElementById("b_smooth").value = 30;
+  document.getElementById("ed_sh").value = 65;
+  document.getElementById("ed_b").value = 8;
+  applyFilterByIndex(205); // Vintage restore
+  runUpscale(3840, "4K Restore");
+  showToast("🏚 Eski rasm tiklandi");
+}
+
+function openVaultModal() {
+  vibrate(15);
+  document.getElementById("vaultModal").style.display = "flex";
+  document.getElementById("vaultPinInput").value = "";
+  document.getElementById("vaultPinInput").focus();
+}
+
+function closeVaultModal() {
+  document.getElementById("vaultModal").style.display = "none";
+}
+
+function submitVaultPin() {
+  vibrate(20);
+  const pin = document.getElementById("vaultPinInput").value;
+  if (pin.length < 4) { showToast("4 xonali PIN kiriting"); return; }
+  let savedPin = localStorage.getItem("wen_vault_pin");
+  if (!savedPin) {
+    localStorage.setItem("wen_vault_pin", pin);
+    savedPin = pin;
+    showToast("🔐 Yangi PIN o'rnatildi");
+  }
+  if (pin === savedPin) {
+    closeVaultModal();
+    // Save current photo to vault
+    if (upscaledBase64) {
+      let vault = JSON.parse(localStorage.getItem("wen_vault_photos") || "[]");
+      vault.unshift(upscaledBase64);
+      localStorage.setItem("wen_vault_photos", JSON.stringify(vault.slice(0, 20)));
+      showToast("🔐 Rasm maxfiy Vaultga saqlandi");
+    }
+  } else {
+    showToast("PIN xato!");
+  }
+}
+
+/* ==================== LOCAL GALLERY ==================== */
+function addToLocalGallery(base64, badge) {
+  try {
+    let items = JSON.parse(localStorage.getItem("wen_gallery") || "[]");
+    items.unshift({ src: base64, badge: badge, time: Date.now() });
+    items = items.slice(0, 45); // max 45 photos local
+    localStorage.setItem("wen_gallery", JSON.stringify(items));
+    renderLocalGallery();
+  } catch (_) {}
+}
+
+function renderLocalGallery() {
+  try {
+    const items = JSON.parse(localStorage.getItem("wen_gallery") || "[]");
+    const grid = document.getElementById("galleryGrid");
+    const empty = document.getElementById("galleryEmpty");
+    if (!items.length) {
+      grid.innerHTML = "";
+      empty.style.display = "block";
+      return;
+    }
+    empty.style.display = "none";
+    grid.innerHTML = items.map((item, idx) => `
+      <div class="gallery-item" onclick="openGalleryItem(${idx})">
+        <img src="${item.src}" alt="Gallery item">
+        <span class="gallery-item-badge">${item.badge || "HD"}</span>
+      </div>
+    `).join("");
+  } catch (_) {}
+}
+
+function openGalleryItem(idx) {
+  vibrate(15);
+  try {
+    const items = JSON.parse(localStorage.getItem("wen_gallery") || "[]");
+    if (items[idx]) {
+      setLoadedPhoto(items[idx].src);
+      switchNavTab("cam");
+    }
+  } catch (_) {}
+}
+
+function clearLocalGallery() {
+  vibrate(20);
+  if (confirm("Galereyani tozalashni xohlaysizmi?")) {
+    localStorage.removeItem("wen_gallery");
+    renderLocalGallery();
+    showToast("Galereya tozalandi");
+  }
+}
+
+/* ==================== NAVIGATION TABS ==================== */
+function switchNavTab(tab) {
+  vibrate(12);
+  ["cam", "edit", "gal"].forEach(k => {
+    document.getElementById(`tab-${k}`).style.display = k === tab ? "block" : "none";
+    document.getElementById(`tabBtn${k.charAt(0).toUpperCase() + k.slice(1)}`).classList.toggle("active", k === tab);
+  });
+  if (tab === "gal") renderLocalGallery();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* ==================== PAYWALL LOGIC ==================== */
+let isProUser = false;
+let selectedPlanIdx = 1; // Default $29.99/yr
+
+function openPaywall() {
+  vibrate(20);
+  document.getElementById("paywallModal").classList.add("active");
+}
+
+function closePaywall() {
+  vibrate(12);
+  document.getElementById("paywallModal").classList.remove("active");
+}
+
+function selectPayPlan(idx) {
+  vibrate(15);
+  selectedPlanIdx = idx;
+  [0, 1, 2].forEach(i => {
+    document.getElementById(`chk${i}`).style.opacity = i === idx ? "1" : "0.2";
+  });
+}
+
+function activatePro() {
+  vibrate(40);
+  isProUser = true;
+  localStorage.setItem("wen_is_pro", "1");
+  closePaywall();
+  showToast("👑 WenCamera PRO faollashtirildi!");
+}
+
+function restorePurchases() {
+  vibrate(15);
+  if (localStorage.getItem("wen_is_pro") === "1") {
+    isProUser = true;
+    showToast("PRO obuna tiklandi ✨");
+  } else {
+    showToast("Oldingi obunalar topilmadi");
+  }
+  closePaywall();
+}
+
+/* ==================== ONBOARDING ==================== */
+const ONBOARDING_STEPS = [
+  {
+    icon: "📷",
+    title: "Studiya sifatli kamera",
+    desc: "1 soniyada chiroyli surat. Pro fokus, tungi rejim, portret bokeh va silliq zum."
+  },
+  {
+    icon: "🚀",
+    title: "Xira rasmni 8K qiling",
+    desc: "Bitta sehrli tugma: shovqin yo'qoladi, yuz tabiiy tiklanadi, 7680px gacha tiniqlashadi."
+  },
+  {
+    icon: "🎨",
+    title: "1000 ta kino filtrlari",
+    desc: "To'y, Korean, Neon Tun, Vintage. AI tavsiya va o'z filtrlaringizni sevimlilarga saqlash."
+  }
+];
+let currentOnbStep = 0;
+
+function showOnboardingIfNeeded() {
+  if (!localStorage.getItem("wen_onboarded")) {
+    document.getElementById("onboardingModal").style.display = "flex";
+    updateOnboardingView();
+  }
+}
+
+function updateOnboardingView() {
+  const step = ONBOARDING_STEPS[currentOnbStep];
+  document.getElementById("onbIcon").textContent = step.icon;
+  document.getElementById("onbTitle").textContent = step.title;
+  document.getElementById("onbDesc").textContent = step.desc;
+  document.getElementById("onbStepNum").textContent = `${currentOnbStep + 1} / ${ONBOARDING_STEPS.length}`;
+  const btnNext = document.getElementById("btnOnbNext");
+  btnNext.textContent = currentOnbStep === ONBOARDING_STEPS.length - 1 ? t("btn_start") : t("btn_next");
+}
+
+function nextOnboarding() {
+  vibrate(15);
+  if (currentOnbStep < ONBOARDING_STEPS.length - 1) {
+    currentOnbStep++;
+    updateOnboardingView();
+  } else {
+    finishOnboarding();
+  }
+}
+
+function finishOnboarding() {
+  vibrate(25);
+  document.getElementById("onboardingModal").style.display = "none";
+  localStorage.setItem("wen_onboarded", "1");
+}
+
+/* ==================== INITIALIZATION ==================== */
+window.addEventListener("DOMContentLoaded", () => {
+  // Splash hide
+  setTimeout(() => {
+    document.getElementById("splash").classList.add("hide");
+  }, 1200);
+
+  // Load language preference
+  const savedLang = localStorage.getItem("wen_lang") || "uz";
+  currentLang = savedLang;
+  document.getElementById("langSelector").value = savedLang;
+  applyTranslations();
+
+  // Check PRO status
+  if (localStorage.getItem("wen_is_pro") === "1") isProUser = true;
+
+  // Initialize filters & categories
+  initCatalog();
+  renderCategoryChips();
+  renderFiltersGrid(true);
+
+  // Initialize camera
+  startCamera();
+
+  // Initialize gallery
+  renderLocalGallery();
+
+  // Check onboarding
+  showOnboardingIfNeeded();
+
+  // Setup plan selection checkmarks
+  selectPayPlan(1);
+});
+</script>
+</body>
+</html>

@@ -134,7 +134,7 @@ function runCnt(el) {
 }
 
 // Typewriter
-const words = ['ship fast.', 'scale clean.', 'feel premium.', 'win $10K contracts.', 'launch on schedule.'];
+const words = ['run AAA 3D at 60 FPS.', 'dominate on iOS, Android & Desktop.', 'scale full stack with zero debt.', 'ship to Steam, App Store & Windows.', 'win $10K+ contracts.'];
 let wi = 0, ci = 0, del = false;
 (function type() {
   const w = words[wi], t = document.getElementById('typed');
